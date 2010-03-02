@@ -89,7 +89,7 @@ div#explinks {
     float: left;
     height: 50px;
     width:48%;
-    background: transparent url("images/header_back.jpg") bottom left no-repeat;
+    background: transparent url("images/header_back.png") bottom left no-repeat;
     font-family: Georgia, Times, serif, sans-serif;
 }
 #ach__header h1 a {
