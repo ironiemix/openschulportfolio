@@ -1,1 +1,1 @@
-etc/apache2/conf.d/linuxmuster-portfolio.conf /etc/linuxmuster-portfolio/apache2.conf
+etc/linuxmuster-portfolio/apache2.conf /etc/apache2/conf.d/linuxmuster-portfolio.conf 
