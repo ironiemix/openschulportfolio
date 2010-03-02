@@ -1,0 +1,625 @@
+/**
+ * Print Styles for 'ACH' Template
+ *
+ * @author Andreas Gohr <andi@splitbrain.org>
+ * @author Anika Henke <a.c.henke@arcor.de>
+ */
+
+html, body {
+    padding:0;
+    margin: 0;
+    font: normal 12pt verdana,arial,tahoma,geneva,sans-serif;
+    background-color:#fff;
+    color:#000;
+    text-align:left;
+}
+#ach__template {
+    text-align:left;
+    border: none;
+    width:100%;
+    margin: 0;
+    position:relative;
+    background-color:#fff;
+    color:#000;
+}
+#ach__header {
+    margin: 0 0 10px 0;
+    padding: 0;
+    background-color:#fff;
+    color:#000;
+    border-bottom: 2px solid #666;
+}
+#ach__mainbox {
+    margin: 0;
+    padding: 0;
+    color: inherit;
+    background-color: inherit;
+    background: none;
+}
+#ach__pageactions {
+    display: none;
+}
+#ach__siteactions {
+    display: none;
+}
+#ach__content {
+    margin: 0;
+    padding: 0;
+    color: inherit;
+    background-color: inherit;
+    border: none;
+}
+#ach__footer {
+    margin: 0;
+    padding: 0;
+    color: inherit;
+    background-color: inherit;
+    border-top: 2px solid #666;
+}
+/* ---------- header ------------------- */
+#ach__header h1 {
+    margin: 0;
+    padding: 0;
+    font-size: 1.6em;
+    float: left;
+    width:48%;
+}
+#ach__header h1 a {
+    color: #666;
+    background-color: inherit;
+}
+#ach__header h2 {
+    margin: 0;
+    padding: 0;
+    font-size: 1.6em;
+    float: right;
+    width:48%;
+    text-align: right;
+    color: #666;
+    background-color: inherit;
+}
+#ach__header p.trace {
+    margin: 0;
+    padding: 0;/*0 10px*/
+    clear: both;
+    border:none;
+    font-size: 0.6em;
+    background-color: inherit;
+    color: inherit;
+    visibility: hidden;
+}
+/* ---------- footer ------------------- */
+#ach__footer p {
+    display: none;
+}
+#ach__footer p.pageinfo {
+    text-align: right;
+    display: block !important;
+    font-style: italic;
+    margin: 0;
+    padding:0;
+}
+
+/* ======================================================= */
+
+.clearer {
+    clear:both;
+    height:1px;
+    margin:0;
+    padding:0;
+    line-height:0%;
+    visibility:hidden;
+    overflow:hidden;
+}
+img {
+    border: none;
+}
+.invisible {
+    display: none;
+}
+
+/* ======================================================= */
+
+
+/*-------------------------------------------------
+    Links
+-------------------------------------------------*/
+a.urlextern, a.windows, a.interwiki, a.mail, a.wikilink1, a.wikilink2 {
+    background: none;
+    padding: 0;
+}
+
+/*-------------------------------------------------
+    Table of contents
+-------------------------------------------------*/
+
+#ach__content div.toc {
+    display: none;
+}
+
+/*-------------------------------------------------
+    Footnotes
+-------------------------------------------------*/
+#ach__content a.fn_top{
+    vertical-align:super;
+    font-size:0.8em;
+}
+
+#ach__content div.footnotes{
+    border-top: 1px solid #000;
+    padding: 0.5em 1.0em;
+    margin: 1.0em 0 0 0;
+    background-color: inherit;
+    color: inherit;
+}
+#ach__content div.fn{
+    font-size: 0.8em;
+    padding: 0 0 0.5em 0;
+    margin: 0;
+}
+#ach__content a.fn_bot{
+    vertical-align: super;
+    font-size: 0.8em;
+    font-weight: bold;
+}
+
+/*------------------------------------------------*/
+/* embedded images */
+#ach__content img.media {
+    margin: 0;
+}
+#ach__content img.medialeft {
+    float: left;
+    margin: 0.5em 0.5em 0.5em 0;
+    display: block;
+}
+#ach__content img.mediaright {
+    float: right;
+    margin: 0.5em 0 0.5em 0.5em;
+    display: block;
+}
+#ach__content img.mediacenter {
+    display: block;
+    margin: 0.5em auto;
+}
+
+/* special headlines
+ */
+#ach__content h1, #ach__content h2, #ach__content h3, #ach__content h4, #ach__content h5 {
+    margin-left: 0px;
+}
+/* indent different sections
+ */
+#ach__content div.level1, #ach__content div.level2, #ach__content div.level3, #ach__content div.level4, #ach__content div.level5 {
+    margin-left: 0px;
+}
+
+/* for index */
+#ach__content ul.idx li {
+    list-style-image: url(images/bullet.gif);
+}
+#ach__content ul.idx li.open {
+    list-style-image: url(images/open.gif);
+}
+#ach__content ul.idx li.closed {
+    list-style-image: url(images/closed.gif);
+}
+
+/* table alignments */
+#ach__content .leftalign {text-align: left;}
+#ach__content .centeralign {text-align: center;}
+#ach__content .rightalign {text-align: right;}
+
+/*-------------------------------------------------
+    Recent changes + Old revisions
+-------------------------------------------------*/
+#ach__content span.user {
+    color: #666;
+    background-color: inherit;
+}
+
+/* ----------- page navigator ------------- */
+#ach__content div.pagenav {
+    display: none;
+}
+
+/* -------------- Diff rendering ------------- */
+
+#ach__content table.diff {
+    width: 99% !important;
+}
+#ach__content td.diff-header {
+    border-bottom: 1px solid #666;
+}
+#ach__content td.diff-blockheader {
+    font-weight:bold;
+}
+#ach__content td.diff-context {
+    background-color: inherit;
+    color: inherit;
+    font-family: monospace;
+}
+#ach__content td.diff-addedline {
+    background-color: inherit;
+    color: inherit;
+    font-family: monospace;
+    width: 50% !important;
+}
+#ach__content td.diff-deletedline { 
+    background-color: inherit;
+    color: inherit;
+    font-family: monospace;    
+    width: 50% !important;
+}
+#ach__content span.diffchange {
+    color: #666;
+    background-color:inherit;
+    font-weight:bold;
+}
+
+/*-------------------------------------------------
+    Search results
+-------------------------------------------------*/
+
+#ach__content div.search_quickresult {
+    margin: 0 0 1.0em 0;
+    padding: 0 0 1.0em 0;
+    border-bottom: 1px solid #000;
+    font-size: 0.8em;
+}
+#ach__content div.search_quickhits {
+    margin: 0;
+    padding: 0.5em 2.0em 1.0em 0;
+    display: inline;
+}
+#ach__content div.search_quickresult div.clearer {
+    display: none !important;
+    clear: none !important;
+}
+
+#ach__content div.search_result {
+    margin: 0;
+    padding: 0 0 1.0em 0;
+    font-size: 0.8em;
+}
+#ach__content span.search_cnt {
+}
+#ach__content div.search_snippet {
+    margin: 0 0 0 1.0em;
+    padding: 0;
+    color: inherit;
+    background-color: inherit;
+}
+#ach__content span.search_hit{
+    color: #000;
+    background-color: inherit;
+    border: 1px solid #666;
+}
+
+/*--> "nothing found" at search + **media** */
+#ach__content div.nothing {
+    text-align:center;
+    font-size: 0.8em;
+}
+
+/* ---------- AJAX quicksearch ----------- */
+div.ajax_qsearch {
+    display:none;
+}
+
+/* ============================================================= */
+
+#ach__template a, #ach__content a {
+    color: inherit;
+    background-color: inherit;
+    text-decoration: underline;
+}
+
+/* external link */
+#ach__template a.urlextern:after, #ach__content a.urlextern:after {
+   content: " [" attr(href) "]";
+   font-size: 90%;
+}
+/* interwiki link */
+#ach__template a.interwiki:after, #ach__content a.interwiki:after {
+   content: " [" attr(href) "]";
+   font-size: 90%;
+}
+/* email link */
+#ach__template a.mail:after, #ach__content a.mail:after {
+   content: " [" attr(href) "]";
+   font-size: 90%;
+}
+
+#ach__content hr {
+    border-top: 1px solid #000;
+    border-right: none;
+    border-bottom: none;
+    border-left: none;
+    text-align:center;
+    height: 0;
+    width:95%;
+}
+
+/* ---------- content ------------------- */
+#ach__content h1, #ach__content h2, #ach__content h3, #ach__content h4, #ach__content h5 {
+    margin: 0 0 0.5em 0;
+    padding: 0;
+/* wg. sec-edit ...
+    padding: 0.5em 0 0.5em 0;
+*/
+}
+#ach__content p, #ach__content blockquote, #ach__content table, #ach__content ul, #ach__content ol {
+    margin: 0;
+    padding: 0 0 1.0em 0;
+}
+#ach__content ul, #ach__content ol {
+    margin: 0;
+    padding: 0 0 1.0em 2.0em;
+}
+#ach__content p, #ach__content td, #ach__content th, #ach__content blockquote, #ach__content ul li, #ach__content ol li, #ach__content label, #ach__content dt, #ach__content dd {
+    font-size: 0.8em;
+}
+#ach__content dt {
+    font-weight: bold;
+}
+#ach__content ul li li, #ach__content ol li li {
+    font-size: 100%;
+}
+#ach__content ul ul, #ach__content ol ol, #ach__content ul ol, #ach__content ol ul {
+    padding: 0 0 0 1.0em;
+}
+#ach__content ol {list-style-type: decimal;}
+#ach__content ol ol {list-style-type: lower-alpha;}
+#ach__content ol ol ol {list-style-type: upper-roman;}
+#ach__content ol ol ol ol {list-style-type: upper-alpha;}
+#ach__content ol ol ol ol ol {list-style-type: lower-roman;}
+
+#ach__content ul {list-style-type: disc;}
+#ach__content ul ul {list-style-type: circle;}
+#ach__content ul ul ul {list-style-type: square;}
+#ach__content ul ul ul ul {list-style-type: circle;}
+#ach__content ul ul ul ul ul {list-style-type: disc;}
+
+#ach__content blockquote {
+    border-left: 2px solid #666;
+    padding: 0 0 0 0.5em;
+}
+#ach__content blockquote blockquote {
+    font-size: 100%;
+}
+
+/* headlines */
+#ach__content h1 {
+    font-size: 1.5em;
+    font-weight: bold;
+    letter-spacing: 0.2em;
+    font-variant: small-caps;
+    border: none;
+}
+#ach__content h2 {
+    font-size: 1.3em;
+    font-weight: bold;
+    border: none;
+    letter-spacing: 0.15em;
+}
+#ach__content h3 {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+#ach__content h4 {
+    font-size: 1.0em;
+    font-weight: bold;
+}
+#ach__content h5 {
+    font-size: 0.8em;
+    font-weight: bold;
+}
+
+/*-------------------------------------------------
+  form-elements
+-------------------------------------------------*/
+
+#ach__content input.button {
+    display: none;
+}
+/* section editing */
+#ach__content div.secedit {
+    display: none;
+}
+
+/*----------------------------------------------------*/
+
+#ach__content div.preview {
+    margin: 0;
+    padding: 0.5em;
+    border: 1px dashed #000;
+    background-color: inherit;
+    color: inherit;
+}
+
+#ach__content pre.pre, #ach__content pre.code, #ach__content pre.file {
+    padding: 0.5em;
+    margin: 0 0 1.0em 0;
+    background-color: inherit;
+    color: inherit;
+    border: 1px dashed #000;
+    overflow: visible;
+    font-size:0.9em;
+}
+#ach__content pre.file {
+    border: 0px dashed #000;
+}
+#ach__content code {
+    background-color: inherit;
+    color: inherit;
+    font-size:1.1em;
+}
+
+/* inline tables */
+#ach__content table.inline {
+    border-spacing: 0.3em;
+    border-collapse: collapse;
+    empty-cells:show;
+    background-color: inherit;
+    color:inherit;
+}
+#ach__content table.inline td, #ach__content table.inline th {
+    border: 1px solid #000;
+    padding: 0.4em;
+}
+#ach__content table.inline th {
+    background-color: inherit;
+    color: inherit;
+    font-weight: bold;
+    text-align: left;
+    border-bottom: 2px solid #000;
+}
+
+/* ======================================================================= */
+
+#ach__template div.content_media  {
+    margin: 0 !important;
+    padding: 0 !important;
+    background-color: inherit !important;
+    color: inherit !important;
+    border: none !important;
+}
+
+#ach__template div.content_media h1 {
+    font-size: 1.2em !important;
+    padding: 0.5em 1.0em 0.5em 1.0em!important;
+    border-bottom: 1px solid #000;
+    margin: 0 0 0.5em 0 !important;
+    background-color: inherit !important;
+    color: inherit !important;
+    letter-spacing: 0 !important;
+    font-variant: normal !important;
+}
+
+#ach__template div.footer {
+    margin:0;
+    padding:0.5em 1.0em;
+    border-top: 1px solid #000;
+    background-color: inherit !important;
+    color: inherit !important;
+}
+#ach__template div.footer a {
+    color: inherit !important;
+    background-color: inherit !important;
+}
+ 
+/* ---------------  Media Selection  ----------------- */
+
+#ach__template div.mediaselect {
+    background-color: inherit !important;
+    color: inherit !important;
+}
+#ach__template div.mediaselect-left {
+    float:left;
+    padding: 0.5em;
+    margin: 0;
+    width:25%;
+    overflow:visible;
+/*
+    background-color:#ccc;
+    color:#600;
+*/
+}
+#ach__template div.mediaselect-right {
+    float:right;
+    border-left: 1px solid #000;
+    padding: 0.5em;
+    margin: 0;
+    width:65%;
+    overflow:visible;
+/*
+    background-color:#ccc;
+    color:#600;
+    width:350px;
+    height:230px;
+*/
+}
+
+/* left */
+#ach__template div.mediaselect ul, #ach__template div.mediaselect ul li {
+    padding: 0 !important;
+    margin: 0 0 0 0.5em !important;
+}
+#ach__template div.mediaselect ul li ul {
+    padding: 0 0 0 0.5em !important;
+    margin: 0 !important;
+}
+#ach__template ul.idx li a.idx_dir {
+}
+
+/* right */
+#ach__template div.imagemeta {
+    color: #999;
+    background-color: inherit;
+    font-size: 0.7em;
+    line-height: 1.0em;
+}
+
+#ach__template div.imagemeta img.thumb {
+    float:left;
+    margin: 0 0.1em 0 0;
+}
+#ach__template div.mediaselect-right li, #ach__template div.uploadform { 
+    clear: both;
+}
+#ach__template div.uploadform {
+    display: none;
+}
+
+/* ---------------  Media Ref  ----------------- */
+
+#ach__template div.mediaref {
+    padding: 0 1.0em;
+    margin: 0;
+}
+#ach__template div.mediaref div.search_result {
+}
+#ach__template div.mediaref_head {
+}
+#ach__template div.mediaref div.search_result {
+}
+
+#ach__template span.mediaref_ref {
+    font-weight: bold;
+}
+
+#ach__template div.mediaref_hidden {
+}
+
+/* ---------------  Image Details  ----------------- */
+
+#ach__template div.img_box {
+    position: relative !important;
+    margin: 0;
+    padding: 0;
+    width: 98%;/* because of peekaboo  */
+}
+#ach__template div.img_big {
+    float: left;
+    margin: 0;
+    padding: 0.5em 1.0em;
+    position: relative !important;
+}
+#ach__template div.img_detail {
+    margin: 0 0.5em;
+    padding: 0 0.5em;
+    position: relative;
+    width: 200px;
+    float: left;
+    border-left: 1px solid #000;
+}
+
+#ach__template dl.img_tags dt {
+    font-weight: bold;
+}
+#ach__template dl.img_tags dd {
+    margin: 0 0 0 1.0em;
+    padding: 0;
+}
+

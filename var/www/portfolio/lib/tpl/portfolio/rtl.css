@@ -1,0 +1,131 @@
+/**
+ * Layout and design corrections for right-to-left languages
+ */
+/*
+	!__disfunctional__!
+	has to be corrected, tested, etc.
+
+*/
+
+/* ======================================================= */
+
+html, body {
+	text-align: right;
+}
+
+#ach__mainbox {
+	background:#fff url(images/logo.png) no-repeat right top;
+}
+#ach__pageactions {
+	margin: 0 195px 0 0;
+}
+#ach__siteactions {
+	width: 175px;
+	float: right;
+}
+#ach__content {
+	margin: 10px 195px 10px 10px;
+}
+ 
+/* ---------- header ------------------- */
+#ach__header h1 {
+	float: right;
+}
+#ach__header h2 {
+	float: left;
+	text-align: left;
+}
+/* ---------- page actions ------------------- */
+* html #ach__pageactions input {
+	padding: 0.1em 0.2em !important;
+	margin: 0 0 0 0.5em;
+}
+
+/* ---------- site actions ------------------- */
+/* login-form */
+#ach__siteactions div {
+	text-align: right !important;
+}
+#ach__siteactions legend {
+	text-align: right !important;
+}
+/* ---------- footer ------------------- */
+#ach__footer p {
+	margin: 0;
+	padding: 0 10px;
+	font-size: 0.8em;;
+	text-align: right;
+	float: right;
+}
+#ach__footer p.pageinfo {
+	text-align: left;
+	float: left;
+	font-style: italic;
+}
+
+/* ------------------  Design corrections  --------------------------------- */
+
+
+#ach__content ul, #ach__content ol {
+	padding: 0 2.0em 1.0em 0;
+}
+#ach__content ul ul, #ach__content ol ol, #ach__content ul ol, #ach__content ol ul {
+	padding: 0 1.0em 0 0 !important;
+}
+#ach__content blockquote {
+	border-right: 2px solid #606;/*000*/
+	padding: 0 0.2em 0 0;
+	border-left: none;
+}
+#ach__content blockquote blockquote {
+	border-right: 2px solid #066;/*900*/
+	border-left: none;
+}
+#ach__content blockquote blockquote blockquote {
+	border-right: 2px solid #900;/*f00*/
+	border-left: none;
+}
+#ach__content blockquote blockquote blockquote blockquote {
+	border-right: 2px solid #009;/*999*/
+	border-left: none;
+}
+#ach__content blockquote blockquote blockquote blockquote blockquote {
+	border-right: 2px solid #c60;/*fff,ccc*/
+	border-left: none;
+}
+#ach__content div.secedit input.button {
+	float:left;
+}
+#ach__content label.simple {
+	text-align: right;
+}
+
+/*---------------------------------------------------*/
+#ach__template a, #ach__content a {
+	background: none !important;
+	padding: 0 !important;
+}
+#ach__content div.pagenav-prev {
+	text-align:left;	
+	float:right;
+	width:49%;
+}
+#ach__content div.pagenav-next {
+	text-align:right;
+	float:left;
+	width:49%
+}
+/*-------------------------------------------------
+    Table of contents
+-------------------------------------------------*/
+
+#ach__content div.toc {
+	margin: 0 10px 10px;
+	float: left;
+}
+#ach__content div.toctoggle {
+	float:left;
+}
+#ach__content ul.toc li li {
+	padding: 0 1.0em 0 0;
+}
