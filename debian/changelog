@@ -1,10 +1,10 @@
-linuxmuster-portfolio (0.2.0-0) unstable; urgency=low
+linuxmuster-portfolio (0.2.1-0) openlml; urgency=low
    
    * first beta release
 
  -- Frank Schiebel <frank@linuxmuster.net>  Thu, 02 Mar 2010 20:15:00 +0100
 
-linuxmuster-portfolio (0.1.2-0) unstable; urgency=low
+linuxmuster-portfolio (0.1.2-0) openlml; urgency=low
    
    * providing sample pages
    * including LS portfolio structure 
