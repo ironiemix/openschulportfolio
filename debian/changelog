@@ -1,3 +1,10 @@
+linuxmuster-portfolio (0.0.1-2) unstable; urgency=low
+   
+   * apache conf in  /etc/linuxmuster-portfolio/apache2.conf
+   * dokuwiki in /usr/share/linuxmuster-portfolio
+   
+ -- Frank Schiebel <frank@linuxmuster.net>  Thu, 02 Mar 2010 12:20:00 +0100
+
 linuxmuster-portfolio (0.0.1-1) unstable; urgency=low
    
    * moved configuration to /etc/linuxmuster-portfolio
