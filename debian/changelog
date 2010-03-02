@@ -1,3 +1,11 @@
+linuxmuster-portfolio (0.1.0-0) unstable; urgency=low
+   
+   * applying patch enabling new config option 
+     $conf['auth']['ldap']['groupdelprefix'] = "p_";
+     to generate working groupnames out of linuxmuster projekts
+
+ -- Frank Schiebel <frank@linuxmuster.net>  Thu, 02 Mar 2010 17:35:00 +0100
+   
 linuxmuster-portfolio (0.0.1-4) unstable; urgency=low
    
    * apache conf in  /etc/linuxmuster-portfolio/apache2.conf
