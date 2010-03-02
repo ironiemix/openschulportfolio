@@ -1,3 +1,11 @@
+linuxmuster-portfolio (0.2.2-1) openlml; urgency=low
+   
+   * fixed permissions for /etc/linuxmuster-portfolio
+   * fixed configuration for the filelist-plugin to reflect the prober
+     data-path
+
+ -- Frank Schiebel <frank@linuxmuster.net>  Thu, 02 Mar 2010 22:05:00 +0100
+
 linuxmuster-portfolio (0.2.2-0) openlml; urgency=low
    
    * fixed missing start.txt

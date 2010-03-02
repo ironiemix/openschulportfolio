@@ -27,6 +27,7 @@ $conf['compress'] = 0;
 $conf['plugin']['tag']['pagelist_flags'] = 'default';
 $conf['plugin']['task']['datefield'] = 0;
 $conf['plugin']['task']['tasks_formposition'] = 'top';
+$conf['plugin']['filelist']['allowed_absolute_paths'] = '/home/linuxmuster-portfolio/data';
 $conf['plugin']['archiveupload']['manageronly'] = 1;
 $conf['plugin']['include']['showuser'] = 0;
 $conf['plugin']['include']['showcomments'] = 0;

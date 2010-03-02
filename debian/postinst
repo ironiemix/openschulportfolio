@@ -18,8 +18,8 @@ if [ -d /usr/share/linuxmuster-portfolio/lib/plugins ]; then
     chown -R www-data: /usr/share/linuxmuster-portfolio/lib/plugins 
 fi
 if [ -d /etc/linuxmuster-portfolio/ ]; then
-    chgrp -R www-data /etc/linuxmuster-portfolio/
-    chmod g+w /etc/linuxmuster-portfolio/*
+    chown -R root:www-data /etc/linuxmuster-portfolio/
+    chmod -R g+w /etc/linuxmuster-portfolio/
 fi
 if [ -f /usr/share/linuxmuster/config/dist.conf ]; then  
      . /usr/share/linuxmuster/config/dist.conf
