@@ -5,7 +5,9 @@ EXAMPLES="/var/lib/linuxmuster-portfolio/example_data/"
 
 
 if [ ! -f $DATADIR/DELETEME_FOR_FRESH_EXAMPLES ]; then
+   echo "Copying example data..."
    cp -r $EXAMPLES/*  $DATADIR/
+   echo "   done."
 fi
 
 # Permissions of data dir: must be writable for www-data
