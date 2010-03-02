@@ -1,0 +1,16 @@
+{{tag>schulcurriculum}}
+
+
+====== Schulcurriculum ======
+
+===== Klasse 5 und 6 =====
+
+{{filelist>:schulcurriculum:20070720_pdf_5_6:*&style=table&tableheader=1&tableshowdate=1&tableshowsize=1}}
+
+===== Klasse 7 und 8 =====
+
+{{filelist>:schulcurriculum:20070720_pdf_7_8:*&style=table&tableheader=1&tableshowdate=1&tableshowsize=1}}
+
+===== Klasse 9 und 10 =====
+ 
+{{filelist>:schulcurriculum:sc_gesamt:*&style=table&tableheader=1&tableshowdate=1&tableshowsize=1}}

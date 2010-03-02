@@ -1,0 +1,18 @@
+{{tag> }}
+
+====== Inhalt ======
+
+  * [[einzugsgebiet|Einzugsgebiet]]
+  * [[portfolio:schulbeschreibung:schularten:Schularten an dieser Schule]]
+  * [[portfolio:schulbeschreibung:schuelerzahl|Anzahl der Scülerinnen und Schüler]]
+  * [[portfolio:schulbeschreibung:klassen_und_jahrgaenge|Anzahl und Größe der Klassen und Jahrgänge]]
+  * [[portfolio:schulbeschreibung:lehrkraefte|Anzahl der Lehrkräfte]]
+  * [[portfolio:schulbeschreibung:paedagogisches_personal|Anzahl des pädagogischen Personals]]
+
+== Optional: ==
+ 
+
+  * [[portfolio:schulbeschreibung:adresse_und_lage|Adresse und Lage der Schule]]
+  * [[portfolio:schulbeschreibung:hintergrund|Lebenssituation der Schülerinnen und Schüler]]
+  * [[portfolio:schulbeschreibung:anmeldezahlen|Anmeldezahlen]]
+  * [[portfolio:schulbeschreibung:verkehrsanbindung|Verkehrsanbindung]]

@@ -1,0 +1,42 @@
+====== Inhaltsübersicht: Schulportfolio ======
+
+
+<note warning>
+Ab hier findet sich die vorgeschlagene Gliederung aus der Handreichung für das Schulportfolio.
+
+**Achtung:** Das ist der in der Handreichung angegebene Maximalumfang, viele der angegebenen Bereiche// können// beschrieben werden,// müssen// aber nicht.
+
+{{:portfolio:qe6_schulportfolio.pdf|Die Handreichung findet sich hier}}
+</note>
+
+======  1 Schulbeschreibung ======
+
+{{page>portfolio:schulbeschreibung:start}}
+
+====== 2 Situation der Schule im Verhältnis zum Schulträger ======
+
+{{page>portfolio:schultraeger:start}}
+
+====== 3 Organisation der Schule ======
+
+{{page>portfolio:organisation:start}}
+
+====== 4 Schulkonzept ======
+
+{{page>portfolio:konzept:start}}
+
+====== 5 Ergebnisbezogene Angaben ======
+{{page>portfolio:ergebnisse:start}}
+
+====== 6 Verfahren und Ergebnisse der Selbstevaluation ======
+
+{{page>portfolio:selbstevaluation:start}}
+ 
+
+====== 7 Weiterentwicklung der Schule ======
+
+{{page>portfolio:schulentwicklung:start}}
+
+====== 8 Weitere Dokumente der Schule ======
+
+{{page>portfolio:sonstiges:start}}

@@ -1,0 +1,29 @@
+{{tag> }}
+
+====== Inhalt ======
+
+
+
+  * [[portfolio:konzept:grundsaetze|Pädagogische Grundsätze (Ziele der Schule) und deren Umsetzung]]
+  * [[portfolio:konzept:profile|besondere Ausrichtung der Schule (zum Beispiel musisches Profil, bilinguales Profil)]]
+  * [[portfolio:konzept:kern_und_schulcurriculum]]
+  * [[portfolio:konzept:kontingentstundentafel]]
+  * [[portfolio:konzept:arbeitsgemeinschaften]]
+
+== Optional: ==
+
+  * [[portfolio:konzept:einbindung_schueler|Beteiligung der Schülerinnen und Schüler am Schulleben]]
+  * [[portfolio:konzept:einbindung_eltern]]
+  * [[portfolio:konzept:zusaetzliche_lernangebote]]
+  *[[portfolio:konzept:leistungsbeurteilung:start|Leistungsbeurteilung]]
+  * [[portfolio:konzept:pruefungen:start|Regelungen zur Prüfungsorganisation]]
+  * [[portfolio:konzept:foerderung]]
+  * [[portfolio:konzept:auv|Außerunterrichtliche Veranstaltungen (Schüleraustausch, Studienfahrten etc.)]]
+  * [[portfolio:konzept:kernzeitbetreuung]]
+  * [[portfolio:konzept:mittagstisch|Mittagstisch und weitere Angebote im Zusammenhang mit der offenen oder (teil)gebundenen Ganztagesschule]]
+  * [[portfolio:konzept:geschlechtsspezifische_foerderung|Berücksichtigung sonstiger differenzierter Fragestellungen (z.B. durchgeführte und geplante Maßnahmen zur Förderung von Mädchen und Jungen unter geschlechtsspezifischen Aspekten)]]
+  * [[portfolio:konzept:regelungen_disziplin|Umgang mit verhaltensauffälligen Schülern]]
+  * [[portfolio:konzept:einbeziehung_erziehungshilfestellen|Einbeziehung von Erziehungshilfestellen]]
+  * [[portfolio:konzept:ausserschulische_partner|Außerschulische Partner]]
+  * [[portfolio:konzept:wettbewerbe_und_projekte|Projekte der Schule (u. a. auch regelmäßige Teilnahme an Wettbewerben)]]
+  * [[portfolio:konzept:medien:start|Medienentwicklungsplan]]

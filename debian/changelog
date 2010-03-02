@@ -1,6 +1,7 @@
-linuxmuster-portfolio (0.1.1-0) unstable; urgency=low
+linuxmuster-portfolio (0.1.2-0) unstable; urgency=low
    
    * providing sample pages
+   * including LS portfolio structure 
 
  -- Frank Schiebel <frank@linuxmuster.net>  Thu, 02 Mar 2010 19:05:00 +0100
 

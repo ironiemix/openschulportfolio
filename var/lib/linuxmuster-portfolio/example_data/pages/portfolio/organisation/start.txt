@@ -1,0 +1,37 @@
+{{tag> }}
+
+====== Inhalt ======
+
+  * [[allgemeine_infos|Allgemeine Informationen]]
+  * [[portfolio:organisation:organigramm|Zuständigkeitsübersicht/Organigramm]]
+  * [[portfolio:organisation:zustaendigkeitsdetails|Zuständigkeiten]]
+  * [[portfolio:organisation:regelungen_lehrerfortbildung]]
+  * [[portfolio:organisation:jahresplanung|Jahresplanung]]
+  * [[portfolio:organisation:beratungsmoeglichkeiten|Beratungsmöglichkeiten für Schülerinnen, Schüler und Lehrkräfte]]
+
+== Optional: ==
+
+  * [[portfolio:organisation:kooperationszeit|Kooperationszeiten am AEG]]
+  * [[portfolio:organisation:unterrichtszeiten|Unterrichtszeiten]]
+  * [[portfolio:organisation:alarmplan|Alarmplan bei Bränden]]
+  * [[portfolio:organisation:infektionsschutz|Merkblatt Infektionsschutz]]
+  * [[portfolio:organisation:oberstufenberatung:start|Organisation der Kursstufe]]
+  * [[portfolio:organisation:referendarbetreuung:start|Referendarbetreuung]]
+  * [[portfolio:organisation:aufgaben_klassenlehrer|Aufgaben der Klassenlehrer]]
+  * [[portfolio:organisation:entschuldigungsregelung|Entschuldigungsregelung]]
+  * [[portfolio:organisation:konfliktregelung|Regelungen zum Umgang mit Konflikten]]
+    * [[portfolio:organisation:konfliktregelung_schuler]]
+    * [[portfolio:organisation:konfliktregelung_eltern]]
+  * [[portfolio:organisation:regelungen_sprechzeiten]]
+  * [[portfolio:organisation:informations_und_kommunikationswege]]
+  * [[portfolio:organisation:ressourcenplanung_und_verteilung]]
+    * [[portfolio:organisation:finanzverteilung|(Verteilung nach pädagogischen Gesichtspunkten etc.)]]
+    * [[portfolio:organisation:raumnutzung| (Fachraumzuteilung, Klassenzimmerzuteilung etc.)]]
+    * [[portfolio:organisation:zeitorganisation| (Kriterien für die Gestaltung des Stundenplans, Regelungen für die Reduzierung von Unterrichtausfall etc.)]]
+  * [[portfolio:organisation:einfuehrung_neue_lehrkraefte]]
+  * [[portfolio:organisation:vertretungsregelungen]]
+  * [[portfolio:organisation:konferenzenregelungen]]
+  * [[portfolio:organisation:personalentwicklungskonzepte]]
+  * [[portfolio:organisation:foerderverein]]
+  * [[portfolio:organisation:darstellung_nach_aussen]]
+ 
