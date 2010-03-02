@@ -12,3 +12,4 @@ fi
 basedn=`grep basedn $NETWORKSETTINGS | sed "s/^.*\"\(.*\)\".*$/\1/"`
 
 sed -i'' -e"s/\(ou=accounts,\).*;/\1 $basedn\';/" /etc/linuxmuster-portfolio/local.php
+sed -i'' -e"s/\(ou=groups,\).*;/\1 $basedn\';/" /etc/linuxmuster-portfolio/local.php
