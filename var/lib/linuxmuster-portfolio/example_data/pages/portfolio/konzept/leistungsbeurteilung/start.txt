@@ -1,7 +1,0 @@
-
-====== Leistungsbewertung ======
-
-  * [[gfs_allgemein|Gleichwertige Feststellung von Schülerleistungen (GFS) Allgemein]]
-  * [[gfs_kursstufe|Gleichwertige Feststellung von Schülerleistungen (GFS) Kursstufe]]
-  * [[noten_und_zeugnisse|Notengebung und Zeugnisse]]
-  * [[portfolio:organisation:oberstufenberatung:seminarkursorganisation|Regelungen zur Durchführung der Seminarkurse am AEG]]
