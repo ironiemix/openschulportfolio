@@ -9,8 +9,3 @@
 *	@ALL	0
 *	@user	1
 *	@editors	16
-set:*	@ALL	0
-set:*	@set	16
-restricted:schulnetzbetreuung:*	@user	0
-restricted:schulnetzbetreuung:*	@editors	0
-restricted:schulnetzbetreuung:*	@nwberater	16

@@ -6,7 +6,9 @@
  * Date: Mon, 01 Mar 2010 15:00:09 +0100
  */
 
-$conf['title'] = 'AEG Handbuch';
+$conf['savedir'] = '/home/linuxmuster-portfolio/data/';
+
+$conf['title'] = 'Schulportfolio';
 $conf['lang'] = 'de';
 $conf['template'] = 'portfolio';
 $conf['license'] = '';
