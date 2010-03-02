@@ -4,3 +4,11 @@
 if [ -d /home/linuxmuster-portfolio/data ]; then
     chown -R www-data: /home/linuxmuster-portfolio/data 
 fi
+
+if [ -f /usr/share/linuxmuster/config/dist.conf ]; then  
+     . /usr/share/linuxmuster/config/dist.conf
+fi
+
+basedn=`grep basedn $NETWORKSETTINGS | sed "s/^.*\"\(.*\)\".*$/\1/"`
+
+echo $basedn > /tmp/bdn

@@ -17,7 +17,6 @@ $conf['breadcrumbs'] = 0;
 $conf['youarehere'] = 1;
 $conf['dformat'] = '%d.%m.%Y %H:%M';
 $conf['useacl'] = 1;
-$conf['authtype'] = 'imap';
 $conf['superuser'] = '@admin';
 $conf['rememberme'] = 0;
 $conf['disableactions'] = 'register,resendpwd,profile';
@@ -35,5 +34,14 @@ $conf['plugin']['include']['showlinkbacks'] = 0;
 $conf['plugin']['include']['showtags'] = 0;
 $conf['plugin']['include']['noheader'] = '1';
 $conf['openregister'] = '0';
+
+
+$conf['authtype']    = 'ldap';
+$conf['auth']['ldap']['server']      = 'ldaps://localhost:636';
+$conf['auth']['ldap']['usertree']    = 'ou=accounts,dc=montfort-realschule, dc=de';
+$conf['auth']['ldap']['grouptree']   = 'ou=groups,dc=montfort-realschule, dc=de';
+$conf['auth']['ldap']['userfilter']  = '(&(uid=%{user})(objectClass=posixAccount))';
+$conf['auth']['ldap']['groupfilter'] = '(&(objectClass=posixGroup)(|(gidNumber=%{gid})(memberUID=%{user})))';
+
 
 // end auto-generated content
