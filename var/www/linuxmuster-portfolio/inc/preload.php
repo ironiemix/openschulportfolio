@@ -1,2 +1,2 @@
 <?php
-define('DOKU_CONF','/home/linuxmuster-portfolio/conf/');
+define('DOKU_CONF','/etc/linuxmuster-portfolio/');
