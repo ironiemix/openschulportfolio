@@ -42,6 +42,6 @@ $conf['auth']['ldap']['usertree']    = 'ou=accounts,dc=montfort-realschule, dc=d
 $conf['auth']['ldap']['grouptree']   = 'ou=groups,dc=montfort-realschule, dc=de';
 $conf['auth']['ldap']['userfilter']  = '(&(uid=%{user})(objectClass=posixAccount))';
 $conf['auth']['ldap']['groupfilter'] = '(&(objectClass=posixGroup)(|(gidNumber=%{gid})(memberUID=%{user})))';
-
+$conf['defaultgroup'] = "users";
 
 // end auto-generated content
