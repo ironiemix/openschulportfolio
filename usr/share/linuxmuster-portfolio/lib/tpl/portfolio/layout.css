@@ -31,7 +31,8 @@ body {
 #ach__header {
     margin: 0;/*0*/
     padding: 0;
-    background-color: __background__;
+    height: 75px;
+    background: transparent url("images/header_back.png") top left no-repeat;
     color: __text__;
     border-bottom: 1px solid __border_alt__;
 }
@@ -84,12 +85,10 @@ div#explinks {
 /* ---------- header ------------------- */
 #ach__header h1 {
     margin: 0;
-    padding: 5px 0 0 0;
+    padding: 15px 0 0 115px;
     font-size: 20px;
     float: left;
-    height: 50px;
     width:48%;
-    background: transparent url("images/header_back.png") bottom left no-repeat;
     font-family: Georgia, Times, serif, sans-serif;
 }
 #ach__header h1 a {
