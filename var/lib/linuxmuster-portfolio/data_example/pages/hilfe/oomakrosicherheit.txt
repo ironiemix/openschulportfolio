@@ -1,0 +1,14 @@
+{{tag>open office hilfe makros }}
+
+====== Makrosicherheit in Open Office einstellen ======
+  -  Open Office öffnen
+  -  In der Symbolleiste auf "Extras" klicken --> "Optionen" 
+  -  Im erscheinenden Dialog in der Liste auf der linken Seite unter Open Office.org den Menüpunkt "Sicherheit" auswählen
+  -  Auf der rechten Seite des Fensters "Makrosicherheit" auswählen  
+  -  Im erscheinenden Dialog "Mittel" auswählen
+  -  Auf OK klicken - fertig!
+{{:hilfe:oomakrosicherheit.png?600|}}
+
+
+
+

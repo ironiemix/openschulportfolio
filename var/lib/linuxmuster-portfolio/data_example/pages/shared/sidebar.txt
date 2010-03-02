@@ -1,0 +1,27 @@
+----
+
+** Hauptmenü **
+
+  * [[..start|Start]]
+  * [[shared:content|Inhaltsübersicht]]
+  * [[aktuelles:vertretungsplan|Vertretungsplan]]
+  * [[themen|Themen]]
+  * [[restricted:start|Wissensdatenbank]]
+
+----
+
+**Links**
+
+  * [[https://albert.aeg-reutlingen.de/mrbs/|Raumbuchung]]
+
+----
+
+
+**Hilfe**
+
+  * [[hilfe:start|Hilfe für Benutzer]]
+  * [[hilfe:editorhelp|Hilfe für Redakteure]]
+ 
+
+
+----

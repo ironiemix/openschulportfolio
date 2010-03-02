@@ -1,5 +1,9 @@
 #!/bin/sh -e
 
+DATADIR="/home/linuxmuster-portfolio/data/"
+EXAMPLES="/var/lib/linuxmuster-portfolio/example_data/"
+
+
 # Permissions of data dir: must be writable for www-data
 if [ -d /home/linuxmuster-portfolio/data ]; then
     chown -R www-data: /home/linuxmuster-portfolio/data 
@@ -13,3 +17,7 @@ basedn=`grep basedn $NETWORKSETTINGS | sed "s/^.*\"\(.*\)\".*$/\1/"`
 
 sed -i'' -e"s/\(ou=accounts,\).*;/\1 $basedn\';/" /etc/linuxmuster-portfolio/local.php
 sed -i'' -e"s/\(ou=groups,\).*;/\1 $basedn\';/" /etc/linuxmuster-portfolio/local.php
+
+if [ ! -f $DATADIR/DELETEME_FOR_FRESH_EXAMPLES ]; then
+   cp -r $EXAMPLES/*  $DATADIR/
+fi

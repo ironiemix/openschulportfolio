@@ -1,0 +1,10 @@
+<- [[:shared:aufgaben:netzwerk:start]]
+
+====== Linbo Server aufsetzen ======
+
+~~TASK:Frank Schiebel?~~
+
+
+
+{{tag>}}
+

@@ -1,0 +1,30 @@
+
+{{tag> redaktion hilfe}}
+====== Wie überführt man ein vorhandenes Office Dokument ist Wiki-Format? ======
+
+
+===== Möglichkeit A - Cut'n'Paste =====
+
+Man öffne das Word/Openoffice Dokument, markiere den Text, Kopiere ihn mit ''Strg-C'' in die Zwischenablage. Dann editiert man die Wiki-Seite, so dass sich das Eingabefeld des Editors öffnet und fügt die Inhalte mit ''Strg-V'' dort ein.
+
+Nun muss man den unformatiert vorliegenden Text mit dem Wiki Editor strukturieren und formatieren, was teilweise mühsam sein kann. Oft muss man auch von der vorhandenen Struktur abrücken, um die Informationen im Wiki lesbar zu machen.
+
+===== Möglichkeit B - Verwendung des Openoffice Makros =====
+
+Für [[http://de.openoffice.org/|Openoffice]] gibt es ein Makro, mit dem vorhandene Dokumente in die DoluWiki Syntax umgewandelt werden können. Damit kann man einen großen Teil der Formatierungsarbeit automatisieren. [[http://de.openoffice.org/|Openoffice ist für Windows/Mac/Linux kostenlos hier erhältlich]]. Ein portable Version für Windows können Sie [[http://downloads.sourceforge.net/portableapps/OpenOfficePortable_3.1.1_German.paf.exe?download|hier herunterladen]]
+
+Da Openoffice auch Word-Dokumente öffnen kann, kann man auf diese Weise auch Word Dokumente vergleichsweise einfach ins Wiki-Format umwandeln:
+
+  * Datei mit Openoffice öffnen
+  * Makro ausführen. Der konvertierte Text landet automatisch in der Zwischenablage
+  * Zwischenablage in den Wiki-Editor einfügen
+
+Um diese Möglichkeit komfortabel zu nutzen, sollte man 
+
+  * Openoffice installieren 
+
+<note important>Damit die folgenden Schritte funktionieren, muss die Makrosicherheit in Openoffice auf "Mittel" eingestellt werden - [[oomakrosicherheit|das geht so]] </note>
+
+  * Das in der Datei {{:hilfe:002dokuwiki.odt|OO2DokuWiki.odt}} enthaltene Makro [[oomakroimport|in die Makrosammlung von Openoffice importieren]].
+  * [[oomakrobutton|Eine Schaltfläche anlegen, welche das Makro einfach startet]]
+

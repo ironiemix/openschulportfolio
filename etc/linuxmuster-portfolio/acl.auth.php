@@ -9,5 +9,5 @@
 *               @ALL        0  
 allusers:*      @users      1
 *               @teachers   1
-*               @p_schulportfolio       16
+*               @schulportfolio       16
 

@@ -1,0 +1,24 @@
+<- [[:shared:aufgaben:netzwerk:start]]
+
+====== Drucker in der NWT einrichten (auch für die Laptops) ======
+
+~~TASK:Ann-Cathrin Speidel?~~
+
+===== IP Adresse =====
+
+
+  - Drucker in Betrieb nehmen, Konfigurationsreport ausdrucken --> Hardwareadresse
+  - Auf albert in /etc/linuxmuster dem link **workstations** (= /var/lib/rembo/files/global/wimport_data) folgen --> in Editor öffnen, Drucker mit jeweiliger Hardwareadresse und zuzuweisender IP hinzufügen
+  - in /etc/linuxmuster: **import_workstations** laufen lassen
+  - Wenn man den Drucker anschließend mit einer gepatchten Dose verbindet, sollte er die neue IP bekommen, wenn man ihn neu einschält.
+
+===== Installation in  Cups =====
+
+<note important>Browserproblem: Geht nicht mit dem firefox, man muss hierfür den IE7 verwenden!</note>
+
+  - Zum CUPS Web-Interface surfen: https://albert.aeg-reutlingen.de:631
+  - "Drucker hinzufügen"
+  - Gerät: "AppSocket HP JetDirect"
+  - URI eingeben: %%socket://<IP-Adresse>%%
+
+===== Einrichten als Standarddrucker für die NwT-Laptops und -Rechner  =====

@@ -1,0 +1,14 @@
+{{tag> redaktion hilfe}}
+
+====== Leitlinien für Redakteure ======
+
+===== Die goldene Regel =====
+
+<note tip>**Es sollten möglichst viele Inhalte und Informationen  als DokuWiki Text eingefügt werden** und möglichst wenige Dateien in das Wiki hochgeladen werden.</note>
+
+  * Nur Informationen in DokuWiki Texten werden von der Suche und der Verschlagwortung erfasst
+  * Nur Änderungen an DokuWiki Texten werden in der Änderungsgeschichte angezeigt.
+  * Nur für DokuWiki Texte greift die Versionskontrolle. Dateien müssen bei jeder Aktualisierung heruntergeladen - verändert  - hochgeladen werden. Die Änderungen sind nicht nachvollziehbar.
+  * Nur DokuWiki Texte können mit geringem Aufwand aktuell gehalten werden.
+
+Will man Informationen - beispielsweise zum ausdrucken - anders formatieren, kann man die Texte jederzeit als Openoffice Dokument herunterladen, formatieren wie gewünscht und anschließend ausdrucken.

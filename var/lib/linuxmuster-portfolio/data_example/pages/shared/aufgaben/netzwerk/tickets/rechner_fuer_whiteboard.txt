@@ -1,0 +1,9 @@
+<- [[:shared:aufgaben:netzwerk:start]]
+
+====== Rechner für Whiteboard ======
+
+~~TASK:Frank Schiebel?~~
+
+Todo:
+
+  * Bluetooth Tastatur (Batterien!)
