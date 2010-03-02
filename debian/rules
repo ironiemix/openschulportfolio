@@ -23,7 +23,8 @@ configure: configure-stamp
 configure-stamp:
 	dh_testdir
 	# Add here commands to configure the package.
-
+	pwd
+	patch usr/share/linuxmuster-portfolio/inc/auth/ldap.class.php debian/linuxmuster.ldap.patch
 	touch configure-stamp
 
 
@@ -53,7 +54,6 @@ clean1:
 	dh_testdir
 	dh_testroot
 	rm -f build-indep-stamp build-arch-stamp configure-stamp
-
 	# Add here commands to clean up after the build process.
 	#-$(MAKE) clean
 
@@ -101,7 +101,6 @@ binary-indep: build install
 
 # Build architecture-dependent files here.
 binary-arch: build install
-	ls -lah
 	dh_testdir
 	dh_testroot
 	dh_installdirs
