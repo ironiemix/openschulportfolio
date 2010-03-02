@@ -99,7 +99,7 @@ if (file_exists(DOKU_PLUGIN.'displaywikipage/code.php')) include_once(DOKU_PLUGI
           <li><?php tpl_actionlink('recent')?></li>
         </ul>
        <?php if (function_exists('dwp_display_wiki_page')): ?>
-       <?php dwp_display_wiki_page("shared:sidebar"); ?>
+       <?php dwp_display_wiki_page("allusers:sidebar"); ?>
        <?php else: ?>
        <?php include(dirname(__FILE__) .  '/sidebar.php'); ?>
        <?php endif; ?>
@@ -140,7 +140,7 @@ if (file_exists(DOKU_PLUGIN.'displaywikipage/code.php')) include_once(DOKU_PLUGI
       </div>
       <div class="box">
        <?php if (function_exists('dwp_display_wiki_page')): ?>
-       <?php dwp_display_wiki_page("shared:clouds"); ?>
+       <?php dwp_display_wiki_page("allusers:clouds"); ?>
        <?php else: ?>
        <?php include(dirname(__FILE__) .  '/clouds.php'); ?>
        <?php endif; ?>
