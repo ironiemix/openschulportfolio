@@ -1,3 +1,10 @@
+linuxmuster-portfolio (0.2.2-0) openlml; urgency=low
+   
+   * fixed missing start.txt
+   * reload apache postinst
+
+ -- Frank Schiebel <frank@linuxmuster.net>  Thu, 02 Mar 2010 21:20:00 +0100
+
 linuxmuster-portfolio (0.2.1-0) openlml; urgency=low
    
    * first beta release

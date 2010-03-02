@@ -1,0 +1,7 @@
+====== Willkommen zu ihrem neuen Schulportfolio ======
+
+Das Programmpaket ''linuxmuster-portfolio'' stellt eine technische Umsetzung des im Rahmen der Schulentwicklung verlangten Schulportfolios dar. Auf der Linux-Musterlösung des Landesmedienzentrums ("padedML-Linux") lässt sich das System ohne weitergehende Konfiguration in Betrieb nehmen.
+
+  * {{:portfolio:qe6_schulportfolio.pdf|Die Handreichung zum Schulportfolio finden Sie hier}}
+  * [[hilfe:warum_als_wiki|Warum als Wiki?]] Eine kurze Überlegung, warum man das Portfolio auf diese Weise führen kann.
+  * [[hilfe:editorhelp|Hilfe für Redakteure]] und [[hilfe:start|Benutzer]] des Systems.
