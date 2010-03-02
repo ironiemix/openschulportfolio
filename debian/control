@@ -1,0 +1,14 @@
+Source: linuxmuster-portfolio
+Section: debian-linuxmuster
+Priority: optional
+Maintainer: Frank Schiebel <frank@linuxmuster.net>
+Build-Depends: debhelper (>= 4.0.0)
+Standards-Version: 3.6.0
+
+Package: linuxmuster-portfolio
+Section: unknown
+Priority: optional
+Architecture: i386
+Depends: apache2 
+Description: linuxmuster-portfolio privides a customized dokuwiki (http://www.dokuwiki.org) environment for use in school administration.
+
