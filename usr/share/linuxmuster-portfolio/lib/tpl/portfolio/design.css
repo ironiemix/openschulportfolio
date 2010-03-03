@@ -28,12 +28,12 @@
 */
 #ach__template input, #ach__template textarea, #ach__template select, #ach__template button, #ach__content input, #ach__content textarea, #ach__content select, #ach__content button {
     border: 1px solid #ccc;
-    background-color: #efefef;
     color: __text__;
     vertical-align: middle;
-    font-size: 0.7em;
+    Font-size: 0.7em;
 }
 #ach__template input.button, #ach__template button, #ach__content input.button, #ach__content button {
+    background: #fff url("images/buttonshadow.png") repeat-x bottom left;
     cursor: pointer;
     position: relative;
 }
@@ -127,29 +127,29 @@ form, fieldset, legend, label, input, select, textarea {position: relative;}
 
 /* headlines */
 #ach__content h1 {
-    font-family: Georgia, Times, serif, sans-serif;
+    font-family: "Trebuchet MS", Helvetica, Arial, sans-serif;
     font-size: 1.6em;
     font-weight: bold;
     border-bottom: 1px solid __border_neu__;
 }
 #ach__content h2 {
-    font-family: Georgia, Times, serif, sans-serif;
+    font-family: "Trebuchet MS", Helvetica, Arial, sans-serif;
     font-size: 1.3em;
     font-weight: bold;
     border-bottom: 1px solid __border_neu__;
 }
 #ach__content h3 {
-    font-family: Georgia, Times, serif, sans-serif;
+    font-family: "Trebuchet MS", Helvetica, Arial, sans-serif;
     font-size: 1.15em;
     font-weight: bold;
 }
 #ach__content h4 {
-    font-family: Georgia, Times, serif, sans-serif;
+    font-family: "Trebuchet MS", Helvetica, Arial, sans-serif;
     font-size: 1.0em;
     font-weight: bold;
 }
 #ach__content h5 {
-    font-family: Georgia, Times, serif, sans-serif;
+    font-family: "Trebuchet MS", Helvetica, Arial, sans-serif;
     font-size: 0.8em;
     font-weight: bold;
 }
@@ -184,6 +184,15 @@ form, fieldset, legend, label, input, select, textarea {position: relative;}
     display: block;
     font-size: 80%;
 }
+#ach__siteactions div.secedit2 a {
+    margin: -0.6em 0 0 0;
+    padding: 0.1em 0.3em;
+    float:right;
+    display: block;
+    font-size: 80%;
+    color: black;
+    }
+
 /* ======= edit ======= */
 #ach__content #draft__status {
     font-size: 0.8em;
@@ -366,4 +375,33 @@ div#link__wiz_header {
     color: __text_alt__;
     font-weight: bold;
     text-align: left;
+}
+/* ---------------  Image Details  ----------------- */
+
+div#pf_imgdetail {
+   width: 900px;
+   margin: 0 auto;
+}
+div.dokuwiki div.img_big {
+  float: left;
+  margin-right: 0.5em;
+}
+
+div.dokuwiki dl.img_tags dt {
+  font-weight: bold;
+  background-color: __background_alt__;
+}
+div.dokuwiki dl.img_tags dd {
+  background-color: __background_neu__;
+}
+
+div.dokuwiki div.imagemeta {
+  color: __text_neu__;
+  font-size: 70%;
+  line-height: 95%;
+}
+
+div.dokuwiki div.imagemeta img.thumb {
+  float: left;
+  margin-right: 0.1em;
 }

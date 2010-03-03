@@ -1,5 +1,3 @@
-----
-
 ** Hauptmenü **
 
   * [[..start|Start]]

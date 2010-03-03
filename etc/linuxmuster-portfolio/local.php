@@ -9,6 +9,7 @@
 $conf['savedir'] = '/home/linuxmuster-portfolio/data/';
 
 $conf['title'] = 'Schulportfolio';
+$conf['schoolname'] = 'Schulname';
 $conf['lang'] = 'de';
 $conf['template'] = 'portfolio';
 $conf['license'] = '';

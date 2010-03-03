@@ -39,10 +39,13 @@ if (file_exists(DOKU_PLUGIN.'displaywikipage/code.php')) include_once(DOKU_PLUGI
 <div id="ach__template" class="dokuwiki">
   <?php html_msgarea()?><!-- error messages, etc. -->
   <div id="ach__header">
- 
-    <h1><?php tpl_link(wl(),$conf['title'],'name="dokuwiki__top" id="dokuwiki__top" accesskey="h" title="[ALT+H]"')?></h1>
+   <div id="pf_header">
+     <div id="pf_nameblock"> 
+      <h1><?php tpl_link(wl(),$conf['title'],'name="dokuwiki__top" id="dokuwiki__top" accesskey="h" title="[ALT+H]"')?></h1>
+      <p><?php tpl_link(wl(),$conf['schoolname'],'name="Schulname"')?></p>
+      </div>
     <h2>[[<?php echo $ID?>]]</h2>
-
+   </div>  
     <?php if($conf['breadcrumbs']){?>
       <p class="trace"><?php tpl_breadcrumbs()?></p>
     <?php }?>
@@ -53,8 +56,6 @@ if (file_exists(DOKU_PLUGIN.'displaywikipage/code.php')) include_once(DOKU_PLUGI
   <hr class="invisible" />
 
   <div id="ach__mainbox">
-
-
     <div id="ach__pageactions">
       <?php tpl_button('edit')?>
       <?php
@@ -90,11 +91,11 @@ if (file_exists(DOKU_PLUGIN.'displaywikipage/code.php')) include_once(DOKU_PLUGI
     
 
     <div id="ach__siteactions">
-      <div class="box">
+      <div class="box" id="pf_searchbox">
         <?php tpl_searchform()?>
       </div>
        
-      <div class="box">
+      <div class="box" id="pf_sidebar">
         <ul>
           <li><?php tpl_actionlink('recent')?></li>
         </ul>
@@ -106,7 +107,7 @@ if (file_exists(DOKU_PLUGIN.'displaywikipage/code.php')) include_once(DOKU_PLUGI
       
       </div>
       <?php if($conf['useacl']){?>
-      <div class="box">
+      <div class="box" id="pf_userinfo">
       <?php if($_SERVER['REMOTE_USER']){
          ob_start();
          tpl_actionlink('profile');
@@ -138,7 +139,7 @@ if (file_exists(DOKU_PLUGIN.'displaywikipage/code.php')) include_once(DOKU_PLUGI
           <p><em><?php tpl_userinfo()?></em></p>
         <?php }?>
       </div>
-      <div class="box">
+      <div class="box" id="pf_clouds">
        <?php if (function_exists('dwp_display_wiki_page')): ?>
        <?php dwp_display_wiki_page("allusers:clouds"); ?>
        <?php else: ?>
