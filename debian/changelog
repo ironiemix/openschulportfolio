@@ -1,6 +1,7 @@
-linuxmuster-portfolio (0.2.2-2) openlml; urgency=low
+linuxmuster-portfolio (0.2.3-1) openlml; urgency=low
      
     * Reorganized example and help mpages once again
+    * Fixed postinst script to install help pages
     * Added Tango Icons as a base iconset
 
  -- Frank Schiebel <frank@linuxmuster.net>  Sat, 06 Mar 2010 14:14:00 +0100

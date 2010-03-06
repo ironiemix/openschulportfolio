@@ -2,11 +2,17 @@
 
 DATADIR="/home/linuxmuster-portfolio/data/"
 EXAMPLES="/var/lib/linuxmuster-portfolio/data/"
+HELP="/var/lib/linuxmuster-portfolio/help/"
 
 
+# Only install examples on fresh install
 if [ ! -f $DATADIR/DELETEME_FOR_FRESH_EXAMPLES ]; then
    echo "Copying example data..."
    cp -r $EXAMPLES/*  $DATADIR/
+   echo "   done."
+
+   echo "Copying help pages..."
+   cp -r $HELP/*  $DATADIR/
    echo "   done."
 fi
 
