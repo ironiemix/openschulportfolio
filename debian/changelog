@@ -1,7 +1,14 @@
 linuxmuster-portfolio (0.2.2-2) openlml; urgency=low
+     
+    * Reorganized example and help mpages once again
+    * Added Tango Icons as a base iconset
+
+ -- Frank Schiebel <frank@linuxmuster.net>  Sat, 06 Mar 2010 14:14:00 +0100
+
+linuxmuster-portfolio (0.2.2-2) openlml; urgency=low
    
    * improved design (icons, mediadetails, adminpages)
-   * moved help pages out of example_data to provide prober update mechanism
+   * moved help pages out of example_data to provide proper update mechanism
      later on
 
  -- Frank Schiebel <frank@linuxmuster.net>  Wed, 03 Mar 2010 23:14:00 +0100
