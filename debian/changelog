@@ -1,11 +1,20 @@
+linuxmuster-portfolio (0.9.0-0) openlml; urgency=low
+     
+    * Added main menu in header area, always visible from every page
+    * Completed help for portfolio users
+    * Reworked start pages in portfolio structure
+    * Linked style.ini to /etc/linuxmuster-portfolio
+    * Linked header pics to /etc/linuxmuster-portfolio/images
+
+ -- Frank Schiebel <frank@linuxmuster.net>  Sun, 07 Mar 2010 19:30:00 +0100
+
 linuxmuster-portfolio (0.2.3-2) openlml; urgency=low
      
-    * Reorganized example and help mpages once again
+    * Reorganized example and help pages once again
     * Fixed postinst script to install help pages
     * Added Tango Icons as a base iconset
     * Added the linuxmsuter-portfolio-setup command for resetting the
       portfolio
-    * Linked style.ini to /etc/linuxmuster-portfolio
 
  -- Frank Schiebel <frank@linuxmuster.net>  Sun, 07 Mar 2010 14:14:00 +0100
 
