@@ -6,7 +6,7 @@ HELP="/var/lib/linuxmuster-portfolio/help/"
 
 
 # Only install examples on fresh install
-if [ ! -f $DATADIR/DELETEME_FOR_FRESH_EXAMPLES ]; then
+if [ ! -f $DATADIR/pages/start.txt ]; then
    echo "Copying example data..."
    cp -r $EXAMPLES/*  $DATADIR/
    echo "   done."
