@@ -10,21 +10,23 @@ des Landesinstituts für Schulentwicklung.]]
 
 Informationen zum Paket selbst finden Sie auf der Seite
 [[http://www.linuxmuster.net/trac/wiki/linuxmuster-portfolio|www.linuxmuster.net]]
+Bevor Sie das System benutzen können, müsseb Sie in der Schulkonsole Projektgruppen 
+einrichten, die den Zugriff auf das Portfolio regeln. Details hierzu finden Sie in der 
+[[http://www.linuxmuster.net/trac/wiki/portfolio_install |Installationsanleitung]].
 
-<note tip>
 Das //linuxmuster-portfolio// ist vollständig mit **quelloffener
 Software** umgesetzt. Basis des Systems ist die Wiki-Software
 [[http://www.dokuwiki.org| DokuWiki]]. DokuWiki und alle verwendeten
 Erweiterungen stehen unter der GNU-Public-License.  
-</note>
 
-<note important>
+<note tip>
 //linuxmuster-portfolio// ist kostenlos  -- es war jedoch
-einige Zeit ntig, um aus der Loesung fur udie schule an der ich tatig bin  ein
-einfach zu installierendes und zu verwaltendes System zu bauen.
+einige Zeit nötig, um aus der speziellen Lösung für die Schule, 
+an der ich tatig bin, ein einfach zu installierendes und zu 
+verwaltendes System zu bauen.
 
-  * Ich freue mich sehr uber Ruckmeldungen aller Art -- wenn Sie das Portfolio benutzen, [[mailto:frank@linuxmuster.net|schreiben Sie mir]].
-  * Zur Zersteuung lese ich sehr gerne -- wenn Sie mochten konnen sie darum auch  gerne mal auf meiner [[http://www.ua25.de/wunschliste.html|Amazon Wunschliste]] vorbeischauen
+  * Ich freue mich sehr über Rückmeldungen aller Art -- wenn Sie das Portfolio benutzen, schreiben Sie mir eine kurze [[mailto:frank@linuxmuster.net|Mail]].
+  * Wenn ich keine Portfolio-Pakete schnüre, lese ich sehr gerne -- wenn Sie möchten konnen sie also auch gerne mal auf meiner [[http://www.ua25.de/wunschliste.html|Amazon Wunschliste]] vorbeischauen...
  --- //[[mailto:frank@linuxmuster.net|Frank Schiebel]] // 
 </note>
 
