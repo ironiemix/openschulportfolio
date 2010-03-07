@@ -1,7 +1,35 @@
 ====== Willkommen zu ihrem neuen Schulportfolio ======
 
-Das Programmpaket ''linuxmuster-portfolio'' stellt eine technische Umsetzung des im Rahmen der Schulentwicklung verlangten Schulportfolios dar. Auf der Linux-Musterlösung des Landesmedienzentrums ("padedML-Linux") lässt sich das System ohne weitergehende Konfiguration in Betrieb nehmen.
+
+Das vorliegende Programmpaket //linuxmuster-portfolio// stellt eine technische
+Umsetzung zur Erstellung und Pflege des **Schulportfolios** innerhalb der
+Linux-Musterlösung bereit. Weitere Informationen zum Schulportfolio in Baden
+Württemberg erhalten Sie auf
+[[http://www.schule-bw.de/entwicklung/qualieval/qualiabs/einstqe/|den Seiten
+des Landesinstituts für Schulentwicklung.]]
+
+Informationen zum Paket selbst finden Sie auf der Seite
+[[http://www.linuxmuster.net/trac/wiki/linuxmuster-portfolio|www.linuxmuster.net]]
+
+<note tip>
+Das //linuxmuster-portfolio// ist vollständig mit **quelloffener
+Software** umgesetzt. Basis des Systems ist die Wiki-Software
+[[http://www.dokuwiki.org| DokuWiki]]. DokuWiki und alle verwendeten
+Erweiterungen stehen unter der GNU-Public-License.  
+</note>
+
+<note important>
+//linuxmuster-portfolio// ist kostenlos  -- es war jedoch
+einige Zeit ntig, um aus der Loesung fur udie schule an der ich tatig bin  ein
+einfach zu installierendes und zu verwaltendes System zu bauen.
+
+  * Ich freue mich sehr uber Ruckmeldungen aller Art -- wenn Sie das Portfolio benutzen, [[mailto:frank@linuxmuster.net|schreiben Sie mir]].
+  * Zur Zersteuung lese ich sehr gerne -- wenn Sie mochten konnen sie darum auch  gerne mal auf meiner [[http://www.ua25.de/wunschliste.html|Amazon Wunschliste]] vorbeischauen
+ --- //[[mailto:frank@linuxmuster.net|Frank Schiebel]] // 
+</note>
+
+===== Startpunkte im Portfolio =====
 
   * {{:portfolio:qe6_schulportfolio.pdf|Die Handreichung zum Schulportfolio finden Sie hier}}
-  * [[hilfe:warum_als_wiki|Warum als Wiki?]] Eine kurze Überlegung, warum man das Portfolio auf diese Weise führen kann.
+  * [[hilfe:warum_als_wiki|Warum als Wiki?]] Eine kurze Überlegung, warum man das Portfolio auf diese Weise führen kann (und soll).
   * [[hilfe:editorhelp|Hilfe für Redakteure]] und [[hilfe:start|Benutzer]] des Systems.
