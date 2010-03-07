@@ -1,0 +1,16 @@
+====== Über linuxmuster-portfolio ======
+
+Um dieses Portfoliosystem zu erstellen, habe ich die Arbeit vieler Personen genutzt, zusammengeführt, angepasst und/oder modifiziert. Viele der verwendeten Komponenten basieren wiederum auf freier, quelloffener Software - die folgende Auflistung muss also unvollständig bleiben, besonderer Dank gilt jedoch:
+
+  * //Andreas Gohr//, der [[http://www.splitbrain.org/projects/dokuwiki|Autor der Software DokuWiki]], die als Basis dieses Systems dient.
+  * //Anika Henke//, auf deren Vorlage ''ACH'' das Design des Portfolios basiert.
+  * //Gina Häußge//, welche die Plugins ''filelist'' und ''blockquote''  programmiert hat - bei denen ich sehr viel für eigene Erweiterungen abschauen konnte.
+  * Alle anderen Autoren der zahlreichen Dokuwiki-Plugins, die bei diesem Paket zum Einsatz kommen.
+
+Vom [[http://tango.freedesktop.org/Tango_Desktop_Project|Tango Desktop Icon Project]] habe ich die im Paket mitgelieferten Icons abgestaubt, das Beamer-Icon kommt von der Seite der [[http://www.netsys-it.de/content/view/196/75/|Firma Net-sys.it]]
+
+Ich hoffe, die Software erleichtert Ihnen Ihre tägliche Arbeit.
+
+ --- //[[mailto:frank@linuxmuster.net|Frank Schiebel]] 07.03.2010//
+
+
