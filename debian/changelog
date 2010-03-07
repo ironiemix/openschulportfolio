@@ -5,6 +5,7 @@ linuxmuster-portfolio (0.9.0-0) openlml; urgency=low
     * Reworked start pages in portfolio structure
     * Linked style.ini to /etc/linuxmuster-portfolio
     * Linked header pics to /etc/linuxmuster-portfolio/images
+    * Fixed some minor bugs
 
  -- Frank Schiebel <frank@linuxmuster.net>  Sun, 07 Mar 2010 19:30:00 +0100
 
