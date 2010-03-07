@@ -3,9 +3,8 @@
 ====== Inhalt ======
 
 
-
-  * [[portfolio:sonstiges:offizielle_anlaesse]]
-  * [[portfolio:sonstiges:feste_und_feiern]]
-  * [[portfolio:sonstiges:lerngaenge]]
-  * [[portfolio:sonstiges:praktika]]
+  * [[portfolio:sonstiges|Offizielle Anlässe]]
+  * [[portfolio:sonstiges|Feste und Feiern]]
+  * [[portfolio:sonstiges|Lerngänge]]
+  * [[portfolio:sonstiges|Praktika]]
   

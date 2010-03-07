@@ -41,10 +41,19 @@ if (file_exists(DOKU_PLUGIN.'displaywikipage/code.php')) include_once(DOKU_PLUGI
   <div id="ach__header">
    <div id="pf_header">
      <div id="pf_nameblock"> 
+      <div id="pf_logo">
       <h1><?php tpl_link(wl(),$conf['title'],'name="dokuwiki__top" id="dokuwiki__top" accesskey="h" title="[ALT+H]"')?></h1>
       <p><?php tpl_link(wl(),$conf['schoolname'],'name="Schulname"')?></p>
       </div>
-    <h2>[[<?php echo $ID?>]]</h2>
+      </div>
+        <h2>[[<?php echo $ID?>]]</h2>
+      <div id="pf_topmenu">
+        <?php if (function_exists('dwp_display_wiki_page')): ?>
+        <?php dwp_display_wiki_page("allusers:topmenu"); ?>
+        <?php else: ?>
+        <?php include(dirname(__FILE__) .  '/sidebar.php'); ?>
+        <?php endif; ?>
+      </div>
    </div>  
     <?php if($conf['breadcrumbs']){?>
       <p class="trace"><?php tpl_breadcrumbs()?></p>

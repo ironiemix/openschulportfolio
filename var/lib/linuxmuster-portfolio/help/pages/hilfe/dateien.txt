@@ -60,4 +60,4 @@ Für jedes Verzeichnis wir der Inhalt einer dort vorhandenen Datei mit dem Namen
 
 ==== So sieht das dann aus: ====
 
-{{filelist>:pruefungen:dva:2006:*&style=page&recursive=1}}
+{{filelist>:hilfe:*&style=page&recursive=1}}

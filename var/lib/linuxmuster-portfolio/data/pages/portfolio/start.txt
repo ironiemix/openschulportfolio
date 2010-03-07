@@ -1,12 +1,9 @@
 ====== Inhaltsübersicht: Schulportfolio ======
 
-
 <note warning>
 Ab hier findet sich die vorgeschlagene Gliederung aus der Handreichung für das Schulportfolio.
 
 **Achtung:** Das ist der in der Handreichung angegebene Maximalumfang, viele der angegebenen Bereiche// können// beschrieben werden,// müssen// aber nicht.
-
-{{:portfolio:qe6_schulportfolio.pdf|Die Handreichung findet sich hier}}
 </note>
 
 ======  1 Schulbeschreibung ======

@@ -2,12 +2,10 @@
 
 ====== Inhalt ======
 
-
-
   * [[portfolio:ergebnisse:dva|Diagnose- und Vergleichsarbeiten sind auf Ebene der Klassenstufe (Fach/ Fächerverbund mit Klassendurchschnitt) zu berücksichtigen]]
   * [[portfolio:ergebnisse:weiterfuehrende_schulen|Übergänge in weiterführende Schulen / Regelschulen (für GS und Sonderschulen)]]
-  * [[portfolio:ergebnisse:uebergaenge_andere_schularten]]
-  * [[portfolio:ergebnisse:erfolgreiche_abschlusspruefungen]]
-  * [[portfolio:ergebnisse:schuelabbrecherzahl]]
-  * [[portfolio:ergebnisse:klassenwiederholungen]]
-  * [[portfolio:ergebnisse:versetzungen_auf_probe]]
+  * [[portfolio:ergebnisse:uebergaenge_andere_schularten|Übergänge an andere Schularten]]
+  * [[portfolio:ergebnisse:erfolgreiche_abschlusspruefungen|Erfolgreiche Abschlußprüfungen]]
+  * [[portfolio:ergebnisse:schuelabbrecherzahl|Schulabbrecherzahl]]
+  * [[portfolio:ergebnisse:klassenwiederholungen|Klassenwiederholungen]]
+  * [[portfolio:ergebnisse:versetzungen_auf_probe|Versetzungen auf Probe]]

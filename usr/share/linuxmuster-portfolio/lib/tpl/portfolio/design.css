@@ -38,16 +38,6 @@
     position: relative;
 }
 
-#ach__header h2 {
-	float: right;
-	text-align: right;
-    font-weight: bold;
-    font-size: 1em;
-    width: 50%;
-    margin-top: 6px;
-
-}
-
 input#qsearch__in {
     background-color: #fff9ee;
 ^    font-size: 1em;
@@ -184,7 +174,7 @@ form, fieldset, legend, label, input, select, textarea {position: relative;}
     display: block;
     font-size: 80%;
 }
-#ach__siteactions div.secedit2 a {
+#ach__siteactions div.secedit2 a, div#pf_topmenu div.secedit2 a {
     margin: -0.6em 0 0 0;
     padding: 0.1em 0.3em;
     float:right;
@@ -192,6 +182,10 @@ form, fieldset, legend, label, input, select, textarea {position: relative;}
     font-size: 80%;
     color: black;
     }
+
+div#pf_topmenu div.secedit2 a {
+  padding: 40px 0 0 0;
+}
 
 /* ======= edit ======= */
 #ach__content #draft__status {
