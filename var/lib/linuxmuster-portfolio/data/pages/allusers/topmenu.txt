@@ -1,0 +1,2 @@
+  * [[aktuelles:termine |{{:shared:icons:office-calendar-40x40.png|Termine}}]]
+  * [[portfolio:start|{{:shared:icons:portfolio-40x40.png|Portfolio}}]]
