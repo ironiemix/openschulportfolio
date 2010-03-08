@@ -18,8 +18,11 @@ fi
 
 # link to local plugins
 for PLUGIN in /etc/linuxmuster-portfolio/plugins/*; do 
-  cd /usr/share/linuxmuster-portfolio/lib/plugins 
-  ln -s $PLUGIN 
+  if [ -d $PLUGIN ]; then
+    echo "Found local plugin $PLUGIN"
+    cd /usr/share/linuxmuster-portfolio/lib/plugins 
+    ln -s $PLUGIN 
+  fi
 done
 
 # Permissions of data dir: must be writable for www-data
