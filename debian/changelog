@@ -1,3 +1,14 @@
+linuxmuster-portfolio (0.9.1-0) openlml; urgency=low
+ 
+    * user.css in etc
+    * added alternative portfolio-icon portfolio2
+    * script in /usr/sbin/ to reset data in installation and provide
+      possipility to reinstall halp pages and icons
+    * users can install their own plugins in 
+      /etc/linuxmuster-portfolio/plugins 
+ 
+ -- Frank Schiebel <frank@linuxmuster.net>  Mon, 08 Mar 2010 14:30:00 +0100
+
 linuxmuster-portfolio (0.9.0-0) openlml; urgency=low
      
     * Added main menu in header area, always visible from every page

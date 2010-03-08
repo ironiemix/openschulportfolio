@@ -1,0 +1,139 @@
+#!/bin/bash
+
+#
+# This script provides the ability to reinstall
+# prdefined pages and/or help pages in the 
+# linuxmsuter-portfolio wiki
+#
+# @author Frank Schiebel <frank@linuxmuster.net>
+#
+# GPLv2
+#
+
+TARGET="/home/linuxmuster-portfolio/data"
+
+
+if (( x$1== "xh"  ||  x$1=="x" )); then 
+echo "Usage: "
+echo " linuxmuster-portfolio-data <icons|pages|help|all|reset>"
+echo 
+echo "This command installs the originally delivered package-data."
+echo 
+echo " icons:   Installs all icons delivered."
+echo " pages:   Installs page structure and predefined start-pages."
+echo " help:    Installs help pages delivered with the package."
+echo " all:     Installs help pages delivered with the package."
+echo
+echo "Files included with linuxmuster-portfolio will be overwritten,"
+echo "user portfolio data will not be deleted."
+echo
+echo " delete:  Installs help pages delivered with the package."
+echo " reset:   Installs help pages delivered with the package."
+echo
+echo "All portfolio data will be erased!"
+echo 
+fi
+
+function install_icons {
+  if [ -d /var/lib/linuxmuster-portfolio/data/media/shared/icons/ ]; then
+   echo "Copying icons..."
+   cp -r /var/lib/linuxmuster-portfolio/data/media/shared/icons/ $TARGET/media/shared/
+   echo " done..."
+  fi
+}
+
+function install_pages {
+  if [ -d /var/lib/linuxmuster-portfolio/data/pages ]; then
+   echo "Copying pagetree..."
+   cp -r /var/lib/linuxmuster-portfolio/data/pages $TARGET/
+   echo " done..."
+  fi
+}
+
+function install_help {
+  if [ -d /var/lib/linuxmuster-portfolio/help/ ]; then
+   echo "Copying help pages..."
+   cp -r /var/lib/linuxmuster-portfolio/help/* $TARGET/
+   echo " done..."
+  fi
+}
+
+
+function delete_all {
+   echo "Delete all wiki pages..."
+   rm -rf  $TARGET
+   mkdir $TARGET
+   chown www-data: $TARGET
+   echo " done..."
+}
+
+case "$1" in
+    icons)
+       echo "Do you want to install the packaged icon-set over"
+       echo "the icons in your data directory shared/icons?"
+       echo "Icons with the same name as delivered icons"
+       echo "will be overwritten withot prompting!"
+       read -p "Continue (y/n) ?" YN
+       if [ "$YN" == "y" ] ; then 
+         install_icons
+         exit 0
+       fi
+       exit 1 
+       ;;
+    pages)
+       echo "Do you want to install the packaged page-structure"
+       echo "over the pages in your data directory?"
+       echo "Pages with the same name as delivered pages"
+       echo "will be overwritten without prompting!"
+       read -p "Continue (y/n) ?" YN
+       if [ "$YN" == "y" ] ; then 
+         install_pages
+         exit 0
+       fi
+       exit 1 
+       ;;
+    help)
+       echo "Do you want to install the packaged help-pages"
+       echo "over the help-pages in your data directory?"
+       echo "Pages with the same name as delivered pages"
+       echo "will be overwritten without prompting!"
+       read -p "Continue (y/n) ?" YN
+       if [ "$YN" == "y" ] ; then 
+         install_help
+         exit 0
+       fi
+       exit 1 
+       ;;
+    all)
+       echo "Do you want to install all the packaged pages"
+       echo "over the pages in your data directory?"
+       echo "Pages with the same name as delivered pages"
+       echo "will be overwritten without prompting!"
+       read -p "Continue (y/n) ?" YN
+       if [ "$YN" == "y" ] ; then 
+         install_icons
+         install_pages
+         install_help
+         exit 0
+       fi
+       exit 1 
+       ;;
+    reset)
+       echo "Do you want to reset your portfolio?"
+       echo "Do you want to install all the packaged pages"
+       echo "over the pages in your data directory?"
+       echo "All your pages will be DELETED"
+       read -p "Continue (y/n) ?" YN
+       if [ "$YN" == "y" ] ; then 
+         delete_all
+         install_icons
+         install_pages
+         install_help
+         exit 0
+       fi
+       exit 1 
+       ;;
+esac
+
+exit 0
+

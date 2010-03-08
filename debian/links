@@ -1,5 +1,6 @@
 etc/linuxmuster-portfolio/apache2.conf /etc/apache2/conf.d/linuxmuster-portfolio.conf 
 etc/linuxmuster-portfolio/style.ini /usr/share/linuxmuster-portfolio/lib/tpl/portfolio/style.ini 
+etc/linuxmuster-portfolio/user.css /usr/share/linuxmuster-portfolio/lib/tpl/portfolio/user.css 
 etc/linuxmuster-portfolio/images/body_back.jpg /usr/share/linuxmuster-portfolio/lib/tpl/portfolio/images/body_back.jpg
 etc/linuxmuster-portfolio/images/header_back.png /usr/share/linuxmuster-portfolio/lib/tpl/portfolio/images/header_back.png
 etc/linuxmuster-portfolio/images/header_logo.png /usr/share/linuxmuster-portfolio/lib/tpl/portfolio/images/header_logo.png

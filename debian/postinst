@@ -16,6 +16,12 @@ if [ ! -f $DATADIR/pages/start.txt ]; then
    echo "   done."
 fi
 
+# link to local plugins
+for PLUGIN in /etc/linuxmuster-portfolio/plugins/*; do 
+  cd /usr/share/linuxmuster-portfolio/lib/plugins 
+  ln -s $PLUGIN 
+done
+
 # Permissions of data dir: must be writable for www-data
 if [ -d /home/linuxmuster-portfolio/data ]; then
     chown -R www-data: /home/linuxmuster-portfolio/data 
@@ -35,6 +41,7 @@ basedn=`grep basedn $NETWORKSETTINGS | sed "s/^.*\"\(.*\)\".*$/\1/"`
 
 sed -i'' -e"s/\(ou=accounts,\).*;/\1 $basedn\';/" /etc/linuxmuster-portfolio/local.php
 sed -i'' -e"s/\(ou=groups,\).*;/\1 $basedn\';/" /etc/linuxmuster-portfolio/local.php
+
 
 if [ -x /etc/init.d/apache2 ]; then
 /etc/init.d/apache2 reload
