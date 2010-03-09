@@ -6,6 +6,7 @@ Um dieses Portfoliosystem zu erstellen, habe ich die Arbeit vieler Personen genu
   * //Andreas Gohr//, der [[http://www.splitbrain.org/projects/dokuwiki|Autor der Software DokuWiki]], die als Basis dieses Systems dient.
   * //Anika Henke//, auf deren Vorlage ''ACH'' das Design des Portfolios basiert.
   * //Gina Häußge//, welche die Plugins ''filelist'' und ''blockquote''  programmiert hat - bei denen ich sehr viel für eigene Erweiterungen abschauen konnte.
+  * //Jörg Richter// und //Jesko Anschütz//, die die passende LDAP Konfiguration für die Musterlösung ausgetüftelt haben.  
   * Alle anderen Autoren der zahlreichen Dokuwiki-Plugins, die bei diesem Paket zum Einsatz kommen: //Michael Klier, Esther Brunner, Mykola Ostrovskyy, Christopher Smith, Terence J. Grant, Luigi Micco, Robert Rackl, Samuele Tognini, Olivier Cortès , Eric Hameleers, Aurélien Bompard,  Gary Owen, Klaus Vormweg// und //Ikuo Obataya//.
 
 Vom [[http://tango.freedesktop.org/Tango_Desktop_Project|Tango Desktop Icon Project]] habe ich die im Paket mitgelieferten Icons abgestaubt, das Beamer-Icon kommt von der Seite der [[http://www.netsys-it.de/content/view/196/75/|Firma Net-sys.it]]

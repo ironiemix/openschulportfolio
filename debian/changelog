@@ -1,4 +1,4 @@
-linuxmuster-portfolio (0.9.9-0) openlml; urgency=low
+linuxmuster-portfolio (0.9.9-1) openlml; urgency=low
 
    * Added sisy-Logo an Version Information to sidebar
    * Fixed some issues in linuxmuster-portfolio-data
