@@ -407,8 +407,10 @@ div#pf_logosmall a.logopic {
    height: 66px;
    margin: 0 auto;
 }
-div#pf_logosmall a {
+div#pf_logosmall p {
   text-align: center;
+}
+div#pf_logosmall a {
   color: #ccc;
   font-size: 70%;
 }
