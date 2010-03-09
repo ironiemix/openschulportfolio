@@ -156,6 +156,10 @@ if (file_exists(DOKU_PLUGIN.'displaywikipage/code.php')) include_once(DOKU_PLUGI
        <?php endif; ?>
       </div>
       <?php }?>
+      <div id="pf_logosmall">
+        <a href="http://www.linuxmuster.net/trac/wiki/linuxmuster-portfolio"></a>
+        <p>Version 0.9.</p>
+      </div>
     </div><!-- /ach__siteactions -->
     <hr class="invisible" />
 
