@@ -46,7 +46,7 @@ sed -i'' -e"s/\(ou=accounts,\).*;/\1 $basedn\';/" /etc/linuxmuster-portfolio/loc
 sed -i'' -e"s/\(ou=groups,\).*;/\1 $basedn\';/" /etc/linuxmuster-portfolio/local.php
 
 VERSION=`dpkg -p linuxmuster-portfolio | grep Version`
-sed -i "s/\#\#\#PAKETINFO\#\#\#/linuxmuster-portfolio(${VERSION})/" /usr/share/linuxmuster-portfolio/lib/tpl/portfolio/main.php 
+sed -i "s/\#\#\#PAKETINFO\#\#\#/linuxmuster-portfolio<br\/>(${VERSION})/" /usr/share/linuxmuster-portfolio/lib/tpl/portfolio/main.php 
 
 if [ -x /etc/init.d/apache2 ]; then
 /etc/init.d/apache2 reload
