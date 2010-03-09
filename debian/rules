@@ -26,8 +26,10 @@ configure-stamp:
 	pwd
 	# Patch the LDAP class to respect linuxmusters option
 	patch usr/share/linuxmuster-portfolio/inc/auth/ldap.class.php debian/linuxmuster.ldap.patch
+	
+	VERSION=`head -n 1 debian/changelog | awk "{print $1 $2}"`
 
-	sed -i 's/\#\#\#PAKETINFO\#\#\#/Hallo/' usr/share/linuxmuster-portfolio/lib/tpl/portfolio/main.php 
+	sed -i "s/\#\#\#PAKETINFO\#\#\#/Version ${VERSION}/" usr/share/linuxmuster-portfolio/lib/tpl/portfolio/main.php 
 	
 	touch configure-stamp
 
