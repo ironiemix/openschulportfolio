@@ -12,8 +12,7 @@
 
 TARGET="/home/linuxmuster-portfolio/data"
 
-
-if (( x$1== "xh"  ||  x$1=="x" )); then 
+function print_help {
 echo "Usage: "
 echo " linuxmuster-portfolio-data <icons|pages|help|all|reset>"
 echo 
@@ -32,7 +31,7 @@ echo " reset:   Installs help pages delivered with the package."
 echo
 echo "All portfolio data will be erased!"
 echo 
-fi
+}
 
 function install_icons {
   if [ -d /var/lib/linuxmuster-portfolio/data/media/shared/icons/ ]; then
@@ -133,6 +132,10 @@ case "$1" in
        fi
        exit 1 
        ;;
+     *)
+        print_help
+        exit 0
+        ;;
 esac
 
 exit 0
