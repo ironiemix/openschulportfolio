@@ -71,7 +71,7 @@ case "$1" in
        echo "Do you want to install the packaged icon-set over"
        echo "the icons in your data directory shared/icons?"
        echo "Icons with the same name as delivered icons"
-       echo "will be overwritten withot prompting!"
+       echo "will be overwritten without prompting!"
        read -p "Continue (y/n) ?" YN
        if [ "$YN" == "y" ] ; then 
          install_icons
