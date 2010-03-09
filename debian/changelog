@@ -1,3 +1,12 @@
+linuxmuster-portfolio (0.9.9-0) openlml; urgency=low
+
+   * Added sisy-Logo an Version Information to sidebar
+   * Fixed some issues in linuxmuster-portfolio-data
+   * German localisation for backup Plugin
+   * Backup Plugin working with tar method
+
+ -- Frank Schiebel <frank@linuxmuster.net>  Tue, 09 Mar 2010 17:30:00 +0100
+
 linuxmuster-portfolio (0.9.1-0) openlml; urgency=low
  
     * user.css in etc
