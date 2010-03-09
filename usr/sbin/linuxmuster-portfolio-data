@@ -63,9 +63,9 @@ function install_help {
 
 function delete_all {
    echo "Delete all wiki pages..."
-   rm -rf  $TARGET
-   mkdir $TARGET
-   chown www-data: $TARGET
+   rm -rf  $TARGET/pages
+   rm -rf  $TARGET/media
+   chown -R www-data: $TARGET
    echo " done..."
 }
 
