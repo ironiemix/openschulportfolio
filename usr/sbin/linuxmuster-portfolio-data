@@ -37,6 +37,7 @@ function install_icons {
   if [ -d /var/lib/linuxmuster-portfolio/data/media/shared/icons/ ]; then
    echo "Copying icons..."
    cp -r /var/lib/linuxmuster-portfolio/data/media/shared/icons/ $TARGET/media/shared/
+   chown -R www-data: $TARGET
    echo " done..."
   fi
 }
@@ -45,6 +46,7 @@ function install_pages {
   if [ -d /var/lib/linuxmuster-portfolio/data/pages ]; then
    echo "Copying pagetree..."
    cp -r /var/lib/linuxmuster-portfolio/data/pages $TARGET/
+   chown -R www-data: $TARGET
    echo " done..."
   fi
 }
@@ -53,6 +55,7 @@ function install_help {
   if [ -d /var/lib/linuxmuster-portfolio/help/ ]; then
    echo "Copying help pages..."
    cp -r /var/lib/linuxmuster-portfolio/help/* $TARGET/
+   chown -R www-data: $TARGET
    echo " done..."
   fi
 }
