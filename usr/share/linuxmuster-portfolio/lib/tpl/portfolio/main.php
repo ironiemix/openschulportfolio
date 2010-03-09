@@ -157,8 +157,10 @@ if (file_exists(DOKU_PLUGIN.'displaywikipage/code.php')) include_once(DOKU_PLUGI
       </div>
       <?php }?>
       <div id="pf_logosmall">
-        <a href="http://www.linuxmuster.net/trac/wiki/linuxmuster-portfolio"></a>
-      <p><?php tpl_link(wl(:shared:credits),'###PAKETINFO###','name="Schulname"')?></p>
+        <a class="logopic" href="http://www.linuxmuster.net/trac/wiki/linuxmuster-portfolio"></a>
+      <p><?php
+      tpl_link(wl(':shared:credits'),'###PAKETINFO###','name="About"');
+      ?></p>
       </div>
     </div><!-- /ach__siteactions -->
     <hr class="invisible" />

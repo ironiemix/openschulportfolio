@@ -400,14 +400,14 @@ div.dokuwiki div.imagemeta img.thumb {
   margin-right: 0.1em;
 }
 /*SiSy logo*/
-div#pf_logosmall a {
+div#pf_logosmall a.logopic {
    background: transparent url("images/sisy-logo.png") top left no-repeat;
    display: block;
    width: 113px;
    height: 66px;
    margin: 0 auto;
 }
-div#pf_logosmall p {
+div#pf_logosmall a {
   text-align: center;
   color: #ccc;
   font-size: 70%;
