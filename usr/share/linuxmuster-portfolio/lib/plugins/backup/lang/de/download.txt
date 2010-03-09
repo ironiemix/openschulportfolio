@@ -1,0 +1,5 @@
+**Backupvorgang abgeschlossen!**
+
+==== Hinweise: ====
+  * Die Backup-Datei befindet sich im Hauptverzeichnis für Dateianhänge und Medien. Sie sollten die Datei sofort herunterladen und löschen, da  Zugriffsbeschränkungen meist nicht für diese Verzeichnis greifen. Außerden werden alte Backup-Dateien **niemals** vom System gelöscht.  
+  * Die Backup-Datei hat einen Namen wie //dw-backup-JahrMonatTag-StundeMinuteSekunde.tar.bz2//, die Zeit wird im **24 Stundenformat** angegeben. Auf diese Weise werden die Backup-Dateien **immer** chronologisch korrekt sortiert und angezeigt. Aus diesem Grund sollte man das Namensformat nicht ändern - aber das müssen Sie selbst entscheiden.

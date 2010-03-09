@@ -1,0 +1,17 @@
+=== Ein Fehler ist aufgetreten =====
+
+**Es wurde kein Backup erstellt!** 
+
+Möglicherweise leigt eine der folgenden Ursachen vor:
+
+  * Das Plugin besitzt keine Schreibrechte im media-Verzeichnis.
+  * Das Programm hat mehr Speicher (RAM) beansprucht, als im zur Verfügung steht.
+  * Der Festplattenplatz reicht nicht aus, um das Backup zu speichern.
+  * Ihre Hardware ist defekt, besipielsweise die Festplatte.
+
+Es gibt weitere Mögliche Ursachen, diese sind jedoch weniger wahrscheinlich.
+
+Am besten überprüfen Sie die obigen Punkte und versuchen Sie es erneut.
+
+Vergessen Sie nicht, Ihre Disk- und RAM-Quotas zu überprüfen, wenn Sie welche haben. Denken Sie auch an mögliche Probleme auf Dateiebene, zum
+Beispiel sehr große Dateien o.ä.

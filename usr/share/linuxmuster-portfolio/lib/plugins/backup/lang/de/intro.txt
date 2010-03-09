@@ -1,0 +1,15 @@
+====== Backup Tool ======
+
+Das Dokuwiki-Backup-Tool ermöglicht es Ihnen, Ihre Wiki-Seiten, Dateien, Konfigurationsdaten, Plugins und Templates auf einfache Weise zu
+sichern, falls in naher Zukunft ein [[wp>Meteorit]] dummerweise auf Ihrem Server landet oder etwas ähnlich mißliches geschieht.
+
+Das Plugin sichert die Daten in einem [[wp>tar_(file format)|tar]] Archiv, das entweder mit [[wp>bzip2]], [[wp>gzip]] oder gar nicht komprimiert 
+wird, je nachdem welche Programme auf ihrem Server verfügbar sind. Das Backuparchiv wird auf dem Server abgelegt, von wo aus Sie es anschließend
+herunterladen können.
+
+==== Bemerkungen:====
+  * Wenn die maximale Skriptlaufzeit des Server nicht ausreicht, um das Backup vollständig abzuschließen, versuchen Sie, nicht alle Objekte gleichzeitig zu sichern.
+  * Die Backup-Datei hat einen Namen wie //dw-backup-JahrMonatTag-StundeMinuteSekunde.tar.bz2//, die Zeit wird im **24 Stundenformat** angegeben. Auf diese Weise werden die Backup-Dateien **immer** chronologisch korrekt sortiert und angezeigt. Aus diesem Grund sollte man das Namensformat nicht ändern - aber das müssen Sie selbst entscheiden.
+
+==== Bitte wählen Sie aus, welche daten gesichert werden sollen:===== 
+
