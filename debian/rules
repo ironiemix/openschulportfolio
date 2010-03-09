@@ -24,7 +24,11 @@ configure-stamp:
 	dh_testdir
 	# Add here commands to configure the package.
 	pwd
+	# Patch the LDAP class to respect linuxmusters option
 	patch usr/share/linuxmuster-portfolio/inc/auth/ldap.class.php debian/linuxmuster.ldap.patch
+
+	sed -i 's/\#\#\#PAKETINFO\#\#\#/Hallo/' usr/share/linuxmuster-portfolio/lib/tpl/portfolio/main.php 
+	
 	touch configure-stamp
 
 
