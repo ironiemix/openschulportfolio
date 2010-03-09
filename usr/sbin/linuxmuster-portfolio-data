@@ -49,6 +49,12 @@ function install_pages {
    chown -R www-data: $TARGET
    echo " done..."
   fi
+  if [ -d /var/lib/linuxmuster-portfolio/data/media ]; then
+   echo "Copying pagetree..."
+   cp -r /var/lib/linuxmuster-portfolio/data/media $TARGET/
+   chown -R www-data: $TARGET
+   echo " done..."
+  fi
 }
 
 function install_help {
