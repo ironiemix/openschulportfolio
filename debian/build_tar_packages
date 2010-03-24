@@ -1,0 +1,75 @@
+#!/bin/bash
+
+# this script builds tar packages based on the 
+# linuxmuster-portfolio debian package for various
+# scenarios to rum without PaedML Linux
+# GPL 2
+# Frank Schiebel <schiebel@aeg-reutlingen.de>
+
+
+TARFILE=$1
+BUILDDIR="tarbuild"
+
+if [ -d $BUILDDIR ]; then 
+rm -rf $BUILDDIR
+fi
+
+if [ ! -f $TARFILE ]; then 
+echo "Unable to open source tarball $TARFILE"
+exit 1
+fi
+
+SOURCE=`tar tvzf $TARFILE --wildcards "*local.php" | awk '{print $6}' | awk -F/ '{print $1}'`
+mkdir $BUILDDIR > /dev/null 2>&1
+tar -C $BUILDDIR -xzf $TARFILE 
+cd $BUILDDIR
+mkdir -p portfolio/conf > /dev/null 2>&1
+mkdir portfolio/data > /dev/null 2>&1
+
+
+echo "Source is $SOURCE"
+
+# copying distributed files from package in one documentroot
+cp -r $SOURCE/usr/share/linuxmuster-portfolio/*  portfolio/
+cp -r $SOURCE/etc/linuxmuster-portfolio/*  portfolio/conf/
+cp -r $SOURCE/etc/linuxmuster-portfolio/images/*  portfolio/lib/tpl/portfolio/images/
+cp -r $SOURCE/etc/linuxmuster-portfolio/style.ini  portfolio/lib/tpl/portfolio/
+cp -r $SOURCE/etc/linuxmuster-portfolio/user.css  portfolio/lib/tpl/portfolio/
+cp -r $SOURCE/home/linuxmuster-portfolio/* portfolio/
+cp -r $SOURCE/var/lib/linuxmuster-portfolio/data/* portfolio/data/
+cp -r $SOURCE/var/lib/linuxmuster-portfolio/help/* portfolio/data/
+
+# removing obsolete files
+rm portfolio/conf/apache2.conf
+rm portfolio/conf/style.ini
+rm portfolio/conf/user.css
+
+# adjusting configuration - common changes
+
+##############################################
+# Standalone Version - own usermanagement    #
+##############################################
+
+# removing preload script
+rm portfolio/inc/preload.php
+# removing ldap auth entrys
+sed -i "/conf\['auth'\]\['ldap'\]/d" portfolio/conf/local.php
+sed -i "/conf\['auth'\]\['ldap'\]/d" portfolio/conf/local.php
+sed -i "/conf\['authtype'\]/d" portfolio/conf/local.php
+sed -i "/conf\['savedir'\]/d" portfolio/conf/local.php
+sed -i "/conf\['userewrite'\]/d" portfolio/conf/local.php
+
+# adding administrator line in users.auth.php
+echo "admin:6bfa9222c4d3d1ba6931b0d6417e89f7:Portfolio Administrator:mail@portfolio.nirgendwo:portfolioadm" >> portfolio/conf/users.auth.php
+
+
+# building full zip package
+zip -r $SOURCE-full.zip portfolio/
+# building system update zip package
+zip -r $SOURCE-update.zip portfolio/* -x portfolio/data/\* -x portfolio/conf/\*
+
+mv *.zip ..
+
+
+
+

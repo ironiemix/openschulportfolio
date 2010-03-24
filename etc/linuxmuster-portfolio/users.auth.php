@@ -7,4 +7,3 @@
 # Format:
 #
 # user:MD5password:Real Name:email:groups,comma,seperated
-#admin:###PASSWORD###:Portfolio Administrator:mail@portfolio.nirgendwo:portfolioadm
