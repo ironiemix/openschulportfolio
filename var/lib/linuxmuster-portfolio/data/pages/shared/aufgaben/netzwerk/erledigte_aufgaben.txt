@@ -1,6 +1,0 @@
-======Alle Aufgaben der Netzwerkberater ======
-
-<note important>Hier werden auch die **erledigten** Aufgaben angezeigt, diese Liste dient als Wissensarchiv!
-[[shared:aufgaben:netzwerk:start|Die offenen Aufgaben finden sich hier.]]</note>
-
-{{tasks>shared:aufgaben:netzwerk:tickets?all&noform}}

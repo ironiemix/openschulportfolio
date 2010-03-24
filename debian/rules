@@ -99,6 +99,8 @@ binary-indep: build install
 	dh_gencontrol
 	dh_md5sums
 	dh_builddeb
+	pwd
+	debian/build_tar_packages
 
 # Build architecture-dependent files here.
 binary-arch: build install
