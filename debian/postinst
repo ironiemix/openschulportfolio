@@ -18,10 +18,13 @@ fi
 
 # link to local plugins
 for PLUGIN in /etc/linuxmuster-portfolio/plugins/*; do 
+PLUGINNAME=`echo $PLUGIN | awk -F/ '{print $5}'`
   if [ -d $PLUGIN ]; then
     echo "Found local plugin $PLUGIN"
     cd /usr/share/linuxmuster-portfolio/lib/plugins 
-    ln -s $PLUGIN 
+    if [ ! -h ./${PLUGINNAME} ]; then 
+       ln -s $PLUGIN
+    fi
   fi
 done
 
