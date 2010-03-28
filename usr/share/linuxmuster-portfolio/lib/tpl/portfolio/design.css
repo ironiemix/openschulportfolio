@@ -399,9 +399,9 @@ div.dokuwiki div.imagemeta img.thumb {
   float: left;
   margin-right: 0.1em;
 }
-/*SiSy logo*/
+/*OSP logo*/
 div#pf_logosmall a.logopic {
-   background: transparent url("images/sisy-logo.png") top left no-repeat;
+   background: transparent url("images/osp-logo.png") top left no-repeat;
    display: block;
    width: 102px;
    height: 60px;
