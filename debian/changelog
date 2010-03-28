@@ -2,6 +2,7 @@ linuxmuster-portfolio (0.9.9-2) openlml; urgency=low
 
    * Changed SiSy to oSP, changed logo accordingly
    * Fixed min-heigt issue with side boxes, when user istn logged in
+   * Added changes plugin for better changelog functionality
 
  -- Frank Schiebel <frank@linuxmuster.net>  Sun, 28 Mar 2010 10:40:00 +0100
 

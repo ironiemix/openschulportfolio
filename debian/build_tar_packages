@@ -20,6 +20,7 @@ exit 1
 fi
 
 SOURCE=`tar tvzf $TARFILE --wildcards "*local.php" | awk '{print $6}' | awk -F/ '{print $1}'`
+VERSION=`basename $TARFILE .tar.gz | awk -F_ '{print $2}'`
 mkdir $BUILDDIR > /dev/null 2>&1
 tar -C $BUILDDIR -xzf $TARFILE 
 cd $BUILDDIR
@@ -28,6 +29,7 @@ mkdir portfolio/data > /dev/null 2>&1
 
 
 echo "Source is $SOURCE"
+echo "Version is $VERSION"
 
 # copying distributed files from package in one documentroot
 cp -r $SOURCE/usr/share/linuxmuster-portfolio/*  portfolio/
@@ -58,15 +60,15 @@ sed -i "/conf\['auth'\]\['ldap'\]/d" portfolio/conf/local.php
 sed -i "/conf\['authtype'\]/d" portfolio/conf/local.php
 sed -i "/conf\['savedir'\]/d" portfolio/conf/local.php
 sed -i "/conf\['userewrite'\]/d" portfolio/conf/local.php
-
+sed -i "s/\#\#\#PAKETINFO\#\#\#/openSchulportfolio<br\/>(${VERSION})/" portfolio/lib/tpl/portfolio/main.php 
 # adding administrator line in users.auth.php
 echo "admin:6bfa9222c4d3d1ba6931b0d6417e89f7:Portfolio Administrator:mail@portfolio.nirgendwo:portfolioadm" >> portfolio/conf/users.auth.php
 
 
 # building full zip package
-zip -r $SOURCE-full.zip portfolio/
+zip -r openschulportfolio-$VERSION-full.zip portfolio/
 # building system update zip package
-zip -r $SOURCE-update.zip portfolio/* -x portfolio/data/\* -x portfolio/conf/\*
+zip -r openschulportfolio-$VERSION-update.zip portfolio/* -x portfolio/data/\* -x portfolio/conf/\*
 
 mv *.zip ..
 
