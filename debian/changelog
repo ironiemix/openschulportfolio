@@ -1,6 +1,13 @@
+linuxmuster-portfolio (0.9.9-2) openlml; urgency=low
+
+   * Changed SiSy to oSP, changed logo accordingly
+   * Fixed min-heigt issue with side boxes, when user istn logged in
+
+ -- Frank Schiebel <frank@linuxmuster.net>  Sun, 28 Mar 2010 10:40:00 +0100
+
 linuxmuster-portfolio (0.9.9-1) openlml; urgency=low
 
-   * Added sisy-Logo an Version Information to sidebar
+   * Added sisy-Logo and Version Information to sidebar
    * Fixed some issues in linuxmuster-portfolio-data
    * German localisation for backup Plugin
    * Backup Plugin working with tar method

@@ -190,6 +190,8 @@ div#explinks {
     border: 1px solid __border_alt__;
     background-color: __background_alt__;
     color: __text__;
+    height: auto;
+    min-height: 40px;
 }
 #ach__siteactions div#pf_userinfo {
     background: transparent url("images/userinfo.png") top right no-repeat;
