@@ -33,6 +33,7 @@ if (file_exists(DOKU_PLUGIN.'displaywikipage/code.php')) include_once(DOKU_PLUGI
   <title><?php tpl_pagetitle()?> [<?php echo strip_tags($conf['title'])?>]</title>
   <?php tpl_metaheaders()?>
   <link rel="shortcut icon" href="<?php echo DOKU_TPL?>images/favicon.ico" />
+  <link rel="stylesheet" media="all" type="text/css" href="<?php echo DOKU_TPL?>/usermod/usermod.css" />
 </head>
 
 <body>
