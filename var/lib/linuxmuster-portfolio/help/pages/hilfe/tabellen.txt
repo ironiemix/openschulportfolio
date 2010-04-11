@@ -1,6 +1,9 @@
 {{tag> redaktion hilfe}}
 ====== Tabellen ======
 
+===== Grundlegende Tabellenfunktionen =====
+
+
 Mit DokuWiki können Tabellen ganz einfach erstellt werden: 
 
 ^ hervorgehoben   ^ zum Beispiel für   ^ eine Titelzeile           ^
@@ -50,3 +53,23 @@ So sieht die Formatierung aus:
   |        Rechts|    Mitte     |Links         |
   |Links         |        Rechts|    Mitte     |
   | xxxxxxxxxxxx | xxxxxxxxxxxx | xxxxxxxxxxxx |
+
+===== Tabellenzellen einfärben =====
+
+Mit im folgenden Beispiel dargestellt, kann man den Hintergrund von Tabellenzellen  einfärben.
+  ^  Header 1         ^  Header 2  ^  Header 3        ^
+  |  @lightgreen:**Verbundene Zellen**         ||                  |
+  |  @#6495ed:Zeile 1 |  Ja       |  Ja  |
+  |  Zeile 2           |  Ja       |  @orange: Jepp    |
+  |  @:Zeile 3        |  Ja       | @red:Nein         |
+
+^  Header 1         ^  Header 2  ^  Header 3        ^
+|  @lightgreen:**Verbundene Zellen**         ||                  |
+|  @#6495ed:Zeile 1 |  Ja       |  Ja  |
+|  Zeile 2           |  Ja       |  @orange: Jepp    |
+|  @:Zeile 3        |  Ja       | @red:Nein         |
+
+
+Dabei wird dem Zelleninhalt die Farbe mit ''@farbcode:'' vorangestellt. Ausrichtung und weitere Textformate wie Fett, Kursiv u.ä. können weiterhin verwendet werden. 
+
+Als Farbcode kann man sowohl Hexadezimale RGB Farbcodes angeben, als auch HTML-Farbnamen.

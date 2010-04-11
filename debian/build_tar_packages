@@ -9,6 +9,8 @@
 
 TARFILE=$1
 BUILDDIR="tarbuild"
+SCRIPTDIR=`dirname $0`
+
 
 if [ -d $BUILDDIR ]; then 
 rm -rf $BUILDDIR
@@ -41,6 +43,9 @@ cp -r $SOURCE/home/linuxmuster-portfolio/* portfolio/
 cp -r $SOURCE/var/lib/linuxmuster-portfolio/data/* portfolio/data/
 cp -r $SOURCE/var/lib/linuxmuster-portfolio/help/* portfolio/data/
 
+# adding usermod directory and usermod.css
+cp -r  "$SCRIPTDIR/usermod"  portfolio/lib/tpl/portfolio/
+
 # removing obsolete files
 rm portfolio/conf/apache2.conf
 rm portfolio/conf/style.ini
@@ -65,14 +70,10 @@ sed -i "s/\#\#\#PAKETINFO\#\#\#/openSchulportfolio<br\/>(${VERSION})/" portfolio
 # default password is ospinstall2010
 echo "admin:cbf915885771cd351a7cf6629356bc2a:Portfolio Administrator:mail@portfolio.nirgendwo:portfolioadm" >> portfolio/conf/users.auth.php
 
-# adding usermod directory and usermod.css
-
-
-
 # building full zip package
 zip -r openschulportfolio-$VERSION-full.zip portfolio/
 # building system update zip package
-zip -r openschulportfolio-$VERSION-update.zip portfolio/* -x portfolio/data/\* -x portfolio/conf/\*
+zip -r openschulportfolio-$VERSION-update.zip portfolio/* -x portfolio/data/\* -x portfolio/conf/\* -x portfolio/lib/tpl/portfolio/usermod/\*
 
 mv *.zip ..
 

@@ -1,7 +1,10 @@
-linuxmuster-portfolio (0.9.9-3) openlml; urgency=low
+linuxmuster-portfolio (0.9.9-4) openlml; urgency=low
 
    * Added cellbg plugin for colored table cells
-
+   * Changed editorhelt for tables accordingly
+   * Added usermod directory for openschulportfolio -> first published version
+     for openschulportfolio
+ 
  -- Frank Schiebel <frank@linuxmuster.net>  Sun, 11 Apr 2010 15:00:00 +0100
 
 linuxmuster-portfolio (0.9.9-2) openlml; urgency=low
