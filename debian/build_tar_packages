@@ -8,6 +8,7 @@
 
 
 TARFILE=$1
+SUBSUBVERSION=$2
 BUILDDIR="tarbuild"
 SCRIPTDIR=`dirname $0`
 
@@ -18,6 +19,11 @@ fi
 
 if [ ! -f $TARFILE ]; then 
 echo "Unable to open source tarball $TARFILE"
+exit 1
+fi
+
+if [ "x$SUBSUBVERSION" == "x" ]; then 
+echo "Subsubversion muss angegeben werden!"
 exit 1
 fi
 
@@ -77,9 +83,9 @@ sed -i "s/\#\#\#PAKETINFO\#\#\#/openSchulportfolio<br\/>(${VERSION})/" portfolio
 echo "admin:cbf915885771cd351a7cf6629356bc2a:Portfolio Administrator:mail@portfolio.nirgendwo:portfolioadm" >> portfolio/conf/users.auth.php
 
 # building full zip package
-zip -r openschulportfolio-$VERSION-full.zip portfolio/
+zip -r openschulportfolio-${VERSION}_${SUBSUBVERSION}-full.zip portfolio/
 # building system update zip package
-zip -r openschulportfolio-$VERSION-update.zip portfolio/* -x portfolio/data/\* -x portfolio/conf/\* -x portfolio/lib/tpl/portfolio/usermod/\*
+zip -r openschulportfolio-${VERSION}_${SUBSUBVERSION}-update.zip portfolio/* -x portfolio/data/\* -x portfolio/conf/\* -x portfolio/lib/tpl/portfolio/usermod/\*
 
 mv *.zip ..
 
