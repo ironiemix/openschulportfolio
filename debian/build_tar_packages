@@ -44,7 +44,11 @@ cp -r $SOURCE/var/lib/linuxmuster-portfolio/data/* portfolio/data/
 cp -r $SOURCE/var/lib/linuxmuster-portfolio/help/* portfolio/data/
 
 # adding usermod directory and usermod.css
-cp -r  "$SCRIPTDIR/usermod"  portfolio/lib/tpl/portfolio/
+cp -r  "../$SCRIPTDIR/usermod"  portfolio/lib/tpl/portfolio/
+rm -r portfolio/lib/tpl/portfolio/usermod/.svn/
+
+#patching ldap auth class
+patch portfolio/inc/auth/ldap.class.php $SCRIPTDIR/linuxmuster.ldap.patch
 
 # removing obsolete files
 rm portfolio/conf/apache2.conf
@@ -65,6 +69,8 @@ sed -i "/conf\['auth'\]\['ldap'\]/d" portfolio/conf/local.php
 sed -i "/conf\['authtype'\]/d" portfolio/conf/local.php
 sed -i "/conf\['savedir'\]/d" portfolio/conf/local.php
 sed -i "/conf\['userewrite'\]/d" portfolio/conf/local.php
+sed -i "/conf\['plugin'\]\['filelist'\]\['allowed_absolute_paths'\]/d" portfolio/conf/local.php
+sed -i "s/conf\['disableactions'\].*/conf\['disableactions'\] = 'register,resendpwd';/" portfolio/conf/local.php 
 sed -i "s/\#\#\#PAKETINFO\#\#\#/openSchulportfolio<br\/>(${VERSION})/" portfolio/lib/tpl/portfolio/main.php 
 # adding administrator line in users.auth.php
 # default password is ospinstall2010
