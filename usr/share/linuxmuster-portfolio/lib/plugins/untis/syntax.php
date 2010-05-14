@@ -70,6 +70,14 @@ class syntax_plugin_untis extends DokuWiki_Syntax_Plugin {
         global $conf;
         // disable caching
         $renderer->info['cache'] = false;
+          
+        if ( preg_match("/^\/.*/", $conf['savedir']) ) {
+            $this->plan_input = $conf['savedir'] . "media/" . $this->getConf('planinputdir');
+        } else {
+            $this->plan_input = DOKU_INC . $conf['savedir'] . "media/" . $this->getConf('planinputdir');
+        }
+
+        $this->_extract_zip();
 
 
         list($type, $pattern, $params, $title) = $data;
@@ -80,13 +88,6 @@ class syntax_plugin_untis extends DokuWiki_Syntax_Plugin {
 
            $untis_date = isset($_REQUEST['untisdate']) ? $_REQUEST['untisdate'] : $this->_get_date();
 
-   
-          if ( preg_match("/^\/.*/", $conf['savedir']) ) {
-                $this->plan_input = $conf['savedir'] . "media/" . $this->getConf('planinputdir');
-           } else {
-                $this->plan_input = DOKU_INC . $conf['savedir'] . "media/" . $this->getConf('planinputdir');
-           }
-           
            // Plan fuer das gegebene Datum aus den Dateien lesen
            $plan = $this->_read_plan_files($untis_date);
            $showfields = $this->getConf('showfields');
@@ -131,8 +132,91 @@ class syntax_plugin_untis extends DokuWiki_Syntax_Plugin {
         return false;
     }
     
-    /* Compares kuerzel to sort list 
+    /*
+     * looks for zipfile with untis plans
      *
+     */
+    function _extract_zip() {
+
+        
+        if (($dir = opendir($this->plan_input)) !== false) {
+            while (($file = readdir($dir)) !== false) {
+                if ($file == '.' || $file == '..') {
+                    // ignore . and ..
+                    continue;
+                }
+                if ($file[0] == '.') {
+                    // ignore hidden files
+                    continue;
+                }
+                $filepath = $this->plan_input . '/' . $file;
+                $filename = $file;
+
+                
+                // Vertretungen
+                if (preg_match("/.*\.zip$/", $filename)) {
+                    // open zip
+                    $zip = zip_open($filepath);
+                    if (is_resource($zip)) {
+                        // find potential entrys
+                         while ($zip_entry = zip_read($zip)) {
+
+                            $completeName = zip_entry_name($zip_entry);
+                            // ignoring index file
+                            if (preg_match('/.*_(.*)\.htm/', $completeName, $treffer)) {
+                                $kuerzel = strtolower($treffer[1]);
+                                $single_content = zip_entry_read($zip_entry, zip_entry_filesize($zip_entry));
+                                   
+                                // Checking if it is untis generated html
+                                if ( preg_match("/<!DOCTYPE HTML PUBLIC/sU", $single_content) &&
+                                     preg_match('/<meta name="GENERATOR" content="Untis .*">/sU', $single_content)  &&
+                                     preg_match('/<B>.*(\d*\.\d*.\/.*)<\/B>/sU', $single_content, $datestring)
+                                     ) {
+                                     list($date, $wday) = split('/', $datestring[1]);
+                                     list($day, $month) = split('\.', $date);
+
+                                     $month = str_replace('1','jan',$month);
+                                     $month = str_replace('2','feb',$month);
+                                     $month = str_replace('3','mar',$month);
+                                     $month = str_replace('4','apr',$month);
+                                     $month = str_replace('5','may',$month);
+                                     $month = str_replace('6','jun',$month);
+                                     $month = str_replace('7','jul',$month);
+                                     $month = str_replace('8','aug',$month);
+                                     $month = str_replace('9','sep',$month);
+                                     $month = str_replace('10','oct',$month);
+                                     $month = str_replace('11','nov',$month);
+                                     $month = str_replace('12','dec',$month);
+
+                                     $outfile = $this->plan_input . "/" . $month ."_" . $day . "_" . $kuerzel . ".htm";
+                                     if ($fd = fopen($outfile, 'w')) {
+                                        fwrite($fd, $single_content);
+                                        fclose($fd);
+                                     } else {
+                                                                                                                                                                                                                                       }
+                                                                                                                                                                                                                                       zip_entry_close($zip_entry);
+                                }
+
+                            }
+                            
+
+
+
+                         }
+
+
+                    } else {
+                       print "Error opening $filepath";
+                    }
+
+
+                }
+            }
+        }
+    }
+
+    /* 
+     *  sortiert die plaene nach lehrerkuerzel
      */
     function _sort_plan($wert_a, $wert_b) {
         
@@ -176,10 +260,9 @@ class syntax_plugin_untis extends DokuWiki_Syntax_Plugin {
      }
 
      /*
-      * Builds day menu
+      * Gets untis plan date: mai_17 jun_28 and so on
       */
      function _get_date() {
-        setlocale(LC_TIME, 'de_DE');
         $untisdate = strtolower(strftime("%b")) . "_" . trim(strftime("%e"));
         return $untisdate;
      }
@@ -241,6 +324,7 @@ class syntax_plugin_untis extends DokuWiki_Syntax_Plugin {
         // untis files haengen _  ans datum
         $untis_date = $untis_date . "_";
 
+
         if (($dir = opendir($this->plan_input)) !== false) {
             while (($file = readdir($dir)) !== false) {
                 if ($file == '.' || $file == '..') {
@@ -275,6 +359,7 @@ class syntax_plugin_untis extends DokuWiki_Syntax_Plugin {
                     // Body der ersten Tabelle auf der Seite
                     preg_match_all("/<TABLE.*>(.*)<\/TABLE>/sU",$input, $treffer);
                     $first_table_body = $treffer[1][0];
+                    print $first_table_body;
                     
                     preg_match_all("/<TR>(.*)<\/TR>/sU",$first_table_body, $treffer);
                     
