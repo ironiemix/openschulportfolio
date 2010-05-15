@@ -259,6 +259,21 @@ class syntax_plugin_untis extends DokuWiki_Syntax_Plugin {
 
      }
 
+     /**
+      *
+      *  Substitutes untis fieldnames
+      *
+      **/
+     function _substitute_untis_fieldnames($string) {
+        
+        $substitutions = $this->getConf('untisfieldmapping');
+        
+        foreach($substitutions as $pattern => $target) {
+            $string = str_ireplace($pattern , $target , $string);
+        }
+        return $string;
+     }
+
      /*
       * Gets untis plan date: mai_17 jun_28 and so on
       */
@@ -347,25 +362,15 @@ class syntax_plugin_untis extends DokuWiki_Syntax_Plugin {
                 
                     $input = file_get_contents($filepath);
 
-                    // Lehrername und Kuerzel
-                    preg_match_all("/<font size=\"8\" face=\"Arial\">(.*)<font/sU", $input, $treffer);
-                    $vertretung['kuerzel'] = $treffer[1][0];
-
-                    preg_match_all("/<font size=\"6\" face=\"Arial\">(.*)<\/font/sU", $input, $treffer);
-                    $vertretung['lehrer'] = utf8_encode($treffer[1][1]);
-
-
-
                     // Body der ersten Tabelle auf der Seite
                     preg_match_all("/<TABLE.*>(.*)<\/TABLE>/sU",$input, $treffer);
                     $first_table_body = $treffer[1][0];
-                    print $first_table_body;
                     
                     preg_match_all("/<TR>(.*)<\/TR>/sU",$first_table_body, $treffer);
                     
                     $rownum = 0;
                     foreach($treffer[0] as $row) { 
-                        if ($rownum > 0 ) {
+                        if ($rownum >= 0 ) {
                             // TD sind die Feldtrenner
                             $row = preg_replace("/<TD.*>/U", "###F###", $row);
                             // alle start-tags weg
@@ -382,32 +387,37 @@ class syntax_plugin_untis extends DokuWiki_Syntax_Plugin {
                             $row = preg_replace("/^###F###/U", "" ,$row);
                             // Feldtrenner Strichpunkt
                             $row = preg_replace("/###F###/U", " ; " ,$row);
+
+                            // Erste Zeile Feldreihenfolge
+                            if ($rownum == 0) {
+                                $row = $this->_substitute_untis_fieldnames($row);
+                                $index = explode(";",$row);
+
+                            } else {
+                                $vertretung['kuerzel'] = "";                            
+                                $vertr_line = explode(";", $row);
+                                foreach($index as $idx_num => $idx_name) {
+                                    $idx_name = trim($idx_name);
+                                    $vertretung[$idx_name] = $vertr_line[$idx_num];
+                                }
+
+                                // Versuche, Lehrername und Kuerzel aus dem Seitenkopf zu bekommen
+                                if($vertretung['kuerzel'] == "" ){
+                                        preg_match_all("/<font size=\"8\" face=\"Arial\">(.*)<font/sU", $input, $treffer);
+                                        $vertretung['kuerzel'] = $treffer[1][0];
+                                }
+
+                                $spos=strpos($vertretung['art'], "Entf");
+                                if (is_int($spos)&&($spos==0)) {
+                                         $vertretung['kuerzel'] = $vertretung['lehreralt'];
+                                } 
+
+                                $vertretung['kuerzel'] = trim($vertretung['kuerzel']);
+
+                                $plan[] = $vertretung;
                             
-                            list(
-                                $vertretung['art'], 
-                                $vertretung['stunde'], 
-                                $vertretung['klasse'],  
-                                $vertretung['fach'],  
-                                $vertretung['raum'],   
-                                $vertretung['vvon'],   
-                                $vertretung['lenach'],   
-                                $vertretung['lehreralt'],   
-                                $vertretung['fachalt'],   
-                                $vertretung['raumalt'],   
-                                $vertretung['vtext']   
-                             )   = explode(";", $row);
+                            }
 
-                             $spos=strpos($vertretung['art'], "Entf");
-                             if (is_int($spos)&&($spos==0)) {
-                                $vertretung['kuerzel'] = $vertretung['lehreralt'];
-                                $vertretung['lehrer'] = "";
-                             }
-                             $vertretung['kuerzel'] = trim($vertretung['kuerzel']);
-                             $vertretung['klasse'] = trim($vertretung['klasse']);
-                             $vertretung['stunde'] = trim($vertretung['stunde']);
-                             $vertretung['lehrer'] = trim($vertretung['lehrer']);
-
-                             $plan[] = $vertretung;
                         }
                         $rownum++;
                     }
