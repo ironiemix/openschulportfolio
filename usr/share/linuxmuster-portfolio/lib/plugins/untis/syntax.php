@@ -1,6 +1,7 @@
 <?php
 /**
- * Filelist Plugin: Lists files matching a given glob pattern.
+ * Untis-plugin: reads teacher substitution-tables exported by
+ * GP-Untis and displays the tables in a nice way in DokuWiki
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Frank Schiebel <frank@linuxmuster.net>
@@ -13,7 +14,6 @@ require_once(DOKU_PLUGIN.'syntax.php');
 require_once(DOKU_INC.'inc/confutils.php');
 require_once(DOKU_INC.'inc/pageutils.php');
 
-
 /**
  * All DokuWiki plugins to extend the parser/rendering mechanism
  * need to inherit from this class
@@ -21,7 +21,6 @@ require_once(DOKU_INC.'inc/pageutils.php');
 class syntax_plugin_untis extends DokuWiki_Syntax_Plugin {
 
     var $mediadir;
-
     function syntax_plugin_untis() {
 
         global $conf;
@@ -37,8 +36,8 @@ class syntax_plugin_untis extends DokuWiki_Syntax_Plugin {
             'email'  => 'frank@linuxmuster.net',
             'date'   => '2010-05-02',
             'name'   => 'Untis Plugin',
-            'desc'   => 'Includes data from GP Untis',
-            'url'    => '',
+            'desc'   => 'Includes data for teacher substitutions from GP Untis',
+            'url'    => 'http://www.openschulportfolio.de/',
         );
     }
 
@@ -76,38 +75,33 @@ class syntax_plugin_untis extends DokuWiki_Syntax_Plugin {
         } else {
             $this->plan_input = DOKU_INC . $conf['savedir'] . "media/" . $this->getConf('planinputdir');
         }
-
+        // Look for new zip-file an extract it if necessary
         $this->_extract_zip();
-
 
         list($type, $pattern, $params, $title) = $data;
 
         if ($mode == 'xhtml') {
-           
+           // show "menu_days" next available plans 
            $menu_days = $data[1];
-
+           // if no untisdate is set, get one
            $untis_date = isset($_REQUEST['untisdate']) ? $_REQUEST['untisdate'] : $this->_get_date();
-
-           // Plan fuer das gegebene Datum aus den Dateien lesen
+           // Read plan from untis html-files 
            $plan = $this->_read_plan_files($untis_date);
+           // Which fields to show?
            $showfields = $this->getConf('showfields');
-           
-           // Sortieren
+           // Sort plan array: kuerzel > stunde
            usort($plan, array($this, "_sort_plan"));
-
-           // Menu 
+           // Build top-menu 
            $this->_build_menu_from_files($untis_date);
-
-           // Tabelle ausgeben
+           // Print substitution table
            print "<table class='untis' cellpadding='0' cellspacing='0'>\n";
            print "<tr>";
            foreach($showfields as $fieldname => $fieldprintname) {
               print '<th>' . $fieldprintname . "</th>";
            }
-
+           // Different colors for different teachers
            $trclass = "eins";
            $merker  =  "";
-           
            print "</tr>\n";
            foreach($plan as $vertretung) {
              if ( $merker != $vertretung['kuerzel'] ) {
@@ -126,18 +120,15 @@ class syntax_plugin_untis extends DokuWiki_Syntax_Plugin {
              print "</tr>\n";
            }
            print "</table>\n";
-
-
         }
         return false;
     }
     
-    /*
-     * looks for zipfile with untis plans
-     *
-     */
+   /*
+    * Looks for zipfile with untis plans
+    * Extracts and deletes zip file
+    */
     function _extract_zip() {
-
         
         if (($dir = opendir($this->plan_input)) !== false) {
             while (($file = readdir($dir)) !== false) {
@@ -151,65 +142,56 @@ class syntax_plugin_untis extends DokuWiki_Syntax_Plugin {
                 }
                 $filepath = $this->plan_input . '/' . $file;
                 $filename = $file;
-
                 
-                // Vertretungen
+                // Look for zip-files
                 if (preg_match("/.*\.zip$/", $filename)) {
                     // open zip
                     $zip = zip_open($filepath);
                     if (is_resource($zip)) {
                         // find potential entrys
                          while ($zip_entry = zip_read($zip)) {
-
                             $completeName = zip_entry_name($zip_entry);
-                            // ignoring index file
+                            // ignoring untis index file
                             if (preg_match('/.*_(.*)\.htm/', $completeName, $treffer)) {
                                 $kuerzel = strtolower($treffer[1]);
                                 $single_content = zip_entry_read($zip_entry, zip_entry_filesize($zip_entry));
                                    
-                                // Checking if it is untis generated html
+                                // Checking if it is untis generated html output
                                 if ( preg_match("/<!DOCTYPE HTML PUBLIC/sU", $single_content) &&
                                      preg_match('/<meta name="GENERATOR" content="Untis .*">/sU', $single_content)  &&
                                      preg_match('/<B>.*(\d*\.\d*.\/.*)<\/B>/sU', $single_content, $datestring)
                                      ) {
-                                     list($date, $wday) = split('/', $datestring[1]);
-                                     list($day, $month) = split('\.', $date);
-
-                                     $month = str_replace('1','jan',$month);
-                                     $month = str_replace('2','feb',$month);
-                                     $month = str_replace('3','mar',$month);
-                                     $month = str_replace('4','apr',$month);
-                                     $month = str_replace('5','may',$month);
-                                     $month = str_replace('6','jun',$month);
-                                     $month = str_replace('7','jul',$month);
-                                     $month = str_replace('8','aug',$month);
-                                     $month = str_replace('9','sep',$month);
-                                     $month = str_replace('10','oct',$month);
-                                     $month = str_replace('11','nov',$month);
-                                     $month = str_replace('12','dec',$month);
-
-                                     $outfile = $this->plan_input . "/" . $month ."_" . $day . "_" . $kuerzel . ".htm";
-                                     if ($fd = fopen($outfile, 'w')) {
-                                        fwrite($fd, $single_content);
-                                        fclose($fd);
-                                     } else {
-                                                                                                                                                                                                                                       }
-                                                                                                                                                                                                                                       zip_entry_close($zip_entry);
+                                        list($date, $wday) = split('/', $datestring[1]);
+                                        list($day, $month) = split('\.', $date);
+                                        // This is dumb coding - more elegant solution needed...
+                                        $month = str_replace('1','jan',$month);
+                                        $month = str_replace('2','feb',$month);
+                                        $month = str_replace('3','mar',$month);
+                                        $month = str_replace('4','apr',$month);
+                                        $month = str_replace('5','may',$month);
+                                        $month = str_replace('6','jun',$month);
+                                        $month = str_replace('7','jul',$month);
+                                        $month = str_replace('8','aug',$month);
+                                        $month = str_replace('9','sep',$month);
+                                        $month = str_replace('10','oct',$month);
+                                        $month = str_replace('11','nov',$month);
+                                        $month = str_replace('12','dec',$month);
+                                        // Outfile name: 8_21_ZELL.htm
+                                        $outfile = $this->plan_input . "/" . $month ."_" . $day . "_" . $kuerzel . ".htm";
+                                        if ($fd = fopen($outfile, 'w')) {
+                                            fwrite($fd, $single_content);
+                                            fclose($fd);
+                                        } else {
+                                        // Error message has to be included here!
+                                        }
                                 }
 
                             }
-                            
-
-
-
+                            zip_entry_close($zip_entry);
                          }
-
-
                     } else {
-                       print "Error opening $filepath";
+                        print "Error opening $filepath";
                     }
-
-
                 }
             }
         }
