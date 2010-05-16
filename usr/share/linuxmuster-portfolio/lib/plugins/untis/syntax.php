@@ -89,6 +89,7 @@ class syntax_plugin_untis extends DokuWiki_Syntax_Plugin {
            $plan = $this->_read_plan_files($untis_date);
            // Which fields to show?
            $showfields = $this->getConf('showfields');
+           $showfields = $this->_split_config_to_array($showfields, "=>");
            // Sort plan array: kuerzel > stunde
            usort($plan, array($this, "_sort_plan"));
            // Build top-menu 
@@ -197,9 +198,10 @@ class syntax_plugin_untis extends DokuWiki_Syntax_Plugin {
         }
     }
 
-    /* 
-     *  sortiert die plaene nach lehrerkuerzel
-     */
+   /* 
+    *  Function to sort the plan-array with usort
+    *  kuerzel -> stunde
+    */
     function _sort_plan($wert_a, $wert_b) {
         
         $a = $wert_a['kuerzel'];
@@ -217,38 +219,73 @@ class syntax_plugin_untis extends DokuWiki_Syntax_Plugin {
         return $compare;
     }
 
-    /**
+   /**
+    * Splits an trims config settings divided by $splitter
+    */
+    function _split_config_to_array($config_list, $splitter) {
+        
+        $conf_lines = explode(",", $config_list);
+        foreach ($conf_lines as $single_line) {
+            // Split lines on $splitter
+            list($key, $value) = split($splitter, $single_line);
+            $key = trim($key);
+            $value = trim($value);
+            if ( ! preg_match('/^\/\//', $key)) {
+                $config_array[$key] = $value;
+            }
+        }
+        return $config_array;
+    }
+
+   /**
     * Substitutes long words.
-    * Move words to config array!
+    * Gets substitutions from config array
     *
-    * @param $string to check
+    * @param   string to check
     * @return  string
     */
     function _substitute_long_words($string) {
-      
-        $substitutions = $this->getConf('substitutions');
+        // Path to template dir
         $tplimagepath = DOKU_TPL;
+
+        $substlist = $this->getConf('substitutions');
+        // building substitution array
+        $subst = explode(",", $substlist);
+        foreach ($subst as $single_subst) {
+            // Split lines on =>
+            list($key, $value) = split("=>", $single_subst);
+            $key = trim($key);
+            $value = trim($value);
+            // Split img/txt on |
+            list($img, $text) = split( '\|' , $value);
+            $img = trim($img);
+            $text = trim($text);
+            if ( $img != "" && $text != "" ) {
+                $substitutions[$key] = '<img src="' . $this->getConf('image_path') . $img .'" /> ' . $text;
+            } else {
+                $substitutions[$key] = $value;
+            }
+
+        }
         
         foreach($substitutions as $pattern => $target) {
             $string = str_replace($pattern , $target , $string);
             if( ! preg_match('/img src="\//', $string) ) {
-                // relative image path substitute!
-                $string = preg_replace('/src="/', "src=\"$tplimagepath", $string);
+                // relative image path
+               $string = preg_replace('/src="/', "src=\"$tplimagepath", $string);
             }
         }
-
         return $string;
-
      }
 
-     /**
-      *
-      *  Substitutes untis fieldnames
-      *
-      **/
+    /**
+     *  Substitutes untis fieldnames
+     *  Reads mapping from config
+     */
      function _substitute_untis_fieldnames($string) {
         
         $substitutions = $this->getConf('untisfieldmapping');
+        $substitutions = $this->_split_config_to_array($substitutions, "=>");
         
         foreach($substitutions as $pattern => $target) {
             $string = str_ireplace($pattern , $target , $string);
@@ -256,38 +293,64 @@ class syntax_plugin_untis extends DokuWiki_Syntax_Plugin {
         return $string;
      }
 
-     /*
-      * Gets untis plan date: mai_17 jun_28 and so on
-      */
+    /*
+     * Gets untis plan date: mai_17 jun_28 and so on
+     * No german locales!
+     * Gets the next date for which a plan exists
+     */
      function _get_date() {
+        // current timestamp
+        $ts_now = time(); 
+        // untisdate for today
         $untisdate = strtolower(strftime("%b")) . "_" . trim(strftime("%e"));
+        // get available plans
+        $plans_available = $this->_get_available_plans();
+        $forward = 0;
+        while( ( ! in_array($untisdate, $plans_available) ) && $forward < $this->getConf('max_days_in_future') ) {
+            $forward++;
+            $tstamp = $ts_now + $forward * 3600 * 24;
+            $untisdate = strtolower(strftime("%b",$tstamp)) . "_" . trim(strftime("%e", $tstamp));
+            if ($this->getConf('debug')) {
+                print "checking if plan for $untisdate exists <br />";
+            }
+        }
         return $untisdate;
+     }
+
+
+     /**
+      * Gets available plans
+      *
+      */
+     function _get_available_plans() {
+        // Which plans are available?
+        if (($dir = opendir($this->plan_input)) !== false) {
+            while (($file = readdir($dir)) !== false) {
+                if ($file == '.' || $file == '..') {
+                     // ignore . and ..
+                     continue;
+                }
+                if ($file[0] == '.') {
+                     // ignore hidden files
+                    continue;
+                }
+
+                if (preg_match("/^([a-z]+_[1-9]+).*\.htm$/", $file, $treffer)) {
+                    $plan_exists[$treffer[1]] = $treffer[1];
+                }
+            }
+        return $plan_exists;
+        }
      }
 
      /*
       * Builds day menu
       */
-      function _build_menu_from_files($chosendate) {
+     function _build_menu_from_files($chosendate) {
 
-        // Vorhandene Pläne ermitteln
-        if (($dir = opendir($this->plan_input)) !== false) {
-            while (($file = readdir($dir)) !== false) {
-                if ($file == '.' || $file == '..') {
-                    // ignore . and ..
-                    continue;
-                }
-                if ($file[0] == '.') {
-                    // ignore hidden files
-                    continue;
-                }
-
-                if (preg_match("/^([a-z]+_[1-9]+).*\.htm$/", $file, $treffer)) {
-                  $plan_exists[$treffer[1]] = $treffer[1];
-                }
-            }
-        }
-         
-        // Menue ausgeben
+        $plan_exists = $this->_get_available_plans();
+        
+        // Print menue: should be in output main function, returning menu-code!
         print "<div id='menu'><ul>";
         foreach ($plan_exists as $menuentry){
             $class = "untis_menu_link";
@@ -297,8 +360,6 @@ class syntax_plugin_untis extends DokuWiki_Syntax_Plugin {
             print "<li><a class='" . $class ."' href='?untisdate=" . $menuentry . "'>" . $this->_untisdate_to_hrdate($menuentry) .  "</a></li>";
         }
         print "</ul></div>";
-
-        
       }
 
      /*
@@ -308,7 +369,6 @@ class syntax_plugin_untis extends DokuWiki_Syntax_Plugin {
             list($month, $day) = split('_', $untisdate);
             $hrdate = "$day. " . ucfirst($month); 
             return $hrdate;
-
       }
 
 
