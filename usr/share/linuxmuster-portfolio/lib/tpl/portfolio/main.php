@@ -33,7 +33,6 @@ if (file_exists(DOKU_PLUGIN.'displaywikipage/code.php')) include_once(DOKU_PLUGI
   <title><?php tpl_pagetitle()?> [<?php echo strip_tags($conf['title'])?>]</title>
   <?php tpl_metaheaders()?>
   <link rel="shortcut icon" href="<?php echo DOKU_TPL?>images/favicon.ico" />
-  <link rel="stylesheet" media="all" type="text/css" href="<?php echo DOKU_TPL?>/usermod/usermod.css" />
 </head>
 
 <body>
@@ -44,7 +43,7 @@ if (file_exists(DOKU_PLUGIN.'displaywikipage/code.php')) include_once(DOKU_PLUGI
      <div id="pf_nameblock"> 
       <div id="pf_logo">
       <h1><?php tpl_link(wl(),$conf['title'],'name="dokuwiki__top" id="dokuwiki__top" accesskey="h" title="[ALT+H]"')?></h1>
-      <p><?php tpl_link(wl(),$conf['schoolname'],'name="Schulname"')?></p>
+      <p><?php tpl_link(wl(),$conf['plugin']['openschulportfolio']['schoolname'],'name="Schulname"')?></p>
       </div>
       </div>
         <h2>[[<?php echo $ID?>]]</h2>
@@ -160,7 +159,7 @@ if (file_exists(DOKU_PLUGIN.'displaywikipage/code.php')) include_once(DOKU_PLUGI
       <div id="pf_logosmall">
         <a class="logopic" href="http://www.openschulportfolio.de/"></a>
       <p><?php
-      tpl_link(wl(':shared:credits'),'###PAKETINFO###','name="About"');
+      tpl_link(wl(':shared:credits'),'linuxmuster-portfolio<br/>(Version: 0.9.9-3aeg1)','name="About"');
       ?></p>
       </div>
     </div><!-- /ach__siteactions -->

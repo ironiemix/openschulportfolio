@@ -348,3 +348,7 @@ div.export {
 div.export div.toc {
     display: none;
 }
+div#config__manager fieldset {
+    width: 95%;
+    margin: 15px 0 0 0;
+}
