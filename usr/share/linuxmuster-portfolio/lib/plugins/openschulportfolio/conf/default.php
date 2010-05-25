@@ -4,5 +4,7 @@
 */
 
 $conf['schoolname'] = "Schulname";
+$conf['logofile'] = "osplogo.png";
+$conf['topbackimg'] = "topback.png";
 
 
