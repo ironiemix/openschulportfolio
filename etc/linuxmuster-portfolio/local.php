@@ -6,10 +6,8 @@
  * Date: Mon, 01 Mar 2010 15:00:09 +0100
  */
 
-$conf['savedir'] = '/home/linuxmuster-portfolio/data/';
-
 $conf['title'] = 'Schulportfolio';
-$conf['schoolname'] = 'Schulname';
+$conf['savedir'] = '/home/linuxmuster-portfolio/data/';
 $conf['lang'] = 'de';
 $conf['template'] = 'portfolio';
 $conf['license'] = '';
@@ -38,7 +36,7 @@ $conf['plugin']['include']['noheader'] = '1';
 $conf['openregister'] = '0';
 
 $conf['authtype']    = 'ldap';
-$conf['auth']['ldap']['server']      = 'ldap://localhost:389'
+$conf['auth']['ldap']['server']      = 'ldap://localhost:389';
 $conf['auth']['ldap']['usertree']    = 'ou=accounts,dc=montfort-realschule, dc=de';
 $conf['auth']['ldap']['grouptree']   = 'ou=groups,dc=montfort-realschule, dc=de';
 $conf['auth']['ldap']['userfilter']  = '(&(uid=%{user})(objectClass=posixAccount))';
