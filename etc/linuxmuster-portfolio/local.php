@@ -38,7 +38,7 @@ $conf['plugin']['include']['noheader'] = '1';
 $conf['openregister'] = '0';
 
 $conf['authtype']    = 'ldap';
-$conf['auth']['ldap']['server']      = 'ldaps://localhost:636';
+$conf['auth']['ldap']['server']      = 'ldap://localhost:389'
 $conf['auth']['ldap']['usertree']    = 'ou=accounts,dc=montfort-realschule, dc=de';
 $conf['auth']['ldap']['grouptree']   = 'ou=groups,dc=montfort-realschule, dc=de';
 $conf['auth']['ldap']['userfilter']  = '(&(uid=%{user})(objectClass=posixAccount))';
