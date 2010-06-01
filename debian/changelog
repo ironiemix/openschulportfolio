@@ -1,3 +1,11 @@
+linuxmuster-portfolio (1.0.0-2) openlml; urgency=low
+
+     * OSP Plugin for layout and design config
+     * First full documented release
+     * Moved experimental gpuntil  plugin to branch
+
+ -- Frank Schiebel <frank@linuxmuster.net>  Mon, 24 May 2010 22:00:00 +0100
+
 linuxmuster-portfolio (1.0.0-1) openlml; urgency=low
 
      * Added first version of GPUntis display plugin
@@ -7,11 +15,12 @@ linuxmuster-portfolio (1.0.0-1) openlml; urgency=low
 linuxmuster-portfolio (0.9.9-4) openlml; urgency=low
 
    * Added cellbg plugin for colored table cells
-   * Changed editorhelt for tables accordingly
+   * Changed editorhelp for tables accordingly
    * Added usermod directory for openschulportfolio -> first published version
      for openschulportfolio
  
  -- Frank Schiebel <frank@linuxmuster.net>  Sun, 11 Apr 2010 15:00:00 +0100
+
 
 linuxmuster-portfolio (0.9.9-2) openlml; urgency=low
 
