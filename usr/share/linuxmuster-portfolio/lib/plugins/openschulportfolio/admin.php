@@ -72,18 +72,25 @@ var $backup = '';
 	/**
 	 * output appropriate html
 	 */
-	function html()
-	{
-		global $conf;
+	function html() {
 
-        $usermod_path = DOKU_TPLINC . "openschulportfolio/";
-        $usermod_web_path = DOKU_TPL . "openschulportfolio/";
+	global $conf;
+
+	// Wenn als Musterloesuungspaket, usermod in etc
+	if (preg_match("/etc\/linuxmuster-portfolio/",DOKU_CONF)) {
+        	$usermod_path = DOKU_CONF . "usermod/";
+	} else {
+        	$usermod_path = DOKU_TPLINC . "usermod/";
+	}
+
+	$usermod_web_path = DOKU_TPL . "usermod/";
+	
 
         $logo_file =  "header_logo.png";
         $topback_file = "header_back.png";
 
 
-        ptln('<h1>Anpassungen Openschulportfolio</h2>');
+        ptln('<h1>Anpassungen openSchulportfolio</h2>');
         ptln('<h2>Logo Bild austauschen</h2>');
         ptln('<img style="float:right;width: 100px; border: 1px solid #aaa;" src="'.$usermod_web_path . $logo_file .'" />');
         ptln('<p>Laden Sie ein Bild von Ihrer Festplatte auf den Server um das Logo zu ersetzen. Das Logobild darf höchtens 120x100 Pixel groß sein und sollte im
@@ -102,7 +109,7 @@ var $backup = '';
           if($dateityp[2] != 0) {
               if($_FILES['logo']['size'] <  102400) {
                     move_uploaded_file($_FILES['logo']['tmp_name'], $usermod_path.$logo_file);
-                    ptln('<p></p><p style="color: #003d00;">Das Bild wurde erfolgreich ins Konfigurationsverzeichnis hochgeladen</p>');;
+                    ptln('<p></p><p style="color: #003d00;">Das Bild wurde erfolgreich ins Konfigurationsverzeichnis hochgeladen</p>');
               } else {
                     ptln('<p></p><p style="color: #f80000;">Es ist ein Fehler aufgetreten: Es dürfen nur Bilddateien hochgeladen werden, die kleiner als 100kB sind.</p>');
                     $error = 1;
