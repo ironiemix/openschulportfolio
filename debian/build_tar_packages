@@ -51,9 +51,6 @@ cp -r $SOURCE/var/lib/linuxmuster-portfolio/help/* portfolio/data/
 cp -r  "../$SCRIPTDIR/usermod"  portfolio/lib/tpl/portfolio/
 rm -r portfolio/lib/tpl/portfolio/usermod/.svn/
 
-#patching ldap auth class
-patch portfolio/inc/auth/ldap.class.php ../$SCRIPTDIR/linuxmuster.ldap.patch
-
 # removing obsolete files
 rm portfolio/conf/apache2.conf
 
