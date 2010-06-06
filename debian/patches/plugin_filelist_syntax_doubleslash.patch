@@ -1,0 +1,17 @@
+Index: trunk/usr/share/linuxmuster-portfolio/lib/plugins/filelist/syntax.php
+===================================================================
+--- trunk.orig/usr/share/linuxmuster-portfolio/lib/plugins/filelist/syntax.php	2010-06-06 19:21:44.000000000 +0200
++++ trunk/usr/share/linuxmuster-portfolio/lib/plugins/filelist/syntax.php	2010-06-06 19:24:09.000000000 +0200
+@@ -200,7 +200,11 @@
+         $link['more']   = '';
+         $link['class']  = 'media';
+         if (!$params['direct']) {
+-            $link['url'] = ml(':'.str_replace('/', ':', substr($filepath, strlen($this->mediadir))));
++	    $link['url'] = ml(':'.str_replace('/', ':', substr($filepath, strlen($this->mediadir))));
++            # Remove multiple slashes / or : (June 06 1010, Frank Schiebel frank@linuxmuster.net)
++	    $link['url'] = preg_replace("|/+|", '/', $link['url']);
++	    $link['url'] = preg_replace("|:+|", ':', $link['url']);
++	    $link['url'] = preg_replace("|/:|", '/', $link['url']);
+         } else {
+             $link['url'] = $webdir.substr($filepath, strlen($basedir));
+         }

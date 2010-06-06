@@ -1,9 +1,0 @@
-238c238,243
-<                     $info['grps'][] = $grp[$this->cnf['groupkey']][0];
----
->                         if (isset($this->cnf['groupdelprefix'])) {
->                             $prefix = $this->cnf['groupdelprefix'];
->                             $info['grps'][] = preg_replace("/^$prefix/", '', $grp[$this->cnf['groupkey']][0]);
->                         } else {
->                             $info['grps'][] = $grp[$this->cnf['groupkey']][0];
->                         }

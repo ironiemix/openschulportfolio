@@ -1,0 +1,19 @@
+Index: trunk/usr/share/linuxmuster-portfolio/inc/auth/ldap.class.php
+===================================================================
+--- trunk.orig/usr/share/linuxmuster-portfolio/inc/auth/ldap.class.php	2010-06-06 19:29:33.000000000 +0200
++++ trunk/usr/share/linuxmuster-portfolio/inc/auth/ldap.class.php	2010-06-06 19:33:49.000000000 +0200
+@@ -235,7 +235,13 @@
+                 if(!empty($grp[$this->cnf['groupkey']][0])){
+                     if($this->cnf['debug'])
+                         msg('LDAP usergroup: '.htmlspecialchars($grp[$this->cnf['groupkey']][0]),0,__LINE__,__FILE__);
+-                    $info['grps'][] = $grp[$this->cnf['groupkey']][0];
++                        # Enabling groupdelprefix option for integration in paedML Linux (June 06 2010, Frank Schiebel <frank@linuxmuster.net>)
++                        if (isset($this->cnf['groupdelprefix'])) {
++                            $prefix = $this->cnf['groupdelprefix'];
++                            $info['grps'][] = preg_replace("/^$prefix/", '', $grp[$this->cnf['groupkey']][0]);
++                         } else {
++                            $info['grps'][] = $grp[$this->cnf['groupkey']][0];
++                         }
+                 }
+             }
+         }

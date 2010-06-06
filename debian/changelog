@@ -1,12 +1,13 @@
-linuxmuster-portfolio (1.0.0-2) openlml; urgency=low
+linuxmuster-portfolio (1.0.0-3) openlml; urgency=low
 
      * OSP Plugin for layout and design config
      * First full documented release
      * Changed local ldap Auth to ldap instead of ldaps - many
        paedMLs appearently have ldaps disabled 
-     * Moved experimental gpuntil  plugin to branch
+     * Moved experimental gpuntis  plugin to branch
+     * Fixed multiple slashes/multiple: bug in filelist-plugin
 
- -- Frank Schiebel <frank@linuxmuster.net>  Mon, 24 May 2010 22:00:00 +0100
+ -- Frank Schiebel <frank@linuxmuster.net>  Sun, 06 Jun 2010 22:00:00 +0100
 
 linuxmuster-portfolio (1.0.0-1) openlml; urgency=low
 
