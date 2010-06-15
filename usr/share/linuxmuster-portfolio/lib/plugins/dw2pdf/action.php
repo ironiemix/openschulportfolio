@@ -47,7 +47,7 @@ class action_plugin_dw2pdf extends DokuWiki_Action_Plugin
       
         $event->preventDefault();
 
-        $idparam = $ID;
+	$idparam = $ID;
         if ($REV != 0) {  $idparam = $idparam."&rev=".$REV; };
 
         $pos = strrpos(utf8_decode($ID), ':');
