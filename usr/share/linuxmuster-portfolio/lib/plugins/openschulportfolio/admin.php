@@ -77,10 +77,12 @@ var $backup = '';
 
 	global $conf;
 
-	// Wenn als Musterloesuungspaket, usermod in etc
 	if (preg_match("/etc\/linuxmuster-portfolio/",DOKU_CONF)) {
+		// Wenn als Musterloesungspaket -> "usermod" in etc
         	$usermod_path = DOKU_CONF . "usermod/";
 	} else {
+		// Wenn als opensSchulportfolioarchiv -> "usermod" 
+	 	// in /lib/tpl/portfolio
         	$usermod_path = DOKU_TPLINC . "usermod/";
 	}
 
