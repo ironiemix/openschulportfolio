@@ -91,12 +91,18 @@ class admin_plugin_confmanager extends DokuWiki_Admin_Plugin {
         uksort( $data , array( &$this , '_sortHuman' ) );
         ptln('<h1>'.$this->getLang('head_'.$name).'</h1>');
         ptln('<p>'.$this->getLang('text_'.$name).'</p>');
-        ptln('<p>'.$this->getLang('edit_desc').'</p>');
+	ptln('<p>'.$this->getLang('edit_desc').'</p>');
+	// Add Var Form
+	$this->_addvarform();
+	// Edit Form
+        ptln('<h2><a name="__add">'.$this->getLang('editvarhead').'</a></h2>');
         ptln('<form method="post" action="doku.php">');
         ptln('<input type="hidden" name="do" value="'.$_REQUEST['do'].'" />');
         ptln('<input type="hidden" name="page" value="'.$_REQUEST['page'].'" />');
         ptln('<input type="hidden" name="id" value="'.$_REQUEST['id'].'" />');
         ptln('<input type="hidden" name="cnf" value="'.hsc($_REQUEST['cnf']).'" />');
+        ptln('<input class="button" type="submit" value="'.$this->getLang('submitchanges').'" />');
+        ptln('<input class="button" type="reset" value="'.$this->getLang('reset').'" />');
         ptln('<table class="confmanager">');
         foreach( $data as $k => $v ) {
             ptln('<tr>');
@@ -112,25 +118,30 @@ class admin_plugin_confmanager extends DokuWiki_Admin_Plugin {
         ptln('</table>');
         ptln('<input class="button" type="submit" value="'.$this->getLang('submitchanges').'" />');
         ptln('<input class="button" type="reset" value="'.$this->getLang('reset').'" />');
-        ptln('</form>');
+	ptln('</form>');
+    }
+
+    function _addvarform() {
         ptln('<h2><a name="__add">'.$this->getLang('addvarhead').'</a></h2>');
-		ptln('<p>');
-		ptln($this->getLang('addvartext'));
-		ptln('<form method="post" action="doku.php">');
+	ptln('<p>');
+	ptln($this->getLang('addvartext'));
+	ptln('<form method="post" action="doku.php">');
         ptln('<input type="hidden" name="do" value="'.$_REQUEST['do'].'" />');
         ptln('<input type="hidden" name="page" value="'.$_REQUEST['page'].'" />');
         ptln('<input type="hidden" name="id" value="'.$_REQUEST['id'].'" />');
-        ptln('<input type="hidden" name="cnf" value="'.hsc($_REQUEST['cnf']).'" />');
-		ptln('<input type="text" name="newkey" class="edit key" /> ');
-		ptln('<input type="text" name="newval" class="edit val" />');
-		ptln('<input type="submit" value="'.$this->getLang('additem').'" class="button" />');
-		ptln('</form>');
-		ptln('</p>');
+	ptln('<input type="hidden" name="cnf" value="'.hsc($_REQUEST['cnf']).'" />');
+        ptln('<table><tr><td>');
+	ptln('Schlüssel:</td><td><input type="text" name="newkey" class="edit key" /> </td><td>');
+	ptln('Wert:</td><td><input type="text" name="newval" class="edit val" /></td><td>');
+	ptln('<input type="submit" value="'.$this->getLang('additem').'" class="button" /></td></tr>');
+	ptln('</table></form>');
+	ptln('</p>');
+
     }
 
-	function _escape($s) {
+    function _escape($s) {
 		return str_replace('#','\#',$s);
-	}
+    }
 
     function _readConf($name) {
         if (!is_file(DOKU_CONF.$name.'.conf')) return array();

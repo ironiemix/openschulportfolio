@@ -1,8 +1,8 @@
-base    ospadmin
-author  Frank Schiebel,  Dominik Eckelmann, 
-email   frank@linuxmuster.net, dokuwiki@cosmocode.de
-date    2010-06-16
-name    openSchulportfolio settings manager
-desc    Plugin to manage openSchulportfolio-settings, based on confmanager plugin by Dominik Eckelmann
-url     http://www.openschulportfolio.de/
+base    confmanager
+author  Dominik Eckelmann
+email   dokuwiki@cosmocode.de
+date    2009-01-27
+name    configuration file manager
+desc    Plugin to manage variouse .conf files 
+url     http://www.dokuwiki.org/plugin:confmanager
 
