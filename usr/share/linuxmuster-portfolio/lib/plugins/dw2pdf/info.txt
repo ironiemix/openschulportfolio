@@ -1,6 +1,0 @@
-author Luigi Micco
-email  l.micco@tiscali.it
-date   2010-02-14
-name   Dw2Pdf
-desc   DokuWiki to Pdf converter
-url    http://www.bitlibero.com/dokuwiki/dw2pdf.zip
