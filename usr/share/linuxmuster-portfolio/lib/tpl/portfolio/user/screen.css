@@ -4,4 +4,7 @@
    de: Ort für benutzerdefinierte CSS-Regeln (screen media) - Diese Datei kann
    beim Durchführen von Updates ohne Risiko beibehalten werden. Konsultieren Sie
    die README für Detailinformationen. */
-
+ 
+#pf-container {
+  max-width:960px;
+}

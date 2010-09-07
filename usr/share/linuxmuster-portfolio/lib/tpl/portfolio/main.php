@@ -505,9 +505,98 @@ if (file_exists(DOKU_TPLINC."lang/".$conf["lang"]."/style.css")){
                   !tpl_getConf("vector_mediamanager_embedded")){
                   echo "mmanagernotembedded ";
               } ?>skin-vector">
+<div id="pf-container">
 <div id="page-base" class="noprint"></div>
-<div id="head-base" class="noprint"></div>
+<div id="head-base" class="noprint">
 
+<!-- start div id=head -->
+<div id="head" class="noprint">
+  <?php
+  //show personal tools
+  if (!empty($conf["useacl"])){ //...makes only sense if there are users
+      echo  "\n"
+           ."  <div id=\"p-personal\">\n"
+           ."    <ul>\n";
+      //login?
+      if ($loginname === ""){
+          echo  "      <li id=\"pt-login\"><a href=\"".wl(cleanID(getId()), array("do" => "login"))."\" rel=\"nofollow\">".hsc($lang["btn_login"])."</a></li>\n"; //language comes from DokuWiki core
+      }else{
+          //username and userpage
+          echo "      <li id=\"pt-userpage\">".(tpl_getConf("vector_userpage")
+                                                ? html_wikilink(tpl_getConf("vector_userpage_ns").$loginname, hsc($loginname))
+                                                : hsc($loginname))."</li>";
+          //personal discussion
+          if (tpl_getConf("vector_discuss") &&
+              tpl_getConf("vector_userpage")){
+              echo "      <li id=\"pt-mytalk\">".html_wikilink(tpl_getConf("vector_discuss_ns").ltrim(tpl_getConf("vector_userpage_ns"), ":").$loginname, hsc($lang["vector_mytalk"]))."</li>";
+          }
+          //admin
+          if (!empty($INFO["isadmin"]) ||
+              !empty($INFO["ismanager"])){
+              echo  "      <li id=\"pt-admin\"><a href=\"".wl(cleanID(getId()), array("do" => "admin"))."\" rel=\"nofollow\">".hsc($lang["btn_admin"])."</a></li>\n"; //language comes from DokuWiki core
+          }
+          //profile
+          if (actionOK("profile")){ //check if action is disabled
+              echo  "      <li id=\"pt-preferences\"><a href=\"".wl(cleanID(getId()), array("do" => "profile"))."\" rel=\"nofollow\">".hsc($lang["btn_profile"])."</a></li>\n"; //language comes from DokuWiki core
+          }
+          //logout
+          echo  "      <li id=\"pt-logout\"><a href=\"".wl(cleanID(getId()), array("do" => "logout"))."\" rel=\"nofollow\">".hsc($lang["btn_logout"])."</a></li>\n"; //language comes from DokuWiki core
+      }
+      echo  "    </ul>\n"
+           ."  </div>\n";
+  }
+  ?>
+
+  <!-- start div id=left-navigation -->
+  <div id="left-navigation">
+    <div id="p-namespaces" class="vectorTabs">
+      <ul><?php
+          //show tabs: left. see vector/user/tabs.php to configure them
+          if (!empty($_vector_tabs_left) &&
+              is_array($_vector_tabs_left)){
+              _vector_renderTabs($_vector_tabs_left);
+          }
+          ?>
+
+      </ul>
+    </div>
+  </div>
+  <!-- end div id=left-navigation -->
+
+  <!-- start div id=right-navigation -->
+  <div id="right-navigation">
+    <div id="p-views" class="vectorTabs">
+      <ul><?php
+          //show tabs: right. see vector/user/tabs.php to configure them
+          if (!empty($_vector_tabs_right) &&
+              is_array($_vector_tabs_right)){
+              _vector_renderTabs($_vector_tabs_right);
+          }
+          ?>
+
+      </ul>
+    </div>
+<?php if (actionOK("search")){ ?>
+    <div id="p-search">
+      <h5>
+        <label for="qsearch__in"><?php echo hsc($lang["vector_search"]); ?></label>
+      </h5>
+      <form action="<?php echo wl(); ?>" accept-charset="utf-8" id="dw__search" name="dw__search">
+        <input type="hidden" name="do" value="search" />
+        <div id="simpleSearch">
+          <input id="qsearch__in" name="id" type="text" accesskey="f" value="" />
+          <button id="searchButton" type="submit" name="button" title="<?php echo hsc($lang["vector_btn_search_title"]); ?>">&nbsp;</button>
+        </div>
+        <div id="qsearch__out" class="ajax_qsearch JSpopup"></div>
+      </form>
+    </div>
+<?php } ?>
+  </div>
+  <!-- end div id=right-navigation -->
+
+</div>
+<!-- end div id=head -->
+</div>
 <!-- start div id=content -->
 <div id="content">
   <a name="top" id="top"></a>
@@ -609,93 +698,6 @@ if (file_exists(DOKU_TPLINC."lang/".$conf["lang"]."/style.css")){
 <!-- end div id=content -->
 
 
-<!-- start div id=head -->
-<div id="head" class="noprint">
-  <?php
-  //show personal tools
-  if (!empty($conf["useacl"])){ //...makes only sense if there are users
-      echo  "\n"
-           ."  <div id=\"p-personal\">\n"
-           ."    <ul>\n";
-      //login?
-      if ($loginname === ""){
-          echo  "      <li id=\"pt-login\"><a href=\"".wl(cleanID(getId()), array("do" => "login"))."\" rel=\"nofollow\">".hsc($lang["btn_login"])."</a></li>\n"; //language comes from DokuWiki core
-      }else{
-          //username and userpage
-          echo "      <li id=\"pt-userpage\">".(tpl_getConf("vector_userpage")
-                                                ? html_wikilink(tpl_getConf("vector_userpage_ns").$loginname, hsc($loginname))
-                                                : hsc($loginname))."</li>";
-          //personal discussion
-          if (tpl_getConf("vector_discuss") &&
-              tpl_getConf("vector_userpage")){
-              echo "      <li id=\"pt-mytalk\">".html_wikilink(tpl_getConf("vector_discuss_ns").ltrim(tpl_getConf("vector_userpage_ns"), ":").$loginname, hsc($lang["vector_mytalk"]))."</li>";
-          }
-          //admin
-          if (!empty($INFO["isadmin"]) ||
-              !empty($INFO["ismanager"])){
-              echo  "      <li id=\"pt-admin\"><a href=\"".wl(cleanID(getId()), array("do" => "admin"))."\" rel=\"nofollow\">".hsc($lang["btn_admin"])."</a></li>\n"; //language comes from DokuWiki core
-          }
-          //profile
-          if (actionOK("profile")){ //check if action is disabled
-              echo  "      <li id=\"pt-preferences\"><a href=\"".wl(cleanID(getId()), array("do" => "profile"))."\" rel=\"nofollow\">".hsc($lang["btn_profile"])."</a></li>\n"; //language comes from DokuWiki core
-          }
-          //logout
-          echo  "      <li id=\"pt-logout\"><a href=\"".wl(cleanID(getId()), array("do" => "logout"))."\" rel=\"nofollow\">".hsc($lang["btn_logout"])."</a></li>\n"; //language comes from DokuWiki core
-      }
-      echo  "    </ul>\n"
-           ."  </div>\n";
-  }
-  ?>
-
-  <!-- start div id=left-navigation -->
-  <div id="left-navigation">
-    <div id="p-namespaces" class="vectorTabs">
-      <ul><?php
-          //show tabs: left. see vector/user/tabs.php to configure them
-          if (!empty($_vector_tabs_left) &&
-              is_array($_vector_tabs_left)){
-              _vector_renderTabs($_vector_tabs_left);
-          }
-          ?>
-
-      </ul>
-    </div>
-  </div>
-  <!-- end div id=left-navigation -->
-
-  <!-- start div id=right-navigation -->
-  <div id="right-navigation">
-    <div id="p-views" class="vectorTabs">
-      <ul><?php
-          //show tabs: right. see vector/user/tabs.php to configure them
-          if (!empty($_vector_tabs_right) &&
-              is_array($_vector_tabs_right)){
-              _vector_renderTabs($_vector_tabs_right);
-          }
-          ?>
-
-      </ul>
-    </div>
-<?php if (actionOK("search")){ ?>
-    <div id="p-search">
-      <h5>
-        <label for="qsearch__in"><?php echo hsc($lang["vector_search"]); ?></label>
-      </h5>
-      <form action="<?php echo wl(); ?>" accept-charset="utf-8" id="dw__search" name="dw__search">
-        <input type="hidden" name="do" value="search" />
-        <div id="simpleSearch">
-          <input id="qsearch__in" name="id" type="text" accesskey="f" value="" />
-          <button id="searchButton" type="submit" name="button" title="<?php echo hsc($lang["vector_btn_search_title"]); ?>">&nbsp;</button>
-        </div>
-        <div id="qsearch__out" class="ajax_qsearch JSpopup"></div>
-      </form>
-    </div>
-<?php } ?>
-  </div>
-  <!-- end div id=right-navigation -->
-
-</div>
-<!-- end div id=head -->
 
 <!-- start panel/sidebar -->
 <div id="panel" class="noprint">
@@ -732,6 +734,8 @@ if (file_exists(DOKU_TPLINC."lang/".$conf["lang"]."/style.css")){
 
 </div>
 <!-- end panel/sidebar -->
+</div>
+<!-- end container -->
 
 <!-- start footer -->
 <div id="footer">
