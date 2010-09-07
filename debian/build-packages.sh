@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #Patchen
-QUILT_PATCHES=./debian/patches
+export QUILT_PATCHES=debian/patches
 quilt --quiltrc /dev/null push -a
 
 cd ..

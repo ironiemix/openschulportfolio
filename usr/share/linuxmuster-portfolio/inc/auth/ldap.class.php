@@ -8,6 +8,7 @@
  */
 
 class auth_ldap extends auth_basic {
+
     var $cnf = null;
     var $con = null;
     var $bound = 0; // 0: anonymous, 1: user, 2: superuser
@@ -138,6 +139,7 @@ class auth_ldap extends auth_basic {
      * @author  <evaldas.auryla@pheur.org>
      * @author  Stephane Chazelas <stephane.chazelas@emerson.com>
      * @return  array containing user data or false
+     * huhu
      */
     function getUserData($user,$inbind=false) {
         global $conf;
