@@ -16,6 +16,7 @@
  * @link http://www.dokuwiki.org/devel:coding_style
  * @link http://www.dokuwiki.org/devel:environment
  * @link http://www.dokuwiki.org/devel:action_modes
+ * @modifications Frank Schiebel <frank@linuxmuster.net>
  */
 
 
@@ -713,7 +714,10 @@ if (file_exists(DOKU_TPLINC."lang/".$conf["lang"]."/style.css")){
       <?php
       //include default or userdefined logo
       echo "<a href=\"".wl()."\" ";
-      if (file_exists(DOKU_TPLINC."user/logo.png")){
+      if (file_exists($conf['savedir']."/media/shared/seitenlogo/logo.png")){
+          //user defined PNG as Media upload
+          echo "style=\"background-image:url(".DOKU_URL."_media/shared:seitenlogo:logo.png);\"";
+      }elseif (file_exists(DOKU_TPLINC."user/logo.png")){
           //user defined PNG
           echo "style=\"background-image:url(".DOKU_TPL."user/logo.png);\"";
       }elseif (file_exists(DOKU_TPLINC."user/logo.gif")){
