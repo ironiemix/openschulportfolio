@@ -33,6 +33,10 @@ if (!defined("DOKU_INC")){
     die();
 }
 
+// portfolio title
+$conf["vector_sitetitle"]    = "Schulportfolio"; //TRUE: use/show user pages
+$conf["vector_schoolname"]    = "Eine tolle Schule"; //TRUE: use/show user pages
+
 //user pages
 $conf["vector_userpage"]    = true; //TRUE: use/show user pages
 $conf["vector_userpage_ns"] = ":wiki:user:"; //namespace to use for user page storage

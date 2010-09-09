@@ -515,7 +515,9 @@ if (file_exists(DOKU_TPLINC."lang/".$conf["lang"]."/style.css")){
   //show personal tools
   if (!empty($conf["useacl"])){ //...makes only sense if there are users
       echo  "\n"
-           ."  <div id=\"p-personal\">\n"
+           ."  <div id=\"p-personal\">\n" . "<div id=\"sitetitle\"> \n" 
+	   . "<h1>" . tpl_getConf("vector_sitetitle") . "</h1>"
+	   . "<span>" . tpl_getConf("vector_schoolname") . "</span></div>"
            ."    <ul>\n";
       //login?
       if ($loginname === ""){
@@ -623,9 +625,14 @@ if (file_exists(DOKU_TPLINC."lang/".$conf["lang"]."/style.css")){
               echo "&#160;]<br />";
           }else{
               //show the rendered page content
-              echo  "    <div class=\"dokuwiki\">\n" //dokuwiki CSS class needed cause we are showing rendered page content
-                   .$interim."\n    "
-                   ."</div>";
+              echo  "    <div class=\"dokuwiki\">\n"; //dokuwiki CSS class needed cause we are showing rendered page content
+
+             if (auth_quickaclcheck(cleanID(tpl_getConf("vector_sitenotice_location"))) > AUTH_READ){ //current user got write perm?
+	     	//print edit link for the site notice
+	  	echo '<div class="secedit2" style="clear:both;text-align:right;padding:0;margin:0"><a href="' . DOKU_BASE .   'doku.php?id=' .tpl_getConf("vector_sitenotice_location") . '&amp;do=edit' . '">' . $lang['btn_secedit'] . '</a></div>';
+	     }
+             echo $interim."\n    " ."</div>";
+
           }
           echo "\n  </div>\n";
       }
@@ -741,7 +748,7 @@ if (file_exists(DOKU_TPLINC."lang/".$conf["lang"]."/style.css")){
 <div id="footer">
   <ul id="footer-info">
     <li id="footer-info-lastmod">
-      <?php tpl_pageinfo()?><br />
+      Seiten-Info  &nbsp;&nbsp;  <span class="pagename">[[<?php echo $ID?>]] </span> &nbsp;&nbsp; <?php tpl_pageinfo()?>
     </li>
     <?php
     //copyright notice

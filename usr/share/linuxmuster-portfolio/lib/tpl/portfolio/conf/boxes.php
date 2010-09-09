@@ -58,7 +58,11 @@ if (empty($conf["useacl"]) || //are there any users?
                 $_vector_boxes["p-navigation"]["xhtml"] = "[&#160;".html_wikilink(tpl_getConf("vector_navigation_location"), hsc($lang["vector_fillplaceholder"]." (".tpl_getConf("vector_navigation_location").")"))."&#160;]<br />";
             }else{
                 //the rendered page content
-                $_vector_boxes["p-navigation"]["xhtml"] = $interim;
+                $_vector_boxes["p-navigation"]["xhtml"] = $interim ;
+		if (auth_quickaclcheck(cleanID(tpl_getConf("vector_navigation_location"))) > AUTH_READ){ //current user got write perm?
+			//add edit link for navigation
+                	$_vector_boxes["p-navigation"]["xhtml"] .= '<div class="secedit2" style="clear:both;text-align:right;padding:0;margin:0"><a href="' . DOKU_BASE .   'doku.php?id=' .tpl_getConf("vector_navigation_location") . '&amp;do=edit' . '">' . $lang['btn_secedit'] . '</a></div>';
+		}
             }
         }
     }
@@ -155,6 +159,10 @@ if (empty($conf["useacl"]) || //are there any users?
             if (actionOK("index")){ //check if action is disabled
                 $_vector_boxes["p-tb"]["xhtml"] .= "        <li id=\"t-special\"><a href=\"".wl("", array("do" => "index"))."\" rel=\"nofollow\">".hsc($lang["vector_toolbxdef_siteindex"])."</a></li>\n";
             }
+	    if ( $INFO['isadmin'] == 1) {
+                $_vector_boxes["p-tb"]["xhtml"] .= "        <li id=\"t-special\"><a href=\"".wl(cleanID(getID()), array("do" => "admin", "page" => "pagemove"))."\" rel=\"nofollow\">Seite verschieben</a></li>\n";
+            }
+
             $_vector_boxes["p-tb"]["xhtml"] .=  "        <li id=\"t-permanent\"><a href=\"".wl(cleanID(getId()), array("rev" =>(int)$rev))."\" rel=\"nofollow\">".hsc($lang["vector_toolboxdef_permanent"])."</a></li>\n"
                                                ."        <li id=\"t-cite\"><a href=\"".wl(cleanID(getId()), array("rev" =>(int)$rev, "vecdo" => "cite"))."\" rel=\"nofollow\">".hsc($lang["vector_toolboxdef_cite"])."</a></li>\n"
                                                ."      </ul>";
