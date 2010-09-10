@@ -66,9 +66,3 @@ $_vector_boxes["example2"]["xhtml"] =  "<ul>\n"
                                       ."  <li><a href=\"".wl(cleanID(getId()), array("rev" => 0, "vecdo" => "cite"))."\" rel=\"nofollow\">Cite newest version</a></li>\n"
                                       ."</ul>";
 */
-
-
-/*
-$_vector_boxes["example3"]["headline"] = "Buttons";
-$_vector_boxes["example3"]["xhtml"] = "<a href=\"http://andreas-haerter.com/donate/vector/\" title=\"Donate\" target=\"_blank\"><img src=\"".DOKU_TPL."static/img/button-donate.gif\" width=\"80\" height=\"15\" alt=\"Donate\" border=\"0\" /></a>";
-*/

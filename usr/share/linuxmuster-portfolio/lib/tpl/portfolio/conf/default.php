@@ -35,23 +35,23 @@ if (!defined("DOKU_INC")){
 
 // portfolio title
 $conf["vector_sitetitle"]    = "Schulportfolio"; //TRUE: use/show user pages
-$conf["vector_schoolname"]    = "Eine tolle Schule"; //TRUE: use/show user pages
+$conf["vector_schoolname"]    = "Schulname hier eintragen"; //TRUE: use/show user pages
 
 //user pages
-$conf["vector_userpage"]    = true; //TRUE: use/show user pages
-$conf["vector_userpage_ns"] = ":wiki:user:"; //namespace to use for user page storage
+$conf["vector_userpage"]    = false; //TRUE: use/show user pages
+$conf["vector_userpage_ns"] = ":wiki:userpages:"; //namespace to use for user page storage
 
 //discussion pages
-$conf["vector_discuss"]    = true; //TRUE: use/show discussion pages
-$conf["vector_discuss_ns"] = ":talk:"; //namespace to use for discussion page storage
+$conf["vector_discuss"]    = false; //TRUE: use/show discussion pages
+$conf["vector_discuss_ns"] = ":wiki:discussion:"; //namespace to use for discussion page storage
 
 //site notice
 $conf["vector_sitenotice"]          = true; //TRUE: use/show sitenotice
-$conf["vector_sitenotice_location"] = ":wiki:site_notice"; //page/article used to store the sitenotice
+$conf["vector_sitenotice_location"] = ":allusers:topmenu"; //page/article used to store the sitenotice
 
 //navigation
 $conf["vector_navigation"]          = true; //TRUE: use/show navigation
-$conf["vector_navigation_location"] = ":wiki:navigation"; //page/article used to store the navigation
+$conf["vector_navigation_location"] = ":allusers:sidebar"; //page/article used to store the navigation
 
 //exportbox ("print/export")
 $conf["vector_exportbox"]          = true; //TRUE: use/show exportbox
@@ -69,7 +69,7 @@ $conf["vector_copyright_default"]  = true; //TRUE: use default copyright notice 
 $conf["vector_copyright_location"] = ":wiki:copyright"; //page/article used to store a custom copyright notice
 
 //donation link/button
-$conf["vector_donate"]          = true; //TRUE: use/show donation link/button
+$conf["vector_donate"]          = false; //TRUE: use/show donation link/button
 $conf["vector_donate_default"]  = true; //TRUE: use default donation link/button (if donation link is enabled at all)
 $conf["vector_donate_url"]      = "http://andreas-haerter.com/donate/vector/paypal"; //custom donation URL instead of the default one
 
@@ -86,5 +86,5 @@ if (!empty($_SERVER["HTTP_HOST"])){
   $conf["vector_cite_author"] = "Anonymous Contributors"; //name to use for the author on the citation page
 }
 $conf["vector_loaduserjs"]            = false; //TRUE: vector/user/user.js will be loaded
-$conf["vector_closedwiki"]            = false; //TRUE: hides most tabs/functions until user is logged in
+$conf["vector_closedwiki"]            = true; //TRUE: hides most tabs/functions until user is logged in
 

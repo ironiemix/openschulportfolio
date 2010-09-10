@@ -38,13 +38,14 @@ if (!defined("DOKU_INC")){
 
 
 //RSS recent changes button
+/*
 $_vector_btns["rss"]["img"]      = DOKU_TPL."static/img/button-rss.png";
 $_vector_btns["rss"]["href"]     = DOKU_BASE."feed.php";
 $_vector_btns["rss"]["width"]    = 80;
 $_vector_btns["rss"]["height"]   = 15;
 $_vector_btns["rss"]["title"]    = $lang["vector_recentchanges"];
 $_vector_btns["rss"]["nofollow"] = true;
-
+*/
 
 //donation button
 if (tpl_getConf("vector_donate")){
@@ -60,6 +61,13 @@ if (tpl_getConf("vector_donate")){
     $_vector_btns["donate"]["title"]    = $lang["vector_donate"];
     $_vector_btns["donate"]["nofollow"] = true;
 }
+//"OSP" button
+$_vector_btns["osp"]["img"]      = DOKU_TPL."static/img/button-osp.gif";
+$_vector_btns["osp"]["href"]     = "http://www.openschulportfolio.de";
+$_vector_btns["osp"]["width"]    = 80;
+$_vector_btns["osp"]["height"]   = 15;
+$_vector_btns["osp"]["title"]    = "Openschulportfolio";
+$_vector_btns["osp"]["nofollow"] = false;
 
 
 //"vector for DokuWiki" button
