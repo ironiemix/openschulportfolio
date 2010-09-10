@@ -15,5 +15,15 @@ if [ $VECTORUPDATE -eq 1 ]; then
     echo "Updating from ACH -> vector..."
     rm -f /etc/linuxmuster-portfolio/user.css
     rm -f /etc/linuxmuster-portfolio/*.dist
+    if [ -f /etc/linuxmuster-portfolio/images/header_logo.png ]; then 
+       cp /etc/linuxmuster-portfolio/images/header_logo.png /etc/linuxmuster-portfolio/logo.png.backup 
+    fi
+    rm -rf /etc/linuxmuster-portfolio/images/
+    if [ -d /etc/linuxmuster-portfolio/usermod ]; then 
+        rm -rf /etc/linuxmuster-portfolio/usermod
+    fi
+    if [ -d /etc/linuxmuster-portfolio/openschulportfolio ]; then 
+        rm -rf /etc/linuxmuster-portfolio/openschulportfolio
+    fi
 fi
 
