@@ -3,6 +3,7 @@
 DATADIR="/home/linuxmuster-portfolio/data/"
 EXAMPLES="/var/lib/linuxmuster-portfolio/data/"
 HELP="/var/lib/linuxmuster-portfolio/help/"
+TEMPLATE="/usr/share/linuxmuster-portfolio/lib/tpl/portfolio"
 
 
 # Only install examples on fresh install
