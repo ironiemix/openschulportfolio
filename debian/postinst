@@ -17,6 +17,18 @@ if [ ! -f $DATADIR/pages/start.txt ]; then
    echo "   done."
 fi
 
+if [ ! -d $DATADIR/media/wiki/logo/ ]; then
+     echo "Creating logo directory..."
+     mkdir -p $DATADIR/media/wiki/logo/
+     touch $DATADIR/media/wiki/logo/dummy_dont_delete.png
+fi
+
+LOGOACL=0
+grep -q "wiki:logo:" /etc/linuxmuster-portfolio/acl.auth.php && LOGOACL=1
+if [ $LOGOACL -eq 0 ]; then
+  echo "wiki:logo:*     @ALL    1" >> /etc/linuxmuster-portfolio/acl.auth.php
+fi
+
 # link to local plugins
 for PLUGIN in /etc/linuxmuster-portfolio/plugins/*; do 
 PLUGINNAME=`echo $PLUGIN | awk -F/ '{print $5}'`
@@ -43,6 +55,7 @@ fi
 if [ -f /usr/share/linuxmuster/config/dist.conf ]; then  
      . /usr/share/linuxmuster/config/dist.conf
 fi
+
 
 basedn=`grep basedn $NETWORKSETTINGS | sed "s/^.*\"\(.*\)\".*$/\1/"`
 

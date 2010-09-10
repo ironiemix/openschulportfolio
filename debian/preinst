@@ -8,7 +8,6 @@ TOPMENU=${DATADIR}/pages/allusers/topmenu.txt
 
 
 # Are we updating from ACH Template?
-echo "Executing preints..."
 VECTORUPDATE=0
 grep -q "Based on 'ACH' Template for DokuWiki" ${TEMPLATE}/main.php && VECTORUPDATE=1
 
@@ -27,10 +26,6 @@ if [ $VECTORUPDATE -eq 1 ]; then
         rm -rf /etc/linuxmuster-portfolio/openschulportfolio
     fi
 
-    if [ ! -d ${DATADIR}/media/wiki/logo/ ]; then
-        mkdir -p ${DATADIR}/media/wiki/logo/
-	touch ${DATADIR}/media/wiki/logo/dummy_dont_delete.png
-    fi
 
     echo '<menu col=1,align=left,caption="",type="menubar">' > ${TOPMENU}.vector
     sed 's#\*.*\[\[\(.*\)|{{\(.*\)|\(.*\)}}\]\]#<item>\3|\3\|\1|\2</item>#' < $TOPMENU >> ${TOPMENU}.vector
