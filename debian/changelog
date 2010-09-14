@@ -1,14 +1,13 @@
-linuxmuster-portfolio (1.0.0-7) openlml; urgency=low
+linuxmuster-portfolio (1.0.0-8) openlml; urgency=low
 
-     * OSP Plugin for layout and design config
      * First full documented release
      * Changed local ldap Auth to ldap instead of ldaps - many
        paedMLs appearently have ldaps disabled 
-     * Moved experimental gpuntis plugin out of the way to branch
      * Fixed multiple slashes/multiple":" bug in filelist-plugin
      * Updated dw2pdf to version 2010-04-02, now read permissions are
        considered
-     * Moved portfolio template base to vector instead of ach
+     * portfolio template based on "vector" instead of "ach"
+     * user modifications linked to /etc in linuxmuster-deb
 
  -- Frank Schiebel <frank@linuxmuster.net>  Sun, 06 Jun 2010 22:00:00 +0100
 
