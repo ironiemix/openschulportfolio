@@ -42,6 +42,7 @@ $lang["vector_specialpage"] = "Spezialseiten";
 $lang["vector_mytalk"] = "Meine Diskussion";
 $lang["vector_exportodt"] = "Export: ODT";
 $lang["vector_exportpdf"] = "Export: PDF";
+$lang["vector_exports5"] = "View: S5";
 $lang["vector_subscribens"] = "NR-Änderungen abbonieren"; //original DW lang $lang["btn_subscribens"] is simply too long for common tab configs
 $lang["vector_unsubscribens"] = "NR-Änderungen abbestellen";  //original DW lang $lang["btn_unsubscribens"] is simply too long for common tab configs
 $lang["vector_translations"] = "In anderen Sprachen";
@@ -63,6 +64,7 @@ $lang["vector_btn_search_title"] = "Suche nach Seiten, die diesen Text enthalten
 $lang["vector_exportbxdef_print"] = "Druckversion";
 $lang["vector_exportbxdef_downloadodt"] = "Als ODT herunterladen";
 $lang["vector_exportbxdef_downloadpdf"] = "Als PDF herunterladen";
+$lang["vector_exportbxdef_downloads5"] = "Als S5 anzeigen";
 
 //default toolbox
 $lang["vector_toolbxdef_whatlinkshere"] = "Links auf diese Seite";

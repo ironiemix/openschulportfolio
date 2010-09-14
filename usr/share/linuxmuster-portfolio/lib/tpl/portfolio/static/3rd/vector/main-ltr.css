@@ -417,6 +417,18 @@ div#panel {
 	width: 10em;
 	left: 0;
 }
+        div#panel div#ospversionpic {
+	     background: transparent url(static/3rd/vector/ospversion.png) top center no-repeat;
+	     height: 45px;
+	     margin-top: 40px;
+	}
+	div#panel div#ospversion {
+		font-size: 0.5em;
+		color: #aaa;
+		text-align: center;
+	}
+
+
 	div#panel div.portal {
 		padding-bottom: 1.5em;
 	}

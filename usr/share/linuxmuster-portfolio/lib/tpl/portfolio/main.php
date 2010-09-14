@@ -305,6 +305,12 @@ function _vector_renderBoxes($arr)
         }
         echo  "\n";
     }
+    echo "<div id=\"ospversionpic\"></div>\n<div id=\"ospversion\">(oSP ";
+    if (file_exists(DOKU_TPLINC."/ospversion.php")){
+         include DOKU_TPLINC."/ospversion.php";
+    }
+    echo ")</div>";
+
 
     return true;
 }

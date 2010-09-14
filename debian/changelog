@@ -1,4 +1,4 @@
-linuxmuster-portfolio (1.0.0-8) openlml; urgency=low
+linuxmuster-portfolio (1.0.0-9) openlml; urgency=low
 
      * First full documented release
      * Changed local ldap Auth to ldap instead of ldaps - many

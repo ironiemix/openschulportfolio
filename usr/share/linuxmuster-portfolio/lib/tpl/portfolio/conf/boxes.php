@@ -115,6 +115,12 @@ if (empty($conf["useacl"]) || //are there any users?
                        !plugin_isdisabled("html2pdf")){
                 $_vector_boxes["p-coll-print_export"]["xhtml"]  .= "        <li id=\"coll-download-as-rl\"><a href=\"".wl(cleanID(getId()), array("do" => "export_pdf"))."\" rel=\"nofollow\">".hsc($lang["vector_exportbxdef_downloadpdf"])."</a></li>\n";
             }
+            //s5 plugin
+            //see <http://www.dokuwiki.org/plugin:s5> for info
+            if (file_exists(DOKU_PLUGIN."s5/syntax.php") &&
+                !plugin_isdisabled("s5")){
+                $_vector_boxes["p-coll-print_export"]["xhtml"]  .= "        <li id=\"coll-download-as-rl\"><a href=\"".wl(cleanID(getId()), array("do" => "export_s5"))."\" rel=\"nofollow\">".hsc($lang["vector_exportbxdef_downloads5"])."</a></li>\n";
+	    }
             $_vector_boxes["p-coll-print_export"]["xhtml"] .=  "        <li id=\"t-print\"><a href=\"".wl(cleanID(getId()), array("rev" =>(int)$rev, "vecdo" => "print"))."\" rel=\"nofollow\">".hsc($lang["vector_exportbxdef_print"])."</a></li>\n"
                                                               ."      </ul>";
         }else{
