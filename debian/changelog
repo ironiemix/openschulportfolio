@@ -1,6 +1,5 @@
-linuxmuster-portfolio (1.0.0-9) openlml; urgency=low
+linuxmuster-portfolio (1.0.0-10) openlml; urgency=low
 
-     * First full documented release
      * Changed local ldap Auth to ldap instead of ldaps - many
        paedMLs appearently have ldaps disabled 
      * Fixed multiple slashes/multiple":" bug in filelist-plugin
@@ -8,6 +7,7 @@ linuxmuster-portfolio (1.0.0-9) openlml; urgency=low
        considered
      * portfolio template based on "vector" instead of "ach"
      * user modifications linked to /etc in linuxmuster-deb
+     * First full documented release
 
  -- Frank Schiebel <frank@linuxmuster.net>  Sun, 06 Jun 2010 22:00:00 +0100
 

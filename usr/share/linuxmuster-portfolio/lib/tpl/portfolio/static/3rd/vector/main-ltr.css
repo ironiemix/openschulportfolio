@@ -32,6 +32,11 @@ body {
 	background-color: #f3f3f3;
 	background-image: url(static/3rd/vector/page-base.png);
 }
+
+#pf-container {
+  max-width:960px;
+}
+
 /* Content */
 div#content {
 	margin-left: 10em;
