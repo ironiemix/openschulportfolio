@@ -1,2 +1,3 @@
 etc/linuxmuster-portfolio/apache2.conf /etc/apache2/conf.d/linuxmuster-portfolio.conf 
 etc/linuxmuster-portfolio/user/ /usr/share/linuxmuster-portfolio/lib/tpl/portfolio/user
+etc/linuxmuster-portfolio/htaccess /usr/share/linuxmuster-portfolio/.htaccess
