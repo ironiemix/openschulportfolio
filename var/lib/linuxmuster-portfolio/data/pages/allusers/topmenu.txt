@@ -1,2 +1,4 @@
-  * [[aktuelles:termine |{{:shared:icons:office-calendar-40x40.png|Termine}}]]
-  * [[portfolio:start|{{:shared:icons:portfolio-40x40.png|Portfolio}}]]
+<menu col=1,align=left,caption="",type="menubar">
+  <item>Start|Startseite|:start|:shared:icons:go-home-40x40.png</item>
+  <item>Portfolio|Beispielhafte Portfoliostruktur|portfolio:start|:shared:icons:portfolio2-40x40.png</item>
+</menu>  
