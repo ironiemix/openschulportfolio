@@ -97,7 +97,7 @@ class syntax_plugin_iCalEvents extends DokuWiki_Syntax_Plugin {
           foreach ($entries as $entry) {
             $rowCount++;
             $ret .= '<tr>';
-            $ret .= '<td>'.$entry['date'].'</td>';
+            $ret .= '<td>'.$entry['date'].' <span class="icaltime">'.$entry['time'].'</span></td>';
             $ret .= '<td>'.$entry['summary'].'</td>';
             $ret .= '<td>'.$entry['description'].'</td>';
             $ret .= '<td>'.$entry['location'].'</td>';
@@ -135,7 +135,11 @@ class syntax_plugin_iCalEvents extends DokuWiki_Syntax_Plugin {
         $regex_description = '/DESCRIPTION:(.*?)\n[^ ]/s';  # descriptions may be continued with a space at the start of the next line
         $regex_allday      = '/DTSTART;VALUE=DATE:([0-9]{4})([0-9]{2})([0-9]{2})/';  #all day event
         $regex_dtstart     = '/DTSTART.*?:([0-9]{4})([0-9]{2})([0-9]{2})T([0-9]{2})([0-9]{2})([0-9]{2})/';
+        $regex_dtend       = '/DTEND.*?:([0-9]{4})([0-9]{2})([0-9]{2})T([0-9]{2})([0-9]{2})([0-9]{2})/';
         $regex_location    = '/LOCATION:(.*?)\n/';
+        
+        
+        $entry['time'] = "";
 
         #split the whole content into VEVENTs        
         preg_match_all($regex_vevent, $content, $matches, PREG_PATTERN_ORDER);
@@ -148,7 +152,14 @@ class syntax_plugin_iCalEvents extends DokuWiki_Syntax_Plugin {
           }
           if (preg_match($regex_dtstart, $vevent, $dtstart)) {
             $entry['date'] = $dtstart[3].'.'.$dtstart[2].'.'.$dtstart[1];
+            $entry_hour = $dtstart[4] + 2;
+            $entry['time'] = $entry_hour.':'.$dtstart[5];
             $entry['unixdate'] = mktime($dtstart[4], $dtstart[5], $dtstart[6], $dtstart[2], $dtstart[3], $dtstart[1]);
+            # get end-time
+            if (preg_match($regex_dtend, $vevent, $dtend)) {
+                $entry_hour = $dtend[4] + 2;
+                $entry['time'] .= '-'.$entry_hour.':'.$dtend[5];
+            }
           }
           if (preg_match($regex_allday, $vevent, $allday)) {
             $entry['date'] = $allday[3].'.'.$allday[2].'.'.$allday[1];
