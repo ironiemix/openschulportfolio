@@ -9,7 +9,9 @@ TOPMENU=${DATADIR}/pages/allusers/topmenu.txt
 
 # Are we updating from ACH Template?
 VECTORUPDATE=0
+if [ -f ${TEMPLATE}/main.php ]; then
 grep -q "Based on 'ACH' Template for DokuWiki" ${TEMPLATE}/main.php && VECTORUPDATE=1
+fi
 
 if [ $VECTORUPDATE -eq 1 ]; then
     echo "Updating from ACH -> vector..."

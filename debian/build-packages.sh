@@ -102,7 +102,6 @@ rm portfolio/inc/preload.php
 
 # removing ldap auth entrys
 sed -i "/conf\['auth'\]\['ldap'\]/d" portfolio/conf/local.php
-sed -i "/conf\['auth'\]\['ldap'\]/d" portfolio/conf/local.php
 sed -i "/conf\['authtype'\]/d" portfolio/conf/local.php
 sed -i "/conf\['savedir'\]/d" portfolio/conf/local.php
 sed -i "/conf\['userewrite'\]/d" portfolio/conf/local.php
