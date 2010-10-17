@@ -1,4 +1,4 @@
-linuxmuster-portfolio (1.0.1-4) openlml; urgency=low
+linuxmuster-portfolio (1.0.1-5) openlml; urgency=low
 
      * Upgraded underlying dokuwiki to "Lazy Sunday"
      * Disabled updatecheck for new installations
@@ -7,6 +7,7 @@ linuxmuster-portfolio (1.0.1-4) openlml; urgency=low
      * Added secutity.png to data-dir
      * Secured data, conf, bin, inc with .htaccess
      * Fixed vector css for verion info in admin
+     * Fixed pagemove back to od version (0.10) doesnt work with lazy sunday
 
  -- Frank Schiebel <frank@linuxmuster.net>  Sun, 17 Oct 2010 13:18:00 +0100
 
