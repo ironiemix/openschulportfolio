@@ -1,8 +1,12 @@
-linuxmuster-portfolio (1.0.1-1) openlml; urgency=low
+linuxmuster-portfolio (1.0.1-4) openlml; urgency=low
 
      * Upgraded underlying dokuwiki to "Lazy Sunday"
      * Disabled updatecheck for new installations
+     * Added data-dir to /usr/share/linuxmuster-portfolio for comptibility
+       reasons 
+     * Added secutity.png to data-dir
      * Secured data, conf, bin, inc with .htaccess
+     * Fixed vector css for verion info in admin
 
  -- Frank Schiebel <frank@linuxmuster.net>  Sun, 17 Oct 2010 13:18:00 +0100
 

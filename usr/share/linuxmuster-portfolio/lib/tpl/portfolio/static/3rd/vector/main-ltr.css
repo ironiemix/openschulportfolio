@@ -36,6 +36,15 @@ body {
 #pf-container {
   max-width:960px;
 }
+
+/* Admin Lazy Sunday: Version */
+#admin__version {
+ clear:left;
+ text-align: right;
+ font-size: 80%;
+ color: #888;
+}
+
 /* Compatibility for old top menu, styles in vektor not needed */
 #siteNotice ul {
     list-style: none !important;
