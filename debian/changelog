@@ -2,6 +2,7 @@ linuxmuster-portfolio (1.0.1-1) openlml; urgency=low
 
      * Upgraded underlying dokuwiki to "Lazy Sunday"
      * Disabled updatecheck for new installations
+     * Secured data, conf, bin, inc with .htaccess
 
  -- Frank Schiebel <frank@linuxmuster.net>  Sun, 17 Oct 2010 13:18:00 +0100
 
