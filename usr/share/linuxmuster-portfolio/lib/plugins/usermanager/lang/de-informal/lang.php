@@ -4,23 +4,25 @@
  *
  * @author Alexander Fischer <tbanus@os-forge.net>
  * @author Juergen Schwarzer <jschwarzer@freenet.de>
+ * @author Marcel Metz <marcel_metz@gmx.de>
+ * @author Matthias Schulte <post@lupo49.de>
  */
 $lang['menu']                  = 'Benutzerverwalter';
 $lang['noauth']                = '(Benutzeranmeldung ist nicht verfügbar)';
 $lang['nosupport']             = '(Benutzerverwaltung wird nicht unterstützt)';
-$lang['badauth']               = 'Ungültige Authentifizerung';
+$lang['badauth']               = 'Ungültige Authentifizierung';
 $lang['user_id']               = 'Benutzer';
 $lang['user_pass']             = 'Passwort';
 $lang['user_name']             = 'Echter Name';
-$lang['user_mail']             = 'Email';
+$lang['user_mail']             = 'E-Mail';
 $lang['user_groups']           = 'Gruppen';
 $lang['field']                 = 'Feld';
 $lang['value']                 = 'Wert';
 $lang['add']                   = 'Zufügen';
 $lang['delete']                = 'Löschen';
 $lang['delete_selected']       = 'Lösche ausgewähltes';
-$lang['edit']                  = 'Editieren';
-$lang['edit_prompt']           = 'Editiere den Benutzer';
+$lang['edit']                  = 'Bearbeiten';
+$lang['edit_prompt']           = 'Bearbeite diesen Benutzer';
 $lang['modify']                = 'Änderungen speichern';
 $lang['search']                = 'Suchen';
 $lang['search_prompt']         = 'Suche ausführen';

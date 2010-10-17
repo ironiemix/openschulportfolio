@@ -1057,6 +1057,11 @@ div#content a[href ^="https://"],
 	background: url(static/3rd/vector/lock-icon.png) center right no-repeat;
 	padding: 0 13px 0 0;
 }
+div#content div#menu a[href ^="https://"],
+.link-https {
+	background: transparent;
+	padding: 0 13px 0 0;
+}
 div#content a[href ^="mailto:"],
 .link-mailto {
 	background: url(static/3rd/vector/mail-icon.png) center right no-repeat;

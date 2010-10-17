@@ -30,6 +30,7 @@ var linkwiz = {
         linkwiz.wiz.style.top  = (findPosY(textArea)+20)+'px';
         linkwiz.wiz.style.left = (findPosX(textArea)+80)+'px';
         linkwiz.wiz.style.marginLeft = '-10000px';
+        linkwiz.wiz.style.marginTop  = '-10000px';
 
         linkwiz.wiz.innerHTML =
              '<div id="link__wiz_header">'+
@@ -37,7 +38,7 @@ var linkwiz = {
              LANG['linkwiz']+'</div>'+
              '<div>'+LANG['linkto']+' <input type="text" class="edit" id="link__wiz_entry" autocomplete="off" /></div>'+
              '<div id="link__wiz_result"></div>';
-        textArea.form.parentNode.appendChild(linkwiz.wiz);
+        $('dw__editform').parentNode.appendChild(linkwiz.wiz);
         linkwiz.textArea = textArea;
         linkwiz.result = $('link__wiz_result');
         linkwiz.entry = $('link__wiz_entry');
@@ -200,6 +201,13 @@ var linkwiz = {
         if(sel.start == 0 && sel.end == 0) sel = linkwiz.selection;
 
         var stxt = sel.getText();
+
+        // don't include trailing space in selection
+        if(stxt.charAt(stxt.length - 1) == ' '){
+            sel.end--;
+            stxt = sel.getText();
+        }
+
         if(!stxt && !DOKU_UHC) stxt=title;
 
         // prepend colon inside namespaces for non namespace pages
@@ -217,6 +225,8 @@ var linkwiz = {
 
         pasteText(sel,link,{startofs: so, endofs: eo});
         linkwiz.hide();
+        // reset the entry to the parent namespace and remove : at the beginning
+        linkwiz.entry.value = linkwiz.entry.value.replace(/(^:)?[^:]*$/, '');
     },
 
     /**
@@ -256,6 +266,7 @@ var linkwiz = {
     show: function(){
         linkwiz.selection  = getSelection(linkwiz.textArea);
         linkwiz.wiz.style.marginLeft = '0px';
+        linkwiz.wiz.style.marginTop = '0px';
         linkwiz.entry.focus();
         linkwiz.autocomplete();
     },
@@ -265,6 +276,7 @@ var linkwiz = {
      */
     hide: function(){
         linkwiz.wiz.style.marginLeft = '-10000px';
+        linkwiz.wiz.style.marginTop  = '-10000px';
         linkwiz.textArea.focus();
     },
 
