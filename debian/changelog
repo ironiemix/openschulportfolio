@@ -1,3 +1,10 @@
+linuxmuster-portfolio (1.0.1-6) openlml; urgency=low
+     
+     * Patched /inc/parser/xhtml.php to accept table_open an table_close
+       without any arguments to make plugins working (doodle, filelist)
+
+ -- Frank Schiebel <frank@linuxmuster.net>  Tue, 19 Oct 2010 19:47:00 +0100
+
 linuxmuster-portfolio (1.0.1-5) openlml; urgency=low
 
      * Upgraded underlying dokuwiki to "Lazy Sunday"
