@@ -79,6 +79,7 @@ $meta["vector_toc_position"] = array("multichoice", "_choices" => array("article
 $meta["vector_mediamanager_embedded"] = array("onoff");
 $meta["vector_breadcrumbs_position"]  = array("multichoice", "_choices" => array("top", "bottom"));
 $meta["vector_youarehere_position"]   = array("multichoice", "_choices" => array("top", "bottom"));
+$meta["vector_winML_logout"]          = array("onoff"); 
 $meta["vector_cite_author"]           = array("string");
 $meta["vector_loaduserjs"]            = array("onoff");
 $meta["vector_closedwiki"]            = array("onoff");

@@ -80,6 +80,8 @@ $conf["vector_toc_position"] = "article"; //article: show TOC embedded within th
 $conf["vector_mediamanager_embedded"] =  false; //TRUE: Show media manager surrounded by the common navigation/tabs and stuff
 $conf["vector_breadcrumbs_position"]  = "bottom"; //position of breadcrumbs navigation ("top" or "bottom")
 $conf["vector_youarehere_position"]   = "top"; //position of "you are here" navigation ("top" or "bottom")
+// Winmuster
+$conf["vector_winML_logout"]   = false; //Logout link according to WinMl SSO?
 if (!empty($_SERVER["HTTP_HOST"])){
   $conf["vector_cite_author"] = "Contributors of ".hsc($_SERVER["HTTP_HOST"]); //name to use for the author on the citation page (hostname included)
 } else {

@@ -74,6 +74,7 @@ $lang["vector_toc_position"] = "Position des Inhaltsverzeichnisses";
 $lang["vector_mediamanager_embedded"] = "Mediamanager ins gewöhnliche Layout eingebetten anzeigen?";
 $lang["vector_breadcrumbs_position"]  = "Position der breadcrumb-Navigation (sofern aktiviert):";
 $lang["vector_youarehere_position"]   = "Position der 'Sie befinden sich hier'-Navigation (sofern aktiviert):";
+$lang["vector_winML_logout"]          = "Logout Link für Windows Musterlösung SSO anpassen?";
 $lang["vector_cite_author"]           = "Zu nutzender Autorenname in 'Artikel zitieren':";
 $lang["vector_loaduserjs"]            = "Datei 'vector/user/user.js' laden?";
 $lang["vector_closedwiki"]            = "Nicht-öffentliches Wiki (die meisten Links/Tabs/Boxen werden versteckt bis man sich einloggt)?";

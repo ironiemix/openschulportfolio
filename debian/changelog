@@ -1,3 +1,11 @@
+linuxmuster-portfolio (1.0.2-1) openlml; urgency=low
+
+     * Upgraded underlying dokuwiki to "Busy Wednesday"
+     * Added option for WinMl Logout button (experimental and untested)
+     * Removed table Patch, dokuwiki fixed this bug
+
+ -- Frank Schiebel <frank@linuxmuster.net>  Fri, 5 Nov 2010 18:18:00 +0100
+
 linuxmuster-portfolio (1.0.1-6) openlml; urgency=low
      
      * Patched /inc/parser/xhtml.php to accept table_open an table_close
