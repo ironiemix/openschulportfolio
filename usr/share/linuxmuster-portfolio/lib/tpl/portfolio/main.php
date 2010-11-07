@@ -526,9 +526,22 @@ if (file_exists(DOKU_TPLINC."lang/".$conf["lang"]."/style.css")){
 	   . "<h1>" . tpl_getConf("vector_sitetitle") . "</h1>"
 	   . "<span>" . tpl_getConf("vector_schoolname") . "</span></div>"
            ."    <ul>\n";
+
+      $showloginlogout = true;
+      // determine if the request comes from outside or inside
+      if (tpl_getConf("vector_winML_hide_loginlogout")) {
+       $winml_subnet = preg_replace("/(.*?)x.*/i", "$1" ,tpl_getConf("vector_winML_hide_loginlogout_subnet")); 
+       $remote_subnet = substr($_SERVER['REMOTE_ADDR'],0,strlen($winml_subnet));
+       if ( $winml_subnet === $remote_subnet ) {
+          $showloginlogout = false;
+       }
+      }
+
       //login?
       if ($loginname === ""){
-          echo  "      <li id=\"pt-login\"><a href=\"".wl(cleanID(getId()), array("do" => "login"))."\" rel=\"nofollow\">".hsc($lang["btn_login"])."</a></li>\n"; //language comes from DokuWiki core
+          if ($showloginlogout) {
+           echo  "      <li id=\"pt-login\"><a href=\"".wl(cleanID(getId()), array("do" => "login"))."\" rel=\"nofollow\">".hsc($lang["btn_login"])."</a></li>\n"; //language comes from DokuWiki core
+          }
       }else{
           //username and userpage
           echo "      <li id=\"pt-userpage\">".(tpl_getConf("vector_userpage")
@@ -549,10 +562,13 @@ if (file_exists(DOKU_TPLINC."lang/".$conf["lang"]."/style.css")){
               echo  "      <li id=\"pt-preferences\"><a href=\"".wl(cleanID(getId()), array("do" => "profile"))."\" rel=\"nofollow\">".hsc($lang["btn_profile"])."</a></li>\n"; //language comes from DokuWiki core
           }
           //logout
-          if (tpl_getConf("vector_winML_logout") ) {
-            echo  "      <li id=\"pt-logout\"><a href=\"".wl("", array("CMD" => "logoff"))."\" rel=\"nofollow\">".hsc($lang["btn_logout"])."</a></li>\n"; //language comes from DokuWiki core
-          } else {
+          if ($showloginlogout) {
+           if (tpl_getConf("vector_winML_logout") ) {
+            list($arg, $value) = split("=", tpl_getConf(vector_winML_logout_argument),2);
+            echo  "      <li id=\"pt-logout\"><a href=\"".wl("", array($arg => $value))."\" rel=\"nofollow\">".hsc($lang["btn_logout"])."</a></li>\n"; //language comes from DokuWiki core
+           } else {
             echo  "      <li id=\"pt-logout\"><a href=\"".wl(cleanID(getId()), array("do" => "logout"))."\" rel=\"nofollow\">".hsc($lang["btn_logout"])."</a></li>\n"; //language comes from DokuWiki core
+           }
           }
       }
       echo  "    </ul>\n"

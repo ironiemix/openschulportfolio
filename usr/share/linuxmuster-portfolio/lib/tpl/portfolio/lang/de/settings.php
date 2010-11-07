@@ -75,6 +75,10 @@ $lang["vector_mediamanager_embedded"] = "Mediamanager ins gewöhnliche Layout ei
 $lang["vector_breadcrumbs_position"]  = "Position der breadcrumb-Navigation (sofern aktiviert):";
 $lang["vector_youarehere_position"]   = "Position der 'Sie befinden sich hier'-Navigation (sofern aktiviert):";
 $lang["vector_winML_logout"]          = "Logout Link für Windows Musterlösung SSO anpassen?";
+$lang["vector_winML_logout_argument"] = "Welches Argument soll der Windows Logout Link haben?";
+$lang["vector_winML_hide_loginlogout"] = "Sollen die Login/Logout Links versteckt werden, wenn der Benutzer von einem Rechner im Intranet zugreift?";
+$lang["vector_winML_hide_loginlogout_subnet"] = "Welche Adressen befinden sich im Intranet? Beliebige Stellen mit 'x' angeben."; 
+
 $lang["vector_cite_author"]           = "Zu nutzender Autorenname in 'Artikel zitieren':";
 $lang["vector_loaduserjs"]            = "Datei 'vector/user/user.js' laden?";
 $lang["vector_closedwiki"]            = "Nicht-öffentliches Wiki (die meisten Links/Tabs/Boxen werden versteckt bis man sich einloggt)?";

@@ -82,6 +82,9 @@ $conf["vector_breadcrumbs_position"]  = "bottom"; //position of breadcrumbs navi
 $conf["vector_youarehere_position"]   = "top"; //position of "you are here" navigation ("top" or "bottom")
 // Winmuster
 $conf["vector_winML_logout"]   = false; //Logout link according to WinMl SSO?
+$conf["vector_winML_logout_argument"] = "CMD=logoff"; // String to attach to url for logging out
+$conf["vector_winML_hide_loginlogout"] = false; // Hide login/logout functions
+$conf["vector_winML_hide_loginlogout_subnet"] = "10.1.x.x"; // wehn hiding, for wicht subnets?
 if (!empty($_SERVER["HTTP_HOST"])){
   $conf["vector_cite_author"] = "Contributors of ".hsc($_SERVER["HTTP_HOST"]); //name to use for the author on the citation page (hostname included)
 } else {
