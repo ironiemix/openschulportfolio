@@ -1,4 +1,4 @@
-# removed in rc2010-10-27
+# removed in 2010-11-07
 inc/lang/ar/subscribermail.txt
 inc/lang/az/subscribermail.txt
 inc/lang/bg/subscribermail.txt

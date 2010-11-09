@@ -1,4 +1,13 @@
-linuxmuster-portfolio (1.0.2-1) openlml; urgency=low
+linuxmuster-portfolio (1.0.3-1) openlml; urgency=low
+     
+     * Upgraded underlying dokuwiki to latest stable release
+       dokuwiki-2010-11-07 ("Anteater")
+     * Removed /lib/tpl/portfolio/.htaccess for compatibility with BelWue
+       webhosting
+
+ -- Frank Schiebel <frank@linuxmuster.net>  Tue, 9 Nov 2010 18:07:00 +0100
+
+linuxmuster-portfolio (1.0.2-7) openlml; urgency=low
 
      * Upgraded underlying dokuwiki to "Busy Wednesday"
      * Added option for WinMl Logout button (experimental and untested)
