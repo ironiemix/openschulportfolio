@@ -1,3 +1,11 @@
+linuxmuster-portfolio (1.0.3-2) openlml; urgency=low
+     
+     * Fixed DST-Bug in icalevents-Plugin
+     * Added options for icalevents-Plugin
+     * Fix for dw2pdf not including images
+
+ -- Frank Schiebel <frank@linuxmuster.net>  Thu, 11 Nov 2010 18:07:00 +0100
+
 linuxmuster-portfolio (1.0.3-1) openlml; urgency=low
      
      * Upgraded underlying dokuwiki to latest stable release

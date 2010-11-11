@@ -1,0 +1,25 @@
+Index: trunk/usr/share/linuxmuster-portfolio/lib/plugins/dw2pdf/mpdf/mpdf.php
+===================================================================
+--- trunk.orig/usr/share/linuxmuster-portfolio/lib/plugins/dw2pdf/mpdf/mpdf.php	2010-11-10 00:24:54.000000000 +0100
++++ trunk/usr/share/linuxmuster-portfolio/lib/plugins/dw2pdf/mpdf/mpdf.php	2010-11-10 00:25:44.000000000 +0100
+@@ -7158,6 +7158,13 @@
+ function _getImage(&$file, $firsttime=true, $allowvector=true, $orig_srcpath=false) { // mPDF 4.2.029 / 4.3.012
+ 	// firsttime i.e. whether to add to this->images - use false when calling iteratively
+ 
++    // fix for openschbulportfolio
++    $orig_srcpath = str_replace(':','/',$orig_srcpath);
++    $orig_srcpath = str_replace('_media','media',$orig_srcpath);
++    if ( is_dir("/home/linuxmuster-portfolio/data") ) {
++        $orig_srcpath = str_replace('portfolio','home/linuxmuster-portfolio/data',$orig_srcpath);
++    }
++
+ 	// Image Data passed directly as var:varname
+ 	if (preg_match('/var:\s*(.*)/',$file, $v)) { 
+ 		$data = $this->$v[1];
+@@ -22119,4 +22126,4 @@
+ 
+ 
+ 
+-?>
+\ No newline at end of file
++?>

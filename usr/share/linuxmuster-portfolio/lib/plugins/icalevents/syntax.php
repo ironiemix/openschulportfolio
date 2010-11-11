@@ -1,11 +1,12 @@
 <?php
 /**
- * Plugin iCalEvents: Renders an iCal .ics file as an HTML table.
+ * Plugin icalevents: Renders an iCal .ics file as an HTML table.
  * 
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @version    1.0
  * @date       October 2008
  * @author     Robert Rackl <wiki@doogie.de>
+ * @author     Frank Schiebel <frank@linuxmuster.net>
  */
 
 // must be run within Dokuwiki
@@ -18,7 +19,7 @@ require_once(DOKU_PLUGIN.'syntax.php');
  * This plugin gets an iCalendar file via HTTP and then
  * parses this file into an HTML table.
  *
- * Usage: {{iCalEvents>http://host/myCalendar.ics#from=today&previewDays=30}}
+ * Usage: {{icalevents>http://host/myCalendar.ics#from=today&previewDays=30}}
  * 
  * You can filter the events that are shown with two parametes:
  * 1. 'from' a unix timestamp from which date on to show events.  
@@ -31,30 +32,30 @@ require_once(DOKU_PLUGIN.'syntax.php');
  *
  * @see http://de.wikipedia.org/wiki/ICalendar
  */
-class syntax_plugin_iCalEvents extends DokuWiki_Syntax_Plugin {
+class syntax_plugin_icalevents extends DokuWiki_Syntax_Plugin {
  
     function getInfo(){
       return array(
-        'author' => 'Robert Rackl',
-        'email'  => 'wiki@doogie.de',
-        'date'   => '2009-10-18',
-        'name'   => 'iCalEvents',
+        'author' => 'Robert Rackl, Frank Schiebel',
+        'email'  => 'wiki@doogie.de, frank@linuxmuster.net',
+        'date'   => '2010-11-11',
+        'name'   => 'icalevents',
         'desc'   => 'Parses an iCalalendar .ics file and renders it as an HTML table',
-        'url'    => 'http://www.doogie.de',
+        'url'    => 'http://www.openschulportfolio.de/',
       );
     }
  
     // implement necessary Dokuwiki_Syntax_Plugin methods
     function getType() { return 'substition'; }
     function getSort() { return 42; }
-    function connectTo($mode) { $this->Lexer->addSpecialPattern('\{\{iCalEvents>.*?\}\}',$mode,'plugin_iCalEvents'); }
+    function connectTo($mode) { $this->Lexer->addSpecialPattern('\{\{icalevents>.*?\}\}',$mode,'plugin_icalevents'); }
     
     /**
-     * parse parameters from the {{iCalEvents>...}} tag.
+     * parse parameters from the {{icalevents>...}} tag.
      * @return an array that will be passed to the renderer function
      */
     function handle($match, $state, $pos, &$handler) {
-      $match = substr($match, 13, -2); // strip {{iCalEvents> from start and }} from end
+      $match = substr($match, 13, -2); // strip {{icalevents> from start and }} from end
       list($icsURL, $flagStr) = explode('#', $match);
       parse_str($flagStr, $params);
             
@@ -83,23 +84,58 @@ class syntax_plugin_iCalEvents extends DokuWiki_Syntax_Plugin {
       if($mode == 'xhtml'){
           $entries = $this->_parseIcs($url, $from, $previewSec);
           if ($this->error) {
-            $renderer->doc .= "Error in Plugin iCalEvents: ".$this->error;
+            $renderer->doc .= "Error in Plugin icalevents: ".$this->error;
             return true;
           }
           #loop over entries and create a table row for each one.
           $rowCount = 0;
-          $ret .= '<table class="inline"><tr>'.
-                  '<th>'.$this->getLang('when').'</th>'.
-                  '<th>'.$this->getLang('what').'</th>'.
-                  '<th>'.$this->getLang('description').'</th>'.
-                  '<th>'.$this->getLang('where').'</th>'.
-                  '</tr>'.NL;
+          # Locale setzen
+          setlocale(LC_TIME, 'de_DE');
+          $monthname = "";
+
           foreach ($entries as $entry) {
+            $monthname_new = strftime("%B %Y",$entry['unixdate']);
+
+            if ( $this->getConf('list_split_months') ) {
+                if ( $monthname_new != $monthname ) {
+                    if ($rowCount > 0 ) {
+                        $ret .= "</table>".NL.NL;
+                    }  
+                    $ret .= "<h3>" . utf8_encode($monthname_new) . "</h3>".NL.NL;
+                    $monthname = $monthname_new;
+                    $ret .= '<table class="inline icalevents"><tr>'.
+                            '<th class="when">'.$this->getLang('when').'</th>'.
+                            '<th class="what">'.$this->getLang('what').'</th>';
+                    if ( ! $this->getConf('list_desc_as_acronym') ) {
+                            $ret .= '<th>'.$this->getLang('description').'</th>';
+                    }
+                    $ret .= '<th class="where">'.$this->getLang('where').'</th></tr>'.NL;
+                }
+            } else {
+                if ( $rowCount == 0 ) {
+                    $ret .= '<table class="inline icalevents"><tr>'.
+                            '<th class="when">'.$this->getLang('when').'</th>'.
+                            '<th class="what">'.$this->getLang('what').'</th>';
+                    if ( ! $this->getConf('list_desc_as_acronym') ) {
+                            $ret .= '<th>'.$this->getLang('description').'</th>';
+                    }
+                    $ret .= '<th class="where">'.$this->getLang('where').'</th></tr>'.NL;
+                }
+            }
+
             $rowCount++;
             $ret .= '<tr>';
             $ret .= '<td>'.$entry['date'].' <span class="icaltime">'.$entry['time'].'</span></td>';
-            $ret .= '<td>'.$entry['summary'].'</td>';
-            $ret .= '<td>'.$entry['description'].'</td>';
+            if ( ! $this->getConf('list_desc_as_acronym') ) {
+                $ret .= '<td>'.$entry['summary'].'</td>';
+                $ret .= '<td>'.$entry['description'].'</td>';
+            } else {
+                if ( $entry['description'] != "" ) {
+                    $ret .= '<td><acronym title="'.$entry['description'].'">'.$entry['summary'].'</acronym></td>';
+                } else {
+                    $ret .= '<td>'.$entry['summary'].'</td>';
+                }
+            }
             $ret .= '<td>'.$entry['location'].'</td>';
             $ret .= '</tr>'.NL;
           }
