@@ -1,7 +1,0 @@
-====== ToDo-Liste Netzwerkberater ======
-
-<note tip>Hier werden die offenen Anfragen und Aufgaben der Netzwerkberater aufgelistet.
-[[erledigte_aufgaben|Alle Aufgaben (auch die erledigten) finden sich hier.]]</note>
-
-{{tasks>shared:aufgaben:netzwerk:tickets}}
-

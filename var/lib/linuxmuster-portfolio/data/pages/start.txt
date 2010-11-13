@@ -1,32 +1,19 @@
 ====== Willkommen zu ihrem neuen Schulportfolio ======
 
-Das vorliegende Programmpaket //openSchulportfolio// ist eine technische
-Umsetzung zur Erstellung und Pflege des **Schulportfolios** "online". 
-Weitere Informationen zum Schulportfolio in Baden-Württemberg erhalten Sie auf
-[[http://www.schule-bw.de/entwicklung/qualieval/qualiabs/einstqe/|den Seiten
-des Landesinstituts für Schulentwicklung.]]
+<menu col=2,align="left",caption="">
+<item>Info|Informationen zum vorliegenden Programmpaket openSchulportfolio|shared:credits|shared:icons:package-x-generic-50x50.png</item>
+<item>Warum als Wiki?| Eine kurze Überlegung, warum man das Portfolio auf diese Weise führen kann (und soll).|:hilfe:warum_als_wiki|:shared:icons:dialog-information-50x50.png</item>  
+<item>Hilfe für Redakteure|Ein Einstieg und einige Erklärungen zum Wikisystem|hilfe:editorhelp|:shared:icons:help-browser-50x50.png</item>
+</menu>
 
-Informationen zum Paket selbst finden Sie auf der Seite
-[[http://www.openschulportfolio.de|www.openschulportfolio.de]]. 
+===== Gliederungsvorschlag für des Portfolio =====
 
-//openSchulportfolio// ist vollständig mit **quelloffener
-Software** umgesetzt. Basis des Systems ist die Wiki-Software
-[[http://www.dokuwiki.org| DokuWiki]]. DokuWiki und alle verwendeten
-Erweiterungen stehen unter der GNU-Public-License.  
+<note important>Vom Landesinstitut für Schulentwicklung Baden-Württemberg wird die folgende **"neue Gliederung des Schulportfolios Baden Württemberg"** als Struktur für das Schulportfolio vorgeschlagen. Beachten Sie, dass es sich hierbei um einen **Vorschlag** handelt, ausführliche Hinweise zur Einführung und Strukturierung des Portfolios finden Sie in der Handreichung des LS.</note>
 
-<note tip>
-//openSchulportfolio// ist kostenlos  -- es war jedoch
-einige Zeit nötig, um aus der speziellen Lösung für die Schule, 
-an der ich tätig bin, ein einfach zu installierendes und zu 
-verwaltendes System zu bauen.
-
-  * Ich freue mich sehr über **Rückmeldungen aller Art** -- wenn Sie das Portfolio benutzen, schreiben Sie mir eine kurze [[mailto:frank@linuxmuster.net|Mail]].
-  * Wenn ich keine Portfolio-Pakete schnüre, lese ich sehr gerne -- wenn Sie möchten, können Sie also auch gerne mal auf meiner [[http://www.ua25.de/wunschliste.html|Amazon Wunschliste]] vorbeischauen...
- --- //[[mailto:frank@linuxmuster.net|Frank Schiebel]] // 
-</note>
-
-===== Startpunkte im Portfolio =====
-
-  * {{:portfolio:qe6_schulportfolio.pdf|Die Handreichung zum Schulportfolio finden Sie hier}}
-  * [[hilfe:warum_als_wiki|Warum als Wiki?]] Eine kurze Überlegung, warum man das Portfolio auf diese Weise führen kann (und soll).
-  * [[hilfe:editorhelp|Hilfe für Redakteure]] und [[hilfe:start|Benutzer]] des Systems.
+<menu col=1,align="left",caption="">
+<item>Voraussetzungen und Bedingungen|Bildungsgänge, Pädagogische Schwerpunkte, Infos zu Schlüler- und Lehrerschaft u.ä.|portfolio:rahmenbedingungen:start|shared:icons:emblem-important-50x50.png</item>
+<item>Abläufe und Prozesse|Dokumente zu den fünf Qualitätsbereichen aus dem "Modell für Schulqualität".|:portfolio:prozesse:start|:shared:icons:emblem-system-50x50.png</item>  
+<item>Qualitätssicherung und Qualitätsentwicklung|Pädagogische Grundsätze, Strukturen der Qualitäts- und Schulentwicklung, Durchführung der Selbstevaluation u.ä.|portfolio:qualitaetsentwicklung:start|:shared:icons:document-open-50x50.png</item>
+<item>Ergebnisse und Wirkungen|Ergebnisbezogene Angaben.|portfolio:ergebnisse:start|:shared:icons:go-jump-50x50.png</item>
+<item>Weitere Dokumente der Schule|Presseartikel, Auszeichnungen und Verleihungsurkunden, Briefvorlagen, Formulare, u.ä.|portfolio:weitere_dokumente:start|:shared:icons:edit-copy-50x50.png</item>
+</menu>
