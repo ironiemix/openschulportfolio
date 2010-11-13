@@ -1,6 +1,6 @@
 linuxmuster-portfolio (1.0.3-2) openlml; urgency=low
      
-     * Fixed DST-Bug in icalevents-Plugin
+     * (Really) fixed DST-Bug in icalevents-Plugin
      * Added options for icalevents-Plugin
      * Fix for dw2pdf not including images
 

@@ -173,7 +173,11 @@ class syntax_plugin_icalevents extends DokuWiki_Syntax_Plugin {
         $regex_dtstart     = '/DTSTART.*?:([0-9]{4})([0-9]{2})([0-9]{2})T([0-9]{2})([0-9]{2})([0-9]{2})/';
         $regex_dtend       = '/DTEND.*?:([0-9]{4})([0-9]{2})([0-9]{2})T([0-9]{2})([0-9]{2})([0-9]{2})/';
         $regex_location    = '/LOCATION:(.*?)\n/';
-        
+
+        # Get hour_offset to times frome google cal
+        # FIXME: config!
+        $seconds = date_offset_get(new DateTime);
+        $hr_offset = $seconds / 3600;
         
         $entry['time'] = "";
 
@@ -188,12 +192,12 @@ class syntax_plugin_icalevents extends DokuWiki_Syntax_Plugin {
           }
           if (preg_match($regex_dtstart, $vevent, $dtstart)) {
             $entry['date'] = $dtstart[3].'.'.$dtstart[2].'.'.$dtstart[1];
-            $entry_hour = $dtstart[4] + 2;
+            $entry_hour = $dtstart[4] + $hr_offset;
             $entry['time'] = $entry_hour.':'.$dtstart[5];
             $entry['unixdate'] = mktime($dtstart[4], $dtstart[5], $dtstart[6], $dtstart[2], $dtstart[3], $dtstart[1]);
             # get end-time
             if (preg_match($regex_dtend, $vevent, $dtend)) {
-                $entry_hour = $dtend[4] + 2;
+                $entry_hour = $dtend[4] + $hr_offset;
                 $entry['time'] .= '-'.$entry_hour.':'.$dtend[5];
             }
           }
