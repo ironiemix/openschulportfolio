@@ -1,11 +1,13 @@
 #!/bin/bash
 
 WDIR=`pwd`
+SCHUQWIKIDIR="${WDIR}/schuqwiki/"
 WDIR=`basename $WDIR`
 if [ $WDIR != "debian" ]; then
 echo "build-Script muss im debian Paketverzeichnis ausgeführt werden"
 exit 1
 fi
+
 
 TDIR="../../build-area/"
 BUILDDIR="tarbuild"
@@ -111,10 +113,30 @@ sed -i "s/conf\['disableactions'\].*/conf\['disableactions'\] = 'register,resend
 # default password is ospinstall2010
 echo "admin:cbf915885771cd351a7cf6629356bc2a:Portfolio Administrator:mail@portfolio.nirgendwo:portfolioadm" >> portfolio/conf/users.auth.php
 
-# building full zip package
-zip -r openschulportfolio-${VERSION}-full.zip portfolio/
-# building system update zip package
-zip -r openschulportfolio-${VERSION}-update.zip portfolio/* -x portfolio/data/\* -x portfolio/conf/\* -x portfolio/lib/tpl/portfolio/user/\*
+# building full zip package for OSP
+echo -n "Zipping full package for OSP..."
+zip -qr openschulportfolio-${VERSION}-full.zip portfolio/
+echo "   done."
+# building system update zip package OSP
+echo -n "Zipping update package for OSP..."
+zip -qr openschulportfolio-${VERSION}-update.zip portfolio/* -x portfolio/data/\* -x portfolio/conf/\* -x portfolio/lib/tpl/portfolio/user/\*
+echo "   done."
+# modifiyng for schuqwiki
+cp -r portfolio/lib/tpl/portfolio/ portfolio/lib/tpl/schuqwiki
+cp -r ${SCHUQWIKIDIR}/* portfolio/lib/tpl/schuqwiki/
+cp -r ${SCHUQWIKIDIR}/../schuqwiki.credits portfolio/data/pages/shared/credits.txt
+rm portfolio/lib/tpl/schuqwiki/user/.htaccess 
+
+sed -i "s/conf\['template'\].*/conf\['template'\] = 'schuqwiki';/" portfolio/conf/local.php 
+# building full zip package for SQW
+echo -n "Zipping full package for SQW..."
+zip -qr schu-q-wiki-${VERSION}-full.zip portfolio/
+echo "   done."
+# building system update zip package SQW
+echo -n "Zipping update package for SQW..."
+zip -qr schu-q-wiki-${VERSION}-update.zip portfolio/* -x portfolio/data/\* -x portfolio/conf/\* -x portfolio/lib/tpl/portfolio/user/\*
+echo "   done."
+
 
 mv *.zip ..
 

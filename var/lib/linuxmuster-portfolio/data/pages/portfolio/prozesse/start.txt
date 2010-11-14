@@ -1,0 +1,35 @@
+====== Prozesse (Bereiche schulischen Handelns) ======
+
+Die fünf Qualitätsbereiche (QBs), die im //"Modell für Schulqualität"// Baden-Württemberg die "Prozesse" umfassen, sind zentrale Felder schulischen Handelns, die von den Schulen weiterentwickelt, strukturiert und gestaltet werden können und sollen. Diese fünf Qualitätsbereiche haben im Gesamtrahmen ein unterschiedliches Gewicht und Inhalte können sich teilweise überschneiden.
+
+{{ :portfolio:prozesse:qhaus.png  |}}
+
+===== Unterricht (QB I) =====
+
+  * [[umsetzung_bildungsplan|Schulinterne Umsetzung des Bildungsplanes]]
+  * [[individielle_foerderung|Individuelle Förderung]]
+  * [[methoden_sozialkompetenz|Förderung methodischer und sozialer bzw. personaler Kompetenzen]]
+  * [[leistungsbeurteilung| Praxis der Leistungsbeurteilung und Leistungsrückmeldung]]
+
+===== Professionalität der Lehrkräfte (QB II) =====
+
+  * [[kooperation| Innerschulische Kooperation]]
+  * [[weiterbildung Konzept und Praxis der Weiterqualifizierung]]
+  * [[umgang_anforderungen|Konzepte zum Umgang mit beruflichen Anforderungen]]
+
+===== Schulführung und Schulmanagement (QB III) =====
+
+  * [[leitbild_schulleitung| Selbstverständnis der Schulleitung hinsichtlich Schul- und Qualitätsentwicklung]]
+  * [[personalentwicklung Verfahren und Regelungen zur Personalentwicklung]]
+  * [[konfliktregelung|Regelungen und Vorgehensweisen bei Konflikten]]
+
+===== Schul- und Klassenklima (QB IV) =====
+
+  * [[klassenregeln|Regeln und Maßnahmen zum Umgang miteinander]]
+  * [[mitgestaltung_schueler|Mitgestaltungsmöglichkeiten der Schülerinnen und Schüler]]
+
+===== Inner- und außerschulische Partnerschaften (QB V) =====
+
+  * [[mitgestaltung_eltern|Mitgestaltungsmöglichkeiten der Eltern]]
+  * [[zusammenarbeit|Zusammenarbeit mit anderen Institutionen]]
+  * [[aussendarstellung|Darstellung nach außen]]

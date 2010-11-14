@@ -1,0 +1,10 @@
+====== Qualitätsdokumentation und Qualitätsentwicklung ======
+
+Der Qualitätsbereich "Qualitätssicherung und Qualitätsentwicklung" (QB Q) beschreibt Verfahren und gibt Hinweise, wie die fünf Qualitätsbereiche des Faktors "Prozesse" systematisch weiterentwickelt werden können. Hier geht es also nicht darum, wie die schulische Qualität inhaltlich ausgestaltet werden kann, sondern darum, mit welchen Verfahren und Strukturen diese gesichert und weiterentwickelt werden kann.
+
+===== Entsprechende Bereiche sind: =====
+
+  * [[paedagogische_grundsaetze|Pädagogische Grundsätze]]
+  * [[strukturen_qe|Strukturen der schulischen Qualitätsentwicklung]]
+  * [[selbstevaluation|Durchführung der Selbstevaluation]]
+  * [[individualfeedback|Individualfeedback]]

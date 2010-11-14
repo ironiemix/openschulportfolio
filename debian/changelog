@@ -1,3 +1,13 @@
+linuxmuster-portfolio (1.1.0-0) openlml; urgency=low
+
+     * Included new structure for portfolio (neue handreichung)
+     * Changed startpage accordingly
+     * Fixed/Added credits
+     * Added help topic about meus
+     * TODO FOR RELEASE: LS-Version of vector (Schu-Q-wiki)
+
+ -- Frank Schiebel <frank@linuxmuster.net>  Sat, 13 Nov 2010 19:46:00 +0100
+
 linuxmuster-portfolio (1.0.3-2) openlml; urgency=low
      
      * (Really) fixed DST-Bug in icalevents-Plugin

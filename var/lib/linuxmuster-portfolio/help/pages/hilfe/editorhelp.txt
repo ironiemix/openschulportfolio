@@ -1,9 +1,6 @@
 {{tag> hilfe}}
 
 ====== Hilfe für Redakteure ======
-
-  * [[wiki:playground:start|Sandkasten:]] Ausprobieren, was man möchte.
-
  
 
 ===== Infos & Erklärungen =====
@@ -12,6 +9,7 @@
   * [[hilfe:prinzipien|Leitlinien für Redakteure]]
   * [[hilfe:grundlagen|Grundlegende Strukturen und Formate]]
   * [[hilfe:links|Verweise zu anderen Seiten/Stellen]]
+  * [[hilfe:menu_plugin|Menüs mit dem menu-Plugin]]
   * [[fileupload|Dateien und Bilder ins Wiki hochladen]]
   * [[hilfe:dateien|Einfügen von Dateien]]
   * [[bilder|Einfügen von Bildern]]

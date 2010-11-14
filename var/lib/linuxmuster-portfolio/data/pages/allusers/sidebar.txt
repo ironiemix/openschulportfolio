@@ -10,3 +10,4 @@
   * [[hilfe:editorhelp|Hilfe für Redakteure]]
 
 ----
+  * [[shared:credits|Über...]]
