@@ -1,0 +1,17 @@
+====== Dokumentensammlung ======
+
+<menu col=1,align="left",caption="">
+<item>Importierter Dokumentenbestand|Seitenstruktur, auf die über die mit dem Assistenten importierten Dokumente zugegriffen werden kann.|portfolio:dokumente:start|shared:icons:folder-new-50x50.png</item>
+</menu>
+
+
+
+====== Schulportfolio als Wiki ======
+
+<menu col=1,align="left",caption="">
+<item>Voraussetzungen und Bedingungen|Bildungsgänge, Pädagogische Schwerpunkte, Infos zu Schlüler- und Lehrerschaft u.ä.|portfolio:rahmenbedingungen:start|shared:icons:emblem-important-50x50.png</item>
+<item>Abläufe und Prozesse|Dokumente zu den fünf Qualitätsbereichen aus dem "Modell für Schulqualität".|:portfolio:prozesse:start|:shared:icons:emblem-system-50x50.png</item>  
+<item>Qualitätssicherung und Qualitätsentwicklung|Pädagogische Grundsätze, Strukturen der Qualitäts- und Schulentwicklung, Durchführung der Selbstevaluation u.ä.|portfolio:qualitaetsentwicklung:start|:shared:icons:document-open-50x50.png</item>
+<item>Ergebnisse und Wirkungen|Ergebnisbezogene Angaben.|portfolio:ergebnisse:start|:shared:icons:go-jump-50x50.png</item>
+<item>Weitere Dokumente der Schule|Presseartikel, Auszeichnungen und Verleihungsurkunden, Briefvorlagen, Formulare, u.ä.|portfolio:weitere_dokumente:start|:shared:icons:edit-copy-50x50.png</item>
+</menu>
