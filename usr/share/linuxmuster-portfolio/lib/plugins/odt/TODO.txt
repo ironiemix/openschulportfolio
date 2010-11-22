@@ -1,1 +1,0 @@
-- The language of the ODT document could be chosen from the dokuwiki configuration
