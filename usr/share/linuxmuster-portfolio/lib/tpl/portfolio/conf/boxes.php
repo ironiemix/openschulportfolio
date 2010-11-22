@@ -120,10 +120,15 @@ if (empty($conf["useacl"]) || //are there any users?
             if (file_exists(DOKU_PLUGIN."s5/syntax.php") &&
                 !plugin_isdisabled("s5")){
                 $_vector_boxes["p-coll-print_export"]["xhtml"]  .= "        <li id=\"coll-download-as-rl\"><a href=\"".wl(cleanID(getId()), array("do" => "export_s5"))."\" rel=\"nofollow\">".hsc($lang["vector_exportbxdef_downloads5"])."</a></li>\n";
-	    }
+	        } 
+            //bookcreator plugin
+            if (file_exists(DOKU_PLUGIN."bookcreator/syntax.php") &&
+                !plugin_isdisabled("bookcreator")){
+                $_vector_boxes["p-coll-print_export"]["xhtml"]  .= "        <li id=\"coll-download-as-rl\"><a href=\"".wl(cleanID(getId()), array("do" => "addtobook"))."\" rel=\"nofollow\">".hsc($lang["vector_exportbxdef_addtobook"])."</a></li>\n";
+	        } 
             $_vector_boxes["p-coll-print_export"]["xhtml"] .=  "        <li id=\"t-print\"><a href=\"".wl(cleanID(getId()), array("rev" =>(int)$rev, "vecdo" => "print"))."\" rel=\"nofollow\">".hsc($lang["vector_exportbxdef_print"])."</a></li>\n"
                                                               ."      </ul>";
-        }else{
+        } else {
             //we have to use a custom exportbox
             if (empty($conf["useacl"]) ||
                 auth_quickaclcheck(cleanID(tpl_getConf("vector_exportbox_location"))) >= AUTH_READ){ //current user got access?
