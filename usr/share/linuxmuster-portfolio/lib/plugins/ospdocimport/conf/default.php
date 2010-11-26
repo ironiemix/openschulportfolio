@@ -2,9 +2,5 @@
 /**
 * Options for osp-plugin
 */
-
-$conf['schoolname'] = "Schulname";
-$conf['logofile'] = "osplogo.png";
-$conf['topbackimg'] = "topback.png";
-
-
+$conf['sourcetree'] = "incoming";
+$conf['destination_namespace'] = "portfolio:dokumente";

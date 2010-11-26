@@ -1,16 +1,18 @@
 <?php
 /**
- * Easy confiiguration of openschulportfolios design
- * only works with template "portfolio"
- * 
+ * Imports filetrees into DokuWikis media directory
+ * and creating a wiki pagetree with filelists linking to the
+ * imported documents
+ *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Frank Schiebel <frank@linuxmuster.net>
  */
- 
+
 if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../../').'/');
 if(!defined('DOKU_PLUGIN')) define('DOKU_PLUGIN',DOKU_INC.'lib/plugins/');
 if(!defined('DOKU_INCLUDE')) define('DOKU_INCLUDE',DOKU_INC.'inc/');
 require_once(DOKU_PLUGIN . 'admin.php');
+require_once(DOKU_INCLUDE . 'io.php');
 
 /**
  * All DokuWiki plugins to extend the admin function
@@ -21,155 +23,154 @@ class admin_plugin_ospdocimport extends DokuWiki_Admin_Plugin
 var $state = 0;
 var $backup = '';
 
-	/**
-	 * Constructor
-	 */
-	function admin_plugin_ospdocimport()
-	{
-		$this->setupLocale();
-	}
-
-	/**
-	 * return some info
-	 */
-	function getInfo()
-	{
-		return array(
-			'author' => 'Frank Schiebel',
-			'email'  => 'frank@linuxmuster.net',
-			'date'   => '2010-05-25',
-			'name'   => 'Configure design elements of openSchulportfolio',
-			'desc'   => 'Allows to change logos an link-colors of openSchulportfolio without file access to the webspace.',
-			'url'    => 'http://openschulportfolio.de/',
-		);
-	}
-
-	/**
-	 * return sort order for position in admin menu
-	 */
-	function getMenuSort()
-	{
-		return 999;
-	}
-	
-	/**
-	 *  return a menu prompt for the admin menu
-	 *  NOT REQUIRED - its better to place $lang['menu'] string in localised string file
-	 *  only use this function when you need to vary the string returned
-	 */
-	function getMenuText()
-	{
-		return 'Importassistent (OSP)';
-	}
-
-	/**
-	 * handle user request
-	 */
-	function handle()
+    /**
+     * Constructor
+     */
+    function admin_plugin_ospdocimport()
     {
-     if (!isset($_REQUEST['ospcmd'])) return;
-     if ($_REQUEST['ospcmd'] == "create_upload_dir") $this->create_upload_dir();
-	}
-
-	/**
-	 * output appropriate html
-	 */
-	function html()
-	{
-      global $conf;
-      
-
-      ptln("<h1>Importassistent für bestehende Dokumentensammlungen</h1>");
-      $helptext = "<p>Dieser Assistent soll Ihnen ermöglichen, eine vorhanden Sammlung von Office-Dokumenten (Word, Powerpoint, PDF u.ä.) in das Wiki zu importieren.</p>";
-      $helptext .= "<p>Der Vorgang besteht aus vier Schritten:</p>";
-      $helptext .= "<ol><li>Zunächst wird der gesamte vorhandene Dokumentenbestand mit allen Unterverzeichnissen auf den Server kopiert, auf dem openSchulportftolio installiert ist.";
-      $helptext .= "Dazu wird vom Assistenten vorübergehend ein Verzeichnis angelegt, in welches die Dateien transferiert werden müssen.</li>";
-      $helptext .= "<li>In einem weiteren Schritt werden die Dateien in den eigentlichen Dokumentenbaum des Wikis kopiert. Dabei werden die Dateien wenn nötig umbenannt";
-      $helptext .= "(Umlaute, Leerzeichen und ähnliches sind für die Verwendung in Online-Systemen nicht geeignet). Außerdem wird bei diesem Vorgang im Wiki eine";
-      $helptext .= "Seitenstruktur erzeugt, über die alle kopierten Dokumente anschließend erreichbar sind. Diese Wikiseiten können nach erfolgreichem Import beliebig";
-      $helptext .= "angepasst werden.</li>";
-      $helptext .= "<li>Wenn alles geklappt hat, können die zuvor auf den Server geladenen Dokumente gelöscht werden.</li>";
-      $helptext .= "</ol>";
-      ptln($helptext);
-
-      $warning = "<div class='notewarning'>Bei der Ausführung des Assistenten werden alle Dokumente im Namensraum <tt>portfolio:dokumente</tt> ";
-      $warning .= "<strong>unwiderruflich durch den importierten Dokumentenstamm ersetzt</strong>!<br />";
-      $warning .= "Außerdem wird die Startseite im Namensraum <tt>portfolio</tt> durch eine Vorlage ersetzt, die einen Verweis auf die importierte ";
-      $warning .= "Seitenstruktur enthält. Ältere Versionen dieser Wiki-Seite können wie gewohnt wiederhergestellt werden.</div>";
-      ptln($warning);
-
-
-        // TOCONF
-        $file_upload = $conf['savedir'] . "media/incoming/";
-        if ($_REQUEST['ospcmd'] == "importit") {
-         $html = $this->import_docs();
-         ptln($html);
-        }
-
-        
-
-        # check if input dir exists
-        if( is_dir($file_upload) ) {
-         ptln("<span class=\"ospok\">OK </span> Quellverzeichnis existiert: <tt>$file_upload</tt>");
-         ptln("<div class=\"ospnext\"><div>Laden Sie nun den gesamten Verzeichnisbaum ihrer");
-         ptln("Dokumentensammlung in das Verzeichnis</div><tt>$file_upload</tt>");
-         ptln("<div>auf dem Server hoch. Anschließend können Sie Ihren Dokumentenstamm durch betätigen der Schaltfläche ins Wiki importieren.</div>");
-         ptln(' <form enctype="multipart/form-data" action="'.DOKU_BASE.'" method="post" /> ');
-         ptln('	<input type="hidden" name="do"   value="admin" />');
-         ptln('	<input type="hidden" name="ospcmd"   value="importit" />');
-         ptln('	<input type="hidden" name="page" value="'.$this->getPluginName().'" />');
-         ptln('  <input type="submit" value="Dateien importieren und Seitenstruktur anlegen"> ');
-         ptln(' </form></div>');
-        } else {
-         ptln(' <form enctype="multipart/form-data" action="'.DOKU_BASE.'" method="post" /> ');
-         ptln('	<input type="hidden" name="do"   value="admin" />');
-         ptln('	<input type="hidden" name="ospcmd"   value="create_upload_dir" />');
-         ptln('	<input type="hidden" name="page" value="'.$this->getPluginName().'" />');
-         ptln('  <input type="submit" value="Importverzeichnis anlegen"> ');
-         ptln(' </form>');
-        }
-
-
-        
+        $this->setupLocale();
     }
 
+    /**
+     * return some info
+     */
+    function getInfo()
+    {
+        return array(
+            'author' => 'Frank Schiebel',
+            'email'  => 'frank@linuxmuster.net',
+            'date'   => '2010-05-25',
+            'name'   => 'ospdocimport: Imports document tree into dokuwiki',
+            'desc'   => '...',
+            'url'    => 'http://openschulportfolio.de/',
+        );
+    }
 
+    /**
+     * return sort order for position in admin menu
+     */
+    function getMenuSort()
+    {
+        return 999;
+    }
+
+    /**
+     *  return a menu prompt for the admin menu
+     *  NOT REQUIRED - its better to place $lang['menu'] string in localised string file
+     *  only use this function when you need to vary the string returned
+     */
+    function getMenuText()
+    {
+        return 'Importassistent (OSP)';
+    }
+
+    /**
+     * handle user request
+     */
+    function handle() {
+        if (!isset($_REQUEST['ospcmd'])) return;
+
+        if ($_REQUEST['ospcmd'] == "create_upload_dir") {
+            $this->create_upload_dir();
+        }
+
+        if ($_REQUEST['ospcmd'] == "importit") {
+            $this->_import_docs();
+        }
+    }
+
+    /**
+     * output appropriate html
+     */
+    function html() {
+        global $conf;
+
+        # print out explanation and warning
+        print "<h1>" . $this->getLang('headline') ."</h1>\n";
+        print "<p>" . $this->getLang('description') ."</p>\n";
+        print $this->getLang('detaildesc') ."\n";
+        print $this->getLang('warning_osp') ."\n";
+
+        # determine upload dir from conf
+        $file_upload = $this->_strip_doubleslashes($conf['savedir'] . '/media/' . $this->getConf('sourcetree') . '/');
+
+
+        # check if input dir exists, if not display button to create it
+        if( is_dir($file_upload) ) {
+            print "<span class=\"ospok\">OK </span>" . $this->getLang('sourcedir_exists') . " <tt> " . $file_upload . " </tt></span>\n";
+            ptln("<div class=\"ospnext\"><div>Laden Sie nun den gesamten Verzeichnisbaum ihrer");
+            ptln("Dokumentensammlung in das Verzeichnis</div><tt>$file_upload</tt>");
+            ptln("<div>auf dem Server hoch. Anschließend können Sie Ihren Dokumentenstamm durch betätigen der Schaltfläche ins Wiki importieren.</div>");
+            ptln('<form action="'.wl($ID).'" method="post" /> ');
+            ptln(' <input type="hidden" name="do"   value="admin" />');
+            ptln(' <input type="hidden" name="ospcmd"   value="importit" />');
+            ptln(' <input type="hidden" name="page" value="'.$this->getPluginName().'" />');
+            print ' <input type="submit" value="'. $this->getLang('btn_import') . '"> ' . "\n";
+            ptln('</form></div>');
+        } else {
+            ptln("<div class=\"ospnext\">");
+            print "<p>" . $this->getLang('sourcedir_does_not_exist') . " <tt> " . $file_upload . " </tt></p>\n ";
+            ptln(' <form action="'.wl($ID).'" method="post" /> ');
+            ptln(' <input type="hidden" name="do" value="admin" />');
+            ptln(' <input type="hidden" name="ospcmd" value="create_upload_dir" />');
+            ptln(' <input type="hidden" name="page" value="'.$this->getPluginName().'" />');
+            print ' <input type="submit" value="' . $this->getLang('btn_create_upload_dir') . '"> ' . "\n";
+            ptln(' </form>');
+            ptln('</div>');
+        }
+
+    }
+
+    /**
+     * Creates upload dir according to config
+     *
+     * @author   Frank Schiebel <frank@linuxmuster.net>
+     * @param    none
+     * @returns  none
+     *
+     **/
     function create_upload_dir() {
         global $conf;
-        $file_upload = $conf['savedir'] . "media/incoming/";
+        # determine upload dir from conf
+        $file_upload = $this->_strip_doubleslashes($conf['savedir'] . '/media/' . $this->getConf('sourcetree') . '/');
         mkdir($file_upload);
     }
 
     /**
-     * Kopiert den Verzeichnisbaum mit dem bisherigen Dokumentenbestand an die 
-     * konfigurierte Stelle im media-Baum. 
+     * Import document tree to media dir
      *
+     * @author   Frank Schiebel <frank@linuxmuster.net>
+     * @param    none
+     * @returns  none
      *
-     *
-     *
-     *
-    **/
-    function import_docs() {
+     **/
+    function _import_docs() {
         global $conf;
-        $mediapath = $conf['savedir'] . "media/";
-        $pagespath = $conf['savedir'] . "pages/";
+        $mediapath = $this->_strip_doubleslashes($conf['savedir'] . '/media/');
+        $pagespath = $this->_strip_doubleslashes($conf['savedir'] . '/pages/');
+        # determine upload dir from conf
+        $file_upload = $this->_strip_doubleslashes($conf['savedir'] . '/media/' . $this->getConf('sourcetree') . '/');
+        $subpath = str_replace(":", "/", $this->getConf('destination_namespace'));
+        $media_dest     = $this->_strip_doubleslashes($mediapath."/".$subpath."/");
+        $pagesdir       = $this->_strip_doubleslashes($pagespath."/".$subpath."/");
 
-        $file_upload    = $mediapath."incoming/";
-        $pfdir          = $mediapath."portfolio/";
-        $dest           = $mediapath."portfolio/dokumente/";
-        $pagesdir       = $pagespath."portfolio/dokumente/";
+        # delete old media and pages dir
+        if (is_dir($media_dest)) { 
+            $this->_deltree($media_dest); 
+        }
+        if (is_dir($pagesdir)) { 
+            $this->_deltree($pagesdir); 
+        }
+        print $media_dest . $pagesdir;
 
-        if (!is_dir($pfdir)) { mkdir($pfdir); }
-
-        // delete old media an pages 
-        if (is_dir($dest)) { $this->recursive_del($dest); }
-        if (is_dir($pagesdir)) { $this->recursive_del($pagesdir); }
-        if (!is_dir($pagesdir)) { mkdir($pagesdir); }
+        # create fresh namespacedirs for media an pages
+        io_createNamespace($this->getConf('destination_namespace').":xx");
+        io_createNamespace($this->getConf('destination_namespace').":xx", 'media');
 
         // copy files recursively
-        $this->recursive_copy($file_upload, $dest);
+        $this->_copytree($file_upload, $media_dest);
         // create startpages
-        $this->create_startpages($dest);
+        $this->create_startpages($media_dest);
 
         $pfstartfile_in  = realpath(dirname(__FILE__))."/start.txt";
         $pfstartfile_out = $pagespath."portfolio/start.txt";
@@ -177,13 +178,18 @@ var $backup = '';
     }
 
     /**
-     * Loescht ein Verzeichnis rekursiv
-    **/
-    function recursive_del($dest) {
+     * deletes directory tree recursively
+     *
+     * @author   Frank Schiebel <frank@linuxmuster.net>
+     * @param    string     directory to delete
+     * @returns  boolean    status of rmdir operation
+     *
+     **/
+    function _deltree($dest) {
         $list = array_diff(scandir($dest), array('.', '..'));
             foreach ($list as $value) {
                     $file = $dest.'/'.$value;
-                    if (is_dir($file)) { $this->recursive_del($file); } else { unlink($file); }
+                    if (is_dir($file)) { $this->_deltree($file); } else { unlink($file); }
             }
             return rmdir($dest);
     }
@@ -191,8 +197,9 @@ var $backup = '';
 
     /**
      * Copy a file, or recursively copy a folder and its contents
-     * 
+     *
      * @author      Aidan Lister <aidan@php.net>
+     * @author      Frank Schiebel <frank@linuxmuster.net>
      * @version     1.0.1
      * @link        http://aidanlister.com/2004/04/recursively-copying-directories-in-php/
      * @param       string   $source    Source path
@@ -200,31 +207,33 @@ var $backup = '';
      * @return      bool     Returns TRUE on success, FALSE on failure
      *
      **/
-    function recursive_copy($source, $dest) {
+    function _copytree($source, $dest) {
       global $conf;
 
-      $dest = $this->get_clean_filename($dest);
+      $dest = $this->_get_clean_filename($dest);
+
       //  Check for symlinks
       if (is_link($source)) {
         return symlink(readlink($source), $dest);
       }
-
       // Simple copy for a file
       if (is_file($source)) {
         return copy($source, $dest);
       }
 
-      $dest = $this->get_clean_filename($dest);
+      $dest = $this->_get_clean_filename($dest);
+
       // Make destination directory
       if (!is_dir($dest)) {
 
-        $mediapath = $conf['savedir'] . "media/";
-        $pagespath = $conf['savedir'] . "pages/";
+        $mediapath = $this->_strip_doubleslashes($conf['savedir'] . '/media/');
+        $pagespath = $this->_strip_doubleslashes($conf['savedir'] . '/pages/');
 
-        $pages_dir = str_replace("$mediapath", "$pagespath", $dest); 
+
+        $pages_dir = str_replace("$mediapath", "$pagespath", $dest);
         mkdir($dest);
-        if (!is_dir($pages_dir)) { 
-          mkdir($pages_dir); 
+        if (!is_dir($pages_dir)) {
+          mkdir($pages_dir);
         }
       }
 
@@ -237,7 +246,7 @@ var $backup = '';
         }
 
         // Deep copy directories
-        $this->recursive_copy("$source/$entry", "$dest/$entry");
+        $this->_copytree("$source/$entry", "$dest/$entry");
       }
 
       // Clean up
@@ -248,14 +257,11 @@ var $backup = '';
     /** Gets utf8 encoded wiki filename (experimantal, has to be tested!)
      *
     **/
-    function get_clean_filename($dest) {
+    function _get_clean_filename($dest) {
       global $conf;
-      $fixpath = $conf['savedir'] . "media/";
 
+      $fixpath = $this->_strip_doubleslashes($conf['savedir'] . "/media/");
       $dest = iconv("CP437", "UTF-8", $dest);
-
-      $fixpath = $conf['savedir'] . "media/";
-
       $dest = str_replace("$fixpath", "", $dest);
       $dest = str_replace("//", "/", $dest);
       $dest = str_replace("/", ":", $dest);
@@ -272,15 +278,15 @@ var $backup = '';
       $subdirs = array();
 
       // namespace for filelist
-      $media = $conf['savedir'] . "media/";
-      $pages = $conf['savedir'] . "pages/";
+      $media = $this->_strip_doubleslashes($conf['savedir'] . "/media/");
+      $pages = $this->_strip_doubleslashes($conf['savedir'] . "/pages/");
 
       // change dest to pages
       $dest = str_replace($media, $pages, $dest);
       $startpage = $dest ."start.txt";
 
       // get filelist namespace
-      $ns_dir = str_replace($pages, "", $dest); 
+      $ns_dir = str_replace($pages, "", $dest);
       $filelist_namespace = str_replace("/",":", $ns_dir);
       $header_namespace   = preg_replace("|.*/(.*)/$|","$1", $ns_dir);
 
@@ -298,7 +304,7 @@ var $backup = '';
         }
       }
 
-      // sort subdirs an create wiki-markup 
+      // sort subdirs and create wiki-markup
       $subdir_out = "";
       if (count($subdirs) > 0 ) {
         sort($subdirs);
@@ -306,7 +312,7 @@ var $backup = '';
         foreach ($subdirs as $subdir) {
           $subdir_out .= "  * [[.$subdir:start|$subdir]]\n";
         }
-      } 
+      }
 
       // write start.txt
       $handle = fopen ("$startpage", "w");
@@ -316,6 +322,18 @@ var $backup = '';
       fwrite($handle, "{{filelist>:$filelist_namespace*&style=table&tableheader=1&tableshowdate=1&tableshowsize=1}}\n\n");
       fwrite($handle, "$subdir_out\n");
       fclose($handle);
+    }
+
+    /**
+     * Strip double slashes from path names
+     *
+     * @author   Frank Schiebel <frank@linuxmuster.net>
+     * @param    string     path in
+     * @returns  string     path out
+     *
+     **/
+    function  _strip_doubleslashes($path) {
+        return preg_replace('/\/\//','/', $path);
     }
 
 

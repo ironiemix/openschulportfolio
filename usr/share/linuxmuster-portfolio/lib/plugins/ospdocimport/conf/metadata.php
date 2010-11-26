@@ -5,6 +5,5 @@
  *
  * @author Frank Schiebel <frank@linuxmuster.net>
  */
-
-
-$meta['schoolname'] = array('string');
+$meta['sourcetree'] = array('string');
+$meta['destination_namespace'] = array('string');
