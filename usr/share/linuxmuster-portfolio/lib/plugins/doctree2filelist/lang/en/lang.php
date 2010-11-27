@@ -1,42 +1,40 @@
 <?php
 /**
- * German language file
+ * English language file
  *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Frank Schiebel <frank@linuxmuster.net>
  */
 
 // custom language strings for the ospdocimport plugin
-$lang['plugname'] = 'Importassistent für bestehende Dokumentensammlungen';
-$lang['headline'] = 'Importassistent für bestehende Dokumentensammlungen';
-$lang['wizard'] = 'Assistent';
-$lang['settings'] = 'Einstellungen';
-$lang['importdir'] = 'Importverzeichnis';
-$lang['targetns'] = 'Ziel-Namensraum';
-$lang['description'] = 'Dieser Assistent soll Ihnen ermöglichen, eine vorhanden Sammlung von Office-Dokumenten (Word, Powerpoint, PDF u.ä.) als Dateiverweise in das Wiki zu importieren.';
-$lang['detaildesc'] = '<p>Der Vorgang besteht aus vier Schritten:</p>
-         <ol><li>Zunächst wird der gesamte vorhandene Dokumentenbestand mit allen Unterverzeichnissen auf den Server kopiert, auf dem openSchulportftolio installiert ist.
-         Dazu wird vom Assistenten vorübergehend ein Verzeichnis angelegt, in welches die Dateien transferiert werden müssen.</li>
-         <li>In einem weiteren Schritt werden die Dateien in den eigentlichen Dokumentenbaum des Wikis kopiert. Dabei werden die Dateien wenn nötig umbenannt
-         (Umlaute, Leerzeichen und ähnliches sind für die Verwendung in Online-Systemen nicht geeignet). Außerdem wird bei diesem Vorgang im Wiki eine
-         Seitenstruktur erzeugt, über die alle kopierten Dokumente anschließend erreichbar sind. Diese Wikiseiten können nach erfolgreichem Import beliebig
-         angepasst werden.</li>
-         <li>Wenn alles geklappt hat, können die zuvor auf den Server geladenen Dokumente gelöscht werden.</li>
+$lang['plugname'] = 'Import Wizard for existing document collections';
+$lang['headline'] = 'Import Wizard for existing document collections';
+$lang['wizard'] = 'Wizard';
+$lang['settings'] = 'Settings';
+$lang['importdir'] = 'Import directory';
+$lang['targetns'] = 'Target namespace';
+$lang['description'] = 'The Import Wizard facilitates the import of existing document collections (word, powerpoint, PDF etc.) as link list to the wiki.';
+$lang['detaildesc'] = '<p>This process requires four steps:</p>
+         <ol><li>The complete document collection (including directories) must be copied to the server that hosts openSchulportfolio.
+         The files need to be transferred to a target directory which is created by the Import Wizard.</li>
+         <li>The files are (automatically) copied and integrated into the document tree of the wiki (if necessary, the files are renamed, thus eliminating   		umlauts, blanks and the like - these characters are unsuitable for use in online systems). This step creates the site structure which allows 		navigation to the documents (the site structure may be customized after the import).</li>
+         <li>Make sure the import has been completed and delete the target directory on the server.</li>
+         <li>Customize the wiki/document structure according to your needs and liking!</li>
          <li>Nun können Sie die erzeugten Wikiseiten an Ihre Bedürfnisse anpassen.</li>
          </ol>';
-$lang['warning_osp'] = 'Beim Importvorgang werden alle Dokumente und Wiki-Seiten im Ziel-Namensraum <strong>unwiderruflich durch den importierten Dokumentenstamm ersetzt</strong>!';
-$lang['filelist_plugin_required'] = 'Dieses Plugin ben&ouml;tigt das <tt>filelist</tt>-Plugin f&uuml;r DokuWiki.</div>';
+$lang['warning_osp'] = 'All documents and wiki pages in the target namespace will be <strong>irreversibly</strong> replaced by the imported document tree!';
+$lang['filelist_plugin_required'] = 'This plugin depends on the <tt>filelist</tt>-plugin for DokuWiki.</div>';
 
-$lang['sourcedir_exists'] = 'Das Importverzeichnis existiert.';
-$lang['sourcedir_does_not_exist'] = 'Das Importverzeichnis existiert <strong>nicht</strong>. ';
-$lang['docuploadnow'] = "Laden Sie nun den gesamten Verzeichnisbaum ihrer Dokumentensammlung in das Importverzeichnis auf den Webserver. Wenn der Vorgang beendet ist, bestätigen Sie den Upload."; 
-$lang['importnow'] = "Starten Sie nun den Importvorgang."; 
-$lang['lastimport'] ="Letzer Import:";
-$lang['fromuser'] ="von Benutzer";
-$lang['docsuploaded'] ="Die Dokumentensammlung wurde auf den Server hochgeladen.";
-$lang['btn_import'] = 'Dateien importieren und Dokumentstruktur anlegen';
-$lang['btn_reimport'] = 'Dateien erneut importieren';
-$lang['btn_create_upload_dir'] = 'Importverzeichnis anlegen';
-$lang['btn_delete_upload_dir'] = 'Importverzeichnis löschen';
-$lang['btn_confirm_upload'] = 'Die Dateien wurden hochgeladen';
-$lang['btn_start_over'] = 'Import neu starten';
+$lang['sourcedir_exists'] = 'The import directory has been created.';
+$lang['sourcedir_does_not_exist'] = 'The import directory has <strong>not</strong> been created.';
+$lang['docuploadnow'] = "Copy the file directory tree of your document collection to the import directory on the web server. Confirm the upload after completion."; 
+$lang['importnow'] = "Start import now."; 
+$lang['lastimport'] ="Last import:";
+$lang['fromuser'] ="by user";
+$lang['docsuploaded'] ="Document collection has been uploaded to server.";
+$lang['btn_import'] = 'Import files and create document structure';
+$lang['btn_reimport'] = 'Re-import files';
+$lang['btn_create_upload_dir'] = 'Create import directory';
+$lang['btn_delete_upload_dir'] = 'Delete import directory';
+$lang['btn_confirm_upload'] = 'File upload complete';
+$lang['btn_start_over'] = 'Start over import';

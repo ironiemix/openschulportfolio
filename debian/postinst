@@ -21,6 +21,12 @@ if [ ! -d $DATADIR/media/wiki/logo/ ]; then
      echo "Creating logo directory..."
      mkdir -p $DATADIR/media/wiki/logo/
      touch $DATADIR/media/wiki/logo/dummy_dont_delete.png
+     echo "   done."
+fi
+if [ ! -d $DATADIR/pages/bookcreator/ ]; then
+     echo "Copying pages for bookcreator plugin"
+     cp -r $EXAMPLES/pages/bookcreator/ $DATADIR/pages/
+     echo "   done."
 fi
 
 LOGOACL=0
