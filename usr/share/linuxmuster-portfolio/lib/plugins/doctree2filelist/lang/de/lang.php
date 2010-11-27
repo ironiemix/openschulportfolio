@@ -23,7 +23,8 @@ $lang['detaildesc'] = '<p>Der Vorgang besteht aus vier Schritten:</p>
          angepasst werden.</li>
          <li>Wenn alles geklappt hat, können die zuvor auf den Server geladenen Dokumente gelöscht werden.</li>
          </ol>';
-$lang['warning_osp'] = ' <div class="notewarning">Bei der Ausführung des Assistenten werden alle Dokumente im Namensraum <tt>portfolio:dokumente</tt> <strong>unwiderruflich durch den importierten Dokumentenstamm ersetzt</strong>!<br /> Außerdem wird die Startseite im Namensraum <tt>portfolio</tt> durch eine Vorlage ersetzt, die einen Verweis auf die importierte Seitenstruktur enthält. Ältere Versionen dieser Wiki-Seite können wie gewohnt wiederhergestellt werden.</div>';
+$lang['warning_osp'] = 'Beim Importvorgang werden alle Dokumente und Wiki-Seiten im Ziel-Namensraum <strong>unwiderruflich durch den importierten Dokumentenstamm ersetzt</strong>!';
+$lang['filelist_plugin_required'] = 'Dieses Plugin ben&ouml;tigt das <tt>filelist</tt>-Plugin f&uuml;r DokuWiki.</div>';
 
 $lang['sourcedir_exists'] = 'Das Importverzeichnis existiert.';
 $lang['sourcedir_does_not_exist'] = 'Das Importverzeichnis existiert <strong>nicht</strong>. ';

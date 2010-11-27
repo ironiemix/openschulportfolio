@@ -1,6 +1,6 @@
 linuxmuster-portfolio (1.1.1-0) openlml; urgency=low
 
-     * First evaluation version of ospdocimport plugin
+     * First evaluation version of doctree2filelist plugin
      * Added pdfbook Plugin, modified template accordingly
 
  -- Frank Schiebel <frank@linuxmuster.net>  Mon, 22 Nov 2010 22:46:00 +0100

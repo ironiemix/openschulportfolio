@@ -41,8 +41,8 @@ var $backup = '';
             'email'  => 'frank@linuxmuster.net',
             'date'   => '2010-05-25',
             'name'   => 'doctree2filelist: Imports document tree into dokuwiki',
-            'desc'   => '...',
-            'url'    => 'http://openschulportfolio.de/',
+            'desc'   => 'This plugin is for importing a whole tree with (office-)documents to a wiki page-structure. It has been written for openschulportfolio, a dokuwiki based portfolio-system for schools.',
+            'url'    => 'http://www.openschulportfolio.de/',
         );
     }
 
@@ -94,11 +94,21 @@ var $backup = '';
     function html() {
         global $conf;
 
+        # check for filelist plugin
+        if (!file_exists(DOKU_PLUGIN . "filelist/syntax.php")) {
+            print $this->_div_warning("start");
+            print $this->getLang('filelist_plugin_required');
+            print $this->_div_warning("end");
+            return;
+        } 
+
         # print out explanation and warning
         print "<h1>" . $this->getLang('headline') ."</h1>\n";
         print "<p>" . $this->getLang('description') ."</p>\n";
         print $this->getLang('detaildesc') ."\n";
+        print $this->_div_warning("start");
         print $this->getLang('warning_osp') ."\n";
+        print $this->_div_warning("end");
 
         # determine upload dir from 
         $file_upload = $this->_strip_doubleslashes($conf['savedir'] . '/media/' . $this->getConf('sourcetree') . '/');
@@ -314,7 +324,6 @@ var $backup = '';
       $dest = $this->_get_clean_filename($dest);
       // Simple copy for a file
       if (is_file($source)) {  
-        print "$source --- $dest<br>";
         return @copy($source, $dest);
       }
       $dest = $this->_get_clean_filename($dest);
@@ -338,7 +347,7 @@ var $backup = '';
         return false;
       }
         
-      $dir = @dir($source);
+      $dir = dir($source);
       while (false !== $entry = $dir->read()) {
         // Skip pointers
         if ($entry == '.' || $entry == '..') {
@@ -501,6 +510,25 @@ var $backup = '';
         return $status;
     }
 
+    /**
+     * prints a warning div. Uses the note plugin if available
+     *
+     * @author   Frank Schiebel <frank@linuxmuster.net>
+     * @param    string (start|end)
+     * @return   string html
+     *
+     **/
+    function _div_warning($mode) {
+        if($mode == "start") {
+            if (file_exists(DOKU_PLUGIN . "note/syntax.php")) {
+                return '<div class="notewarning">';
+            } else {
+                return '<div class="docimpwarning">';
+            }
+        } else {
+            return '</div>';
+        }
+    }
 
 
 }
