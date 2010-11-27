@@ -18,7 +18,7 @@ require_once(DOKU_INCLUDE . 'io.php');
  * All DokuWiki plugins to extend the admin function
  * need to inherit from this class
  */
-class admin_plugin_ospdocimport extends DokuWiki_Admin_Plugin
+class admin_plugin_doctree2filelist extends DokuWiki_Admin_Plugin
 {
 var $state = 0;
 var $backup = '';
@@ -26,7 +26,7 @@ var $backup = '';
     /**
      * Constructor
      */
-    function admin_plugin_ospdocimport()
+    function admin_plugin_doctree2filelist()
     {
         $this->setupLocale();
     }
@@ -40,7 +40,7 @@ var $backup = '';
             'author' => 'Frank Schiebel',
             'email'  => 'frank@linuxmuster.net',
             'date'   => '2010-05-25',
-            'name'   => 'ospdocimport: Imports document tree into dokuwiki',
+            'name'   => 'doctree2filelist: Imports document tree into dokuwiki',
             'desc'   => '...',
             'url'    => 'http://openschulportfolio.de/',
         );
