@@ -22,6 +22,7 @@ $lang['detaildesc'] = '<p>Der Vorgang besteht aus vier Schritten:</p>
          Seitenstruktur erzeugt, über die alle kopierten Dokumente anschließend erreichbar sind. Diese Wikiseiten können nach erfolgreichem Import beliebig
          angepasst werden.</li>
          <li>Wenn alles geklappt hat, können die zuvor auf den Server geladenen Dokumente gelöscht werden.</li>
+         <li>Nun können Sie die erzeugten Wikiseiten an Ihre Bedürfnisse anpassen.</li>
          </ol>';
 $lang['warning_osp'] = 'Beim Importvorgang werden alle Dokumente und Wiki-Seiten im Ziel-Namensraum <strong>unwiderruflich durch den importierten Dokumentenstamm ersetzt</strong>!';
 $lang['filelist_plugin_required'] = 'Dieses Plugin ben&ouml;tigt das <tt>filelist</tt>-Plugin f&uuml;r DokuWiki.</div>';

@@ -1,15 +1,165 @@
 Index: trunk/usr/share/linuxmuster-portfolio/lib/plugins/bookcreator/syntax.php
 ===================================================================
---- trunk.orig/usr/share/linuxmuster-portfolio/lib/plugins/bookcreator/syntax.php	2010-11-14 17:18:37.000000000 +0100
-+++ trunk/usr/share/linuxmuster-portfolio/lib/plugins/bookcreator/syntax.php	2010-11-14 17:19:50.000000000 +0100
-@@ -202,8 +202,49 @@
+--- trunk.orig/usr/share/linuxmuster-portfolio/lib/plugins/bookcreator/syntax.php	2010-11-27 20:36:25.000000000 +0100
++++ trunk/usr/share/linuxmuster-portfolio/lib/plugins/bookcreator/syntax.php	2010-11-27 20:52:38.000000000 +0100
+@@ -8,7 +8,6 @@
+ 
+ // must be run within Dokuwiki
+ if (!defined('DOKU_INC')) die();
+-
+ if (!defined('DOKU_PLUGIN')) define('DOKU_PLUGIN', DOKU_INC . 'lib/plugins/');
+ require_once(DOKU_PLUGIN . 'syntax.php');
+ require_once(DOKU_INC.'inc/search.php');
+@@ -18,7 +17,7 @@
+  * need to inherit from this class
+  */
+ class syntax_plugin_bookcreator extends DokuWiki_Syntax_Plugin {
+-    
++
+     var $usercansave;
+ 
+     function getInfo() {
+@@ -44,12 +43,12 @@
+      * Where to sort in?
+      */
+     function getSort(){
+-        return 190; 
++        return 190;
+     }
+ 
+ 
+     function handle($match, $state, $pos, &$handler) {
+-      
++
+       $match = substr($match, 2, -2); // strip markup
+       if (substr($match, 0, 7) == 'ARCHIVE') $type = 'archive';
+       else $type = 'book';
+@@ -59,7 +58,7 @@
+       if ($type == 'archive') {
+         list($junk, $params) = explode(':', $match, 2);
+         list($param1, $param2) = explode('&', $params, 2);
+-        
++
+         if (is_numeric($param1)) {
+           $num = $param1;
+           if (is_string($param2)) $order = $param2;
+@@ -71,7 +70,7 @@
+       }
+ 
+       return array($type, $num, $order);
+-    
++
+     }
+ 
+     function render($mode, &$renderer, $data) {
+@@ -94,16 +93,16 @@
+           $this->usercansave = (auth_quickaclcheck($this->getConf('save_namespace').':*') >= AUTH_CREATE);
+           // verifica che se l'utente può salvare/eliminare le selezioni
+ 
+-          if ($this->usercansave) {        
++          if ($this->usercansave) {
+             if ((isset($_POST['task'])) && ($_POST['task'] == "save")) {
+               checkSecurityToken();
+               if (isset($_COOKIE['list-pagelist'])) {
+                 if (isset($_POST['bookcreator_title'])) {
+                   $list = explode("|", $_COOKIE['list-pagelist']);
+-                  $content = "====== ".$_POST['bookcreator_title']." ======".DOKU_LF;    
+-                  for ($n = 0; $n < count($list); $n++) {            
++                  $content = "====== ".$_POST['bookcreator_title']." ======".DOKU_LF;
++                  for ($n = 0; $n < count($list); $n++) {
+                     $page = $list[$n];
+-                    $content .= "  * [[:$page]]".DOKU_LF;    
++                    $content .= "  * [[:$page]]".DOKU_LF;
+                   }
+                   saveWikiText($this->getConf('save_namespace').":".$_POST['bookcreator_title'],$content, "selection created");
+                   msg($this->getLang('bookcreator_saved').": ".$this->getConf('save_namespace').":".$_POST['bookcreator_title']);
+@@ -118,27 +117,27 @@
+               msg($this->getLang('bookcreator_deleted').": ".$this->getConf('save_namespace').":".$_POST['page']);
+             }
+           }
+-        
++
+           if ((isset($_GET['do'])) || (isset($_GET['mddo']))) {
+             if (($_GET['do'] == 'export_html') || ($_GET['do'] == 'export_text')) {
+               if (isset($_COOKIE['list-pagelist'])) {
+                 $renderer->doc = '';
+                 $list = explode("|", $_COOKIE['list-pagelist']);
+               }
+-              
++
+               $render_mode = 'xhtml';
+               $lf_subst = '';
+               if ($_GET['do'] == 'export_text') {
+                 $render_mode = 'text';
+                 $lf_subst = '<br>';
+               }
+-              
+-              for ($n = 0; $n < count($list); $n++) {            
++
++              for ($n = 0; $n < count($list); $n++) {
+                 $page = $list[$n];
+                 $renderer->doc .= str_replace(DOKU_LF,$lf_subst,p_cached_output(wikiFN($page),$render_mode)); //p_wiki_xhtml($page,$REV,false);
+-              }  
+-            
+-            } 
++              }
++
++            }
+           } else {
+             $renderer->info['cache'] = FALSE;
+             $renderer->doc .= '<script language="JavaScript" type="text/javascript" src="'.DOKU_URL.'lib/plugins/bookcreator/sorter/core.js"></script>';
+@@ -154,12 +153,12 @@
+             if (isset($_COOKIE['bookcreator']) || ((isset($_POST['task'])) && ($_POST['task'] == "read")) )  {
+               $list = array();
+               $i = 0;
+-              
++
+               // c'è una selezione salvata da recuperare
+               if ((isset($_POST['task'])) && ($_POST['task'] == "read")) {
+                 checkSecurityToken();
+                 $renderer->doc .= "
+-  <script type='text/javascript'><!--//--><![CDATA[//><!-- 
++  <script type='text/javascript'><!--//--><![CDATA[//><!--
+   book_removeAllPages('bookcreator');
+   //--><!]]></script>";
+                 $select= rawWiki($this->getConf('save_namespace').":".$_POST['page']);
+@@ -168,7 +167,7 @@
+                 for($n=0; $n<$nr; $n++) {
+                   if (trim($lines[$n]) == '') continue;
+                   if ((($n > 0) && substr($lines[$n], 0, 7) != "  * [[:") ) continue;
+-                  
++
+                   if ($n === 0){
+                     $lines[$n] = str_replace("====== ",'',$lines[$n]);
+                     $lines[$n] = str_replace(" ======",'',$lines[$n]);
+@@ -178,7 +177,7 @@
+                     $lines[$n] = str_replace("]]",'',$lines[$n]);
+                     $list[$n] = $lines[$n];
+                     $renderer->doc .= '
+-  <script type="text/javascript"><!--//--><![CDATA[//><!-- 
++  <script type="text/javascript"><!--//--><![CDATA[//><!--
+   book_changePage(\'bookcreator['.$list[$n].']\', 1, new Date(\'July 21, 2099 00:00:00\'), \'/\');
+   //--><!]]></script>';
+                     $i++;
+@@ -193,7 +192,7 @@
+                   $renderer->doc .= $this->getLang('bookcreator_empty');
+                   return;
+                 }
+-              
++
+                 foreach ($fav as $page => $cpt) {
+                   list($cpt, $date) = explode(";", $cpt);
+                   if ($cpt<1) continue;
+@@ -201,24 +200,65 @@
+                   $list[$i] = $page;
                  }
                }
-               
+-              
 -              $renderer->doc .= "<table width='100%' border='0' ><tr>";
 -              $renderer->doc .= "<td width='60%' valign='top'>";
-+              $renderer->doc .= '<div id="bookcreator_exportform">'; 
-+              
++
++              $renderer->doc .= '<div id="bookcreator_exportform">';
++
 +              //Esportazione PDF
 +              $renderer->doc .= '<form class="button" method="get" action="'.wl($ID).'" accept-charset="'.$lang['encoding'].'">';
 +              $renderer->doc .= "<fieldset style=\"text-align:left;\"><legend><b>".$this->getLang('bookcreator_export')."</b></legend>";
@@ -25,7 +175,7 @@ Index: trunk/usr/share/linuxmuster-portfolio/lib/plugins/bookcreator/syntax.php
 +              if (file_exists(DOKU_PLUGIN."dw2pdf/action.php") && !plugin_isdisabled("dw2pdf")) {
 +                $renderer->doc .= '<option value="export_pdfbook" selected="selected">'.$this->getLang('bookcreator_exportpdf').'</option>';
 +              }
-+              
++
 +              $renderer->doc .= '</select>';
 +              $renderer->doc .= '<input type="submit" value="'.$this->getLang('bookcreator_create').'" class="button"/>
 +                  <input type="hidden" name="id" value="'.$ID.'" />';
@@ -33,8 +183,8 @@ Index: trunk/usr/share/linuxmuster-portfolio/lib/plugins/bookcreator/syntax.php
 +              $renderer->doc .= formSecurityToken(false);
 +              $renderer->doc .= '</form></div>';
 +              //Esportazione PDF
-+              
-+              
++
++
 +              $renderer->doc .= '<div id="bookcreator_saveselform">';
 +              if ($this->usercansave) {
 +                //Salva selezione
@@ -49,18 +199,62 @@ Index: trunk/usr/share/linuxmuster-portfolio/lib/plugins/bookcreator/syntax.php
 +                $renderer->doc .= '</form>';
 +                //Salva selezione
 +              }
-+              
++
 +              $renderer->doc .= '</div>';
  
                // Pagine selezionate
-               for ($n = 1; $n <= $i; $n++) {            
-@@ -258,53 +299,8 @@
+-              for ($n = 1; $n <= $i; $n++) {            
++              for ($n = 1; $n <= $i; $n++) {
+                 $page = $list[$n];
+                 if ($n == 1) {
+                   $renderer->header($this->getLang('bookcreator_toprint'), 2, 0);
+                   $renderer->doc.= '<ul id="pagelist" class="boxes">';
+                 }
+                 $lien = $this->createLink($page);
+-                $renderer->doc.= '	<li itemID="'.$page.'">';
++                $renderer->doc.= '  <li itemID="'.$page.'">';
+                 $renderer->doc .= ' <a href="javascript:book_changePage(\'bookcreator['.$page.']\', 0, new Date(\'July 21, 2099 00:00:00\'), \'/\'); book_recharge();"><img src="'.DOKU_URL.'lib/plugins/bookcreator/images/remove.png" title="'.$this->getLang('bookcreator_remove').'" border="0" style="vertical-align:middle;" name="ctrl" /></a>&nbsp;&nbsp;';
+                 $renderer->doc .= $lien;
+                 $renderer->doc .= '</li>';
+                 if ( $n==$i ) {
+-                  $renderer->doc .= '</ul>'; 
++                  $renderer->doc .= '</ul>';
+                   $renderer->doc .= "<br />";
+                 }
+               }
+@@ -233,14 +273,14 @@
+                     if (!$i) {
+                       $renderer->header($this->getLang('bookcreator_removed'), 2, 0);
+                       $renderer->listu_open();
+-                    }  
++                    }
+                     $lien = $this->createLink($page);
+                     $i++;
+                     $renderer->doc.= "<div id=\"ex__$page\">";
+                     $renderer->listitem_open(1);
+                     $renderer->doc .= '<a href="javascript:book_changePage(\'bookcreator['.$page.']\', 1, new Date(\'July 21, 2099 00:00:00\'), \'/\');  book_recharge();"><img src="'.DOKU_URL.'lib/plugins/bookcreator/images/include.png" title="'.$this->getLang('bookcreator_include').'" border="0" style="vertical-align:middle;" name="ctrl" /></a> ';
+                     $renderer->doc .= $lien;
+-                    $renderer->doc .= "</div>"; 
++                    $renderer->doc .= "</div>";
+                     $renderer->listitem_close();
+                   }
+                 }
+@@ -248,7 +288,7 @@
+               }
+ 
+               // azzera selezione
+-              $renderer->doc .= "<div align='center'>"; 
++              $renderer->doc .= "<div align='center'>";
+               $onclick = "javascript:if(confirm('".$this->getLang('bookcreator_reserconfirm')."')) {book_removeAllPages('bookcreator'); document.reset.submit();}";
+               $renderer->doc .= '<form name="reset" class="button" method="get" action="'.wl($ID).'">';
+               $renderer->doc .= "<input type='button' value='".$this->getLang('bookcreator_reset')."' class='button' onclick=\"".$onclick."\">";
+@@ -258,58 +298,13 @@
                $renderer->doc .= '</div>';
                // azzera selezione
  
 -              $renderer->doc .= "</td>";
 -              $renderer->doc .= "<td width='40%' valign='top' >";
- 
+-
 -              $renderer->doc .= "<div align='center'>"; 
 -              
 -              //Esportazione PDF
@@ -74,7 +268,7 @@ Index: trunk/usr/share/linuxmuster-portfolio/lib/plugins/bookcreator/syntax.php
 -              if (file_exists(DOKU_PLUGIN."text/renderer.php") && !plugin_isdisabled("text")) {
 -                $renderer->doc .= '<option value="export_text">'.$this->getLang('bookcreator_exporttext').'</option>';
 -              }
--
+ 
 -              if (file_exists(DOKU_PLUGIN."dw2pdf/action.php") && !plugin_isdisabled("dw2pdf")) {
 -                $renderer->doc .= '<option value="export_pdfbook" selected="selected">'.$this->getLang('bookcreator_exportpdf').'</option>';
 -              }
@@ -108,10 +302,126 @@ Index: trunk/usr/share/linuxmuster-portfolio/lib/plugins/bookcreator/syntax.php
  
              } else {
                $renderer->doc .= $this->getLang('bookcreator_nocookies');
+             }
+-              
++
+             // genera la lista delle selezioni salvate
+             $result = $this->_getlist($order);
+             if (sizeof($result) > 0) {
+@@ -322,13 +317,13 @@
+               $renderer->doc .= formSecurityToken(false);
+               $renderer->doc .= '</fieldset>';
+               $renderer->doc .= '</form>';
+-            }  
++            }
+             // genera la lista delle selezioni salvate
+-          }  
++          }
+         }
+         return false;
+       } else {
+-      
++
+         if ($mode == 'xhtml') {
+           // genera la lista delle selezioni salvate
+           $result = $this->_getlist($order, $num);
+@@ -340,7 +335,7 @@
+             $renderer->doc .= "<input type='hidden' name='id' value='".$this->getConf('book_page')."'/>";
+             $renderer->doc .= formSecurityToken(false);
+             $renderer->doc .= '</form>';
+-          }  
++          }
+           // genera la lista delle selezioni salvate
+         }
+         return false;
+@@ -367,30 +362,30 @@
+ 
+     function _getlist($order, $limit=0) {
+       global $conf;
+-      
++
+       $result = array();
+       $opts = array('depth' => 1,'listfiles' => true,'listdirs' => false,'skipacl' => false, 'pagesonly' => true,'meta' => true);
+       $tt = str_replace(':','/',$this->getConf('save_namespace'));
+       search(&$result,$conf['datadir'],'search_allpages',$opts,$tt);
+ 
+       if (sizeof($result) > 0) {
+-      
++
+         if($order == 'date'){
+           usort($result,array($this,'_datesort'));
+         }elseif($order == 'title'){
+           usort($result,array($this,'_titlesort'));
+         }
+-        
++
+         if ($limit != 0) $result = array_slice($result, 0, $limit);
+       }
+       return $result;
+     }
+ 
+-    
++
+     function _showlist(&$renderer, $result, $showbin = false, $showtime = false) {
+ 
+       $renderer->doc .= '
+-<script type="text/javascript"><!--//--><![CDATA[//><!-- 
++<script type="text/javascript"><!--//--><![CDATA[//><!--
+ function actionList(action,page) {
+   var msg = "";
+   var flag = true;
+@@ -400,21 +395,21 @@
+   } else {
+     if (book_countPages("bookcreator") == 0) {
+       flag = false;
+-    }  
++    }
+     msg = "'.$this->getLang('bookcreator_confirmload').'";
+   }
+-  
++
+   if (flag) flagconfirm = confirm(msg);
+   if(flagconfirm) {
+     document.bookcreator__selections__list.task.value=action;
+     document.bookcreator__selections__list.page.value=page;
+     document.bookcreator__selections__list.submit();
+     return true;
+-  }  
++  }
+ }
+ //--><!]]></script>';
+-    
+-    
++
++
+       $renderer->listu_open();
+       foreach($result as $item){
+         $itemtitle = p_get_first_heading($item['id']);
+@@ -422,7 +417,7 @@
+         $renderer->listitem_open(1);
+         if (($showbin) && (auth_quickaclcheck($item['id']) >= AUTH_DELETE)) {
+           $renderer->doc .= "<a href=\"javascript:actionList('del','".$nons."');\" ><img src='".DOKU_URL."lib/plugins/bookcreator/images/remove.png' title='".$this->getLang('bookcreator_delselection')."' border='0' style='vertical-align:middle;' /></a> ";
+-        }  
++        }
+         $renderer->doc .= "<a href='".wl($this->getConf('save_namespace').":".$nons)."'><img src='".DOKU_URL."lib/plugins/bookcreator/images/include.png' title='".$this->getLang('bookcreator_showpage')."' border='0' style='vertical-align:middle;' /></a> ";
+         $renderer->doc .= "<a href=\"javascript:actionList('read','".$nons."');\" title='".$this->getLang('bookcreator_loadselection')."'>".$itemtitle."</a>";
+         if ($showtime) $renderer->cdata(' ('.dformat($item['mtime']).')');
+@@ -442,9 +437,9 @@
+           $pageName = $page;
+         }
+         $pageName = str_replace('_', ' ', $pageName);
+-      }    
++      }
+       return "<a href='".wl($page, false, true, "&")."'>".$pageName."</a>";
+    }
+-   
++
+ }
+ ?>
 Index: trunk/usr/share/linuxmuster-portfolio/lib/plugins/bookcreator/style.css
 ===================================================================
---- trunk.orig/usr/share/linuxmuster-portfolio/lib/plugins/bookcreator/style.css	2010-11-14 17:19:57.000000000 +0100
-+++ trunk/usr/share/linuxmuster-portfolio/lib/plugins/bookcreator/style.css	2010-11-14 17:21:08.000000000 +0100
+--- trunk.orig/usr/share/linuxmuster-portfolio/lib/plugins/bookcreator/style.css	2010-11-27 20:36:25.000000000 +0100
++++ trunk/usr/share/linuxmuster-portfolio/lib/plugins/bookcreator/style.css	2010-11-27 20:48:11.000000000 +0100
 @@ -44,4 +44,15 @@
    
  }
@@ -128,3 +438,27 @@ Index: trunk/usr/share/linuxmuster-portfolio/lib/plugins/bookcreator/style.css
 +
 +
  
+Index: trunk/usr/share/linuxmuster-portfolio/lib/plugins/bookcreator/conf/default.php
+===================================================================
+--- trunk.orig/usr/share/linuxmuster-portfolio/lib/plugins/bookcreator/conf/default.php	2010-11-27 20:48:59.000000000 +0100
++++ trunk/usr/share/linuxmuster-portfolio/lib/plugins/bookcreator/conf/default.php	2010-11-27 20:52:25.000000000 +0100
+@@ -4,14 +4,8 @@
+  *
+  * @author  Luigi Micco <l.micco@tiscali.it>
+  */
+-
+ $conf['toolbar']         = 'noempty';
+-
+-$conf['book_page']       = 'wiki:ebook'; 
+-$conf['help_page']       = 'wiki:ebook_help'; 
+-$conf['save_namespace']  = 'wiki:ebook'; 
+-
+-$conf['skip_ids']        = 'sidebar,user,group,playground,wiki:syntax,wiki:ebook';
+-
+-
+-//Setup VIM: ex: et ts=2 enc=utf-8 :
+\ No newline at end of file
++$conf['book_page']       = 'bookcreator:start';
++$conf['help_page']       = 'bookcreator:help';
++$conf['save_namespace']  = 'bookcreator:saved';
++$conf['skip_ids']        = 'sidebar,user,group,playground,wiki:syntax,wiki:ebook,bookcreator';

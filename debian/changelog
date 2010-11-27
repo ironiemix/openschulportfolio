@@ -1,9 +1,9 @@
-linuxmuster-portfolio (1.1.1-0) openlml; urgency=low
+linuxmuster-portfolio (1.1.2-0) openlml; urgency=low
 
-     * First evaluation version of doctree2filelist plugin
-     * Added pdfbook Plugin, modified template accordingly
+     * Added doctree2filelist-plugin
+     * Added pdfbook Plugin, modified template an settings to fit OSP
 
- -- Frank Schiebel <frank@linuxmuster.net>  Mon, 22 Nov 2010 22:46:00 +0100
+ -- Frank Schiebel <frank@linuxmuster.net>  Sat, 27 Nov 2010 22:46:00 +0100
 
 linuxmuster-portfolio (1.1.0-0) openlml; urgency=low
 

@@ -178,13 +178,13 @@ var $backup = '';
             $html .= '  <input type="hidden" name="page" value="'.$this->getPluginName().'" />'."\n";
             $html .= ' <input type="submit" value="' . $this->getLang('btn_delete_upload_dir') . '"> ' . "\n";
             $html .= '</form>'."\n";
+            $html .=  '<form action="'.wl($ID).'" method="post" /> '."\n";
+            $html .= '  <input type="hidden" name="do" value="admin" />'."\n";
+            $html .= '  <input type="hidden" name="ospcmd" value="importit" />'."\n";
+            $html .= '  <input type="hidden" name="page" value="'.$this->getPluginName().'" />'."\n";
+            $html .= ' <input type="submit" value="' . $this->getLang('btn_reimport') . '"> ' . "\n";
+            $html .= '</form>'."\n";
         }
-        $html .=  '<form action="'.wl($ID).'" method="post" /> '."\n";
-        $html .= '  <input type="hidden" name="do" value="admin" />'."\n";
-        $html .= '  <input type="hidden" name="ospcmd" value="importit" />'."\n";
-        $html .= '  <input type="hidden" name="page" value="'.$this->getPluginName().'" />'."\n";
-        $html .= ' <input type="submit" value="' . $this->getLang('btn_reimport') . '"> ' . "\n";
-        $html .= '</form>'."\n";
         $html .=  '<form action="'.wl($ID).'" method="post" /> '."\n";
         $html .= '  <input type="hidden" name="do" value="admin" />'."\n";
         $html .= '  <input type="hidden" name="ospcmd" value="start_over" />'."\n";
@@ -280,9 +280,12 @@ var $backup = '';
         // create startpages
         $this->create_startpages($media_dest);
 
-        $pfstartfile_in  = realpath(dirname(__FILE__))."/start.txt";
-        $pfstartfile_out = $pagespath."portfolio/start.txt";
-        copy($pfstartfile_in, $pfstartfile_out);
+        # determine if we are running under openschulportfolio
+        if (file_exists(DOKU_INC . "/lib/tpl/portfolio/ospversion.php")) {
+            $pfstartfile_in  = realpath(dirname(__FILE__))."/start.txt";
+            $pfstartfile_out = $pagespath."portfolio/start.txt";
+            copy($pfstartfile_in, $pfstartfile_out);
+        }
         $this->_save_status("IMPORTED");
 
     }
