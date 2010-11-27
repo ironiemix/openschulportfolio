@@ -20,7 +20,6 @@ $lang['detaildesc'] = '<p>This process requires four steps:</p>
          <li>The files are (automatically) copied and integrated into the document tree of the wiki (if necessary, the files are renamed, thus eliminating   		umlauts, blanks and the like - these characters are unsuitable for use in online systems). This step creates the site structure which allows 		navigation to the documents (the site structure may be customized after the import).</li>
          <li>Make sure the import has been completed and delete the target directory on the server.</li>
          <li>Customize the wiki/document structure according to your needs and liking!</li>
-         <li>Nun können Sie die erzeugten Wikiseiten an Ihre Bedürfnisse anpassen.</li>
          </ol>';
 $lang['warning_osp'] = 'All documents and wiki pages in the target namespace will be <strong>irreversibly</strong> replaced by the imported document tree!';
 $lang['filelist_plugin_required'] = 'This plugin depends on the <tt>filelist</tt>-plugin for DokuWiki.</div>';
