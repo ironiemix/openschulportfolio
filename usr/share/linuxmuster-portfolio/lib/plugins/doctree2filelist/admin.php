@@ -61,7 +61,8 @@ var $backup = '';
      */
     function getMenuText()
     {
-        return 'Importassistent (OSP)';
+        $menu_base = $this->getLang('plugname'); 
+        return $menu_base;
     }
 
     /**
@@ -71,9 +72,17 @@ var $backup = '';
         if (!isset($_REQUEST['ospcmd'])) return;
 
         if ($_REQUEST['ospcmd'] == "create_upload_dir") {
-            $this->create_upload_dir();
+            $this->_create_upload_dir();
         }
-
+        if ($_REQUEST['ospcmd'] == "docsuploaded") {
+            $this->_save_status("DOCSUPLOADED");
+        }
+        if ($_REQUEST['ospcmd'] == "delete_upload_dir") {
+            $this->_delete_upload_dir();
+        }
+        if ($_REQUEST['ospcmd'] == "start_over") {
+            $this->_reset_wizard();
+        }
         if ($_REQUEST['ospcmd'] == "importit") {
             $this->_import_docs();
         }
@@ -91,25 +100,44 @@ var $backup = '';
         print $this->getLang('detaildesc') ."\n";
         print $this->getLang('warning_osp') ."\n";
 
-        # determine upload dir from conf
+        # determine upload dir from 
         $file_upload = $this->_strip_doubleslashes($conf['savedir'] . '/media/' . $this->getConf('sourcetree') . '/');
+        print "<h2>" . $this->getLang('wizard') . "</h2>\n";
+        print '<div class="settingsbox"><strong>' . $this->getLang('settings') . "</strong><br />";
+        print  $this->getLang('importdir') .": <tt>". $file_upload . "</tt><br />\n";
+        print  $this->getLang('targetns') .": <tt>". $this->getConf('destination_namespace') . "</tt>\n";
+        print "</div>\n";
 
+        $status = $this->_read_status();
 
-        # check if input dir exists, if not display button to create it
-        if( is_dir($file_upload) ) {
-            print "<span class=\"ospok\">OK </span>" . $this->getLang('sourcedir_exists') . " <tt> " . $file_upload . " </tt></span>\n";
-            ptln("<div class=\"ospnext\"><div>Laden Sie nun den gesamten Verzeichnisbaum ihrer");
-            ptln("Dokumentensammlung in das Verzeichnis</div><tt>$file_upload</tt>");
-            ptln("<div>auf dem Server hoch. Anschließend können Sie Ihren Dokumentenstamm durch betätigen der Schaltfläche ins Wiki importieren.</div>");
+        if ($status == "IMPORTED") {
+            $statusline = $this->_read_status("all");
+            print "<p><span class=\"ospok\">OK </span>" . $this->getLang('lastimport') . " " . $statusline . "</p>\n";
+            print $this->_create_reset_form();
+        }
+        if ($status == "DOCSUPLOADED") {
+            print "<p><span class=\"ospok\">OK </span>" . $this->getLang('docsuploaded') . "</p>\n";
+            print "<div class=\"ospnext\">" . $this->getLang('importnow') . "\n";
             ptln('<form action="'.wl($ID).'" method="post" /> ');
             ptln(' <input type="hidden" name="do"   value="admin" />');
             ptln(' <input type="hidden" name="ospcmd"   value="importit" />');
             ptln(' <input type="hidden" name="page" value="'.$this->getPluginName().'" />');
             print ' <input type="submit" value="'. $this->getLang('btn_import') . '"> ' . "\n";
             ptln('</form></div>');
-        } else {
+        }
+        if (is_dir($file_upload) && ($status != "IMPORTED") && ($status != "DOCSUPLOADED") )  {
+            print "<span class=\"ospok\">OK </span>" . $this->getLang('sourcedir_exists') . " <tt> " . $file_upload . " </tt></span>\n";
+            print "<div class=\"ospnext\">" . $this->getLang('docuploadnow') . "\n";
+            ptln('<form action="'.wl($ID).'" method="post" /> ');
+            ptln(' <input type="hidden" name="do"   value="admin" />');
+            ptln(' <input type="hidden" name="ospcmd"   value="docsuploaded" />');
+            ptln(' <input type="hidden" name="page" value="'.$this->getPluginName().'" />');
+            print ' <input type="submit" value="'. $this->getLang('btn_confirm_upload') . '"> ' . "\n";
+            ptln('</form></div>');
+        }
+        if (!is_dir($file_upload) && $status == "START") { 
             ptln("<div class=\"ospnext\">");
-            print "<p>" . $this->getLang('sourcedir_does_not_exist') . " <tt> " . $file_upload . " </tt></p>\n ";
+            print $this->getLang('sourcedir_does_not_exist') . "\n ";
             ptln(' <form action="'.wl($ID).'" method="post" /> ');
             ptln(' <input type="hidden" name="do" value="admin" />');
             ptln(' <input type="hidden" name="ospcmd" value="create_upload_dir" />');
@@ -120,20 +148,91 @@ var $backup = '';
         }
 
     }
+    
+    /**
+     * Creates creates reset form 
+     *
+     * @author   Frank Schiebel <frank@linuxmuster.net>
+     * @param    none
+     * @return   none
+     *
+     **/
+    function _create_reset_form() {
+        global $conf;
+        # determine upload dir from conf
+        $file_upload = $this->_strip_doubleslashes($conf['savedir'] . '/media/' . $this->getConf('sourcetree') . '/');
+        if (@is_dir($file_upload) && @is_writable($file_upload)) {
+            $html =  '<form action="'.wl($ID).'" method="post" /> '."\n";
+            $html .= '  <input type="hidden" name="do" value="admin" />'."\n";
+            $html .= '  <input type="hidden" name="ospcmd" value="delete_upload_dir" />'."\n";
+            $html .= '  <input type="hidden" name="page" value="'.$this->getPluginName().'" />'."\n";
+            $html .= ' <input type="submit" value="' . $this->getLang('btn_delete_upload_dir') . '"> ' . "\n";
+            $html .= '</form>'."\n";
+        }
+        $html .=  '<form action="'.wl($ID).'" method="post" /> '."\n";
+        $html .= '  <input type="hidden" name="do" value="admin" />'."\n";
+        $html .= '  <input type="hidden" name="ospcmd" value="importit" />'."\n";
+        $html .= '  <input type="hidden" name="page" value="'.$this->getPluginName().'" />'."\n";
+        $html .= ' <input type="submit" value="' . $this->getLang('btn_reimport') . '"> ' . "\n";
+        $html .= '</form>'."\n";
+        $html .=  '<form action="'.wl($ID).'" method="post" /> '."\n";
+        $html .= '  <input type="hidden" name="do" value="admin" />'."\n";
+        $html .= '  <input type="hidden" name="ospcmd" value="start_over" />'."\n";
+        $html .= '  <input type="hidden" name="page" value="'.$this->getPluginName().'" />'."\n";
+        $html .= ' <input type="submit" value="' . $this->getLang('btn_start_over') . '"> ' . "\n";
+        $html .= '</form>'."\n";
+        return $html;
+    }
 
     /**
      * Creates upload dir according to config
      *
      * @author   Frank Schiebel <frank@linuxmuster.net>
      * @param    none
-     * @returns  none
+     * @return   none
      *
      **/
-    function create_upload_dir() {
+    function _create_upload_dir() {
         global $conf;
         # determine upload dir from conf
         $file_upload = $this->_strip_doubleslashes($conf['savedir'] . '/media/' . $this->getConf('sourcetree') . '/');
         mkdir($file_upload);
+        $this->_save_status("UPLOADDIRCREATED");
+    }
+    
+    /**
+     * Resets wizard
+     *
+     * @author   Frank Schiebel <frank@linuxmuster.net>
+     * @param    none
+     * @return   none
+     *
+     **/
+    function _reset_wizard() {
+        global $conf;
+        # determine upload dir from conf
+        $file_upload = $this->_strip_doubleslashes($conf['savedir'] . '/media/' . $this->getConf('sourcetree') . '/');
+        if (@is_dir($file_upload) && @is_writable($file_upload)) {
+            $this->_deltree($file_upload);
+        }
+        $this->_save_status("START");
+    }
+    
+    /**
+     * Deletes upload dir and all containing docs
+     *
+     * @author   Frank Schiebel <frank@linuxmuster.net>
+     * @param    none
+     * @return   none
+     *
+     **/
+    function _delete_upload_dir() {
+        global $conf;
+        # determine upload dir from conf
+        $file_upload = $this->_strip_doubleslashes($conf['savedir'] . '/media/' . $this->getConf('sourcetree') . '/');
+        if (@is_dir($file_upload) && @is_writable($file_upload)) {
+            $this->_deltree($file_upload);
+        }
     }
 
     /**
@@ -155,13 +254,12 @@ var $backup = '';
         $pagesdir       = $this->_strip_doubleslashes($pagespath."/".$subpath."/");
 
         # delete old media and pages dir
-        if (is_dir($media_dest)) { 
-            $this->_deltree($media_dest); 
+        if (is_dir($media_dest)) {
+            $this->_deltree($media_dest);
         }
-        if (is_dir($pagesdir)) { 
-            $this->_deltree($pagesdir); 
+        if (is_dir($pagesdir)) {
+            $this->_deltree($pagesdir);
         }
-        print $media_dest . $pagesdir;
 
         # create fresh namespacedirs for media an pages
         io_createNamespace($this->getConf('destination_namespace').":xx");
@@ -175,6 +273,8 @@ var $backup = '';
         $pfstartfile_in  = realpath(dirname(__FILE__))."/start.txt";
         $pfstartfile_out = $pagespath."portfolio/start.txt";
         copy($pfstartfile_in, $pfstartfile_out);
+        $this->_save_status("IMPORTED");
+
     }
 
     /**
@@ -210,17 +310,13 @@ var $backup = '';
     function _copytree($source, $dest) {
       global $conf;
 
+      $source = $this->_strip_doubleslashes($source);
       $dest = $this->_get_clean_filename($dest);
-
-      //  Check for symlinks
-      if (is_link($source)) {
-        return symlink(readlink($source), $dest);
-      }
       // Simple copy for a file
-      if (is_file($source)) {
-        return copy($source, $dest);
+      if (is_file($source)) {  
+        print "$source --- $dest<br>";
+        return @copy($source, $dest);
       }
-
       $dest = $this->_get_clean_filename($dest);
 
       // Make destination directory
@@ -233,12 +329,16 @@ var $backup = '';
         $pages_dir = str_replace("$mediapath", "$pagespath", $dest);
         mkdir($dest);
         if (!is_dir($pages_dir)) {
-          mkdir($pages_dir);
+          @mkdir($pages_dir);
         }
       }
 
       // Loop through the folder
-      $dir = dir($source);
+      if (!is_dir($source)) {
+        return false;
+      }
+        
+      $dir = @dir($source);
       while (false !== $entry = $dir->read()) {
         // Skip pointers
         if ($entry == '.' || $entry == '..') {
@@ -261,12 +361,29 @@ var $backup = '';
       global $conf;
 
       $fixpath = $this->_strip_doubleslashes($conf['savedir'] . "/media/");
-      $dest = iconv("CP437", "UTF-8", $dest);
       $dest = str_replace("$fixpath", "", $dest);
+      # Fix windows encoding: this is really bad, but i could not figure out how to 
+      # change the filename to utf8 from wathever encoding comes in...
+      $dest = urlencode($dest);
+      $dest = str_replace('%2F','/', $dest);
+      $dest = str_replace('%25','%', $dest);
+      $dest = str_replace('%C2','', $dest);
+      $dest = str_replace('%C3','', $dest);
+      $dest = str_replace('%81','ue', $dest);
+      $dest = str_replace('%84','ae', $dest);
+      $dest = str_replace('%94','oe', $dest);
+      $dest = str_replace('%A1','ss', $dest);
+      $dest = str_replace('+','_', $dest);
+      $dest = str_replace('-','_', $dest);
+     
+      $dest = str_replace('__','_', $dest);
       $dest = str_replace("//", "/", $dest);
       $dest = str_replace("/", ":", $dest);
       $dest = preg_replace("/:$/", "",  $dest);
+
       $dest = mediaFN($dest);
+      $dest = $this->_strip_doubleslashes($fixpath . str_replace($conf['mediadir'], '', $dest));
+
       return $dest;
     }
 
@@ -334,6 +451,54 @@ var $backup = '';
      **/
     function  _strip_doubleslashes($path) {
         return preg_replace('/\/\//','/', $path);
+    }
+
+    /**
+     * Save status of import procedure to status file
+     * $conf['cachedir'].'/doctree2filelist.status'
+     * creates the file if it does not exist.
+     *
+     * @author   Frank Schiebel <frank@linuxmuster.net>
+     * @param    string     statusstring
+     * @return   true on success
+     *
+     **/
+    function _save_status($status) {
+        global $conf;
+        // build status line
+        $t = time();
+        $statusline = $t."\t".strftime($conf['dformat'],$t)."\t".$_SERVER['REMOTE_ADDR']."\t".$_SERVER['REMOTE_USER']."\t".$status."\n";
+        // write status to file
+        io_saveFile($conf['cachedir'].'/doctree2filelist.status',$statusline, false);
+        return true;
+    }
+
+    /**
+     * reads status of import procedure from status file
+     * $conf['cachedir'].'/doctree2filelist.status'
+     *
+     * @author   Frank Schiebel <frank@linuxmuster.net>
+     * @param    none
+     * @return   string statusstring
+     *
+     **/
+    function _read_status($mode = "statonly") {
+        global $conf;
+        $status = "START";
+        // read status from file
+        $statusfile = $conf['cachedir'].'/doctree2filelist.status';
+        if(@file_exists($statusfile)) {
+            $statusline = file($statusfile);
+            $statusline = $statusline[0];  
+            $status = explode("\t", $statusline);
+            if ($mode == "statonly" ) {
+                $status = rtrim($status[4]);
+            } else {
+                $status = $status[1] . " " . $this->getLang('fromuser') . " " . $status[3]; 
+            }
+        }
+
+        return $status;
     }
 
 
