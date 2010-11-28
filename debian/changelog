@@ -1,6 +1,7 @@
-linuxmuster-portfolio (1.1.2-1) openlml; urgency=low
+linuxmuster-portfolio (1.1.2-2) openlml; urgency=low
     
      * Modified template: Link to book selection in toolbox
+     * Fixed some minor issues in doctree2filelist, completed en locales
  
  -- Frank Schiebel <frank@linuxmuster.net>  Sun, 28 Nov 2010 11:46:00 +0100
 

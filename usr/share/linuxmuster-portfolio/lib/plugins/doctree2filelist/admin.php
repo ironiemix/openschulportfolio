@@ -20,9 +20,6 @@ require_once(DOKU_INCLUDE . 'io.php');
  */
 class admin_plugin_doctree2filelist extends DokuWiki_Admin_Plugin
 {
-var $state = 0;
-var $backup = '';
-
     /**
      * Constructor
      */
