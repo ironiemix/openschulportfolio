@@ -1,5 +1,11 @@
 #!/bin/bash
 
+opt=$1
+
+if [ -z $opt ]; then 
+ opt="deb"
+fi
+
 WDIR=`pwd`
 SCHUQWIKIDIR="${WDIR}/schuqwiki/"
 WDIR=`basename $WDIR`
@@ -38,7 +44,7 @@ echo "Version:          $VERSION"
 echo "Source-Version:   $SOURCEVERSION"
 
 
-sleep 5
+sleep 1 
 
 # Anpassungen einpatchen
 export QUILT_PATCHES=debian/patches
@@ -52,8 +58,9 @@ cd debian
 # Patches entfernen
 quilt --quiltrc /dev/null pop -a
 
-# TAR Pakete erzeugen 
 
+if [ $opt = "zip" ]; then 
+# ZIP Pakete erzeugen 
 # Nach TDIR wechseln
 cd $TDIR
 
@@ -120,6 +127,7 @@ echo "   done."
 # building system update zip package OSP
 echo -n "Zipping update package for OSP..."
 zip -qr openschulportfolio-${VERSION}-update.zip portfolio/* -x portfolio/data/\* -x portfolio/conf/\* -x portfolio/lib/tpl/portfolio/user/\*
+zip -qur openschulportfolio-${VERSION}-update.zip portfolio/data/pages/bookcreator/
 echo "   done."
 # modifiyng for schuqwiki
 cp -r portfolio/lib/tpl/portfolio/ portfolio/lib/tpl/schuqwiki
@@ -135,9 +143,9 @@ echo "   done."
 # building system update zip package SQW
 echo -n "Zipping update package for SQW..."
 zip -qr schu-q-wiki-${VERSION}-update.zip portfolio/* -x portfolio/data/\* -x portfolio/conf/\* -x portfolio/lib/tpl/portfolio/user/\*
+zip -qur schu-q-wiki-${VERSION}-update.zip  portfolio/data/pages/bookcreator/
 echo "   done."
-
-
 mv *.zip ..
+fi
 
 

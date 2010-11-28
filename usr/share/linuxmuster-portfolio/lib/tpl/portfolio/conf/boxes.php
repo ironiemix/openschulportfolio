@@ -10,9 +10,11 @@
  *
  * @license GPLv2 (http://www.gnu.org/licenses/gpl2.html)
  * @author Andreas Haerter <andreas.haerter@dev.mail-node.com>
+ * @author Frank Schiebel <frank@linuxmuster.net>
  * @link http://andreas-haerter.com/projects/dokuwiki-template-vector
  * @link http://www.dokuwiki.org/template:vector
  * @link http://www.dokuwiki.org/devel:configuration
+ * @link http://www.openschulportfolio.de
  */
 
 
@@ -38,8 +40,8 @@ if (!defined("DOKU_INC")){
 
 //hide boxes for anonymous clients (closed wiki)?
 if (empty($conf["useacl"]) || //are there any users?
-    $loginname !== "" || //user is logged in?
-    !tpl_getConf("vector_closedwiki")){
+        $loginname !== "" || //user is logged in?
+        !tpl_getConf("vector_closedwiki")){
 
 
     //navigation
@@ -49,20 +51,20 @@ if (empty($conf["useacl"]) || //are there any users?
 
         //content
         if (empty($conf["useacl"]) ||
-            auth_quickaclcheck(cleanID(tpl_getConf("vector_navigation_location"))) >= AUTH_READ){ //current user got access?
+                auth_quickaclcheck(cleanID(tpl_getConf("vector_navigation_location"))) >= AUTH_READ){ //current user got access?
             //get the rendered content of the defined wiki article to use as custom navigation
             $interim = tpl_include_page(tpl_getConf("vector_navigation_location"), false);
             if ($interim === "" ||
-                $interim === false){
+                    $interim === false){
                 //creation/edit link if the defined page got no content
                 $_vector_boxes["p-navigation"]["xhtml"] = "[&#160;".html_wikilink(tpl_getConf("vector_navigation_location"), hsc($lang["vector_fillplaceholder"]." (".tpl_getConf("vector_navigation_location").")"))."&#160;]<br />";
             }else{
                 //the rendered page content
                 $_vector_boxes["p-navigation"]["xhtml"] = $interim ;
-		if (auth_quickaclcheck(cleanID(tpl_getConf("vector_navigation_location"))) > AUTH_READ){ //current user got write perm?
-			//add edit link for navigation
-                	$_vector_boxes["p-navigation"]["xhtml"] .= '<div class="secedit2" style="clear:both;text-align:right;padding:0;margin:0"><a href="' . DOKU_BASE .   'doku.php?id=' .tpl_getConf("vector_navigation_location") . '&amp;do=edit' . '">' . $lang['btn_secedit'] . '</a></div>';
-		}
+                if (auth_quickaclcheck(cleanID(tpl_getConf("vector_navigation_location"))) > AUTH_READ){ //current user got write perm?
+                    //add edit link for navigation
+                    $_vector_boxes["p-navigation"]["xhtml"] .= '<div class="secedit2" style="clear:both;text-align:right;padding:0;margin:0"><a href="' . DOKU_BASE .   'doku.php?id=' .tpl_getConf("vector_navigation_location") . '&amp;do=edit' . '">' . $lang['btn_secedit'] . '</a></div>';
+                }
             }
         }
     }
@@ -77,14 +79,14 @@ if (empty($conf["useacl"]) || //are there any users?
 
             //content
             $_vector_boxes["p-toc"]["xhtml"] = //get rid of some styles and the embedded headline
-                                               str_replace(//search
-                                                           array("<div class=\"tocheader toctoggle\" id=\"toc__header\">".$lang["toc"]."</div>", //language comes from DokuWiki core
-                                                                 " class=\"toc\"",
-                                                                 " id=\"toc__inside\""),
-                                                           //replace
-                                                           "",
-                                                           //haystack
-                                                           $toc);
+                str_replace(//search
+                        array("<div class=\"tocheader toctoggle\" id=\"toc__header\">".$lang["toc"]."</div>", //language comes from DokuWiki core
+                            " class=\"toc\"",
+                            " id=\"toc__inside\""),
+                        //replace
+                        "",
+                        //haystack
+                        $toc);
         }
         unset($toc);
     }
@@ -101,42 +103,42 @@ if (empty($conf["useacl"]) || //are there any users?
             //ODT plugin
             //see <http://www.dokuwiki.org/plugin:odt> for info
             if (file_exists(DOKU_PLUGIN."odt/syntax.php") &&
-                !plugin_isdisabled("odt")){
+                    !plugin_isdisabled("odt")){
                 $_vector_boxes["p-coll-print_export"]["xhtml"]  .= "        <li id=\"coll-download-as-odt\"><a href=\"".wl(cleanID(getId()), array("do" => "export_odt"))."\" rel=\"nofollow\">".hsc($lang["vector_exportbxdef_downloadodt"])."</a></li>\n";
             }
             //dw2pdf plugin
             //see <http://www.dokuwiki.org/plugin:dw2pdf> for info
             if (file_exists(DOKU_PLUGIN."dw2pdf/action.php") &&
-                !plugin_isdisabled("dw2pdf")){
+                    !plugin_isdisabled("dw2pdf")){
                 $_vector_boxes["p-coll-print_export"]["xhtml"]  .= "        <li id=\"coll-download-as-rl\"><a href=\"".wl(cleanID(getId()), array("do" => "export_pdf"))."\" rel=\"nofollow\">".hsc($lang["vector_exportbxdef_downloadpdf"])."</a></li>\n";
-            //html2pdf plugin
-            //see <http://www.dokuwiki.org/plugin:html2pdf> for info
+                //html2pdf plugin
+                //see <http://www.dokuwiki.org/plugin:html2pdf> for info
             } else if (file_exists(DOKU_PLUGIN."html2pdf/action.php") &&
-                       !plugin_isdisabled("html2pdf")){
+                    !plugin_isdisabled("html2pdf")){
                 $_vector_boxes["p-coll-print_export"]["xhtml"]  .= "        <li id=\"coll-download-as-rl\"><a href=\"".wl(cleanID(getId()), array("do" => "export_pdf"))."\" rel=\"nofollow\">".hsc($lang["vector_exportbxdef_downloadpdf"])."</a></li>\n";
             }
             //s5 plugin
             //see <http://www.dokuwiki.org/plugin:s5> for info
             if (file_exists(DOKU_PLUGIN."s5/syntax.php") &&
-                !plugin_isdisabled("s5")){
+                    !plugin_isdisabled("s5")){
                 $_vector_boxes["p-coll-print_export"]["xhtml"]  .= "        <li id=\"coll-download-as-rl\"><a href=\"".wl(cleanID(getId()), array("do" => "export_s5"))."\" rel=\"nofollow\">".hsc($lang["vector_exportbxdef_downloads5"])."</a></li>\n";
-	        } 
+            } 
             //bookcreator plugin
             if (file_exists(DOKU_PLUGIN."bookcreator/syntax.php") &&
-                !plugin_isdisabled("bookcreator")){
+                    !plugin_isdisabled("bookcreator")){
                 $_vector_boxes["p-coll-print_export"]["xhtml"]  .= "        <li id=\"coll-download-as-rl\"><a href=\"".wl(cleanID(getId()), array("do" => "addtobook"))."\" rel=\"nofollow\">".hsc($lang["vector_exportbxdef_addtobook"])."</a></li>\n";
-	        } 
+            } 
             $_vector_boxes["p-coll-print_export"]["xhtml"] .=  "        <li id=\"t-print\"><a href=\"".wl(cleanID(getId()), array("rev" =>(int)$rev, "vecdo" => "print"))."\" rel=\"nofollow\">".hsc($lang["vector_exportbxdef_print"])."</a></li>\n"
-                                                              ."      </ul>";
+                ."      </ul>";
         } else {
             //we have to use a custom exportbox
             if (empty($conf["useacl"]) ||
-                auth_quickaclcheck(cleanID(tpl_getConf("vector_exportbox_location"))) >= AUTH_READ){ //current user got access?
+                    auth_quickaclcheck(cleanID(tpl_getConf("vector_exportbox_location"))) >= AUTH_READ){ //current user got access?
                 //get the rendered content of the defined wiki article to use as
                 //custom exportbox
                 $interim = tpl_include_page(tpl_getConf("vector_exportbox_location"), false);
                 if ($interim === "" ||
-                    $interim === false){
+                        $interim === false){
                     //add creation/edit link if the defined page got no content
                     $_vector_boxes["p-coll-print_export"]["xhtml"] =  "<li>[&#160;".html_wikilink(tpl_getConf("vector_exportbox_location"), hsc($lang["vector_fillplaceholder"]." (".tpl_getConf("vector_exportbox_location").")"), null)."&#160;]<br /></li>";
                 }else{
@@ -166,30 +168,32 @@ if (empty($conf["useacl"]) || //are there any users?
             if (actionOK("recent")){ //check if action is disabled
                 $_vector_boxes["p-tb"]["xhtml"] .= "        <li id=\"t-recentchanges\"><a href=\"".wl("", array("do" => "recent"))."\" rel=\"nofollow\">".hsc($lang["btn_recent"])."</a></li>\n"; //language comes from DokuWiki core
             }
-            if (empty($conf["useacl"]) ||
-                auth_quickaclcheck(cleanID("start")) >= AUTH_CREATE){ //current user got write access to start page?
+            if (empty($conf["useacl"]) || auth_quickaclcheck(cleanID("start")) >= AUTH_CREATE){ //current user got write access to start page?
                 $_vector_boxes["p-tb"]["xhtml"] .= "        <li id=\"t-special\"><a href=\"".wl(cleanID(":shared:do_newpage"), array())."\" rel=\"nofollow\">Neue Seite</a></li>\n";
-	    }
+            }
             $_vector_boxes["p-tb"]["xhtml"] .= "        <li id=\"t-upload\"><a target=\"t-upload\" href=\"".DOKU_BASE."lib/exe/mediamanager.php?ns=".getNS(getID())."\" rel=\"nofollow\">".hsc($lang["vector_toolbxdef_upload"])."</a></li>\n";
             if (actionOK("index")){ //check if action is disabled
                 $_vector_boxes["p-tb"]["xhtml"] .= "        <li id=\"t-special\"><a href=\"".wl("", array("do" => "index"))."\" rel=\"nofollow\">".hsc($lang["vector_toolbxdef_siteindex"])."</a></li>\n";
             }
-	    if ( $INFO['isadmin'] == 1) {
+            if (empty($conf["useacl"]) || auth_quickaclcheck(cleanID("bookcreator:start")) >= AUTH_READ){ //current user got write access to start page?
+                $_vector_boxes["p-tb"]["xhtml"] .= "        <li id=\"t-special\"><a href=\"".wl(cleanID(":bookcreator:start"), array())."\" rel=\"nofollow\">Buchauswahl</a></li>\n";
+            }
+            if ( $INFO['isadmin'] == 1) {
                 $_vector_boxes["p-tb"]["xhtml"] .= "        <li id=\"t-special\"><a href=\"".wl(cleanID(getID()), array("do" => "admin", "page" => "pagemove"))."\" rel=\"nofollow\">Seite verschieben</a></li>\n";
             }
 
             $_vector_boxes["p-tb"]["xhtml"] .=  "        <li id=\"t-permanent\"><a href=\"".wl(cleanID(getId()), array("rev" =>(int)$rev))."\" rel=\"nofollow\">".hsc($lang["vector_toolboxdef_permanent"])."</a></li>\n"
-                                               ."        <li id=\"t-cite\"><a href=\"".wl(cleanID(getId()), array("rev" =>(int)$rev, "vecdo" => "cite"))."\" rel=\"nofollow\">".hsc($lang["vector_toolboxdef_cite"])."</a></li>\n"
-                                               ."      </ul>";
+                ."        <li id=\"t-cite\"><a href=\"".wl(cleanID(getId()), array("rev" =>(int)$rev, "vecdo" => "cite"))."\" rel=\"nofollow\">".hsc($lang["vector_toolboxdef_cite"])."</a></li>\n"
+                ."      </ul>";
         }else{
             //we have to use a custom toolbox
             if (empty($conf["useacl"]) ||
-                auth_quickaclcheck(cleanID(tpl_getConf("vector_toolbox_location"))) >= AUTH_READ){ //current user got access?
+                    auth_quickaclcheck(cleanID(tpl_getConf("vector_toolbox_location"))) >= AUTH_READ){ //current user got access?
                 //get the rendered content of the defined wiki article to use as
                 //custom toolbox
                 $interim = tpl_include_page(tpl_getConf("vector_toolbox_location"), false);
                 if ($interim === "" ||
-                    $interim === false){
+                        $interim === false){
                     //add creation/edit link if the defined page got no content
                     $_vector_boxes["p-tb"]["xhtml"] =  "<li>[&#160;".html_wikilink(tpl_getConf("vector_toolbox_location"), hsc($lang["vector_fillplaceholder"]." (".tpl_getConf("vector_toolbox_location").")"), null)."&#160;]<br /></li>";
                 }else{
@@ -209,17 +213,17 @@ if (empty($conf["useacl"]) || //are there any users?
     //headline
     $_vector_boxes["p-login"]["headline"] = $lang["btn_login"];
     $_vector_boxes["p-login"]["xhtml"] =  "      <ul>\n"
-                                         ."        <li id=\"t-login\"><a href=\"".wl(cleanID(getId()), array("do" => "login"))."\" rel=\"nofollow\">".hsc($lang["btn_login"])."</a></li>\n" //language comes from DokuWiki core
-                                         ."      </ul>";
+        ."        <li id=\"t-login\"><a href=\"".wl(cleanID(getId()), array("do" => "login"))."\" rel=\"nofollow\">".hsc($lang["btn_login"])."</a></li>\n" //language comes from DokuWiki core
+        ."      </ul>";
 
 }
 
 
 /******************************************************************************
  ********************************  ATTENTION  *********************************
-         DO NOT MODIFY THIS FILE, IT WILL NOT BE PRESERVED ON UPDATES!
+ DO NOT MODIFY THIS FILE, IT WILL NOT BE PRESERVED ON UPDATES!
  ******************************************************************************
-  If you want to add some own boxes, have a look at the README of this
-  template and "/user/boxes.php". You have been warned!
+ If you want to add some own boxes, have a look at the README of this
+ template and "/user/boxes.php". You have been warned!
  *****************************************************************************/
 
