@@ -39,7 +39,7 @@ var $backup = '';
         return array(
             'author' => 'Frank Schiebel',
             'email'  => 'frank@linuxmuster.net',
-            'date'   => '2010-05-25',
+            'date'   => '2010-11-27',
             'name'   => 'doctree2filelist: Imports document tree into dokuwiki',
             'desc'   => 'This plugin is for importing a whole tree with (office-)documents to a wiki page-structure. It has been written for openschulportfolio, a dokuwiki based portfolio-system for schools.',
             'url'    => 'http://www.openschulportfolio.de/',
@@ -98,7 +98,7 @@ var $backup = '';
         if (!file_exists(DOKU_PLUGIN . "filelist/syntax.php")) {
             print $this->_div_warning("start");
             print $this->getLang('filelist_plugin_required');
-            print $this->_div_warning("end");
+            print '<a href="http://www.dokuwiki.org/plugin:filelist">The filelist-plugin can be found here.</a>';
             return;
         } 
 
@@ -437,7 +437,7 @@ var $backup = '';
       $subdir_out = "";
       if (count($subdirs) > 0 ) {
         sort($subdirs);
-        $subdir_out = "===== Untergeordnete Namensräume ===== \n\n";
+        $subdir_out = "===== " . $this->getLang('subnamespaces') ." ===== \n\n";
         foreach ($subdirs as $subdir) {
           $subdir_out .= "  * [[.$subdir:start|$subdir]]\n";
         }
@@ -445,9 +445,9 @@ var $backup = '';
 
       // write start.txt
       $handle = fopen ("$startpage", "w");
-      fwrite($handle, "[[".DOKU_URL."/lib/exe/mediamanager.php?ns=$filelist_namespace|Dateien bearbeiten]] | [[..start|In den übergeordneten Namensraum wechseln]].\n\n");
-      fwrite($handle, "====== Dokumente für: $header_namespace======\n\n");
-      fwrite($handle, "Hier sind alle Dateien des Namensraums ''$filelist_namespace'' aufgelistet.\n\n");
+      fwrite($handle, "[[".DOKU_URL."/lib/exe/mediamanager.php?ns=$filelist_namespace|" . $this->getLang('edit_files') . "]] | [[..start|" . $this->getLang('ns_up') . "]] \n\n");
+      fwrite($handle, "====== " . $this->getLang('documents_for') .  $header_namespace . " ======\n\n");
+      fwrite($handle, $this->getLang('docslisted') . "\\\\ ''$filelist_namespace'' \n\n");
       fwrite($handle, "{{filelist>:$filelist_namespace*&style=table&tableheader=1&tableshowdate=1&tableshowsize=1}}\n\n");
       fwrite($handle, "$subdir_out\n");
       fclose($handle);
