@@ -1,8 +1,9 @@
-linuxmuster-portfolio (1.1.2-2) openlml; urgency=low
-    
+linuxmuster-portfolio (1.1.2-3) openlml; urgency=low
+
      * Modified template: Link to book selection in toolbox
      * Fixed some minor issues in doctree2filelist, completed en locales
- 
+     * added shorturl plugin
+
  -- Frank Schiebel <frank@linuxmuster.net>  Sun, 28 Nov 2010 11:46:00 +0100
 
 linuxmuster-portfolio (1.1.2-0) openlml; urgency=low
@@ -23,7 +24,7 @@ linuxmuster-portfolio (1.1.0-0) openlml; urgency=low
  -- Frank Schiebel <frank@linuxmuster.net>  Sat, 13 Nov 2010 19:46:00 +0100
 
 linuxmuster-portfolio (1.0.3-2) openlml; urgency=low
-     
+
      * (Really) fixed DST-Bug in icalevents-Plugin
      * Added options for icalevents-Plugin
      * Fix for dw2pdf not including images
@@ -31,7 +32,7 @@ linuxmuster-portfolio (1.0.3-2) openlml; urgency=low
  -- Frank Schiebel <frank@linuxmuster.net>  Thu, 11 Nov 2010 18:07:00 +0100
 
 linuxmuster-portfolio (1.0.3-1) openlml; urgency=low
-     
+
      * Upgraded underlying dokuwiki to latest stable release
        dokuwiki-2010-11-07 ("Anteater")
      * Removed /lib/tpl/portfolio/.htaccess for compatibility with BelWue
@@ -48,7 +49,7 @@ linuxmuster-portfolio (1.0.2-7) openlml; urgency=low
  -- Frank Schiebel <frank@linuxmuster.net>  Fri, 5 Nov 2010 18:18:00 +0100
 
 linuxmuster-portfolio (1.0.1-6) openlml; urgency=low
-     
+
      * Patched /inc/parser/xhtml.php to accept table_open an table_close
        without any arguments to make plugins working (doodle, filelist)
 
@@ -59,7 +60,7 @@ linuxmuster-portfolio (1.0.1-5) openlml; urgency=low
      * Upgraded underlying dokuwiki to "Lazy Sunday"
      * Disabled updatecheck for new installations
      * Added data-dir to /usr/share/linuxmuster-portfolio for comptibility
-       reasons 
+       reasons
      * Added secutity.png to data-dir
      * Secured data, conf, bin, inc with .htaccess
      * Fixed vector css for verion info in admin
@@ -78,7 +79,7 @@ linuxmuster-portfolio (1.0.0-13) openlml; urgency=low
 linuxmuster-portfolio (1.0.0-12) openlml; urgency=low
 
      * Changed local ldap Auth to ldap instead of ldaps - many
-       paedMLs appearently have ldaps disabled 
+       paedMLs appearently have ldaps disabled
      * Fixed multiple slashes/multiple":" bug in filelist-plugin
      * Updated dw2pdf to version 2010-04-02, now read permissions are
        considered
@@ -92,7 +93,7 @@ linuxmuster-portfolio (1.0.0-12) openlml; urgency=low
 linuxmuster-portfolio (1.0.0-1) openlml; urgency=low
 
      * Added first version of GPUntis display plugin
- 
+
  -- Frank Schiebel <frank@linuxmuster.net>  Tue, 04 May 2010 22:00:00 +0100
 
 linuxmuster-portfolio (0.9.9-4) openlml; urgency=low
@@ -101,7 +102,7 @@ linuxmuster-portfolio (0.9.9-4) openlml; urgency=low
    * Changed editorhelp for tables accordingly
    * Added usermod directory for openschulportfolio -> first published version
      for openschulportfolio
- 
+
  -- Frank Schiebel <frank@linuxmuster.net>  Sun, 11 Apr 2010 15:00:00 +0100
 
 
@@ -123,18 +124,18 @@ linuxmuster-portfolio (0.9.9-1) openlml; urgency=low
  -- Frank Schiebel <frank@linuxmuster.net>  Tue, 09 Mar 2010 17:30:00 +0100
 
 linuxmuster-portfolio (0.9.1-0) openlml; urgency=low
- 
+
     * user.css in etc
     * added alternative portfolio-icon portfolio2
     * script in /usr/sbin/ to reset data in installation and provide
       possipility to reinstall halp pages and icons
-    * users can install their own plugins in 
-      /etc/linuxmuster-portfolio/plugins 
- 
+    * users can install their own plugins in
+      /etc/linuxmuster-portfolio/plugins
+
  -- Frank Schiebel <frank@linuxmuster.net>  Mon, 08 Mar 2010 14:30:00 +0100
 
 linuxmuster-portfolio (0.9.0-0) openlml; urgency=low
-     
+
     * Added main menu in header area, always visible from every page
     * Completed help for portfolio users
     * Reworked start pages in portfolio structure
@@ -145,7 +146,7 @@ linuxmuster-portfolio (0.9.0-0) openlml; urgency=low
  -- Frank Schiebel <frank@linuxmuster.net>  Sun, 07 Mar 2010 19:30:00 +0100
 
 linuxmuster-portfolio (0.2.3-2) openlml; urgency=low
-     
+
     * Reorganized example and help pages once again
     * Fixed postinst script to install help pages
     * Added Tango Icons as a base iconset
@@ -155,7 +156,7 @@ linuxmuster-portfolio (0.2.3-2) openlml; urgency=low
  -- Frank Schiebel <frank@linuxmuster.net>  Sun, 07 Mar 2010 14:14:00 +0100
 
 linuxmuster-portfolio (0.2.2-2) openlml; urgency=low
-   
+
    * improved design (icons, mediadetails, adminpages)
    * moved help pages out of example_data to provide proper update mechanism
      later on
@@ -163,13 +164,13 @@ linuxmuster-portfolio (0.2.2-2) openlml; urgency=low
  -- Frank Schiebel <frank@linuxmuster.net>  Wed, 03 Mar 2010 23:14:00 +0100
 
 linuxmuster-portfolio (0.2.2-2) openlml; urgency=low
-   
+
    * removed aeg logo from help
 
  -- Frank Schiebel <frank@linuxmuster.net>  Thu, 02 Mar 2010 23:05:00 +0100
 
 linuxmuster-portfolio (0.2.2-1) openlml; urgency=low
-   
+
    * fixed permissions for /etc/linuxmuster-portfolio
    * fixed configuration for the filelist-plugin to reflect the prober
      data-path
@@ -177,51 +178,51 @@ linuxmuster-portfolio (0.2.2-1) openlml; urgency=low
  -- Frank Schiebel <frank@linuxmuster.net>  Thu, 02 Mar 2010 22:05:00 +0100
 
 linuxmuster-portfolio (0.2.2-0) openlml; urgency=low
-   
+
    * fixed missing start.txt
    * reload apache postinst
 
  -- Frank Schiebel <frank@linuxmuster.net>  Thu, 02 Mar 2010 21:20:00 +0100
 
 linuxmuster-portfolio (0.2.1-0) openlml; urgency=low
-   
+
    * first beta release
 
  -- Frank Schiebel <frank@linuxmuster.net>  Thu, 02 Mar 2010 20:15:00 +0100
 
 linuxmuster-portfolio (0.1.2-0) openlml; urgency=low
-   
+
    * providing sample pages
-   * including LS portfolio structure 
+   * including LS portfolio structure
 
  -- Frank Schiebel <frank@linuxmuster.net>  Thu, 02 Mar 2010 19:05:00 +0100
 
 linuxmuster-portfolio (0.1.0-0) unstable; urgency=low
-   
-   * applying patch enabling new config option 
+
+   * applying patch enabling new config option
      $conf['auth']['ldap']['groupdelprefix'] = "p_";
      to generate working groupnames out of linuxmuster projekts
 
  -- Frank Schiebel <frank@linuxmuster.net>  Thu, 02 Mar 2010 17:35:00 +0100
-   
+
 linuxmuster-portfolio (0.0.1-4) unstable; urgency=low
-   
+
    * apache conf in  /etc/linuxmuster-portfolio/apache2.conf
    * dokuwiki in /usr/share/linuxmuster-portfolio
    * replaced files in data dir
    * fixed permissions in /home/linuxmuster/portfolio/data
-   
+
  -- Frank Schiebel <frank@linuxmuster.net>  Thu, 02 Mar 2010 12:20:00 +0100
 
 linuxmuster-portfolio (0.0.1-1) unstable; urgency=low
-   
+
    * moved configuration to /etc/linuxmuster-portfolio
-   
+
  -- Frank Schiebel <frank@linuxmuster.net>  Thu, 02 Mar 2010 12:00:00 +0100
 
 linuxmuster-portfolio (0.0.1-0) unstable; urgency=low
-   
+
    * initial package
-   
+
  -- Frank Schiebel <frank@linuxmuster.net>  Thu, 02 Mar 2010 11:05:00 +0100
 
