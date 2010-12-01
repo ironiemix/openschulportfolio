@@ -1,0 +1,9 @@
+====== ShortURL Configuration ======
+
+Here you can see and modify all saved short URLs for your Wiki.
+
+This file uses the following format:
+
+<code>
+short   regular:page:name
+</code>

@@ -1,0 +1,9 @@
+====== Konfiguration für kurze Seitennamen (ShortURLs)  ======
+
+Hier können Sie sehen, welche Kurz-Seitennamen ihr Wiki bislang angelegt hat. Normalerweise müssen Sie diese Zuordnungen nicht bearbeiten, wenn Sie Fehler feststellen, können Sie jedoch an dieser Stelle Einfluß nehmen.
+
+Die Zuordnungen werden in folgendem Format abgelegt:
+
+<code>
+short   regular:page:name
+</code>

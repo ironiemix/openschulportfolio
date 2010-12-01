@@ -1,0 +1,7 @@
+base   shorturl
+author Frank Schiebel
+email  frank@linuxmuster.net
+date   2010-11-30
+name   ShortURL Plugin
+desc   Creates short urls and redirects pages based on a central redirection list. Based on Andreas Gohrs redirect plugin.
+url    http://www.dokuwiki.org/plugin:shorturl
