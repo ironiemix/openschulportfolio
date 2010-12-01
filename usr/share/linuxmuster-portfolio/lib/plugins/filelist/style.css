@@ -1,0 +1,7 @@
+a.fleditfiles {
+    display:block;
+    padding: 2px 0 2px 20px;
+    text-align: left;
+    color: #454545;
+    background: transparent url("img/folder.png") top left no-repeat;
+}

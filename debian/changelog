@@ -1,10 +1,12 @@
-linuxmuster-portfolio (1.1.2-3) openlml; urgency=low
+linuxmuster-portfolio (1.1.2-4) openlml; urgency=low
 
      * Modified template: Link to book selection in toolbox
      * Fixed some minor issues in doctree2filelist, completed en locales
      * added shorturl plugin
+     * added shortfilelist option to filelist plugin
+     * added "edit files" link to filelist plugin
 
- -- Frank Schiebel <frank@linuxmuster.net>  Sun, 28 Nov 2010 11:46:00 +0100
+ -- Frank Schiebel <frank@linuxmuster.net>  Wed, 01 Dec 2010 18:25:00 +0100
 
 linuxmuster-portfolio (1.1.2-0) openlml; urgency=low
 
