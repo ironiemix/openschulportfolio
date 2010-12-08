@@ -1,0 +1,12 @@
+@ANREDE@,
+
+@COMMENT@
+
+@AUTHOR@
+
+-- 
+Seitenname:
+@PAGE@
+Direktlink:
+@URL@
+

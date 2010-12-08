@@ -60,11 +60,7 @@ class helper_plugin_shorturl extends DokuWiki_Plugin {
     * creates and saves forwarding to shortID if not
     */
     function autoGenerateShortUrl ($pageID) {
-        if (file_exists($this->savedir.'/shorturl.conf') ) {
-            $redirects = confToHash($this->savedir.'/shorturl.conf');
-        } else {
-            return "FEHLER";
-        }
+        $redirects = confToHash($this->savedir.'/shorturl.conf');
         if (in_array($pageID, $redirects)) {
             $shortID = array_search($pageID, $redirects);
         } else {
@@ -137,13 +133,12 @@ class helper_plugin_shorturl extends DokuWiki_Plugin {
      * @return   string regular id
      *
      */
-
-    function shorturlPrintLink () {
+    function shorturlPrintLink ($pageID) {
         
         if (file_exists($this->savedir.'/shorturl.conf') ) {
             $redirects = confToHash($this->savedir.'/shorturl.conf');
         } else {
-            return "FEHLER";
+            $redirects = array();
         }
 
         if (in_array($pageID, $redirects)) {
