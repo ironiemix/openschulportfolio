@@ -579,14 +579,20 @@ if (file_exists(DOKU_TPLINC."lang/".$conf["lang"]."/style.css")){
   <!-- start div id=left-navigation -->
   <div id="left-navigation">
     <div id="p-namespaces" class="vectorTabs">
-      <ul><?php
+      <ul>
+    <?php
           //show tabs: left. see vector/user/tabs.php to configure them
           if (!empty($_vector_tabs_left) &&
               is_array($_vector_tabs_left)){
               _vector_renderTabs($_vector_tabs_left);
           }
-          ?>
 
+        if(isset($_SERVER['REMOTE_USER']) && auth_isadmin($_SERVER['REMOTE_USER'])) {
+        global $lang;
+        $lang['btn_infomail'] = 'Infomail';
+        print "<li id='tabinfomail'>" . html_btn('infomail',$ID,null,array('do' => 'infomail', 'id' => $ID)) . "</li>";
+        }
+    ?>
       </ul>
     </div>
   </div>
@@ -635,6 +641,9 @@ if (file_exists(DOKU_TPLINC."lang/".$conf["lang"]."/style.css")){
   <?php
   //show messages (if there are any)
   html_msgarea();
+
+
+
   //show site notice
   if (tpl_getConf("vector_sitenotice")){
       //we have to show a custom sitenotice

@@ -132,14 +132,21 @@ class action_plugin_infomail extends DokuWiki_Action_Plugin {
             return 'Keine gueltigen Empfaenger angegeben!';
         }
 
+        $default_sender = $this->getConf('default_sender');
+
         if (!isset($_POST['s_email']) || !mail_isvalid($_POST['s_email'])) {
-            return 'Invalid sender email address submitted' . $_POST['s_email'];
+            if (!isset($default_sender) || !mail_isvalid($default_sender)) {
+                return 'Ungültige Sender-Mailadresse angegeben' . $_POST['s_email'];
+            } else {
+                $sender = "Infomail" . ' <' . $this->getConf('default_sender') . '>';
+            }
+        } else {
+            $sender = $s_name . ' <' . $_POST['s_email'] . '>';
         }
         if (!isset($_POST['s_name']) || trim($_POST['s_name']) === '') {
             return 'Invalid sender name submitted';
         }
         $s_name = $_POST['s_name'];
-        $sender = $s_name . ' <' . $_POST['s_email'] . '>';
 
         if (!isset($_POST['id']) || !page_exists($_POST['id'])) {
             return 'Invalid page submitted';
@@ -179,8 +186,6 @@ class action_plugin_infomail extends DokuWiki_Action_Plugin {
         foreach ( $all_recipients_valid as $mail ) {
             $recipient = '<' . $mail . '>';
             mail_send($recipient, $subject, $mailtext, $sender);
-            $log = new Plugin_infomail_Log(date('Y-m'));
-            $log->writeEntry($page, $sender, $recipient, $comment);
         }
         return false;
     }
