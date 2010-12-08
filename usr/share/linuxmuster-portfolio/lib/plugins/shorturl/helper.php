@@ -26,9 +26,9 @@ class helper_plugin_shorturl extends DokuWiki_Plugin {
         $this->configtocache = $this->getConf('saveconftocachedir');
 
         if ( $this->configtocache ) {
-            $this->savedir = DOKU_INC . rtrim($conf['savedir'],"/") . "/cache";
+            $this->savedir = rtrim($conf['savedir'],"/") . "/cache";
         } else {
-            $this->savedir =  dirname(__FILE__);
+            $this->savedir = dirname(__FILE__);
         }
 
     }
@@ -59,7 +59,7 @@ class helper_plugin_shorturl extends DokuWiki_Plugin {
     * returns shortID for pageID
     * creates and saves forwarding to shortID if not
     */
-    function autoGenerateShortUrl ($pagpeID) {
+    function autoGenerateShortUrl ($pageID) {
         if (file_exists($this->savedir.'/shorturl.conf') ) {
             $redirects = confToHash($this->savedir.'/shorturl.conf');
         } else {

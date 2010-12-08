@@ -181,9 +181,9 @@ if (empty($conf["useacl"]) || //are there any users?
                 $_vector_boxes["p-tb"]["xhtml"] .= "        <li id=\"t-special\"><a href=\"".wl(cleanID(getID()), array("do" => "admin", "page" => "pagemove"))."\" rel=\"nofollow\">Seite verschieben</a></li>\n";
             }
             //shorturl plugin
-            if (file_exists(DOKU_PLUGIN."shorturl/template.php") && !plugin_isdisabled("shorturl") && auth_quickaclcheck(cleanID(getID())) >= AUTH_READ){
-                require_once(DOKU_PLUGIN."shorturl/template.php");
-                $_vector_boxes["p-tb"]["xhtml"]  .= "        <li id=\"coll-download-as-rl\">". plugin_shorturl_printlink() ."</li>\n";
+            if (!plugin_isdisabled("shorturl") && auth_quickaclcheck(cleanID(getID())) >= AUTH_READ){
+                $shorturl =& plugin_load('helper', 'shorturl');
+                $_vector_boxes["p-tb"]["xhtml"]  .= "        <li id=\"coll-download-as-rl\">". $shorturl->shorturlPrintLink(getID()) ."</li>\n";
             }
 
             $_vector_boxes["p-tb"]["xhtml"] .=  "        <li id=\"t-permanent\"><a href=\"".wl(cleanID(getId()), array("rev" =>(int)$rev))."\" rel=\"nofollow\">".hsc($lang["vector_toolboxdef_permanent"])."</a></li>\n"
