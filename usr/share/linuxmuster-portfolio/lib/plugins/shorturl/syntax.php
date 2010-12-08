@@ -32,11 +32,9 @@ class syntax_plugin_shorturl extends DokuWiki_Syntax_Plugin {
         return 302;
     }
 
-
     function connectTo($mode) {
         $this->Lexer->addSpecialPattern('\~\~SHORTURL\~\~',$mode,'plugin_shorturl');
     }
-
 
     function handle($match, $state, $pos, &$handler){
 
@@ -45,21 +43,20 @@ class syntax_plugin_shorturl extends DokuWiki_Syntax_Plugin {
     }
 
     function render($mode, &$renderer, $data) {
+        global $ID;
+
         if($mode != 'xhtml') return false;
 
         if ( $data['todo'] == "print" ) {
-            $shorturl = action_plugin_shorturl::generateShortUrl();
-            $renderer->doc .= "<a href=". wl($shorturl, "", true) ." class=\"shortlinkinpage\" >" . $this->getLang('shortlinktext')  . "</a>\n";
+            $shorturl = $this->loadHelper('shorturl', true);
+            if ($shorturl) {
+                $shortID = $shorturl->autoGenerateShortUrl($ID);
+                $renderer->doc .= "<a href=". wl($shortID, "", true) ." class=\"shortlinkinpage\" >" . $this->getLang('shortlinktext')  . "</a>\n";
+            }
         }
 
         return true;
     }
-
-    function idToTpl() {
-        global $ID;
-        return $ID;
-    }
-
 }
 
 // vim:ts=4:sw=4:et:enc=utf-8:
