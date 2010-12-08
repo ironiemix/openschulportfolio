@@ -58,7 +58,7 @@ function infomail_handle() {
         return;
     }
     if (this.responseStatus[0] === 204) {
-        var box = infomail_box('<form id="infomail_plugin" accept-charset="utf-8" method="post" action="?do=infomail"><div class="no"><fieldset><legend>Finished</legend<p>Thanks for recommending our site.</p><input type="submit" class="button" value="Schliessen" name="do[cancel]"/></fieldset></div></form>');
+        var box = infomail_box('<form id="infomail_plugin" accept-charset="utf-8" method="post" action="?do=infomail"><div class="no"><fieldset class="infomailok"> <legend>Mail versandt...</legend<p>Ihre Nachricht wurde verschickt.</p><input type="submit" class="button" value="Schliessen" name="do[cancel]"/></fieldset></div></form>');
     } else {
 
         var box = infomail_box(this.response);

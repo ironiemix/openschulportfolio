@@ -31,6 +31,10 @@ form#infomail_plugin p {
     text-align: left;
 }
 
+.infomailok {
+ background-color: #efffef;
+}
+
 form#infomail_plugin fieldset legend {
 font-size: 120%;
 }

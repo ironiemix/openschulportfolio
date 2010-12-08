@@ -82,8 +82,13 @@ class action_plugin_infomail extends DokuWiki_Action_Plugin {
                 $r_predef_valid[] = $addr;
             }
         }
-        $form->addElement(form_makeListboxField('r_predef', $r_predef_valid, '',  'Lesezeichen:'));
-        $form->addElement(form_makeTextField('r_email', $r_email, 'Weitere Empfaenger'));
+        $morerec = "";
+        if(count($r_predef_valid)>0) {
+            array_unshift($r_predef_valid, "Keines gewählt...");
+            $form->addElement(form_makeListboxField('r_predef', $r_predef_valid, '',  'Lesezeichen:'));
+            $morerec = "Weitere ";
+        }
+        $form->addElement(form_makeTextField('r_email', $r_email, $morerec . 'Empfänger'));
         $form->addElement(form_makeTextField('subject', $subject, 'Betreff'));
         $form->addElement('<label><span>'.hsc('Nachricht').'</span>'.
                           '<textarea name="comment" rows="8" cols="10" ' .
@@ -123,9 +128,6 @@ class action_plugin_infomail extends DokuWiki_Action_Plugin {
             $all_recipients_valid[] =  $_POST['r_predef'];
         }
         $all_recipients_valid =  array_unique($all_recipients_valid);
-        foreach ($all_recipients_valid as $addr) {
-            $allrec .= $addr . " -- ";
-        }
 
         /* Validate input. */
         if ( count($all_recipients_valid) == 0 ) {
@@ -138,7 +140,7 @@ class action_plugin_infomail extends DokuWiki_Action_Plugin {
             if (!isset($default_sender) || !mail_isvalid($default_sender)) {
                 return 'Ungültige Sender-Mailadresse angegeben' . $_POST['s_email'];
             } else {
-                $sender = "Infomail" . ' <' . $this->getConf('default_sender') . '>';
+                $sender = $this->getConf('default_sender_displayname') . " " . ' <' . $this->getConf('default_sender') . '>';
             }
         } else {
             $sender = $s_name . ' <' . $_POST['s_email'] . '>';
@@ -167,7 +169,7 @@ class action_plugin_infomail extends DokuWiki_Action_Plugin {
             $pageurl .= wl($page, '', true);
         }
 
-        $subject =hsc($_POST['subject']);
+        $subject = hsc($this->getConf('subjectprefix')) . " " . hsc($_POST['subject']);
 
         foreach (array('NAME' => $r_name,
                        'PAGE' => $page,

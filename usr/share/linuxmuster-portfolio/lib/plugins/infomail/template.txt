@@ -1,12 +1,7 @@
-@ANREDE@,
-
 @COMMENT@
 
-@AUTHOR@
-
 -- 
-Seitenname:
-@PAGE@
-Direktlink:
-@URL@
+Direktlink:  @URL@
+Seitenname:  @PAGE@
+Es schreibt: @AUTHOR@
 
