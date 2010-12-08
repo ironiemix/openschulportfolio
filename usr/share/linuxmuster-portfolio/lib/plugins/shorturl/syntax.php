@@ -48,7 +48,7 @@ class syntax_plugin_shorturl extends DokuWiki_Syntax_Plugin {
         if($mode != 'xhtml') return false;
 
         if ( $data['todo'] == "print" ) {
-            $shorturl = $this->loadHelper('shorturl', true);
+            $shorturl =& plugin_load('helper', 'shorturl');
             if ($shorturl) {
                 $shortID = $shorturl->autoGenerateShortUrl($ID);
                 $renderer->doc .= "<a href=". wl($shortID, "", true) ." class=\"shortlinkinpage\" >" . $this->getLang('shortlinktext')  . "</a>\n";

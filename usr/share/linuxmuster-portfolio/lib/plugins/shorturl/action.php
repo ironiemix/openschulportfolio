@@ -49,7 +49,7 @@ class action_plugin_shorturl extends DokuWiki_Action_Plugin {
             exit;
         } else {
             if ($_GET['generateShortURL'] != "" && auth_quickaclcheck($ID) >= AUTH_READ) {
-                $shorturl = $this->loadHelper('shorturl', true);
+                $shorturl =& plugin_load('helper', 'shorturl');
                 if ($shorturl) {
                     $shortID = $shorturl->autoGenerateShortUrl($ID);
                 }
