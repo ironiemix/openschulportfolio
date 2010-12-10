@@ -21,11 +21,13 @@ function sack_form(form, fnc) {
     return false;
 }
 
+/* commented out for compatibility reasons
 function bind(fnc, val) {
     return function () {
         return fnc(val);
     };
 }
+*/
 
 function change_form_handler(forms, handler) {
     if (!forms) return;

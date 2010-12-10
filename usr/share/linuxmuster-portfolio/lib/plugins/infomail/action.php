@@ -127,12 +127,18 @@ class action_plugin_infomail extends DokuWiki_Action_Plugin {
         if( isset($_POST['r_predef']) && mail_isvalid($_POST['r_predef']) )  {
             $all_recipients_valid[] =  $_POST['r_predef'];
         }
-        $all_recipients_valid =  array_unique($all_recipients_valid);
 
         /* Validate input. */
         if ( count($all_recipients_valid) == 0 ) {
             return 'Keine gueltigen Empfaenger angegeben!';
         }
+
+        if (!isset($_POST['s_name']) || trim($_POST['s_name']) === '') {
+            return 'Invalid sender name submitted';
+        }
+        $s_name = $_POST['s_name'];
+
+        $all_recipients_valid =  array_unique($all_recipients_valid);
 
         $default_sender = $this->getConf('default_sender');
 
@@ -140,15 +146,15 @@ class action_plugin_infomail extends DokuWiki_Action_Plugin {
             if (!isset($default_sender) || !mail_isvalid($default_sender)) {
                 return 'Ungültige Sender-Mailadresse angegeben' . $_POST['s_email'];
             } else {
-                $sender = $this->getConf('default_sender_displayname') . " " . ' <' . $this->getConf('default_sender') . '>';
+                if (trim($this->getConf('default_sender_displayname')) != "" ) {
+                    $sender = $this->getConf('default_sender_displayname') . " " . ' <' . $this->getConf('default_sender') . '>';
+                } else {
+                    $sender = $s_name . " " . ' <' . $this->getConf('default_sender') . '>';
+                }
             }
         } else {
             $sender = $s_name . ' <' . $_POST['s_email'] . '>';
         }
-        if (!isset($_POST['s_name']) || trim($_POST['s_name']) === '') {
-            return 'Invalid sender name submitted';
-        }
-        $s_name = $_POST['s_name'];
 
         if (!isset($_POST['id']) || !page_exists($_POST['id'])) {
             return 'Invalid page submitted';
