@@ -65,14 +65,14 @@ class action_plugin_infomail extends DokuWiki_Action_Plugin {
         }
         $form = new Doku_Form('infomail_plugin', '?do=infomail');
         $form->addHidden('id', $id);
-        $form->startFieldset('<b>Infomail:</b> ' .hsc($id) );
+        $form->startFieldset($this->getLang('formname') . " " . hsc($id) );
         if (isset($_SERVER['REMOTE_USER'])) {
             global $USERINFO;
             $form->addHidden('s_name', $USERINFO['name']);
             $form->addHidden('s_email', $USERINFO['mail']);
         } else {
-            $form->addElement(form_makeTextField('s_name', $s_name, 'Your name'));
-            $form->addElement(form_makeTextField('s_email', $s_email, 'Your email address'));
+            $form->addElement(form_makeTextField('s_name', $s_name, $this->getLang('yourname')));
+            $form->addElement(form_makeTextField('s_email', $s_email, $this->getLang('youremailaddress')));
         }
         //get default emails from config
         $r_predef = array();
@@ -84,13 +84,13 @@ class action_plugin_infomail extends DokuWiki_Action_Plugin {
         }
         $morerec = "";
         if(count($r_predef_valid)>0) {
-            array_unshift($r_predef_valid, "Keines gewählt...");
-            $form->addElement(form_makeListboxField('r_predef', $r_predef_valid, '',  'Lesezeichen:'));
-            $morerec = "Weitere ";
+            array_unshift($r_predef_valid, $this->getLang('noneselected'));
+            $form->addElement(form_makeListboxField('r_predef', $r_predef_valid, '', $this->getLang('bookmarks')));
+            $morerec = $this->getLang('more_rec_fill');
         }
-        $form->addElement(form_makeTextField('r_email', $r_email, $morerec . 'Empfänger'));
-        $form->addElement(form_makeTextField('subject', $subject, 'Betreff'));
-        $form->addElement('<label><span>'.hsc('Nachricht').'</span>'.
+        $form->addElement(form_makeTextField('r_email', $r_email, $morerec . $this->getLang('recipients')));
+        $form->addElement(form_makeTextField('subject', $subject, $this->getLang('subject')));
+        $form->addElement('<label><span>'.$this->getLang('message').'</span>'.
                           '<textarea name="comment" rows="8" cols="10" ' .
                           'class="edit">' . $comment . '</textarea></label>');
         $helper = null;
@@ -99,8 +99,8 @@ class action_plugin_infomail extends DokuWiki_Action_Plugin {
             $form->addElement($helper->getHTML());
         }
 
-        $form->addElement(form_makeButton('submit', '', 'Mail senden'));
-        $form->addElement(form_makeButton('submit', 'cancel', 'Abbrechen'));
+        $form->addElement(form_makeButton('submit', '', $this->getLang('send_infomail')));
+        $form->addElement(form_makeButton('submit', 'cancel', $this->getLang('cancel_infomail')));
         $form->printForm();
     }
 
@@ -130,7 +130,7 @@ class action_plugin_infomail extends DokuWiki_Action_Plugin {
 
         /* Validate input. */
         if ( count($all_recipients_valid) == 0 ) {
-            return 'Keine gueltigen Empfaenger angegeben!';
+            return $this->getLang('novalid_rec');
         }
 
         if (!isset($_POST['s_name']) || trim($_POST['s_name']) === '') {

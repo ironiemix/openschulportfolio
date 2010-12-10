@@ -1,10 +1,10 @@
-linuxmuster-portfolio (1.1.3-7) openlml; urgency=low
+linuxmuster-portfolio (1.1.3-8) openlml; urgency=low
 
     * Modified shorturl plugin to provide a helper class
     * Changed template accordingly
     * Added infomail plugin
 
- -- Frank Schiebel <frank@linuxmuster.net>  Wed, 08 Dec 2010 18:25:00 +0100
+ -- Frank Schiebel <frank@linuxmuster.net>  Fri, 10 Dec 2010 12:05:00 +0100
 
 linuxmuster-portfolio (1.1.2-5) openlml; urgency=low
 
