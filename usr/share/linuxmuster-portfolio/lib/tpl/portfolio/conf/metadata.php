@@ -40,6 +40,9 @@ $meta["vector_schoolname"]    = array("string");
 $meta["vector_userpage"]    = array("onoff");
 $meta["vector_userpage_ns"] = array("string", "_pattern" => "/^:.{1,}:$/");
 
+//infomail button?
+$meta["vector_infomail"]    = array("onoff");
+
 //discussion pages
 $meta["vector_discuss"]    = array("onoff");
 $meta["vector_discuss_ns"] = array("string", "_pattern" => "/^:.{1,}:$/");

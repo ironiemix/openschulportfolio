@@ -1,6 +1,6 @@
 <?php
 $conf['allowanonymous'] = false;
 $conf['default_recipient'] = "";
-$conf['subjectprefix'] = "[portfolio]";
-$conf['default_sender'] = "portfolio@schule.intern";
+$conf['subjectprefix'] = "[mailinfo]";
+$conf['default_sender'] = "";
 $conf['default_sender_displayname'] = "";

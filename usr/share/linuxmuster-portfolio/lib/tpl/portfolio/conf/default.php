@@ -40,6 +40,8 @@ $conf["vector_schoolname"]    = "Schulname hier eintragen"; //TRUE: use/show use
 //user pages
 $conf["vector_userpage"]    = false; //TRUE: use/show user pages
 $conf["vector_userpage_ns"] = ":wiki:userpages:"; //namespace to use for user page storage
+//show infomail button?
+$conf["vector_infomail"]    = true;
 
 //discussion pages
 $conf["vector_discuss"]    = false; //TRUE: use/show discussion pages

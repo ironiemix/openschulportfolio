@@ -587,7 +587,7 @@ if (file_exists(DOKU_TPLINC."lang/".$conf["lang"]."/style.css")){
               _vector_renderTabs($_vector_tabs_left);
           }
 
-        if(isset($_SERVER['REMOTE_USER']) && auth_isadmin($_SERVER['REMOTE_USER'])) {
+        if(isset($_SERVER['REMOTE_USER']) && tpl_getConf('vector_infomail')) {
         global $lang;
         $lang['btn_infomail'] = 'Infomail';
         print "<li id='tabinfomail'>" . html_btn('infomail',$ID,null,array('do' => 'infomail', 'id' => $ID)) . "</li>";

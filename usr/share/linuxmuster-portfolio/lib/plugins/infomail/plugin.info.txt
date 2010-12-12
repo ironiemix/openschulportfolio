@@ -1,7 +1,7 @@
-base    recommend
-author  Adrian Lang
-email   dokuwiki@cosmocode.de
-date    2009-10-21
-name    recommend 
-desc    Allows to recommend a page via email
-url     http://www.dokuwiki.org/plugin:recommend
+base    mailinfo
+author  Adrian Lang, Frank Schiebel
+email   dokuwiki@cosmocode.de, frank@linuxmuster.net
+date    2010-12-12
+name    mailinfo
+desc    Allows to inform users via email
+url     http://www.dokuwiki.org/plugin:infomail
