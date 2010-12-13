@@ -1,6 +1,5 @@
 <?php
 require_once DOKU_PLUGIN . 'admin.php';
-require_once dirname(__FILE__) . '/log.php';
 
 class admin_plugin_infomail extends DokuWiki_Admin_Plugin {
     function getInfo(){
@@ -8,45 +7,53 @@ class admin_plugin_infomail extends DokuWiki_Admin_Plugin {
     }
 
     function getMenuText() {
-        return 'Log of recommendations';
+        return $this->getLang('infomail_admin_menu_text');
     }
 
     function handle() {
-        if (isset($_REQUEST['rec_month']) &&
-            preg_match('/^\d{4}-\d{2}$/', $_REQUEST['rec_month'])) {
-            $this->month = $_REQUEST['rec_month'];
-        } else {
-            $this->month = date('Y-m');
+        if (isset($_REQUEST['infomail_simple_new']) && $_REQUEST['infomail_simple_new'] != "" ) {
+                $newlist = ":wiki:infomail:list_" . $_REQUEST['infomail_simple_new'];
+                send_redirect($newlist);
         }
-        $log = new Plugin_infomail_Log($this->month);
-        $this->entries = $log->getEntries();
-        $this->logs = Plugin_infomail_Log::getLogs();
-    }
-
-    function getTOC() {
-        return array_map('infomail_make_toc', $this->logs);
     }
 
     function html() {
-        if (!$this->logs) {
-            echo 'No recommendations.';
-            return;
+        global $ID;
+        global $conf;
+
+        $html = "<h1>" .$this->getLang('admin_title') ."</h1>";
+        $html .= $this->getLang('admin_desc') ;
+        print $html;
+        $html = "<h2>" . $this->getLang('infomail_listoverview') . "</h2>";
+
+        $form = new Doku_Form('infomail_plugin_admin');
+        $form->addElement(form_makeTextField('infomail_simple_new', $s_name, $this->getLang('newsimplelist')));
+        $form->addElement(form_makeButton('submit', '', $this->getLang('createnewsimplelist')));
+        $form->printForm();
+
+        $listdir = rtrim($conf['datadir'],"/")."/wiki/infomail/";
+
+        $simple_lists = array();
+        if ($handle = @opendir($listdir)) {
+            while (false !== ($file = readdir($handle))) {
+                if ($file != "." && $file != ".." ) {
+                    if (substr($file, 0, 5) == "list_" ) {
+                        $list_name = substr($file, 5, -4);
+                        $simple_lists["$list_name"] =substr($file,0,-4);
+                    }
+                }
+            }
+            closedir($handle);
         }
-        if (!$this->entries) {
-            echo 'No recommendations were made in ' . $this->month . '.';
-            return;
+
+        $html .= "<ul>\n";
+        foreach ($simple_lists as $name => $listid) {
+            $html .= "<li>". html_wikilink("wiki:infomail:$listid", "$name") . "</li>\n";
         }
-        echo '<p>In ' . $this->month . ', your users made the following ' . count($this->entries) . ' recommendations:</p>';
-        echo '<ul>';
-        foreach(array_reverse($this->entries) as $entry) {
-            echo "<li>$entry</li>";
-        }
-        echo '</ul>';
+        $html .= "</ul>\n";
+
+        print $html;
+
     }
 }
 
-function infomail_make_toc($month) {
-    global $ID;
-    return html_mktocitem('?do=admin&page=infomail&id=' . $ID . '&rec_month=' . $month, $month, 1, '');
-
-}

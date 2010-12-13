@@ -1,7 +1,6 @@
 <?php
 require_once DOKU_PLUGIN . 'action.php';
 require_once DOKU_INC . 'inc/form.php';
-require_once dirname(__FILE__) . '/log.php';
 
 class action_plugin_infomail extends DokuWiki_Action_Plugin {
     function getInfo(){
@@ -48,6 +47,7 @@ class action_plugin_infomail extends DokuWiki_Action_Plugin {
     }
 
     function _show_form() {
+        global $conf;
         global $ID;
         $r_name  = isset($_REQUEST['r_name']) ? $_REQUEST['r_name'] : '';
         $r_email = isset($_REQUEST['r_email']) ? $_REQUEST['r_email'] : '';
@@ -74,6 +74,7 @@ class action_plugin_infomail extends DokuWiki_Action_Plugin {
             $form->addElement(form_makeTextField('s_name', $s_name, $this->getLang('yourname')));
             $form->addElement(form_makeTextField('s_email', $s_email, $this->getLang('youremailaddress')));
         }
+
         //get default emails from config
         $r_predef = array();
         $r_predef = explode('|', $this->getConf('default_recipient'));
@@ -82,12 +83,34 @@ class action_plugin_infomail extends DokuWiki_Action_Plugin {
                 $r_predef_valid[] = $addr;
             }
         }
+
+        // get simple listfiles from pages
+        $listdir = rtrim($conf['datadir'], "/")."/wiki/infomail/";
+        $simple_lists = array();
+        if ($handle = opendir($listdir)) {
+            while (false !== ($file = readdir($handle))) {
+                if ($file != "." && $file != ".." ) {
+                    if (substr($file, 0, 5) == "list_" ) {
+                        $simple_lists[] =substr($file,5,-4);
+                    }
+                }
+            }
+            closedir($handle);
+        }
+
+        // print selection
         $morerec = "";
         if(count($r_predef_valid)>0) {
             array_unshift($r_predef_valid, $this->getLang('noneselected'));
+            $r_predef_valid = array_merge($r_predef_valid, $simple_lists);
             $form->addElement(form_makeListboxField('r_predef', $r_predef_valid, '', $this->getLang('bookmarks')));
             $morerec = $this->getLang('more_rec_fill');
+        } elseif(count($simple_lists)>0) {
+            array_unshift($simple_lists, $this->getLang('noneselected'));
+            $form->addElement(form_makeListboxField('r_predef', $simple_lists, '', $this->getLang('bookmarks')));
+            $morerec = $this->getLang('more_rec_fill');
         }
+
         $form->addElement(form_makeTextField('r_email', $r_email, $morerec . $this->getLang('recipients')));
         $form->addElement(form_makeTextField('subject', $subject, $this->getLang('subject')));
         $form->addElement('<label><span>'.$this->getLang('message').'</span>'.
@@ -123,11 +146,19 @@ class action_plugin_infomail extends DokuWiki_Action_Plugin {
             if (mail_isvalid($addr)) {
                 $all_recipients_valid[] = $addr;
             }
+
         }
         if( isset($_POST['r_predef']) && mail_isvalid($_POST['r_predef']) )  {
             $all_recipients_valid[] =  $_POST['r_predef'];
-        }
-
+        } elseif (isset($_POST['r_predef']) && file_exists(rtrim($conf['datadir'],"/")."/wiki/infomail/list_". $_POST['r_predef']. ".txt")) {
+                $listfile_content = file_get_contents(rtrim($conf['datadir'],"/")."/wiki/infomail/list_". $_POST['r_predef'] .".txt");
+                preg_match_all("/[\._a-zA-Z0-9-]+@[\._a-zA-Z0-9-]+/i", $listfile_content, $simple_mails);
+                foreach($simple_mails[0] as $addr) {
+                    if (mail_isvalid($addr)) {
+                        $all_recipients_valid[] = $addr;
+                    }
+                }
+            }
         /* Validate input. */
         if ( count($all_recipients_valid) == 0 ) {
             return $this->getLang('novalid_rec');
@@ -164,7 +195,11 @@ class action_plugin_infomail extends DokuWiki_Action_Plugin {
         $comment = isset($_POST['comment']) ? $_POST['comment'] : null;
 
         /* Prepare mail text. */
-        $mailtext = file_get_contents(dirname(__FILE__).'/template.txt');
+        if (file_exists($conf['savedir']."/pages/wiki/infomail/template.txt")) {
+            $mailtext = file_get_contents($conf['savedir']."/pages/wiki/infomail/template.txt");
+        } else {
+            $mailtext = file_get_contents(dirname(__FILE__).'/template.txt');
+        }
 
         // shorturl hook
         if(!plugin_isdisabled('shorturl')) {
