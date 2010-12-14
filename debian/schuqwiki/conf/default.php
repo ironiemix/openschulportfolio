@@ -34,7 +34,7 @@ if (!defined("DOKU_INC")){
 }
 
 // portfolio title
-$conf["vector_sitetitle"]    = "Schulportfolio"; //TRUE: use/show user pages
+$conf["vector_sitetitle"]    = "Schu-Q-Wiki"; //TRUE: use/show user pages
 $conf["vector_schoolname"]    = "Schulname hier eintragen"; //TRUE: use/show user pages
 
 //user pages
