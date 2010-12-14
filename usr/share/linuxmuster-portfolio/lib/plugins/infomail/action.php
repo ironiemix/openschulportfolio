@@ -200,6 +200,8 @@ class action_plugin_infomail extends DokuWiki_Action_Plugin {
         } else {
             $mailtext = file_get_contents(dirname(__FILE__).'/template.txt');
         }
+        $parts = explode("###template_begin###", $mailtext);
+        $mailtext = $parts[1];
 
         // shorturl hook
         if(!plugin_isdisabled('shorturl')) {
@@ -223,7 +225,8 @@ class action_plugin_infomail extends DokuWiki_Action_Plugin {
         }
         /* Limit to two empty lines. */
         $mailtext = preg_replace('/\n{4,}/', "\n\n\n", $mailtext);
-        $mailtext .= $mailfooter;
+        $mailtext = preg_replace('/\n\s{2}/', "\n", $mailtext);
+        $mailtext = preg_replace('/^\s{2}/', "", $mailtext);
 
         /* Perform stuff. */
         foreach ( $all_recipients_valid as $mail ) {

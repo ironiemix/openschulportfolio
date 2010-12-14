@@ -11,9 +11,22 @@ class admin_plugin_infomail extends DokuWiki_Admin_Plugin {
     }
 
     function handle() {
+        global $conf;
         if (isset($_REQUEST['infomail_simple_new']) && $_REQUEST['infomail_simple_new'] != "" ) {
                 $newlist = ":wiki:infomail:list_" . $_REQUEST['infomail_simple_new'];
-                send_redirect($newlist);
+                send_redirect(wl($newlist,'',true));
+        }
+        if (isset($_REQUEST['infomail_edit_tpl']) && $_REQUEST['infomail_edit_tpl'] == "yes" ) {
+                if (file_exists(rtrim($conf['datadir'],"/")."/wiki/infomail/template.txt" )) {
+                    $tplid = ":wiki:infomail:template";
+                    send_redirect(wl($tplid,'',true));
+                } else {
+                    $tplsrc = dirname(__FILE__).'/template.txt';
+                    $tpldst = rtrim($conf['datadir'],"/")."/wiki/infomail/template.txt";
+                    copy($tplsrc, $tpldst);
+                    $tplid = ":wiki:infomail:template";
+                    send_redirect(wl($tplid,'',true));
+                }
         }
     }
 
@@ -23,8 +36,9 @@ class admin_plugin_infomail extends DokuWiki_Admin_Plugin {
 
         $html = "<h1>" .$this->getLang('admin_title') ."</h1>";
         $html .= $this->getLang('admin_desc') ;
+        $html .= "<h2>" . $this->getLang('infomail_listoverview') . "</h2>";
         print $html;
-        $html = "<h2>" . $this->getLang('infomail_listoverview') . "</h2>";
+        $html = "";
 
         $form = new Doku_Form('infomail_plugin_admin');
         $form->addElement(form_makeTextField('infomail_simple_new', $s_name, $this->getLang('newsimplelist')));
@@ -53,6 +67,13 @@ class admin_plugin_infomail extends DokuWiki_Admin_Plugin {
         $html .= "</ul>\n";
 
         print $html;
+
+        print "<h2>" .$this->getLang('infomail_tpl') . "</h2>";
+
+        $form = new Doku_Form('infomail_plugin_admin_tpl');
+        $form->addHidden('infomail_edit_tpl', "yes");
+        $form->addElement(form_makeButton('submit', '', $this->getLang('infomail_edit_tpl')));
+        $form->printForm();
 
     }
 }
