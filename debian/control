@@ -9,6 +9,6 @@ Package: linuxmuster-portfolio
 Section: unknown
 Priority: optional
 Architecture: i386
-Depends: apache2 
+Depends: apache2
 Description: linuxmuster-portfolio privides a customized dokuwiki (http://www.dokuwiki.org) environment for use in school administration.
 

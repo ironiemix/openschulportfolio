@@ -1,4 +1,4 @@
-linuxmuster-portfolio (1.2.0-rc1) openlml; urgency=low
+linuxmuster-portfolio (1.2.0-rc2) openlml; urgency=low
 
     * Added edittable-plugin
     * Fixed some minor bugs in mailinfo-plugin

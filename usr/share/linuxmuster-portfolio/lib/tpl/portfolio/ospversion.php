@@ -1,2 +1,2 @@
 <?php
-print "1.2.0-rc1";
+print "1.2.0-rc2";
