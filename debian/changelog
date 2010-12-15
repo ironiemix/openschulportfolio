@@ -1,7 +1,8 @@
-linuxmuster-portfolio (1.2.0-rc2) openlml; urgency=low
+linuxmuster-portfolio (1.2.0-rc3) openlml; urgency=low
 
     * Added edittable-plugin
     * Fixed some minor bugs in mailinfo-plugin
+    * Fixed bug in filelist groupbyext option when recursively rendering lists and pages
     * This is the release candidate for 1.2
 
  -- Frank Schiebel <frank@linuxmuster.net>  Tue, 14 Dec 2010 16:05:00 +0100
