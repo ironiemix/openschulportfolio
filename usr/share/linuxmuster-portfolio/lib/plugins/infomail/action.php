@@ -87,7 +87,7 @@ class action_plugin_infomail extends DokuWiki_Action_Plugin {
         // get simple listfiles from pages
         $listdir = rtrim($conf['datadir'], "/")."/wiki/infomail/";
         $simple_lists = array();
-        if ($handle = opendir($listdir)) {
+        if ($handle = @opendir($listdir)) {
             while (false !== ($file = readdir($handle))) {
                 if ($file != "." && $file != ".." ) {
                     if (substr($file, 0, 5) == "list_" ) {
