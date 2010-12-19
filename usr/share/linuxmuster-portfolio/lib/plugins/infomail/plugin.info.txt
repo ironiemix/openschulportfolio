@@ -1,7 +1,7 @@
-base    mailinfo
+base    infomail
 author  Adrian Lang, Frank Schiebel
 email   dokuwiki@cosmocode.de, frank@linuxmuster.net
-date    2010-12-12
-name    mailinfo
+date    2010-12-19
+name    infomail
 desc    Allows to inform users via email
 url     http://www.dokuwiki.org/plugin:infomail

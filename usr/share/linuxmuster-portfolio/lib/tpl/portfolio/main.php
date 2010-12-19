@@ -514,6 +514,8 @@ if (file_exists(DOKU_TPLINC."lang/".$conf["lang"]."/style.css")){
               } ?>skin-vector">
 <div id="pf-container">
 <div id="page-base" class="noprint"></div>
+<div id="shadowleft">
+<div id="shadowright">
 <div id="head-base" class="noprint">
 
 <!-- start div id=head -->
@@ -522,15 +524,15 @@ if (file_exists(DOKU_TPLINC."lang/".$conf["lang"]."/style.css")){
   //show personal tools
   if (!empty($conf["useacl"])){ //...makes only sense if there are users
       echo  "\n"
-           ."  <div id=\"p-personal\">\n" . "<div id=\"sitetitle\"> \n" 
-	   . "<h1>" . tpl_getConf("vector_sitetitle") . "</h1>"
-	   . "<span>" . tpl_getConf("vector_schoolname") . "</span></div>"
+           ."  <div id=\"p-personal\">\n" . "<div id=\"sitetitle\"> \n"
+       . "<h1>" . tpl_getConf("vector_sitetitle") . "</h1>"
+       . "<span>" . tpl_getConf("vector_schoolname") . "</span></div>"
            ."    <ul>\n";
 
       $showloginlogout = true;
       // determine if the request comes from outside or inside
       if (tpl_getConf("vector_winML_hide_loginlogout")) {
-       $winml_subnet = preg_replace("/(.*?)x.*/i", "$1" ,tpl_getConf("vector_winML_hide_loginlogout_subnet")); 
+       $winml_subnet = preg_replace("/(.*?)x.*/i", "$1" ,tpl_getConf("vector_winML_hide_loginlogout_subnet"));
        $remote_subnet = substr($_SERVER['REMOTE_ADDR'],0,strlen($winml_subnet));
        if ( $winml_subnet === $remote_subnet ) {
           $showloginlogout = false;
@@ -664,9 +666,9 @@ if (file_exists(DOKU_TPLINC."lang/".$conf["lang"]."/style.css")){
               echo  "    <div class=\"dokuwiki\">\n"; //dokuwiki CSS class needed cause we are showing rendered page content
 
              if (auth_quickaclcheck(cleanID(tpl_getConf("vector_sitenotice_location"))) > AUTH_READ){ //current user got write perm?
-	     	//print edit link for the site notice
-	  	echo '<div class="secedit2" style="clear:both;text-align:right;padding:0;margin:0"><a href="' . DOKU_BASE .   'doku.php?id=' .tpl_getConf("vector_sitenotice_location") . '&amp;do=edit' . '">' . $lang['btn_secedit'] . '</a></div>';
-	     }
+            //print edit link for the site notice
+        echo '<div class="secedit2" style="clear:both;text-align:right;padding:0;margin:0"><a href="' . DOKU_BASE .   'doku.php?id=' .tpl_getConf("vector_sitenotice_location") . '&amp;do=edit' . '">' . $lang['btn_secedit'] . '</a></div>';
+         }
              echo $interim."\n    " ."</div>";
 
           }
@@ -780,6 +782,8 @@ if (file_exists(DOKU_TPLINC."lang/".$conf["lang"]."/style.css")){
 
 </div>
 <!-- end panel/sidebar -->
+</div></div>
+<!-- end shadow left/right -->
 </div>
 <!-- end container -->
 
