@@ -1,65 +1,65 @@
 
 div.menu {
-	text-align:left;
+    text-align:left;
 }
 
 div.menu#menucenter {
-	margin:auto;
+    margin:auto;
 }
 
 div.menu#menuleft {
-	margin:0;
-	float:left
+    margin:0;
+    float:left
 }
 
 div.menu#menuright {
-	margin:0;
-	float:right
+    margin:0;
+    float:right
 }
 
 div.menuitem {
-	float:left;
-	padding:5px 5px 0 0;
+    float:left;
+    padding:5px 5px 0 0;
 }
 
 div.menu p.caption {
-	font-size:120%;
-	font-weight:bold;
-	margin:0;
+    font-size:120%;
+    font-weight:bold;
+    margin:0;
 }
 
 div.menu img {
-	float:left;
-	margin:3px;
-	padding-right:3px;
+    float:left;
+    margin:3px;
+    padding-right:3px;
 }
 
-div.menu p.menutext {
-	font-size:140%;
-	line-height:1em;
-	margin:0;
-	padding-top:5px;
+div.menu span.menutext {
+    font-size:140%;
+    line-height:1em;
+    margin:0;
+    padding-top:5px;
 }
 
 div.menu p.menudesc {
-	color:__text__;
-	font-size:90%;
-	line-height:1em;
-	margin:0;
+    color:__text__;
+    font-size:90%;
+    line-height:1em;
+    margin:0;
 }
 
 div#menu ul.menubar {
-	padding:0;
-	margin:0;
-	list-style:none !important;
+    padding:0;
+    margin:0;
+    list-style:none !important;
 }
 
 div#menu ul.menubar li {
-	border:none;
-	float:left;
-	margin-right:8px;
+    border:none;
+    float:left;
+    margin-right:8px;
 }
 
 div#menu ul.menubar li a {
-	text-decoration:none;
+    text-decoration:none;
 }

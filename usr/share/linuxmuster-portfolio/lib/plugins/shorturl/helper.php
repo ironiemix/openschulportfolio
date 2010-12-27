@@ -93,7 +93,7 @@ class helper_plugin_shorturl extends DokuWiki_Plugin {
 
         for ($i = 0; $i < $subHexLen; $i++) {
             $subHex = substr ($hex, $i * 8, 8);
-            $int = 0x3FFFFFFF & (1 * ('0x'.$subHex));
+            $int = hexdec('0x'.$subHex);
             $out = '';
 
             for ($j = 0; $j < 6; $j++) {

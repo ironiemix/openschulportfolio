@@ -302,7 +302,7 @@ class syntax_plugin_menu extends DokuWiki_Syntax_Plugin {
                         $link['name']  = $img;
                         $renderer->doc .= $renderer->_formatLink($link);
 
-                        $link['name']  = '<p class="menutext">'.$args[1].'</p>';
+                        $link['name']  = '<span class="menutext">'.$args[1].'</span>';
                         $renderer->doc .= $renderer->_formatLink($link);
                         $renderer->doc .= '<p class="menudesc">'.$item['descr'].'</p>';
                         $renderer->doc .= '</div>'."\n";
