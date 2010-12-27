@@ -280,7 +280,7 @@ class syntax_plugin_menu extends DokuWiki_Syntax_Plugin {
         if($mode == 'xhtml'){
             if ($data['type'] != "menubar"){  
                     // for IE6 2x10em does not fit into 20em, it needs 21em
-                    $renderer->doc .= '<div class="menu" id="menu'.$data['float'].'"';
+                    $renderer->doc .= '<div class="menu menu'.$data['float'].'"';
                     $renderer->doc .= ' style="width:'.($data['columns'] * $data['width'] + 2).'em;">'."\n";
                     if (isset($data['caption']))
                         $renderer->doc .= '<p class="caption">'.$data['caption'].'</p>'."\n";

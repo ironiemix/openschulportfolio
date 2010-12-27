@@ -3,3 +3,38 @@
 Dokumente, die sich nicht eindeutig Qualitätsbereichen des Orientierungsrahmens zuordnen lassen, können mit eigener Struktur hier unter dem Gliederungspunkt "Weitere Dokumente" abgelegt werden. 
 
 Dies können beispielsweise sein: Presseartikel, Auszeichnungen und Verleihungsurkunden, Briefvorlagen, Formulare, etc.
+
+===== Darstellung nach außen =====
+
+  * [[homepage|Internetauftritt/Homepage]]
+  * [[jahrbuecher|Jahresberichte/Jahrbücher]]
+  * [[zeitungsberichte|Zeitungsberichte]]
+
+===== Feste und Feiern =====
+
+  * [[einschulungsfeier|Einschulungsfeier]]
+  * [[abschlussfeier|Abschlussfeier]]
+  * [[schulfest|Schulfest]]
+  * [[heimatfest|Kinder- und Heimatfest]]
+
+===== Unterrichts und Pausenzeiten =====
+
+Informationen zu den Unterichts- und Pausenzeiten.
+
+===== Aufsichtspläne =====
+
+Aufsichtspläne.
+
+===== Rahmenkrisenplan, Kriseninterventionsplan =====
+ 
+  * [[aufgaben_krisenteam|Aufgabenbeschreibung Krisenteam]]
+  * [[geiselnahme|Geiselnahme]]
+  * [[amoklage|Amoklage]]
+
+===== Brandschutz, Verhalten im Brandfall =====
+
+  * [[lehrerinfo_feueralarm|Lehrerinfo Feueralarm]]
+  * [[verhalten_brandfall|Verhalten im Brandfall]]
+
+===== Ferienplan =====
+ 

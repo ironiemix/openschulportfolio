@@ -1,4 +1,4 @@
-====== Schulportfolio ======
+====== Schulportfolio als Wiki ======
 
 <menu col=1,align="left",caption="">
 <item>Voraussetzungen und Bedingungen|Bildungsgänge, Pädagogische Schwerpunkte, Infos zu Schlüler- und Lehrerschaft u.ä.|portfolio:rahmenbedingungen:start|shared:icons:emblem-important-50x50.png</item>

@@ -3,16 +3,16 @@ div.menu {
     text-align:left;
 }
 
-div.menu#menucenter {
+div.menucenter {
     margin:auto;
 }
 
-div.menu#menuleft {
+div.menuleft {
     margin:0;
     float:left
 }
 
-div.menu#menuright {
+div.menuright {
     margin:0;
     float:right
 }
