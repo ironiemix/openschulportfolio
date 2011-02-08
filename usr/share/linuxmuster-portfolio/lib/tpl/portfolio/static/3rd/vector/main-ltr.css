@@ -72,6 +72,7 @@ div#shadowright {
     padding: 0;
     padding-right: 9px;
     background: transparent url(static/3rd/vector/shadowright.png) top right repeat-y;
+    margin-right: __panelwidth__;
 }
 
 /* Content */

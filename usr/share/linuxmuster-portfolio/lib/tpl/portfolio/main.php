@@ -782,6 +782,12 @@ if (file_exists(DOKU_TPLINC."lang/".$conf["lang"]."/style.css")){
 
 </div>
 <!-- end panel/sidebar -->
+
+<!-- start right panel/sidebar -->
+<div id="panelright" class="noprint">
+Hallo!
+</div>
+<!-- end right panel/sidebar -->
 </div></div>
 <!-- end shadow left/right -->
 </div>
