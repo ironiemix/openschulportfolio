@@ -46,6 +46,7 @@ $conf["vector_infomail"]    = true;
 //discussion pages
 $conf["vector_discuss"]    = false; //TRUE: use/show discussion pages
 $conf["vector_discuss_ns"] = ":wiki:discussion:"; //namespace to use for discussion page storage
+$conf["vector_discuss_enabled_ns"] = ""; //namespaces for which the discussion  pages should be enabled
 
 //site notice
 $conf["vector_sitenotice"]          = true; //TRUE: use/show sitenotice

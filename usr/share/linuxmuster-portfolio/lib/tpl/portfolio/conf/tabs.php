@@ -63,6 +63,8 @@ if (empty($conf["useacl"]) || //are there any users?
 
     //discussion tab
     //ATTENTION: "ca-talk" is used as css id selector!
+    if (tpl_getConf("vector_discuss_enabled_ns") !== "") {
+    }
     if (tpl_getConf("vector_discuss")){
         $_vector_tabs_left["ca-talk"]["text"] = $lang["vector_discussion"];
         if ($vector_context === "discuss"){ //$vector_context was defined within main.php

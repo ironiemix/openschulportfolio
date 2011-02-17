@@ -46,6 +46,7 @@ $meta["vector_infomail"]    = array("onoff");
 //discussion pages
 $meta["vector_discuss"]    = array("onoff");
 $meta["vector_discuss_ns"] = array("string", "_pattern" => "/^:.{1,}:$/");
+$meta["vector_discuss_enabled_ns"] = array("string");
 
 //site notice
 $meta["vector_sitenotice"]          = array("onoff");
