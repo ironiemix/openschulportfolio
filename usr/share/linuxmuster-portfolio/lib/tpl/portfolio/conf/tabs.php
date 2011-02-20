@@ -63,9 +63,25 @@ if (empty($conf["useacl"]) || //are there any users?
 
     //discussion tab
     //ATTENTION: "ca-talk" is used as css id selector!
-    if (tpl_getConf("vector_discuss_enabled_ns") !== "") {
-    }
+    $showdiscussiontab = FALSE;
     if (tpl_getConf("vector_discuss")){
+        if (tpl_getConf("vector_discuss_enabled_ns") !== "") {
+            $discuss_enabled_namespaces = explode(" ",tpl_getConf("vector_discuss_enabled_ns"));
+            foreach($discuss_enabled_namespaces as $discuss_namespace) {
+                $discuss_namespace = ltrim($discuss_namespace, ":");
+                $actual_id = ltrim(getID(), ":");
+                if ( strpos($actual_id, $discuss_namespace) === 0 ) {
+                    $showdiscussiontab = TRUE;
+                }
+            }
+        } else {
+            $showdiscussiontab = TRUE;
+        }
+        if ($vector_context === "discuss"){ //$vector_context was defined within main.php
+            $showdiscussiontab = TRUE;
+        }
+    }
+    if ($showdiscussiontab){
         $_vector_tabs_left["ca-talk"]["text"] = $lang["vector_discussion"];
         if ($vector_context === "discuss"){ //$vector_context was defined within main.php
             $_vector_tabs_left["ca-talk"]["wiki"]  = ":".getID();
