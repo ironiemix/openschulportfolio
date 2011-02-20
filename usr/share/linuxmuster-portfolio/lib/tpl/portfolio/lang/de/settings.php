@@ -38,7 +38,6 @@ $lang["vector_userpage_ns"] = "Falls ja, folgenden ':namensraum:' als Wurzel fü
 //discussion pages
 $lang["vector_discuss"]    = "Diskussions-Tabs/Seiten benutzen?";
 $lang["vector_discuss_ns"] = "Falls ja, folgenden ':namensraum:' als Wurzel für Diskussionen nutzen:";
-$lang["vector_discuss_enabled_ns"] = "Wenn dieser Wert nicht leer ist, Diskussionsseiten nur für diese Namensräume anzeigen (mehrere Namensräume durch Leerzeichen trennen):";
 //use infomail
 $lang["vector_infomail"]    = "Infomail Erweiterung verwenden? Damit der Infomail-Button angezeigt wird, muss diese Option gesetzt sein.";
 

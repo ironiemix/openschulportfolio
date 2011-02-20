@@ -64,30 +64,35 @@ if (empty($conf["useacl"]) || //are there any users?
     //discussion tab
     //ATTENTION: "ca-talk" is used as css id selector!
     $showdiscussiontab = FALSE;
+    $discussion_exists = TRUE;
     if (tpl_getConf("vector_discuss")){
-        if (tpl_getConf("vector_discuss_enabled_ns") !== "") {
-            $discuss_enabled_namespaces = explode(" ",tpl_getConf("vector_discuss_enabled_ns"));
-            foreach($discuss_enabled_namespaces as $discuss_namespace) {
-                $discuss_namespace = ltrim($discuss_namespace, ":");
-                $actual_id = ltrim(getID(), ":");
-                if ( strpos($actual_id, $discuss_namespace) === 0 ) {
-                    $showdiscussiontab = TRUE;
-                }
-            }
-        } else {
-            $showdiscussiontab = TRUE;
-        }
         if ($vector_context === "discuss"){ //$vector_context was defined within main.php
-            $showdiscussiontab = TRUE;
+                $showdiscussiontab = TRUE;
+                if( ! page_exists(getID())) {
+                    $discussion_exists = FALSE;
+                }
+        } else {
+            if( page_exists(tpl_getConf("vector_discuss_ns").getID())) {
+                $showdiscussiontab = TRUE;
+            } elseif ( auth_quickaclcheck(getID()) > AUTH_READ ) {
+                $showdiscussiontab = TRUE;
+                $discussion_exists = FALSE;
+            }
         }
     }
     if ($showdiscussiontab){
         $_vector_tabs_left["ca-talk"]["text"] = $lang["vector_discussion"];
         if ($vector_context === "discuss"){ //$vector_context was defined within main.php
+            if ( ! $discussion_exists ) {
+                $_vector_tabs_left["ca-talk"]["text"] = $lang["vector_discussion_create"];
+            }
             $_vector_tabs_left["ca-talk"]["wiki"]  = ":".getID();
             $_vector_tabs_left["ca-talk"]["class"] = "selected";
         }else{
-            $_vector_tabs_left["ca-talk"]["wiki"] = tpl_getConf("vector_discuss_ns").getID();
+            if ( ! $discussion_exists ) {
+                $_vector_tabs_left["ca-talk"]["text"] = $lang["vector_discussion_create"];
+            }
+                $_vector_tabs_left["ca-talk"]["wiki"] = tpl_getConf("vector_discuss_ns").getID();
         }
     }
 

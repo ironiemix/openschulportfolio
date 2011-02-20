@@ -34,6 +34,7 @@ if (!defined("DOKU_INC")){
 //tabs, personal tools and special links
 $lang["vector_article"] = "Article";
 $lang["vector_discussion"] = "Discussion";
+$lang["vector_discussion_create"] = "Create Discussion";
 $lang["vector_read"] = "Read";
 $lang["vector_edit"] = "Edit";
 $lang["vector_create"] = "Create";
