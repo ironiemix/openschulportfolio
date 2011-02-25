@@ -22,7 +22,11 @@ class admin_plugin_infomail extends DokuWiki_Admin_Plugin {
                     send_redirect(wl($tplid,'',true));
                 } else {
                     $tplsrc = dirname(__FILE__).'/template.txt';
+                    $tpldstdir = rtrim($conf['datadir'],"/")."/wiki/infomail/";
                     $tpldst = rtrim($conf['datadir'],"/")."/wiki/infomail/template.txt";
+                    if (!is_dir($tpldstdir)) {
+                        @mkdir($tpldstdir);
+                    }
                     copy($tplsrc, $tpldst);
                     $tplid = ":wiki:infomail:template";
                     send_redirect(wl($tplid,'',true));

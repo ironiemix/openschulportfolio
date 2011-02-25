@@ -195,8 +195,8 @@ class action_plugin_infomail extends DokuWiki_Action_Plugin {
         $comment = isset($_POST['comment']) ? $_POST['comment'] : null;
 
         /* Prepare mail text. */
-        if (file_exists(rtrim($conf['datadir'],"/")."/wiki/infomail/template.txt")) {
-            $mailtext = file_get_contents(rtrim($conf['datadir'],"/")."/wiki/infomail/template.txt");
+        if (file_exists($conf['savedir']."/pages/wiki/infomail/template.txt")) {
+            $mailtext = file_get_contents($conf['savedir']."/pages/wiki/infomail/template.txt");
         } else {
             $mailtext = file_get_contents(dirname(__FILE__).'/template.txt');
         }
