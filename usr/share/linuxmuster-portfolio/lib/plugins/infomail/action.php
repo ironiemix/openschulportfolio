@@ -227,6 +227,8 @@ class action_plugin_infomail extends DokuWiki_Action_Plugin {
         $mailtext = preg_replace('/\n{4,}/', "\n\n\n", $mailtext);
         $mailtext = preg_replace('/\n\s{2}/', "\n", $mailtext);
         $mailtext = preg_replace('/^\s{2}/', "", $mailtext);
+        /* Wrap mailtext at 78 chars */
+        $mailtext = wordwrap($mailtext, 78);
 
         /* Perform stuff. */
         foreach ( $all_recipients_valid as $mail ) {

@@ -1,10 +1,11 @@
-linuxmuster-portfolio (1.3.0-3) openlml; urgency=low
+linuxmuster-portfolio (1.3.0-4) openlml; urgency=low
 
     * Discussion plugin on discussion pages configurable per page.
     * Fixed ACL bug in zip package preventing custom logo to appear to
       unauthenticated users
     * Fixed bug in infomail plugin preventing template editing if wiki:infomail namespace does
       not exist
+    * Infomails get a linebreak every 78 chars now
 
  -- Frank Schiebel <frank@linuxmuster.net>  Fri, 25 Feb 2011 15:40:00 +0100
 
