@@ -120,12 +120,12 @@ if (empty($conf["useacl"]) || //are there any users?
             //see <http://www.dokuwiki.org/plugin:s5> for info
             if (file_exists(DOKU_PLUGIN."s5/syntax.php") &&
                     !plugin_isdisabled("s5")){
-                $_vector_boxes["p-coll-print_export"]["xhtml"]  .= "        <li id=\"coll-download-as-rl\"><a href=\"".wl(cleanID(getId()), array("do" => "export_s5"))."\" rel=\"nofollow\">".hsc($lang["vector_exportbxdef_downloads5"])."</a></li>\n";
+                $_vector_boxes["p-coll-print_export"]["xhtml"]  .= "        <li id=\"coll-download-as-s5\"><a href=\"".wl(cleanID(getId()), array("do" => "export_s5"))."\" rel=\"nofollow\">".hsc($lang["vector_exportbxdef_downloads5"])."</a></li>\n";
             }
             //bookcreator plugin
             if (file_exists(DOKU_PLUGIN."bookcreator/syntax.php") &&
                     !plugin_isdisabled("bookcreator")){
-                $_vector_boxes["p-coll-print_export"]["xhtml"]  .= "        <li id=\"coll-download-as-rl\"><a href=\"".wl(cleanID(getId()), array("do" => "addtobook"))."\" rel=\"nofollow\">".hsc($lang["vector_exportbxdef_addtobook"])."</a></li>\n";
+                $_vector_boxes["p-coll-print_export"]["xhtml"]  .= "        <li id=\"coll-download-as-book\"><a href=\"".wl(cleanID(getId()), array("do" => "addtobook"))."\" rel=\"nofollow\">".hsc($lang["vector_exportbxdef_addtobook"])."</a></li>\n";
             }
             $_vector_boxes["p-coll-print_export"]["xhtml"] .=  "        <li id=\"t-print\"><a href=\"".wl(cleanID(getId()), array("rev" =>(int)$rev, "vecdo" => "print"))."\" rel=\"nofollow\">".hsc($lang["vector_exportbxdef_print"])."</a></li>\n"
                 ."      </ul>";
@@ -168,14 +168,14 @@ if (empty($conf["useacl"]) || //are there any users?
                 $_vector_boxes["p-tb"]["xhtml"] .= "        <li id=\"t-recentchanges\"><a href=\"".wl("", array("do" => "recent"))."\" rel=\"nofollow\">".hsc($lang["btn_recent"])."</a></li>\n"; //language comes from DokuWiki core
             }
             if (empty($conf["useacl"]) || auth_quickaclcheck(cleanID("start")) >= AUTH_CREATE){ //current user got write access to start page?
-                $_vector_boxes["p-tb"]["xhtml"] .= "        <li id=\"t-special\"><a href=\"".wl(cleanID(":shared:do_newpage"), array())."\" rel=\"nofollow\">Neue Seite</a></li>\n";
+                $_vector_boxes["p-tb"]["xhtml"] .= "        <li id=\"t-newpage\"><a href=\"".wl(cleanID(":shared:do_newpage"), array())."\" rel=\"nofollow\">Neue Seite</a></li>\n";
             }
             $_vector_boxes["p-tb"]["xhtml"] .= "        <li id=\"t-upload\"><a target=\"t-upload\" href=\"".DOKU_BASE."lib/exe/mediamanager.php?ns=".getNS(getID())."\" rel=\"nofollow\">".hsc($lang["vector_toolbxdef_upload"])."</a></li>\n";
             if (actionOK("index")){ //check if action is disabled
-                $_vector_boxes["p-tb"]["xhtml"] .= "        <li id=\"t-special\"><a href=\"".wl("", array("do" => "index"))."\" rel=\"nofollow\">".hsc($lang["vector_toolbxdef_siteindex"])."</a></li>\n";
+                $_vector_boxes["p-tb"]["xhtml"] .= "        <li id=\"t-siteindex\"><a href=\"".wl("", array("do" => "index"))."\" rel=\"nofollow\">".hsc($lang["vector_toolbxdef_siteindex"])."</a></li>\n";
             }
             if (empty($conf["useacl"]) || auth_quickaclcheck(cleanID("bookcreator:start")) >= AUTH_READ){ //current user got write access to start page?
-                $_vector_boxes["p-tb"]["xhtml"] .= "        <li id=\"t-special\"><a href=\"".wl(cleanID(":bookcreator:start"), array())."\" rel=\"nofollow\">Buchauswahl</a></li>\n";
+                $_vector_boxes["p-tb"]["xhtml"] .= "        <li id=\"t-bookselection\"><a href=\"".wl(cleanID(":bookcreator:start"), array())."\" rel=\"nofollow\">Buchauswahl</a></li>\n";
             }
             if ( $INFO['isadmin'] == 1) {
                 $_vector_boxes["p-tb"]["xhtml"] .= "        <li id=\"t-special\"><a href=\"".wl(cleanID(getID()), array("do" => "admin", "page" => "pagemove"))."\" rel=\"nofollow\">Seite verschieben</a></li>\n";
@@ -183,7 +183,7 @@ if (empty($conf["useacl"]) || //are there any users?
             //shorturl plugin
             if (!plugin_isdisabled("shorturl") && auth_quickaclcheck(cleanID(getID())) >= AUTH_READ){
                 $shorturl =& plugin_load('helper', 'shorturl');
-                $_vector_boxes["p-tb"]["xhtml"]  .= "        <li id=\"coll-download-as-rl\">". $shorturl->shorturlPrintLink(getID()) ."</li>\n";
+                $_vector_boxes["p-tb"]["xhtml"]  .= "        <li id=\"t-shorturl\">". $shorturl->shorturlPrintLink(getID()) ."</li>\n";
             }
 
             $_vector_boxes["p-tb"]["xhtml"] .=  "        <li id=\"t-permanent\"><a href=\"".wl(cleanID(getId()), array("rev" =>(int)$rev))."\" rel=\"nofollow\">".hsc($lang["vector_toolboxdef_permanent"])."</a></li>\n"
