@@ -1,3 +1,4 @@
+auth_ad_remove_winmlgroupprefix.patch
 notes_plugin.patch
 bookcreator_tableless.patch
 dw2pdf_quick_fix.patch

@@ -11,6 +11,8 @@ linuxmuster-portfolio (1.3.1-1) openlml; urgency=low
     * Fixed identical css-ids in template/conf/boxes.php
     * Updated include-plugin for compatibility to php5.3
     * Added additional auth methods from http://lastweekend.com.au/ggauth.4.zip
+    * Removing group_prefixes from AD, new config option
+      $conf['auth']['ad']['groupdelprefix']     = 'g_projekt_';
 
  -- Frank Schiebel <frank@linuxmuster.net>  Sun, 20 Mar 2011 18:30:00 +0100
 
