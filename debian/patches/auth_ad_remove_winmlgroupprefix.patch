@@ -1,29 +1,43 @@
 Index: trunk/usr/share/linuxmuster-portfolio/inc/auth/ad.class.php
 ===================================================================
---- trunk.orig/usr/share/linuxmuster-portfolio/inc/auth/ad.class.php	2011-03-17 19:09:06.000000000 +0100
-+++ trunk/usr/share/linuxmuster-portfolio/inc/auth/ad.class.php	2011-03-17 19:20:46.000000000 +0100
+--- trunk.orig/usr/share/linuxmuster-portfolio/inc/auth/ad.class.php	2011-03-31 23:38:24.000000000 +0200
++++ trunk/usr/share/linuxmuster-portfolio/inc/auth/ad.class.php	2011-03-31 23:40:14.000000000 +0200
 @@ -30,6 +30,9 @@
   *   // add a list of comma separated ldap contact fields.
   *   $conf['auth']['ad']['additional'] = 'field1,field2';
   *
 + *   // patched for openschulportfolio
-+ *   $conf['auth']['ad']['groupdelprefix']     = 'g_projekt_'
++ *   $conf['auth']['ad']['groupdelprefix']     = 'g_,g_projekt_'
 + *
   *  @license GPL 2 (http://www.gnu.org/licenses/gpl.html)
   *  @author  James Van Lommel <jamesvl@gmail.com>
   *  @link    http://www.nosq.com/blog/2005/08/ldap-activedirectory-and-dokuwiki/
-@@ -187,6 +190,14 @@
+@@ -187,9 +190,28 @@
       * @author  James Van Lommel (jamesvl@gmail.com)
       */
      function cleanGroup($name) {
-+        if (isset($this->cnf['groupdelprefix'])) {
-+            $prefixes = explode("_", $this->cnf['groupdelprefix']);
-+            $sname = $name;
-+            foreach ($prefixes as $prefix) {
-+                $prefix .= "_";
-+                $sname = preg_replace("/^$prefix/", '',$sname);
-+            }
-+        }
++
          $sName = str_replace('\\', '', $name);
          $sName = str_replace('#', '', $sName);
          $sName = preg_replace('[\s]', '_', $sName);
++
++        if (isset($this->cnf['groupdelprefix'])) {
++            if ($this->cnf['debug'])
++                msg("auth ad: cleanGroup removing prefix is " . $this->cnf['groupdelprefix']);
++            if ($this->cnf['debug'])
++                msg("auth ad: found ad group ". $sName);
++            $sName = strtolower($sName);
++            $prefixes = explode(",", $this->cnf['groupdelprefix']);
++            usort($prefixes, create_function(   '$a, $b', 'if (strlen($a) == strlen($b)) return 0;
++                                                else return (strlen($a) < strlen($b)) ? 1 : -1;'    ));
++            foreach ($prefixes as $prefix) {
++                $prefix = trim($prefix);
++                $sName = preg_replace("/^$prefix/i", '',$sName);
++            }
++            $sName = str_replace('_', '', $sName);
++            if ($this->cnf['debug'])
++                msg("         mapped to wiki group ". $sName);
++        }
+         return $sName;
+     }
+ 
