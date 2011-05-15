@@ -207,7 +207,7 @@ var $backup = '';
                 }
 
                 //Generate array of files
-                $files = array($linuxmusterconf. "/smileys.conf");
+                $files = array();
 
                 if (strcmp($this->backup['type'], 'lazy') == 0) //Use lazy method
                 {
