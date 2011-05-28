@@ -1,4 +1,4 @@
-linuxmuster-portfolio (11.05-1) openlml; urgency=low
+linuxmuster-portfolio (11.05-ada.1) openlml; urgency=low
 
     * Discussion plugin on discussion pages configurable per page.
     * Fixed ACL bug in zip package preventing custom logo to appear to
@@ -16,9 +16,9 @@ linuxmuster-portfolio (11.05-1) openlml; urgency=low
     * Fixed bugs in backup plugin (media dir without slashes, wrong config
       dirs)
     * Upgraded dokuwiki to version 2011-05-25 "rincewind"
-    * Changed versioning to ubuntu-style: yy.mm-build
+    * Changed versioning to ubuntu-style: yy.mm-releasename.build
 
- -- Frank Schiebel <frank@linuxmuster.net>  Fir, 27 May 2011 17:30:00 +0100
+ -- Frank Schiebel <frank@linuxmuster.net>  Fri, 27 May 2011 17:30:00 +0100
 
 linuxmuster-portfolio (1.2.0-2) openlml; urgency=low
 
