@@ -1,3 +1,10 @@
+linuxmuster-portfolio (11.05-ada.3) openlml; urgency=low
+
+    * First import of new DokuWiki RC1 "angua"
+    * fixed missing js files in svn
+
+ -- Frank Schiebel <frank@linuxmuster.net>  Tue, 13 Dec 2011 16:37:00 +0100
+
 linuxmuster-portfolio (11.05-ada.1) openlml; urgency=low
 
     * Discussion plugin on discussion pages configurable per page.

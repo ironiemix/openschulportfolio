@@ -646,6 +646,19 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
 
         $name = $this->_getLinkTitle($name, $url, $isImage);
 
+        // url might be an attack vector, only allow registered protocols
+        if(is_null($this->schemes)) $this->schemes = getSchemes();
+        list($scheme) = explode('://',$url);
+        $scheme = strtolower($scheme);
+        if(!in_array($scheme,$this->schemes)) $url = '';
+
+        // is there still an URL?
+        if(!$url){
+            $this->doc .= $name;
+            return;
+        }
+
+        // set class
         if ( !$isImage ) {
             $class='urlextern';
         } else {
@@ -792,8 +805,10 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         if($hash) $link['url'] .= '#'.$hash;
 
         //markup non existing files
-        if (!$exists)
-          $link['class'] .= ' wikilink2';
+        if (!$exists) {
+            $link['class'] .= ' wikilink2';
+            $link['url'] = media_managerURL(array('tab_details' => 'view', 'image' => $src, 'ns' => getNS($src)), '&');
+        }
 
         //output formatted
         if ($linking == 'nolink' || $noLink) $this->doc .= $link['name'];
