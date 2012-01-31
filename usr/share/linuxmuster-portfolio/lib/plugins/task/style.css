@@ -1,0 +1,86 @@
+div.dokuwiki div.newtask_form {
+  clear: both;
+  text-align: center;
+  margin-bottom: 1em;
+}
+
+div.dokuwiki #task__newtask_form input.edit {
+  width: 95%;
+}
+
+div.dokuwiki div.vcalendar {
+  margin-bottom: 1em;
+}
+
+div.dokuwiki div.vcalendar fieldset {
+  padding: 0 0.5em 0.5em 0.5em;
+  border: 1px solid #ffc561;
+  width: 90%;
+}
+
+div.dokuwiki div.vcalendar img.summary {
+  vertical-align: middle;
+}
+
+div.dokuwiki div.vcalendar abbr {
+  border-bottom: 0;
+}
+
+div.dokuwiki div.newtask_form table.blind,
+div.dokuwiki div.vcalendar table.blind {
+  border: 0;
+  padding: 0;
+  border-spacing: 3px;
+  margin: 1px;
+}
+
+div.dokuwiki div.newtask_form table.blind th,
+div.dokuwiki div.vcalendar table.blind th {
+  text-align: right;
+  color: __text_neu__;
+  font-weight: normal;
+  background-color: transparent;
+}
+
+div.dokuwiki div.newtask_form table.blind td,
+div.dokuwiki div.vcalendar table.blind td {
+  width: 50%;
+  text-align: left;
+}
+
+div.dokuwiki div.vcalendar table.blind tr.due { color: #ffa200; font-weight: bold; }
+div.dokuwiki div.vcalendar table.blind tr.overdue { color: #ff0040; font-weight: bold; }
+
+div.dokuwiki div.vcalendar fieldset.priority1 { background-color: #fff7e8; }
+div.dokuwiki div.vcalendar fieldset.priority2 { background-color: #fff1d9; }
+div.dokuwiki div.vcalendar fieldset.priority3 { background-color: #ffe9c2; }
+
+div.dokuwiki tr.priority1 { background-color: #fff7e8; }
+div.dokuwiki tr.priority2 { background-color: #fff1d9; }
+div.dokuwiki tr.priority3 { background-color: #ffe9c2; }
+
+div.dokuwiki div.vcalendar fieldset.due { border: 1px solid #ffa200; }
+div.dokuwiki div.vcalendar fieldset.overdue { border: 1px solid #ff0040; }
+
+div.dokuwiki div.task_viewmenu {
+  margin-bottom: 0.5em;
+}
+
+div.dokuwiki form#task__changeview_form label {
+  float: left;
+  margin-right: 0.5em;
+}
+
+div.dokuwiki form#task__changeview_form input {
+  margin: 0.3em;
+}
+
+div.dokuwiki form#task__changeview_form input.button {
+  margin: 0;
+}
+
+div.dokuwiki th.status,
+div.dokuwiki td.status {
+  color: __text_neu__;
+  font-size: 80%;
+}
