@@ -27,3 +27,4 @@ $lang['newsimplelist'] = "Neue Verteilerliste (Name eingeben):";
 $lang['createnewsimplelist'] = "Liste anlegen";
 $lang['infomail_edit_tpl'] = "Infomail Vorlage bearbeiten...";
 $lang['infomail_tpl'] = "Vorlage";
+$lang['recipients_help'] = "(Mehrere Empf&auml;nger k&ouml;nnen durch Leerzeichen getrennt angegeben werden)";

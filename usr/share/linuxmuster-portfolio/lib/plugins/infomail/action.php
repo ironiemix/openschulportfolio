@@ -53,6 +53,9 @@ class action_plugin_infomail extends DokuWiki_Action_Plugin {
         $r_email = isset($_REQUEST['r_email']) ? $_REQUEST['r_email'] : '';
         $s_name  = isset($_REQUEST['s_name']) ? $_REQUEST['s_name'] : '';
         $s_email = isset($_REQUEST['s_email']) ? $_REQUEST['s_email'] : '';
+        $comment = isset($_REQUEST['comment']) ? $_REQUEST['comment'] : null;
+        $subject = isset($_REQUEST['subject']) ? $_REQUEST['subject'] : null;
+
         if (isset($_REQUEST['id'])) {
             $id  = $_REQUEST['id'];
         } else {
@@ -112,6 +115,7 @@ class action_plugin_infomail extends DokuWiki_Action_Plugin {
         }
 
         $form->addElement(form_makeTextField('r_email', $r_email, $morerec . $this->getLang('recipients')));
+        $form->addElement('<span class="hint">'. $this->getLang('recipients_help') . "</span>");
         $form->addElement(form_makeTextField('subject', $subject, $this->getLang('subject')));
         $form->addElement('<label><span>'.$this->getLang('message').'</span>'.
                           '<textarea name="comment" rows="8" cols="10" ' .
@@ -139,7 +143,11 @@ class action_plugin_infomail extends DokuWiki_Action_Plugin {
         /* Get recipients */
         $all_recipients = array();
         if (isset($_POST['r_email'])) {
-            $all_recipients = explode(" ", $_POST['r_email']);
+            // substitute , and ; with spaces for failsafe multiadresses
+            $post_r_email = str_replace(",", " ", $_POST['r_email']);
+            $post_r_email = str_replace(";", " ", $post_r_email);
+            // split recipients on spaces afterwards
+            $all_recipients = explode(" ", $post_r_email);
         }
         foreach ($all_recipients as $addr ) {
             $addr = trim($addr);

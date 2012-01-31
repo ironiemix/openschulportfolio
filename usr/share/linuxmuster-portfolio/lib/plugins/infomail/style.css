@@ -13,6 +13,11 @@
     margin: 20px;
 }
 
+#infomail_box span.hint {
+    font-size: 80%;
+    color:#777;
+}
+
 div.infomail_plugin {
     width: 50%;
     text-align: center;
