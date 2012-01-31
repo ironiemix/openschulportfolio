@@ -35,7 +35,7 @@ class action_plugin_infomail extends DokuWiki_Action_Plugin {
                 header('HTTP/1.1 204 No Content');
                 return;
             }
-            echo 'Thanks for recommending our site.';
+            echo $this->getLang('confirmation');
             return;
         }
         /* To display msgs even via AJAX. */
