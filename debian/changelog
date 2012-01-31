@@ -1,3 +1,22 @@
+linuxmuster-portfolio (12.02.indie.4) openlml; urgency=low
+
+    * Updated underlying DokuWiki to release 2012-01-25 "Angua"
+    * Improved infomail-plugin:
+      * Hint for sending infomail to multiple recipients
+      * Failsafe dividers between multiple mail adresses
+      * Form remembers input in case of no recipients-error
+      * Localized confirmation message
+   * Removed newpage-plugin
+   * Updated dw2pdf-plugin to release "2012/01/30 15:26"
+   * Added Hack to task plugin, so hopefully new tasks will show up in the
+     task list again. (http://www.dokuwiki.org/plugin:task:hacks_discussions)
+   * Updated cloud-plugin to "2011/12/26 15:09"
+   * Updated changes-plugin to "2011/07/20 14:58"
+   * Updated tag-plugin to "2011/09/04 12:43"
+   * Updated disussion-plugin to "2011/07/10 22:39
+
+ -- Frank Schiebel <frank@linuxmuster.net>  Tue, 31 Jan 2012 11:04:00 +0100
+
 linuxmuster-portfolio (11.05-ada.3) openlml; urgency=low
 
     * First import of new DokuWiki RC1 "angua"
