@@ -1,9 +1,0 @@
-<- [[:@BACK@]]
-
-====== @TITLE@ ======
-
-~~TASK:@USER@?@DATE@@PRIORITY@~~
-
-@TAG@
-
-@DISCUSSION@
