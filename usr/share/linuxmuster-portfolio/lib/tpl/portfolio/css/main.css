@@ -29,7 +29,7 @@ body {
     font-size: 1em;
 }
 body {
-    background-color: #fff;
+    background-color: #f6f6f6;
     background-image: url(css/p/bodyback.png) top left repeat-y;
 }
 
@@ -41,12 +41,16 @@ body {
  color: #888;
 }
 
+#siteNotice #menu {
+   overflow: hidden;
+}
+
 /* Compatibility for old top menu, styles in vektor not needed */
 #siteNotice ul {
     list-style: none !important;
     padding: 0;
     margin: 0;
-    }
+}
 
 #siteNotice ul li {
      float: left;
@@ -68,13 +72,13 @@ div#content {
     max-width: __maxcontwidth__;
     margin-left: 9px;
     padding: 0 8px 0 8px;
-    background-color: white;
+    background: #ffffff url("css/p/fauxcolumn2a.gif") top right repeat-y;
     color: black;
 }
 /* Head */
 #page-base {
     height: 120px;
-    background-color: white;
+    background-color: #f6f6f6;
     background-position: bottom left;
     background-repeat: repeat-x;
 }
@@ -90,9 +94,10 @@ div#head {
 }
 
 div#sitetitle {
-    width: 45%;
+    width: 55%;
     float: left;
-    padding-top: 6px;
+    font-size: 1em;
+    padding-top: 10px;
 }
 
 div#sitetitle  h1 {
@@ -104,9 +109,11 @@ div#sitetitle  h1 {
 
 }
 div#sitetitle span {
-        margin-left: 15px;
-    font-size: 8px;
-
+    display: block;
+    margin: 0;
+    padding: 10px 0 0 0;
+    font-size: 1.2em;
+    color: #888;
 }
 
 span.pagename {
@@ -124,15 +131,16 @@ div.emptyPortlet {
 /* Personal */
 #p-personal {
     height: 80px;
-    padding-left: 20px;
+    padding-left: 0px;
+    background-color: #f6f6f6;
 }
 #p-personal h5 {
     display: none;
 }
 #p-personal ul {
-        float: right;
+    float: right;
     list-style: none;
-    margin: 0;
+    margin: 0 12px 0 0;
     padding: 0;
 }
 /* @noflip */
@@ -145,21 +153,28 @@ div.emptyPortlet {
     margin-top: 0.5em;
     font-size: 0.75em;
 }
+
+/* rightbar */
+div#rightbar {
+  width:220px;
+  float: right;
+}
 /* Navigation Containers */
 
 div#navbar {
-  background: transparent url("css/p/navbar_left.png") top left no-repeat;
+  background: #ffd373 url("css/p/naivbar_left.png") top left no-repeat;
   width: 100%;
-  height: 40px;
+  height:38px;
+  border: 1px solid #aaa;
 }
 
 #left-navigation {
     left: __panelwidth__;
-    padding-left: 9px;
+    padding-left: 14px;
 }
 #right-navigation {
     float: right;
-    background: transparent url("css/p/navbar_right.png") top right no-repeat;
+    background: transparent url("css/p/navbiar_right.png") top right no-repeat;
 }
 /* Navigation Labels */
 div.vectorTabs h5,
@@ -217,7 +232,7 @@ div.vectorTabs li a {
 }
 div.vectorTabs li a,
 div.vectorTabs li a span {
-    color: #0645ad;
+    color: #000;
     cursor: pointer;
 }
 div.vectorTabs li a span {
@@ -230,7 +245,7 @@ div.vectorTabs li > a {
 /* OVERRIDDEN BY COMPLIANT BROWSERS */
 div.vectorTabs a span {
     display: inline-block;
-    padding-top: 1.25em;
+    padding-top: 0.95em;
 }
 /* IGNORED BY IE6 */
 /* @noflip */
@@ -238,18 +253,25 @@ div.vectorTabs a > span {
     float: left;
     display: block;
 }
+div.vectorTabs li.selected {
+    background: #fff;
+    height: 39px;
+    border-left: 1px solid #aaa;
+    border-right: 1px solid #aaa;
+}
 div.vectorTabs li.selected a,
 div.vectorTabs li.selected a span,
 div.vectorTabs li.selected a:visited
 div.vectorTabs li.selected a:visited span {
     color: #333333;
     text-decoration: none;
+
 }
 div.vectorTabs li.new a,
 div.vectorTabs li.new a span,
 div.vectorTabs li.new a:visited,
 div.vectorTabs li.new a:visited span {
-    color: #a55858;
+    color: #333333;
 }
 /* Variants and Actions */
 /* @noflip */
@@ -372,7 +394,7 @@ div#head div.vectorMenu h4 {
         display: block;
     }
     div.vectorMenu li a {
-        color: #0645ad;
+        color: #000;
         cursor: pointer;
         font-size: 0.8em;
     }
@@ -429,7 +451,7 @@ div#head div.vectorMenu h4 {
         border: none;
         cursor: pointer;
         background-color: transparent;
-        background-image: url(static/3rd/vector/search-ltr.png);
+        background-image: url(css/p/search-ltr.png);
         background-position: center center;
         background-repeat: no-repeat;
     }
@@ -447,7 +469,7 @@ div#panel {
     background-color: #f6f6f6;
 }
 div#panel div#ospversionpic {
-    background: transparent url(static/3rd/vector/ospversion.png) top center no-repeat;
+    background: transparent url(css/p/ospversion.png) top center no-repeat;
     height: 45px;
     margin-top: 40px;
 }
@@ -546,11 +568,11 @@ div#footer #footer-places li {
 /* Logo */
 #p-logo {
     position: absolute;
-    background: __background_alt__;
-    top: -100px;
+    background:#f6f6f6;
+    top: -140px;
     left: 0;
     width: __panelwidth__;
-    height: 100px;
+    height: 140px;
 }
 #p-logo a {
     display: block;
@@ -682,6 +704,8 @@ div#footer #footer-places li {
  */
 div#content {
     line-height: 1.5em;
+    border-right: 1px solid #aaa;
+    border-bottom: 1px solid #aaa;
 }
 #bodyContent {
     font-size: 0.9em;
@@ -993,19 +1017,19 @@ img.thumbborder {
     text-align: center;
     font-size: 0.8em;
     margin: 0;
+    background: #ffffff;
 }
-    #siteNotice div,
-    #siteNotice p {
-        margin: 0;
-        padding: 0;
-        margin-bottom: 0.9em;
-    }
+#siteNotice div,
+#siteNotice p {
+    margin: 0;
+    padding: 0;
+    margin-bottom: 0.9em;
+}
 /* Categories */
 .catlinks {
     border: 1px solid #aaa;
-    background-color: #f9f9f9;
-    padding: 5px;
-    margin-top: 1em;
+    background-color: #fafaf9;
+    padding: 1px 1px 1px 8px;
     clear: both;
 }
 /* Sub-navigation */
@@ -1134,7 +1158,7 @@ div#content .printfooter {
 #pt-userpage,
 #pt-anonuserpage,
 #pt-login {
-    background: url(static/3rd/vector/user-icon.png) left top no-repeat;
+    background: url(css/p/user-icon.png) left top no-repeat;
     padding-left: 15px !important;
     text-transform: none;
 }
@@ -1147,8 +1171,7 @@ div#content .printfooter {
 }
 #bodyContent {
     position: relative;
-    margin-right: 14em;
-
+    margin-right: 220px;
 }
 #mw-js-message {
     font-size: 0.8em;
@@ -1214,8 +1237,8 @@ div.vectorTabs form  {
 div.vectorTabs form input.button {
     padding-left: 0.4em;
     padding-right: 0.4em;
-    margin-top: 0.33em;
-    color: #0645AD;
+    margin-top: 0;
+    color: #000;
     cursor: pointer;
     font-family: sans-serif;
     font-size: 80%;

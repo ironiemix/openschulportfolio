@@ -665,11 +665,11 @@ if (file_exists(DOKU_TPLINC."lang/".$conf["lang"]."/style.css")){
               echo "&#160;]<br />";
           }else{
               //show the rendered page content
-              echo  "    <div class=\"dokuwiki\">\n"; //dokuwiki CSS class needed cause we are showing rendered page content
+              echo  "    <div class=\"dokuwiki\">\n"; //dokuwiki CSS class needed cos we are showing rendered page content
 
              if (auth_quickaclcheck(cleanID(tpl_getConf("vector_sitenotice_location"))) > AUTH_READ){ //current user got write perm?
-            //print edit link for the site notice
-        echo '<div class="secedit2" style="clear:both;text-align:right;padding:0;margin:0"><a href="' . DOKU_BASE .   'doku.php?id=' .tpl_getConf("vector_sitenotice_location") . '&amp;do=edit' . '">' . $lang['btn_secedit'] . '</a></div>';
+             //print edit link for the site notice
+             echo '<div class="secedit2" style="clear:both;text-align:right;padding:0;margin:0"><a href="' . DOKU_BASE .   'doku.php?id=' .tpl_getConf("vector_sitenotice_location") . '&amp;do=edit' . '">' . "Seitenmenü " . $lang['btn_secedit'] . '</a></div>';
          }
              echo $interim."\n    " ."</div>";
 
@@ -692,6 +692,10 @@ if (file_exists(DOKU_TPLINC."lang/".$conf["lang"]."/style.css")){
       echo "\n  </p></div>\n";
   }
   ?>
+  <!-- right column -->
+  <div id="rightbar" class="dokuwiki">
+   <?php tpl_toc()?>
+  </div>
 
   <!-- start div id bodyContent -->
   <div id="bodyContent" class="dokuwiki">
@@ -715,7 +719,8 @@ if (file_exists(DOKU_TPLINC."lang/".$conf["lang"]."/style.css")){
             break;
         //show "normal" content
         default:
-            tpl_content(((tpl_getConf("vector_toc_position") === "article") ? true : false));
+            tpl_content(false);
+#((tpl_getConf("vector_toc_position") === "article") ? true : false));
             break;
     }
     ?>
@@ -767,7 +772,7 @@ if (file_exists(DOKU_TPLINC."lang/".$conf["lang"]."/style.css")){
           echo "style=\"background-image:url(".DOKU_TPL."user/logo.jpg);\"";
       }else{
           //default
-          echo "style=\"background-image:url(".DOKU_TPL."static/3rd/dokuwiki/logo.png);\"";
+          echo "style=\"background-image:url(".DOKU_TPL."css/p/logo.png);\"";
       }
       echo " accesskey=\"h\" title=\"[ALT+H]\"></a>\n";
       ?>

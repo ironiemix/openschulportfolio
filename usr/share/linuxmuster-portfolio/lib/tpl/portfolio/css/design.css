@@ -546,7 +546,7 @@ div.dokuwiki table.inline td {
 /* ---------- table of contents ------------------- */
 
 div.dokuwiki div.toc {
-  margin: 1.2em 0 0 2em;
+  margin: 0;
   float: right;
   width: 200px;
   font-size: 80%;
@@ -558,7 +558,7 @@ div.dokuwiki div.tocheader {
   background-color: __background_alt__;
   text-align: left;
   font-weight: bold;
-  padding: 3px;
+  padding: 5px;
   margin-bottom: 2px;
 }
 
