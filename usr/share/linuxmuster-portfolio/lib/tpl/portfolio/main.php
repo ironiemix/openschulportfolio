@@ -512,10 +512,7 @@ if (file_exists(DOKU_TPLINC."lang/".$conf["lang"]."/style.css")){
                   !tpl_getConf("vector_mediamanager_embedded")){
                   echo "mmanagernotembedded ";
               } ?>skin-vector">
-<div id="page-base" class="noprint"></div>
-<div id="shadowleft">
-<div id="head-base" class="noprint">
-
+<div id="contentframe">
 <!-- start div id=head -->
 <div id="head" class="noprint">
   <?php
@@ -576,7 +573,7 @@ if (file_exists(DOKU_TPLINC."lang/".$conf["lang"]."/style.css")){
   }
   ?>
   
-  <!-- start div id=navbar -->
+<!-- start div id=navbar -->
 <div id="navbar">
   <!-- start div id=left-navigation -->
   <div id="left-navigation">
@@ -635,7 +632,6 @@ if (file_exists(DOKU_TPLINC."lang/".$conf["lang"]."/style.css")){
 
 </div>
 <!-- end div id=head -->
-</div>
 <!-- start div id=content -->
 <div id="content">
   <a name="top" id="top"></a>
@@ -749,6 +745,7 @@ if (file_exists(DOKU_TPLINC."lang/".$conf["lang"]."/style.css")){
 </div>
 <!-- end div id=content -->
 
+</div>
 
 
 <!-- start panel/sidebar -->
@@ -789,8 +786,6 @@ if (file_exists(DOKU_TPLINC."lang/".$conf["lang"]."/style.css")){
 
 </div>
 <!-- end panel/sidebar -->
-</div>
-<!-- end shadow left/right -->
 
 <!-- start footer -->
 <div id="footer">

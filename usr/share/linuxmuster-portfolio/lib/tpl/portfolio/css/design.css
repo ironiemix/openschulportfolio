@@ -101,7 +101,7 @@ div.dokuwiki textarea.edit {
 
 /* nice alphatransparency background except for IE <7 */
 html>body div.dokuwiki textarea.edit {
-  background:  __background__ url(static/3rd/dokuwiki/inputshadow.png) repeat-x top;
+  background:  __background__ url(d/inputshadow.png) repeat-x top;
 }
 
 div.dokuwiki input.edit,
@@ -555,7 +555,7 @@ div.dokuwiki div.toc {
 
 div.dokuwiki div.tocheader {
   border: 1px solid __border__;
-  background-color: __background_alt__;
+  background-color: __topbarbackgroundcolor__;
   text-align: left;
   font-weight: bold;
   padding: 5px;
