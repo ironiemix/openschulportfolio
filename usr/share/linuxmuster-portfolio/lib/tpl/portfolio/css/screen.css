@@ -1,43 +1,3 @@
-/******************************************************************************
- ********************************  ATTENTION  *********************************
-         DO NOT MODIFY THIS FILE, IT WILL NOT BE PRESERVED ON UPDATES!
- ******************************************************************************
-  If you want to add some own screen CSS, have a look at the README of this
-  template and "/user/screen.css". You have been warned!
- *****************************************************************************/
-
-/* Notes about how the template CSS works:
-
-   - This template includes 3rd party CSS files:
-     1) CSS from the "default" DokuWiki template by Andreas Gohr (brings
-        important and basic styling for syntax and core features)
-     2) CSS from the original "vector" skin for MediaWiki (brings the basic
-        layout and overwrites some "default" styling)
-     These files will be included BEFORE this specific CSS file. In this file,
-     I just overwrite non fitting MediaWiki "vector" and DokuWiki "default" CSS
-     + add some CSS for some exclusive objects of this template
-   - Why I am doing this? Well, read <http://j.mp/jIyE2>. I followed the main
-     principle described there and simply apply it to the two sources ("default"
-     template and "vector" skin).
-   - This way also ensures a painless update, if there are new versions of
-     MediaWiki vector or DokuWiki CSS files. Cause these 3rd party components
-     were not edited or partially copied, I do not have to track their changes
-     in detail.
-
-   Explanation of the different sections in here:
-   - "Styles/corrections for the template itself"
-     General CSS targeting the template structure. This section overwrites non
-     fitting CSS of the "vector" MediaWiki skin and "default" DokuWiki template.
-     Read the notes above and <http://j.mp/jIyE2> if you do not know why I am
-     doing it this way.
-   - "Browser Hacks and corrections"
-     Section containing bigger hacks for browser specific problems.
-*/
-
-
-/******************************************************************************
- ************** Styles/corrections for the template itself ********************
- ******************************************************************************/
 /* --------------- general styling --------------- */
 /* missing page links outside rendered articles */
 a.wikilink2,
@@ -87,11 +47,13 @@ div#content .dokuwiki h6 {
   padding-bottom: 0.17em;
   padding-top: 0.5em;
 }
+
 div#content .dokuwiki h1,
 div#content .dokuwiki h2 {
   margin-bottom:0.6em;
   font-weight: normal;
 }
+
 div#content .dokuwiki h3,
 div#content .dokuwiki h4,
 div#content .dokuwiki h5,
@@ -103,6 +65,7 @@ div#content .dokuwiki h6 {
 div#content .dokuwiki h3 {
   font-size: 132%;
 }
+
 div#content .dokuwiki h4 {
   font-size: 116%;
 }
@@ -112,6 +75,21 @@ div#content .dokuwiki h5 {
 div#content .dokuwiki h6 {
   font-size: 80%;
 }
+
+body.fsmm div#content .dokuwiki h2,
+body.fsmm div#content .dokuwiki h3,
+body.fsmm div#content .dokuwiki h4,
+body.fsmm div#content .dokuwiki h5 {
+  font-size: 100%;
+  border: 0;
+  padding: 0.3em;
+  margin: 0;
+}
+body.fsmm div#content .dokuwiki h3 {
+  font-weight: normal;
+  padding:0;
+}
+
 
 /* remove indent from different sections */
 div#content .dokuwiki div.level1,
@@ -123,13 +101,6 @@ div#content .dokuwiki div.level5 {
 }
 
 /* lists */
-div#content .dokuwiki ul {
-  list-style-type: square;
-  margin-top: .3em;
-  margin-left: 1.5em;
-  padding: 0;
-  list-style-image: url(static/3rd/vector/bullet-icon.png);
-}
 div#content .dokuwiki ol {
   margin-top: .3em;
   margin-left: 3.2em;

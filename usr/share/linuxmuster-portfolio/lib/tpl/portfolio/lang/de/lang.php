@@ -70,7 +70,7 @@ $lang["vector_exportbxdef_downloads5"] = "Als S5 anzeigen";
 
 //default toolbox
 $lang["vector_toolbxdef_whatlinkshere"] = "Links auf diese Seite";
-$lang["vector_toolbxdef_upload"] = "Hochladen";
+$lang["vector_toolbxdef_upload"] = "Medienmanager";
 $lang["vector_toolbxdef_siteindex"] = "Seitenindex";
 $lang["vector_toolboxdef_permanent"] = "Permanenter link";
 $lang["vector_toolboxdef_cite"] = "Seite zitieren";

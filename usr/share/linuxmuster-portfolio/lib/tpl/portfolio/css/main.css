@@ -20,14 +20,14 @@
  * a comment block.
  */
 /* Framework */
-html,
-body {
+html, body {
     height: 100%;
     margin: 0;
     padding: 0;
     font-family: sans-serif;
     font-size: 1em;
 }
+
 body {
     background-color: #f6f6f6;
     background-image: url(css/p/bodyback.png) top left repeat-y;
@@ -41,11 +41,12 @@ body {
  color: #888;
 }
 
+/* SiteNotice: Page gets displayed on ervery page */
+
 #siteNotice #menu {
    overflow: hidden;
 }
 
-/* Compatibility for old top menu, styles in vektor not needed */
 #siteNotice ul {
     list-style: none !important;
     padding: 0;
@@ -58,7 +59,6 @@ body {
      border: none;
 }
 
-/* shadow*/
 div#contentframe {
     border: 0;
     margin 0;
@@ -76,6 +76,13 @@ div#content {
     border-right: 1px solid #aaa;
     border-left: 1px solid #aaa;
 }
+
+/* No fauxcolumn when displaying fs-mediamamnager */
+body.fsmm div#content {
+    background-color: #ffffff;
+    background-image: none;
+}
+
 /* Head */
 div#head {
     height: 120px;
@@ -96,6 +103,7 @@ div#sitetitle  h1 {
     display: inline;
 
 }
+
 div#sitetitle span {
     display: block;
     margin: 0;
@@ -112,10 +120,12 @@ div#head h5 {
     margin: 0;
     padding: 0;
 }
+
 /* Hide empty portlets */
 div.emptyPortlet {
     display: none;
 }
+
 /* Personal */
 #p-personal {
     height: 80px;
@@ -147,8 +157,8 @@ div#rightbar {
   width:220px;
   float: right;
 }
-/* Navigation Containers */
 
+/* Navigation Containers */
 div#navbar {
   background-color: __topbarbackgroundcolor__;
   height: 38px;
@@ -163,9 +173,9 @@ div#navbar {
     float: right;
     background: transparent url("css/p/navbiar_right.png") top right no-repeat;
 }
+
 /* Navigation Labels */
-div.vectorTabs h5,
-div.vectorMenu h5 span {
+div.vectorTabs h5 {
     display: none;
 }
 /* Namespaces and Views */
@@ -204,18 +214,12 @@ div.vectorTabs ul li {
 div.vectorTabs ul > li {
     display: block;
 }
-div.vectorTabs li.selected {
-    background-image: url(static/3rd/vector/tab-current-fade.png);
-}
 /* OVERRIDDEN BY COMPLIANT BROWSERS */
 div.vectorTabs li a {
     display: inline-block;
     height: 2.5em;
     padding-left: 0.4em;
     padding-right: 0.4em;
-    background-image: url(static/3rd/vector/tab-break.png);
-    background-position: bottom right;
-    background-repeat: no-repeat;
 }
 div.vectorTabs li a,
 div.vectorTabs li a span {
@@ -260,192 +264,64 @@ div.vectorTabs li.new a:visited,
 div.vectorTabs li.new a:visited span {
     color: #333333;
 }
-/* Variants and Actions */
-/* @noflip */
-div.vectorMenu {
-    direction: ltr;
-    float: left;
-    background-image: url(static/3rd/vector/arrow-down-icon.png);
-    background-position: 100% 60%;
-    background-repeat: no-repeat;
-    cursor: pointer;
+
+/* Search */
+#p-search h5 {
+    display: none;
 }
 /* @noflip */
-body.rtl div.vectorMenu {
-    direction: rtl;
+#p-search {
+    float: left;
+}
+#p-search {
+    margin-right: 0.5em;
+    margin-left: 0.5em;
+}
+#p-search form,
+#p-search input {
+    margin: 0;
+    margin-top: 0.4em;
+}
+div#simpleSearch {
+    margin-top: 0.5em;
+    position: relative;
+    border: solid 1px #AAAAAA;
+    background-color: white;
+    background-image: url(static/3rd/vector/search-fade.png);
+    background-position: top left;
+    background-repeat: repeat-x;
+}
+div#simpleSearch label {
+    font-size: 0.8em;
+    top: 0.25em;
+}
+div#simpleSearch input#searchInput {
+    margin: 0;
+    border-width: 0;
+    padding: 0.25em;
+    line-height: 1em;
+    font-size: 0.8em;
+    width: 14em;
+    background-color: transparent;
 }
 /* OVERRIDDEN BY COMPLIANT BROWSERS */
-/* @noflip */
-div#head div.vectorMenu h5 {
-    float: left;
-    background-image: url(static/3rd/vector/tab-break.png);
+div#simpleSearch button#searchButton {
+    margin: 0;
+    padding: 0;
+    width: 1.75em;
+    height: 1.5em;
+    border: none;
+    cursor: pointer;
+    background-color: transparent;
+    background-image: url(css/p/search-ltr.png);
+    background-position: center center;
     background-repeat: no-repeat;
 }
-/* IGNORED BY IE6 */
-div#head div.vectorMenu > h5 {
-    background-image: none;
-}
-div#head div.vectorMenu h5 {
-    background-position: bottom left;
-    margin-left: -1px;
-}
-div#head div.vectorMenu h4 {
-    display: inline-block;
-    float: left;
-    font-size: 0.8em;
-    padding-left: 0.5em;
-    padding-top: 1.375em;
-    font-weight: normal;
-    border: none;
-}
-    /* OVERRIDDEN BY COMPLIANT BROWSERS */
-    /* @noflip */
-    div.vectorMenu h5 a {
-        display: inline-block;
-        width: 24px;
-        height: 2.5em;
-        text-decoration: none;
-        background-image: url(static/3rd/vector/tab-break.png);
-        background-repeat: no-repeat;
-    }
-    div.vectorMenu h5 a{
-        background-position: bottom right;
-    }
-    /* IGNORED BY IE6 */
-    div.vectorMenu h5 > a {
-        display: block;
-    }
-    div.vectorMenu div.menu {
-        position: relative;
-        display: none;
-        clear: both;
-        text-align: left;
-    }
-    /* OVERRIDDEN BY COMPLIANT BROWSERS */
-    /* @noflip */
-    body.rtl div.vectorMenu div.menu {
-        margin-left: 24px;
-    }
-    /* IGNORED BY IE6 */
-    /* @noflip */
-    body.rtl div.vectorMenu > div.menu {
-        margin-left: auto;
-    }
-    /* Fixes old versions of FireFox */
-    /* @noflip */
-    body.rtl div.vectorMenu > div.menu,
-    x:-moz-any-link {
-        margin-left: 23px;
-    }
-    div.vectorMenu:hover div.menu {
-        display: block;
-    }
-    div.vectorMenu ul {
-        position: absolute;
-        background-color: white;
-        border: solid 1px silver;
-        border-top-width: 0;
-        list-style: none;
-        list-style-image: none;
-        list-style-type: none;
-        padding: 0;
-        margin: 0;
-        margin-left: -1px;
-        text-align: left;
-    }
-    /* Fixes old versions of FireFox */
-    div.vectorMenu ul,
-    x:-moz-any-link {
-        min-width: 5em;
-    }
-    /* Returns things back to normal in modern versions of FireFox */
-    div.vectorMenu ul,
-    x:-moz-any-link,
-    x:default {
-        min-width: 0;
-    }
-    div.vectorMenu li {
-        padding: 0;
-        margin: 0;
-        text-align: left;
-        line-height: 1em;
-    }
-    /* OVERRIDDEN BY COMPLIANT BROWSERS */
-    div.vectorMenu li a {
-        display: inline-block;
-        padding: 0.5em;
-        white-space: nowrap;
-    }
-    /* IGNORED BY IE6 */
-    div.vectorMenu li > a {
-        display: block;
-    }
-    div.vectorMenu li a {
-        color: #000;
-        cursor: pointer;
-        font-size: 0.8em;
-    }
-    div.vectorMenu li.selected a,
-    div.vectorMenu li.selected a:visited {
-        color: #333333;
-        text-decoration: none;
-    }
-    /* Search */
-    #p-search h5 {
-        display: none;
-    }
-    /* @noflip */
-    #p-search {
-        float: left;
-    }
-    #p-search {
-        margin-right: 0.5em;
-        margin-left: 0.5em;
-    }
-    #p-search form,
-    #p-search input {
-        margin: 0;
-        margin-top: 0.4em;
-    }
-    div#simpleSearch {
-        margin-top: 0.5em;
-        position: relative;
-        border: solid 1px #AAAAAA;
-        background-color: white;
-        background-image: url(static/3rd/vector/search-fade.png);
-        background-position: top left;
-        background-repeat: repeat-x;
-    }
-    div#simpleSearch label {
-        font-size: 0.8em;
-        top: 0.25em;
-    }
-    div#simpleSearch input#searchInput {
-        margin: 0;
-        border-width: 0;
-        padding: 0.25em;
-        line-height: 1em;
-        font-size: 0.8em;
-        width: 14em;
-        background-color: transparent;
-    }
-    /* OVERRIDDEN BY COMPLIANT BROWSERS */
-    div#simpleSearch button#searchButton {
-        margin: 0;
-        padding: 0;
-        width: 1.75em;
-        height: 1.5em;
-        border: none;
-        cursor: pointer;
-        background-color: transparent;
-        background-image: url(css/p/search-ltr.png);
-        background-position: center center;
-        background-repeat: no-repeat;
-    }
 /* IGNORED BY IE6 */
 div#simpleSearch > button#searchButton {
     height: 100%;
 }
+
 /* Panel */
 div#panel {
     position: absolute;
@@ -568,63 +444,6 @@ div#footer #footer-places li {
     text-decoration: none;
 }
 
-/*
- *
- * The following code is highly modified from monobook. It would be nice if the
- * preftoc id was more human readable like preferences-toc for instance,
- * howerver this would require backporting the other skins.
- */
-
-/* Preferences */
-#preftoc {
-    /* Tabs */
-    width: 100%;
-    float: left;
-    clear: both;
-    margin: 0 !important;
-    padding: 0 !important;
-    background-image: url(static/3rd/vector/preferences-break.png);
-    background-position: bottom left;
-    background-repeat: no-repeat;
-}
-    #preftoc li {
-        /* Tab */
-        float: left;
-        margin: 0;
-        padding: 0;
-        padding-right: 1px;
-        height: 2.25em;
-        white-space: nowrap;
-        list-style-type: none;
-        list-style-image: none;
-        background-image: url(static/3rd/vector/preferences-break.png);
-        background-position: bottom right;
-        background-repeat: no-repeat;
-    }
-    /* IGNORED BY IE6 */
-    #preftoc li:first-child {
-        margin-left: 1px;
-    }
-    #preftoc a,
-    #preftoc a:active {
-        display: inline-block;
-        position: relative;
-        color: __existing__;
-        padding: 0.5em;
-        text-decoration: none;
-        background-image: none;
-        font-size: 0.9em;
-    }
-    #preftoc a:hover {
-        text-decoration: underline;
-    }
-    #preftoc li.selected a {
-        background-image: url(static/3rd/vector/preferences-fade.png);
-        background-position: bottom;
-        background-repeat: repeat-x;
-        color: #333333;
-        text-decoration: none;
-    }
 #preferences {
     float: left;
     width: 100%;
@@ -682,19 +501,16 @@ div#footer #footer-places li {
     width: 40em;
 }
 
-/*
- *
- * The following code is slightly modified from monobook
- *
- */
 div#content {
     line-height: 1.5em;
     border-right: 1px solid #aaa;
     border-bottom: 1px solid #aaa;
 }
+
 #bodyContent {
     font-size: 0.9em;
 }
+
 /* Links */
 a {
     text-decoration: none;
@@ -804,35 +620,6 @@ pre {
     color: black;
     background-color: #f9f9f9;
     line-height: 1.1em;
-}
-ul {
-    line-height: 1.5em;
-    list-style-type: square;
-    margin: .3em 0 0 1.5em;
-    padding: 0;
-    list-style-image: url(static/3rd/vector/bullet-icon.png);
-}
-ol {
-    line-height: 1.5em;
-    margin: .3em 0 0 3.2em;
-    padding: 0;
-    list-style-image: none;
-}
-li {
-    margin-bottom: .1em;
-}
-dt {
-    font-weight: bold;
-    margin-bottom: .1em;
-}
-dl {
-    margin-top: .2em;
-    margin-bottom: .5em;
-}
-dd {
-    line-height: 1.5em;
-    margin-left: 2em;
-    margin-bottom: .1em;
 }
 /* Tables */
 table {
@@ -1157,6 +944,11 @@ div#content .printfooter {
     position: relative;
     margin-right: 220px;
 }
+
+body.fsmm #bodyContent {
+   margin: 0;
+}
+
 #mw-js-message {
     font-size: 0.8em;
 }

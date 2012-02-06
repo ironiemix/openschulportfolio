@@ -62,6 +62,13 @@ if (!empty($vector_action) &&
     $vector_action = "article";
 }
 
+# check if we are displaying the media manager
+if ( $_REQUEST["do"] == "media" ) {
+    $body_media_class = "fsmm";
+} else {
+    $body_media_class = "";
+}
+
 
 /**
  * Stores the template wide context
@@ -480,6 +487,7 @@ if (file_exists(DOKU_TPLINC."lang/".$conf["lang"]."/style.css")){
 <!--[if lt IE 7]><style type="text/css">body{behavior:url("<?php echo DOKU_TPL; ?>static/3rd/vector/csshover.htc")}</style><![endif]-->
 </head>
 <body class="<?php
+
              //different styles/backgrounds for different page types
              switch (true){
                   //special: tech
@@ -511,7 +519,7 @@ if (file_exists(DOKU_TPLINC."lang/".$conf["lang"]."/style.css")){
               if ($vector_action === "mediamanager" &&
                   !tpl_getConf("vector_mediamanager_embedded")){
                   echo "mmanagernotembedded ";
-              } ?>skin-vector">
+              } ?>skin-vector <?php echo $body_media_class; ?>">
 <div id="contentframe">
 <!-- start div id=head -->
 <div id="head" class="noprint">
@@ -572,7 +580,7 @@ if (file_exists(DOKU_TPLINC."lang/".$conf["lang"]."/style.css")){
            ."  </div>\n";
   }
   ?>
-  
+
 <!-- start div id=navbar -->
 <div id="navbar">
   <!-- start div id=left-navigation -->

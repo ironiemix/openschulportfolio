@@ -1,2 +1,2 @@
 <?php
-print "12.02.indie.6";
+print "12.02.indie.7";

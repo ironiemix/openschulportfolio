@@ -170,7 +170,7 @@ if (empty($conf["useacl"]) || //are there any users?
             if (empty($conf["useacl"]) || auth_quickaclcheck(cleanID("start")) >= AUTH_CREATE){ //current user got write access to start page?
                 $_vector_boxes["p-tb"]["xhtml"] .= "        <li id=\"t-newpage\"><a href=\"".wl(cleanID(":shared:do_newpage"), array())."\" rel=\"nofollow\">Neue Seite</a></li>\n";
             }
-            $_vector_boxes["p-tb"]["xhtml"] .= "        <li id=\"t-upload\"><a target=\"t-upload\" href=\"".DOKU_BASE."lib/exe/mediamanager.php?ns=".getNS(getID())."\" rel=\"nofollow\">".hsc($lang["vector_toolbxdef_upload"])."</a></li>\n";
+            $_vector_boxes["p-tb"]["xhtml"] .= "        <li id=\"t-upload\"><a target=\"t-upload\" href=\"".DOKU_BASE."?do=media&ns=".getNS(getID())."\" rel=\"nofollow\">".hsc($lang["vector_toolbxdef_upload"])."</a></li>\n";
             if (actionOK("index")){ //check if action is disabled
                 $_vector_boxes["p-tb"]["xhtml"] .= "        <li id=\"t-siteindex\"><a href=\"".wl("", array("do" => "index"))."\" rel=\"nofollow\">".hsc($lang["vector_toolbxdef_siteindex"])."</a></li>\n";
             }
