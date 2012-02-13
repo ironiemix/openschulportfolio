@@ -35,6 +35,7 @@ if (!defined("DOKU_INC")){
 // portfolio title
 $meta["vector_sitetitle"]    = array("string"); 
 $meta["vector_schoolname"]    = array("string"); 
+$meta["vector_barcolor"]    = array("string"); 
 
 //user pages
 $meta["vector_userpage"]    = array("onoff");

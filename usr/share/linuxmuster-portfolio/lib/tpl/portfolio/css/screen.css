@@ -147,16 +147,6 @@ div#content .dokuwiki dl.file dt {
   margin: 0.3em 0;
 }
 
-/* section edit buttons */
-div#content .dokuwiki div.secedit input.button {
-  border: 0 none;
-  text-transform: lowercase;
-  color: __existing__;
-  margin: 0;
-  padding: 0;
-  cursor: pointer;
-  background: transparent none;
-}
 
 /* insitu-footnotes */
 div.insitu-footnote code,

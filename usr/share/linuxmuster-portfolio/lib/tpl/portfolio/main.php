@@ -448,6 +448,13 @@ if (!file_exists(DOKU_TPLINC."style.ini")){
     echo  "<link rel=\"stylesheet\" media=\"all\" type=\"text/css\" href=\"".DOKU_TPL."bug49642.php".((!empty($lang["direction"]) && $lang["direction"] === "rtl") ? "?langdir=rtl" : "")."\" />\n"; //var comes from DokuWiki core
 }
 
+echo '<style type="text/css">';
+echo 'div#navbar { background-color: ' . tpl_getConf("vector_barcolor") .';}';
+echo 'div#panel div.portal h5 { background-color: ' . tpl_getConf("vector_barcolor") .';}';
+echo 'div.dokuwiki div.tocheader { background-color: ' . tpl_getConf("vector_barcolor") .';}';
+echo '</style>';
+
+
 //include default or userdefined favicon
 if (file_exists(DOKU_TPLINC."user/favicon.ico")) {
     //user defined - you might find http://tools.dynamicdrive.com/favicon/
@@ -581,25 +588,31 @@ if (file_exists(DOKU_TPLINC."lang/".$conf["lang"]."/style.css")){
   }
   ?>
 
-<!-- start div id=navbar -->
-<div id="navbar">
-  <!-- start div id=left-navigation -->
-  <div id="left-navigation">
-    <div id="p-namespaces" class="vectorTabs">
-      <ul>
-    <?php
-          //show tabs: left. see vector/user/tabs.php to configure them
-          if (!empty($_vector_tabs_left) &&
-              is_array($_vector_tabs_left)){
-              _vector_renderTabs($_vector_tabs_left);
-          }
 
-        if(isset($_SERVER['REMOTE_USER']) && tpl_getConf('vector_infomail')) {
-        global $lang;
-        $lang['btn_infomail'] = 'Infomail';
-        print "<li id='tabinfomail'>" . html_btn('infomail',$ID,null,array('do' => 'infomail', 'id' => $ID)) . "</li>";
-        }
-    ?>
+</div>
+<!-- end div id=head -->
+<!-- start div id=content -->
+<div id="content">
+  <a name="top" id="top"></a>
+  <a name="dokuwiki__top" id="dokuwiki__top"></a>
+    <!-- start div id=navbar -->
+    <div id="navbar">
+    <!-- start div id=left-navigation -->
+    <div id="left-navigation">
+        <div id="p-namespaces" class="vectorTabs">
+        <ul>
+        <?php
+            global $lang;
+            //show tabs: left. see vector/user/tabs.php to configure them
+            if (!empty($_vector_tabs_left) && is_array($_vector_tabs_left)){
+              _vector_renderTabs($_vector_tabs_left);
+            }
+
+            if(isset($_SERVER['REMOTE_USER']) && tpl_getConf('vector_infomail')) {
+                $lang['btn_infomail'] = 'Infomail';
+                print "<li id='tabinfomail'>" . html_btn('infomail',$ID,null,array('do' => 'infomail', 'id' => $ID)) . "</li>";
+            }
+        ?>
       </ul>
     </div>
   </div>
@@ -618,7 +631,7 @@ if (file_exists(DOKU_TPLINC."lang/".$conf["lang"]."/style.css")){
 
       </ul>
     </div>
-<?php if (actionOK("search")){ ?>
+    <?php if (actionOK("search")){ ?>
     <div id="p-search">
       <h5>
         <label for="qsearch__in"><?php echo hsc($lang["vector_search"]); ?></label>
@@ -632,25 +645,17 @@ if (file_exists(DOKU_TPLINC."lang/".$conf["lang"]."/style.css")){
         <div id="qsearch__out" class="ajax_qsearch JSpopup"></div>
       </form>
     </div>
-<?php } ?>
-  </div>
-  <!-- end div id=right-navigation -->
-</div>
-  <!-- start div id=navbar -->
+    <?php } ?>
+    </div>
+    <!-- end div id=right-navigation -->
+    </div>
+    <!-- end div id=navbar -->
 
-</div>
-<!-- end div id=head -->
-<!-- start div id=content -->
-<div id="content">
-  <a name="top" id="top"></a>
-  <a name="dokuwiki__top" id="dokuwiki__top"></a>
-
-  <!-- start main content area -->
+    <!-- start main content area -->
+  <div id="content_inner">
   <?php
   //show messages (if there are any)
   html_msgarea();
-
-
 
   //show site notice
   if (tpl_getConf("vector_sitenotice")){
@@ -750,6 +755,8 @@ if (file_exists(DOKU_TPLINC."lang/".$conf["lang"]."/style.css")){
   }
   ?>
 
+  </div>
+  <!-- end div id=content_inner -->
 </div>
 <!-- end div id=content -->
 

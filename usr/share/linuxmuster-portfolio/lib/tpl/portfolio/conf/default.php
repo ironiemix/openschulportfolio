@@ -36,6 +36,7 @@ if (!defined("DOKU_INC")){
 // portfolio title
 $conf["vector_sitetitle"]    = "Schulportfolio"; //TRUE: use/show user pages
 $conf["vector_schoolname"]    = "Schulname hier eintragen"; //TRUE: use/show user pages
+$conf["vector_barcolor"]    = "#FFE28A";
 
 //user pages
 $conf["vector_userpage"]    = false; //TRUE: use/show user pages

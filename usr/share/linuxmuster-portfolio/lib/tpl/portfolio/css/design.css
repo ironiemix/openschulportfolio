@@ -562,10 +562,10 @@ div.dokuwiki div.toc {
 
 div.dokuwiki div.tocheader {
   border: 1px solid __border__;
-  background-color: __background_alt__;
+  background: __topbarbackgroundcolor__ url(css/p/barpattern.png) top left repeat-x;
   text-align: left;
   font-weight: bold;
-  padding: 3px;
+  padding: 8px 0 8px 4px;
   margin-bottom: 2px;
 }
 
