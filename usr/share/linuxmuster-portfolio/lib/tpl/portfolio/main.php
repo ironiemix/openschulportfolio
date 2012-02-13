@@ -479,8 +479,7 @@ if ($vector_action === "print"){
   //note: this is just a workaround for people searching for a print version.
   //      don't forget to update the styles.ini, this is the really important
   //      thing! BTW: good text about this: http://is.gd/5MyG5
-  echo  "<link rel=\"stylesheet\" media=\"all\" type=\"text/css\" href=\"".DOKU_TPL."static/3rd/dokuwiki/print.css\" />\n"
-       ."<link rel=\"stylesheet\" media=\"all\" type=\"text/css\" href=\"".DOKU_TPL."static/css/print.css\" />\n"
+  echo  "<link rel=\"stylesheet\" media=\"all\" type=\"text/css\" href=\"".DOKU_TPL."css/print.css\" />\n"
        ."<link rel=\"stylesheet\" media=\"all\" type=\"text/css\" href=\"".DOKU_TPL."user/print.css\" />\n";
 }
 //load language specific css hacks?
@@ -678,7 +677,7 @@ if (file_exists(DOKU_TPLINC."lang/".$conf["lang"]."/style.css")){
 
              if (auth_quickaclcheck(cleanID(tpl_getConf("vector_sitenotice_location"))) > AUTH_READ){ //current user got write perm?
              //print edit link for the site notice
-             echo '<div class="secedit2" style="clear:both;text-align:right;padding:0;margin:0"><a href="' . DOKU_BASE .   'doku.php?id=' .tpl_getConf("vector_sitenotice_location") . '&amp;do=edit' . '">' . "Seitenmenü " . $lang['btn_secedit'] . '</a></div>';
+             echo '<div class="secedit" style="clear:both;text-align:right;padding:0;margin:0"><a href="' . DOKU_BASE .   'doku.php?id=' .tpl_getConf("vector_sitenotice_location") . '&amp;do=edit' . '">' . "Seitenmenü " . $lang['btn_secedit'] . '</a></div>';
          }
              echo $interim."\n    " ."</div>";
 
@@ -688,6 +687,7 @@ if (file_exists(DOKU_TPLINC."lang/".$conf["lang"]."/style.css")){
   }
   //show breadcrumps if enabled and position = top
   if ($conf["breadcrumbs"] == true &&
+      isset($_SERVER['REMOTE_USER']) &&
       tpl_getConf("vector_breadcrumbs_position") === "top"){
       echo "\n  <div class=\"catlinks noprint\"><p>\n    ";
       tpl_breadcrumbs();
@@ -695,6 +695,7 @@ if (file_exists(DOKU_TPLINC."lang/".$conf["lang"]."/style.css")){
   }
   //show hierarchical breadcrumps if enabled and position = top
   if ($conf["youarehere"] == true &&
+      isset($_SERVER['REMOTE_USER']) &&
       tpl_getConf("vector_youarehere_position") === "top"){
       echo "\n  <div class=\"catlinks noprint\"><p>\n    ";
       tpl_youarehere();
@@ -741,6 +742,7 @@ if (file_exists(DOKU_TPLINC."lang/".$conf["lang"]."/style.css")){
   <?php
   //show breadcrumps if enabled and position = bottom
   if ($conf["breadcrumbs"] == true &&
+      isset($_SERVER['REMOTE_USER']) &&
       tpl_getConf("vector_breadcrumbs_position") === "bottom"){
       echo "\n  <div class=\"catlinks noprint\"><p>\n    ";
       tpl_breadcrumbs();
@@ -748,6 +750,7 @@ if (file_exists(DOKU_TPLINC."lang/".$conf["lang"]."/style.css")){
   }
   //show hierarchical breadcrumps if enabled and position = bottom
   if ($conf["youarehere"] == true &&
+      isset($_SERVER['REMOTE_USER']) &&
       tpl_getConf("vector_youarehere_position") === "bottom"){
       echo "\n  <div class=\"catlinks noprint\"><p>\n    ";
       tpl_youarehere();
