@@ -70,6 +70,7 @@ if ( $_REQUEST["do"] == "media" ) {
 }
 
 
+
 /**
  * Stores the template wide context
  *
@@ -705,6 +706,14 @@ if (file_exists(DOKU_TPLINC."lang/".$conf["lang"]."/style.css")){
   <!-- right column -->
   <div id="rightbar" class="dokuwiki">
    <?php tpl_toc()?>
+   
+   <?php
+    if (!plugin_isdisabled("responsibility") && auth_quickaclcheck(cleanID(getID())) >= AUTH_READ) {
+        $responsibility =& plugin_load('helper', 'responsibility');
+        print $responsibility-> show_responsibility($ID);
+    }
+    ?>
+
   </div>
 
   <!-- start div id bodyContent -->
