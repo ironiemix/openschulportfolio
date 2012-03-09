@@ -808,6 +808,7 @@ div.picker {
   width: 250px;
   border: 1px solid __border__;
   background-color: __background_alt__;
+  z-index: 1;
 }
 
 div.pk_hl {
