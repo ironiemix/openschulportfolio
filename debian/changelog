@@ -1,4 +1,4 @@
-linuxmuster-portfolio (12.02.indie.8) openlml; urgency=low
+linuxmuster-portfolio (12.02.indie.9) openlml; urgency=low
 
     * Updated underlying DokuWiki to release 2012-01-25 "Angua"
     * Improved infomail-plugin:
@@ -18,8 +18,10 @@ linuxmuster-portfolio (12.02.indie.8) openlml; urgency=low
      fullscreen mediamanager
    * modified the template to a wider, cleaner look width media manager
      integration
+   * fixed z-index bug preventing picker to show up in editing mode
+   * fixed non-fullscreen media insert dialog
 
- -- Frank Schiebel <frank@linuxmuster.net>  Tue, 31 Jan 2012 11:04:00 +0100
+ -- Frank Schiebel <frank@linuxmuster.net>  Fri, 09 Mar 2012 18:08:00 +0100
 
 linuxmuster-portfolio (11.05-ada.3) openlml; urgency=low
 

@@ -335,7 +335,7 @@ div#panel {
     width: __panelwidth__;
     left: 0;
     background-color: #f6f6f6;
-    z-index: 0;
+    z-index: -1;
 }
 div#panel div#ospversionpic {
     background: transparent url(css/p/ospversion.png) top center no-repeat;
@@ -514,7 +514,6 @@ div#content {
     border-radius: 2px 2px 2px 2px;
     box-shadow: 0 0 0.5em #999999;
     position: relative;
-    z-index: 2;
 }
 
 #bodyContent {

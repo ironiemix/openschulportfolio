@@ -382,16 +382,26 @@ div.dokuwiki form#dw__login label.simple {
 /* make a "non-embedded"/fullpage manager possible trough hiding some stuff */
 body.mmanagernotembedded .noprint,
 body.mmanagernotembedded #siteNotice,
+body.mmanagernotembedded #navbar,
+body.mmanagernotembedded #rightbar,
 body.mmanagernotembedded #footer {
   display: none !important;
 }
 body.mmanagernotembedded #content {
   margin: 0 !important;
+  width: 100% !important;
 }
-
-
-
-
+body.mmanagernotembedded #contentframe {
+ margin:1em;
+ width: 98%;
+ max-width: 98% !important;
+}
+body.mmanagernotembedded #content_inner {
+ background: #fff;
+}
+body.mmanagernotembedded #bodyContent {
+ margin:0;
+}
 
 /******************************************************************************
  ********************* Browser Hacks and corrections **************************
