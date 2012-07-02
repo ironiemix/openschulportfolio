@@ -1,7 +1,7 @@
 ====== Schulportfolio - warum als Wiki? ======
 
 
-Grundlage aller Überlegungen ist die {{:portfolio:qe6_schulportfolio.pdf|Handreichung des LS zum Schulportfolio}}. 
+Grundlage aller Überlegungen sind die Handreichungen des LS Baden-Württemberg zum Schulportfolio. 
 
 ===== Zielüberlegung =====
 

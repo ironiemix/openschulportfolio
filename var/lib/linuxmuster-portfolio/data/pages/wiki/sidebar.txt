@@ -1,7 +1,6 @@
 ** Hauptmenü **
 
   * [[..start|Start]]
-  * [[allusers:content|Inhaltsübersicht]]
 
 ---- 
 **Hilfe**
@@ -10,4 +9,4 @@
   * [[hilfe:editorhelp|Hilfe für Redakteure]]
 
 ----
-  * [[shared:credits|Über...]]
+  * [[wiki:credits|Über OSP]]
