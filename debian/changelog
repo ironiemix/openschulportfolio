@@ -1,4 +1,4 @@
-linuxmuster-portfolio (12.07-marie.3) openlml; urgency=low
+linuxmuster-portfolio (12.07-marie.4) openlml; urgency=low
 
    * Restuctured system information such as credits, icons,
      sidebar and the like to reside in namespace "wiki"
@@ -9,7 +9,8 @@ linuxmuster-portfolio (12.07-marie.3) openlml; urgency=low
    * Removed newpage plugin
    * Fixed bookcreator link
    * Added document based structure for schulportfolio
-   * Changed container width to 90%
+   * Changed container width to 98%
+   * Fixed startseite only structure
 
  -- Frank Schiebel <frank@linuxmuster.net>  Mon, 02 Jul 2012 10:14:06 +0200
 
