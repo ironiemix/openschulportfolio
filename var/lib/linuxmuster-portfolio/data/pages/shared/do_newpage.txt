@@ -1,6 +1,0 @@
-====== Neue Seite ======
-
-Hier können Sie eine neue Seite anlegen. Achten Sie darauf, dass die Seite anschließend auch verlinkt wird, andernfalls erzeugen Sie ein Waisenkind.
-
-
-{{NEWPAGE}}

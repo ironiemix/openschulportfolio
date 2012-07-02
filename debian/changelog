@@ -1,3 +1,14 @@
+linuxmuster-portfolio (11.05-ada.2) openlml; urgency=low
+
+  
+   * Restuctured system information such as credits, icons, 
+     sidebar and the like to reside in namespace "wiki"
+   * Removed page structure 
+   * Added pagepacks plugin to provide multiple page structures 
+     on installation  
+
+ -- Frank Schiebel <frank@linuxmuster.net>  Mon, 02 Jul 2012 10:14:06 +0200
+
 linuxmuster-portfolio (11.05-ada.1) openlml; urgency=low
 
     * Discussion plugin on discussion pages configurable per page.

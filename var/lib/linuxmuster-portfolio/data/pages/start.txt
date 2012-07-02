@@ -1,19 +1,7 @@
 ====== Willkommen zu ihrem neuen Schulportfolio ======
+{{ :wiki:pagepacks:install.png?nolink&|}}
+Hier können Sie festlegen, mit welcher der mitgelieferten Seitenstrukturen Sie die Arbeit in Ihrem Portfolio beginnen möchten. Wenn Sie mit einem leeren Wiki beginnen möchten, wählen Sie die Option "Nur Startseite" aus.
 
-<menu col=2,align="left",caption="">
-<item>Info|Informationen zum vorliegenden Programmpaket openSchulportfolio|shared:credits|shared:icons:package-x-generic-50x50.png</item>
-<item>Warum als Wiki?| Eine kurze Überlegung, warum man das Portfolio auf diese Weise führen kann (und soll).|:hilfe:warum_als_wiki|:shared:icons:dialog-information-50x50.png</item>  
-<item>Hilfe für Redakteure|Ein Einstieg und einige Erklärungen zum Wikisystem|hilfe:editorhelp|:shared:icons:help-browser-50x50.png</item>
-</menu>
+Wenn Sie wenig Erfahrung im Umgang mit einem Wiki haben, sollten Sie auf jeden Fall eine Struktur auswählen - Sie können diese jederzeit an Ihre Bedürfnisse anpassen.
 
-===== Gliederungsvorschlag für des Portfolio =====
-
-<note important>Vom Landesinstitut für Schulentwicklung Baden-Württemberg wird die folgende **"neue Gliederung des Schulportfolios Baden Württemberg"** als Struktur für das Schulportfolio vorgeschlagen. Beachten Sie, dass es sich hierbei um einen **Vorschlag** handelt, ausführliche Hinweise zur Einführung und Strukturierung des Portfolios finden Sie in der Handreichung des LS.</note>
-
-<menu col=1,align="left",caption="">
-<item>Voraussetzungen und Bedingungen|Bildungsgänge, Pädagogische Schwerpunkte, Infos zu Schlüler- und Lehrerschaft u.ä.|portfolio:rahmenbedingungen:start|shared:icons:emblem-important-50x50.png</item>
-<item>Abläufe und Prozesse|Dokumente zu den fünf Qualitätsbereichen aus dem "Modell für Schulqualität".|:portfolio:prozesse:start|:shared:icons:emblem-system-50x50.png</item>  
-<item>Qualitätssicherung und Qualitätsentwicklung|Pädagogische Grundsätze, Strukturen der Qualitäts- und Schulentwicklung, Durchführung der Selbstevaluation u.ä.|portfolio:qualitaetsentwicklung:start|:shared:icons:document-open-50x50.png</item>
-<item>Ergebnisse und Wirkungen|Ergebnisbezogene Angaben.|portfolio:ergebnisse:start|:shared:icons:go-jump-50x50.png</item>
-<item>Weitere Dokumente der Schule|Presseartikel, Auszeichnungen und Verleihungsurkunden, Briefvorlagen, Formulare, u.ä.|portfolio:weitere_dokumente:start|:shared:icons:edit-copy-50x50.png</item>
-</menu>
+{{pagepackform>init}}
