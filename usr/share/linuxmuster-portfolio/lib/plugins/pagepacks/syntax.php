@@ -139,10 +139,13 @@ class syntax_plugin_pagepacks extends DokuWiki_Syntax_Plugin {
      */
     function _showform() {
         global $ID, $lang, $INFO, $conf;
-
+        if (auth_quickaclcheck($ID) < AUTH_ADMIN) {
+            $ret = $this->getLang('admin_required');
+            return $ret;
+        }
 
         $packfiles = scandir("$this->packdir");
-        while ($file = readdir($handler)) {
+        foreach ($packfiles as $file) {
             if (preg_match ("/.zip$/i", $file)) {
                 $fileinfo = $this->packdir . $file . ".info";
                 if(file_exists($fileinfo)) {
@@ -153,7 +156,6 @@ class syntax_plugin_pagepacks extends DokuWiki_Syntax_Plugin {
                 $formselects .= '<p class="radioleft"><input type="radio" name="packzipfile" value=' . $file . '> ' . $file . '<span>' . $info . '</span>' . '</p>';
             }
         }
-        closedir($handler);
 
         $ret  = '<div>'.DOKU_LF;
         $ret .= '<form id="pagepack"  method="post" action="'.script().'" accept-charset="'.$lang['encoding'].'">'.DOKU_LF;
