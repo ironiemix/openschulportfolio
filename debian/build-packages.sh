@@ -52,7 +52,7 @@ quilt --quiltrc /dev/null push -a
 
 # debian Paket bauen
 cd ..
-svn-buildpackage --svn-ignore-new
+dpkg-buildpackage
 cd debian
 
 # Patches entfernen
