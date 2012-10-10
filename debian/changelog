@@ -1,6 +1,6 @@
-linuxmuster-portfolio (11.05-ada.1) openlml-addons; urgency=low
+linuxmuster-portfolio (11.05-ada.1) openml5-addons; urgency=low
 
-  * Nwe openml-addons Repo, no new version required
+  * New openml5-addons Repo, no new version required
 
  -- Frank Schiebel <frank@linuxmuster.net>  Sat, 29 Sep 2012 12:58:20 +0200
 
