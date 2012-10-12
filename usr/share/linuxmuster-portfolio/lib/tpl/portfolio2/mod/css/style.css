@@ -1,0 +1,12 @@
+div.topmenu {
+    overflow: hidden;
+    text-align:center;
+}
+
+.dokuwiki div.breadcrumbs {
+    border:0 !important;
+}
+
+.dokuwiki div.breadcrumbs div:first-child {
+    border: 0 !important;
+}
