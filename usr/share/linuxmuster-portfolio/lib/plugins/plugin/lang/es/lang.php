@@ -20,6 +20,9 @@
  * @author Victor Castelan <victorcastelan@gmail.com>
  * @author Mauro Javier Giamberardino <mgiamberardino@gmail.com>
  * @author emezeta <emezeta@infoprimo.com>
+ * @author Oscar Ciudad <oscar@jacho.net>
+ * @author Ruben Figols <ruben.figols@gmail.com>
+ * @author Gerardo Zamudio <gerardo@gerardozamudio.net>
  */
 $lang['menu']                  = 'Administración de Plugins';
 $lang['download']              = 'Descargar e instalar un nuevo plugin';
@@ -65,4 +68,4 @@ $lang['enabled']               = 'Plugin %s habilitado.';
 $lang['notenabled']            = 'Plugin %s no puede ser habilitado, verifica los permisos del archivo.';
 $lang['disabled']              = 'Plugin %s desabilitado.';
 $lang['notdisabled']           = 'Plugin %s no puede ser desabilitado, verifica los permisos de archivo.';
-$lang['packageinstalled']      = 'Plugin (%d plugin%s: %s) instalado exitosamente.';
+$lang['packageinstalled']      = 'Plugin (%d plugin(s): %s) instalado exitosamente.';

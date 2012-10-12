@@ -8,8 +8,9 @@ class ap_download extends ap_manage {
      */
     function process() {
         global $lang;
+        global $INPUT;
 
-        $plugin_url = $_REQUEST['url'];
+        $plugin_url = $INPUT->str('url');
         $this->download($plugin_url, $this->overwrite);
         return '';
     }
@@ -59,7 +60,7 @@ class ap_download extends ap_manage {
             return false;
         }
 
-        if (!$file = io_download($url, "$tmp/", true, $file)) {
+        if (!$file = io_download($url, "$tmp/", true, $file, 0)) {
             $this->manager->error = sprintf($this->lang['error_download'],$url)."\n";
         }
 
@@ -114,7 +115,7 @@ class ap_download extends ap_manage {
         if ($tmp) $this->dir_delete($tmp);
 
         if (!$this->manager->error) {
-            msg(sprintf($this->lang['packageinstalled'], count($this->downloaded), (count($this->downloaded) != 1?'s':''), join(',',$this->downloaded)),1);
+            msg(sprintf($this->lang['packageinstalled'], count($this->downloaded), join(',',$this->downloaded)),1);
             $this->refresh();
             return true;
         }
@@ -155,16 +156,16 @@ class ap_download extends ap_manage {
                     $info['type'] = 'plugin';
                     $info['tmp']  = "$base/$dir";
                     $conf = confToHash("$base/$dir/$f");
-                    $info['base'] = basename($conf['base']);
-                    if(!$info['base']) $info['base'] = basename("$base/$dir");
+                    $info['base'] = utf8_basename($conf['base']);
+                    if(!$info['base']) $info['base'] = utf8_basename("$base/$dir");
                     $result['new'][] = $info;
                 }elseif($f == 'template.info.txt'){
                     $info = array();
                     $info['type'] = 'template';
                     $info['tmp']  = "$base/$dir";
                     $conf = confToHash("$base/$dir/$f");
-                    $info['base'] = basename($conf['base']);
-                    if(!$info['base']) $info['base'] = basename("$base/$dir");
+                    $info['base'] = utf8_basename($conf['base']);
+                    if(!$info['base']) $info['base'] = utf8_basename("$base/$dir");
                     $result['new'][] = $info;
                 }
             }else{

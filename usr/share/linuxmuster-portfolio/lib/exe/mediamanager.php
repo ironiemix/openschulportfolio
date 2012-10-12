@@ -10,32 +10,32 @@
     trigger_event('MEDIAMANAGER_STARTED',$tmp=array());
     session_write_close();  //close session
 
+    global $INPUT;
     // handle passed message
-    if($_REQUEST['msg1']) msg(hsc($_REQUEST['msg1']),1);
-    if($_REQUEST['err']) msg(hsc($_REQUEST['err']),-1);
+    if($INPUT->str('msg1')) msg(hsc($INPUT->str('msg1')),1);
+    if($INPUT->str('err')) msg(hsc($INPUT->str('err')),-1);
 
 
     // get namespace to display (either direct or from deletion order)
-    if($_REQUEST['delete']){
-        $DEL = cleanID($_REQUEST['delete']);
+    if($INPUT->str('delete')){
+        $DEL = cleanID($INPUT->str('delete'));
         $IMG = $DEL;
         $NS  = getNS($DEL);
-    }elseif($_REQUEST['edit']){
-        $IMG = cleanID($_REQUEST['edit']);
+    }elseif($INPUT->str('edit')){
+        $IMG = cleanID($INPUT->str('edit'));
         $NS  = getNS($IMG);
-    }elseif($_REQUEST['img']){
-        $IMG = cleanID($_REQUEST['img']);
+    }elseif($INPUT->str('img')){
+        $IMG = cleanID($INPUT->str('img'));
         $NS  = getNS($IMG);
     }else{
-        $NS = $_REQUEST['ns'];
-        $NS = cleanID($NS);
+        $NS = cleanID($INPUT->str('ns'));
     }
 
     // check auth
     $AUTH = auth_quickaclcheck("$NS:*");
 
     // do not display the manager if user does not have read access
-    if($AUTH < AUTH_READ) {
+    if($AUTH < AUTH_READ && !$fullscreen) {
         header('HTTP/1.0 403 Forbidden');
         die($lang['accessdenied']);
     }
@@ -76,8 +76,18 @@
     }
 
     // handle meta saving
-    if($IMG && $_REQUEST['do']['save']){
-        $JUMPTO = media_metasave($IMG,$AUTH,$_REQUEST['meta']);
+    if($IMG && @array_key_exists('save', $INPUT->arr('do'))){
+        $JUMPTO = media_metasave($IMG,$AUTH,$INPUT->arr('meta'));
+    }
+
+    if($IMG && ($INPUT->str('mediado') == 'save' || @array_key_exists('save', $INPUT->arr('mediado')))) {
+        $JUMPTO = media_metasave($IMG,$AUTH,$INPUT->arr('meta'));
+    }
+
+    if ($INPUT->int('rev') && $conf['mediarevisions']) $REV = $INPUT->int('rev');
+
+    if($INPUT->str('mediado') == 'restore' && $conf['mediarevisions']){
+        $JUMPTO = media_restore($INPUT->str('image'), $REV, $AUTH);
     }
 
     // handle deletion
@@ -88,10 +98,10 @@
         }
         if ($res & DOKU_MEDIA_DELETED) {
             $msg = sprintf($lang['deletesucc'], noNS($DEL));
-            if ($res & DOKU_MEDIA_EMPTY_NS) {
+            if ($res & DOKU_MEDIA_EMPTY_NS && !$fullscreen) {
                 // current namespace was removed. redirecting to root ns passing msg along
                 send_redirect(DOKU_URL.'lib/exe/mediamanager.php?msg1='.
-                        rawurlencode($msg).'&edid='.$_REQUEST['edid']);
+                        rawurlencode($msg).'&edid='.$INPUT->str('edid'));
             }
             msg($msg,1);
         } elseif ($res & DOKU_MEDIA_INUSE) {
@@ -102,9 +112,11 @@
             msg(sprintf($lang['deletefail'],noNS($DEL)),-1);
         }
     }
-
     // finished - start output
-    header('Content-Type: text/html; charset=utf-8');
-    include(template('mediamanager.php'));
+
+    if (!$fullscreen) {
+        header('Content-Type: text/html; charset=utf-8');
+        include(template('mediamanager.php'));
+    }
 
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */

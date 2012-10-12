@@ -12,9 +12,11 @@
  * @author Dirk Einecke <dirk@dirkeinecke.de>
  * @author Blitzi94@gmx.de
  * @author Robert Bogenschneider <robog@GMX.de>
- * @author Robert Bogenschneider <robog@gmx.de>
  * @author Niels Lange <niels@boldencursief.nl>
  * @author Christian Wichmann <nospam@zone0.de>
+ * @author Paul Lachewsky <kaeptn.haddock@gmail.com>
+ * @author Pierre Corell <info@joomla-praxis.de>
+ * @author Matthias Schulte <dokuwiki@lupo49.de>
  */
 $lang['menu']                  = 'Benutzerverwaltung';
 $lang['noauth']                = '(Authentifizierungssystem nicht verfügbar)';

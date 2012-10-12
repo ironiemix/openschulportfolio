@@ -42,6 +42,15 @@ PLUGINNAME=`echo $PLUGIN | awk -F/ '{print $5}'`
   fi
 done
 
+# check for media_attic and media_meta upon upgrading
+if [ ! -d /home/linuxmuster-portfolio/data/media_attic ]; then
+    mkdir -p /home/linuxmuster-portfolio/data/media_attic
+fi
+if [ ! -d /home/linuxmuster-portfolio/data/media_meta ]; then
+    mkdir -p /home/linuxmuster-portfolio/data/media_meta
+fi
+
+
 # Permissions of data dir: must be writable for www-data
 if [ -d /home/linuxmuster-portfolio/data ]; then
     chown -R www-data: /home/linuxmuster-portfolio/data 

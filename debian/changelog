@@ -1,3 +1,10 @@
+linuxmuster-portfolio (12.11-marie.5) openlml; urgency=low
+
+  * New dokuwiki "Adora Belle"
+  * New template based upon the new dokuwiki default template
+
+ -- Frank Schiebel <frank@linuxmuster.net>  Fri, 12 Oct 2012 14:56:02 +0200
+
 linuxmuster-portfolio (12.07-marie.4) openlml; urgency=low
 
    * Restuctured system information such as credits, icons,

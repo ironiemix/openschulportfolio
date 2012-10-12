@@ -6,35 +6,39 @@
  * @author     Andreas Gohr <andi@splitbrain.org>
  */
 
-//fix for Opera XMLHttpRequests
-if(!count($_POST) && $HTTP_RAW_POST_DATA){
-  parse_str($HTTP_RAW_POST_DATA, $_POST);
-}
-
 if(!defined('DOKU_INC')) define('DOKU_INC',dirname(__FILE__).'/../../../');
 require_once(DOKU_INC.'inc/init.php');
 //close session
 session_write_close();
+
+global $conf;
+global $ID;
+global $INPUT;
+
+//fix for Opera XMLHttpRequests
+$postData = http_get_raw_post_data();
+if(!count($_POST) && !empty($postData)){
+    parse_str($postData, $_POST);
+}
 
 if(!auth_isadmin()) die('for admins only');
 if(!checkSecurityToken()) die('CRSF Attack');
 
 $ID    = getID();
 
+/** @var $acl admin_plugin_acl */
 $acl = plugin_load('admin','acl');
 $acl->handle();
 
-$ajax = $_REQUEST['ajax'];
+$ajax = $INPUT->str('ajax');
 header('Content-Type: text/html; charset=utf-8');
 
 if($ajax == 'info'){
     $acl->_html_info();
 }elseif($ajax == 'tree'){
-    global $conf;
-    global $ID;
 
     $dir = $conf['datadir'];
-    $ns  = $_REQUEST['ns'];
+    $ns  = $INPUT->str('ns');
     if($ns == '*'){
         $ns ='';
     }
@@ -44,13 +48,10 @@ if($ajax == 'info'){
 
     $data = $acl->_get_tree($ns,$ns);
 
-    foreach($data as $item){
-        $item['level'] = $lvl+1;
-        echo $acl->_html_li_acl($item);
-        echo '<div class="li">';
-        echo $acl->_html_list_acl($item);
-        echo '</div>';
-        echo '</li>';
+    foreach(array_keys($data) as $item){
+        $data[$item]['level'] = $lvl+1;
     }
+    echo html_buildlist($data, 'acl', array($acl, '_html_list_acl'),
+                        array($acl, '_html_li_acl'));
 }
 

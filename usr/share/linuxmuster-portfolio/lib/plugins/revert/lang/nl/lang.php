@@ -11,6 +11,9 @@
  * @author Matthias Carchon webmaster@c-mattic.be
  * @author Marijn Hofstra <hofstra.m@gmail.com>
  * @author Timon Van Overveldt <timonvo@gmail.com>
+ * @author Jeroen
+ * @author Ricardo Guijt <ricardoguijt@gmail.com>
+ * @author Gerrit <klapinklapin@gmail.com>
  */
 $lang['menu']                  = 'Herstelmanager';
 $lang['filter']                = 'Zoek naar bekladde pagina\'s';

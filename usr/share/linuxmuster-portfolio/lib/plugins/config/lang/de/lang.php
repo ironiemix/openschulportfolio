@@ -11,10 +11,12 @@
  * @author Arne Pelka <mail@arnepelka.de>
  * @author Dirk Einecke <dirk@dirkeinecke.de>
  * @author Blitzi94@gmx.de
- * @author Robert Bogenschneider <robog@GMX.de>
  * @author Robert Bogenschneider <robog@gmx.de>
  * @author Niels Lange <niels@boldencursief.nl>
  * @author Christian Wichmann <nospam@zone0.de>
+ * @author Paul Lachewsky <kaeptn.haddock@gmail.com>
+ * @author Pierre Corell <info@joomla-praxis.de>
+ * @author Matthias Schulte <dokuwiki@lupo49.de>
  */
 $lang['menu']                  = 'Konfiguration';
 $lang['error']                 = 'Die Einstellungen wurden wegen einer fehlerhaften Eingabe nicht gespeichert.
@@ -38,6 +40,8 @@ $lang['_anti_spam']            = 'Anti-Spam-Konfiguration';
 $lang['_editing']              = 'Bearbeitungs-Konfiguration';
 $lang['_links']                = 'Link-Konfiguration';
 $lang['_media']                = 'Medien-Konfiguration';
+$lang['_notifications']        = 'Benachrichtigungs-Konfiguration';
+$lang['_syndication']          = 'Syndication-Konfiguration (RSS)';
 $lang['_advanced']             = 'Erweiterte Konfiguration';
 $lang['_network']              = 'Netzwerk-Konfiguration';
 $lang['_plugin_sufix']         = 'Plugin-Konfiguration';
@@ -51,9 +55,12 @@ $lang['lang']                  = 'Sprache';
 $lang['basedir']               = 'Installationsverzeichnis';
 $lang['baseurl']               = 'Installationspfad (URL)';
 $lang['savedir']               = 'Speicherverzeichnis';
+$lang['cookiedir']             = 'Cookiepfad. Frei lassen, um den gleichen Pfad wie "baseurl" zu benutzen.';
 $lang['start']                 = 'Startseitenname';
 $lang['title']                 = 'Titel des Wikis';
 $lang['template']              = 'Designvorlage (Template)';
+$lang['tagline']               = 'Tag-Linie (nur, wenn vom Template unterstützt)';
+$lang['sidebar']               = 'Name der Sidebar-Seite (nur, wenn vom Template unterstützt)), ein leeres Feld deaktiviert die Sidebar';
 $lang['license']               = 'Unter welcher Lizenz sollen Ihre Inhalte veröffentlicht werden?';
 $lang['fullpath']              = 'Den kompletten Dateipfad im Footer anzeigen';
 $lang['recent']                = 'Anzahl der Einträge in der Änderungsliste';
@@ -64,7 +71,7 @@ $lang['htmlok']                = 'HTML erlauben';
 $lang['phpok']                 = 'PHP erlauben';
 $lang['dformat']               = 'Datumsformat (Siehe PHP <a href="http://www.php.net/strftime">strftime</a> Funktion)';
 $lang['signature']             = 'Signatur';
-$lang['toptoclevel']           = 'Inhaltsverzeichnis bei dieser Überschriftsgröße beginnen';
+$lang['toptoclevel']           = 'Inhaltsverzeichnis bei dieser Überschriftengröße beginnen';
 $lang['tocminheads']           = 'Mindestanzahl der Überschriften die entscheidet, ob ein Inhaltsverzeichnis erscheinen soll';
 $lang['maxtoclevel']           = 'Maximale Überschriftsgröße für Inhaltsverzeichnis';
 $lang['maxseclevel']           = 'Abschnitte bis zu dieser Stufe einzeln editierbar machen';
@@ -72,8 +79,9 @@ $lang['camelcase']             = 'CamelCase-Verlinkungen verwenden';
 $lang['deaccent']              = 'Seitennamen bereinigen';
 $lang['useheading']            = 'Erste Überschrift als Seitennamen verwenden';
 $lang['refcheck']              = 'Auf Verwendung beim Löschen von Media-Dateien testen';
-$lang['refshow']               = 'Wieviele Verwendungsorte der Media-Datei zeigen';
+$lang['refshow']               = 'Wiev iele Verwendungsorte der Media-Datei zeigen';
 $lang['allowdebug']            = 'Debug-Ausgaben erlauben <b>Abschalten wenn nicht benötigt!</b>';
+$lang['mediarevisions']        = 'Media-Revisionen (ältere Versionen) aktivieren?';
 $lang['usewordblock']          = 'Spam-Blocking benutzen';
 $lang['indexdelay']            = 'Zeit bevor Suchmaschinenindexierung erlaubt ist';
 $lang['relnofollow']           = 'rel="nofollow" verwenden';
@@ -96,8 +104,8 @@ $lang['disableactions_other']  = 'Andere Aktionen (durch Komma getrennt)';
 $lang['sneaky_index']          = 'Standardmäßig zeigt DokuWiki alle Namensräume in der Übersicht. Wenn diese Option aktiviert wird, werden alle Namensräume, für die der Benutzer keine Lese-Rechte hat, nicht angezeigt. Dies kann unter Umständen dazu führen, das lesbare Unter-Namensräume nicht angezeigt werden und macht die Übersicht evtl. unbrauchbar in Kombination mit bestimmten ACL Einstellungen.';
 $lang['auth_security_timeout'] = 'Authentifikations-Timeout (Sekunden)';
 $lang['securecookie']          = 'Sollen Cookies, die via HTTPS gesetzt wurden nur per HTTPS versendet werden? Deaktivieren Sie diese Option, wenn nur der Login Ihres Wikis mit SSL gesichert ist, aber das Betrachten des Wikis ungesichert geschieht.';
-$lang['xmlrpc']                = 'XML-RPC-Zugriff erlauben.';
-$lang['xmlrpcuser']            = 'XML-RPC-Zugriff auf folgende Gruppen oder Benutzer (kommasepariert) beschränken. Wenn Sie dieses Feld leer lassen, wir der Zugriff jedem gewährt.';
+$lang['remote']                = 'Aktiviert den externen API-Zugang. Diese Option erlaubt es externen Anwendungen von außen auf die XML-RPC-Schnittstelle oder anderweitigen Schnittstellen zuzugreifen.';
+$lang['remoteuser']            = 'Zugriff auf die externen Schnittstellen durch kommaseparierte Angabe von Benutzern oder Gruppen einschränken. Ein leeres Feld erlaubt Zugriff für jeden.';
 $lang['updatecheck']           = 'Automatisch auf Updates und Sicherheitswarnungen prüfen? DokuWiki muss sich dafür mit update.dokuwiki.org verbinden.';
 $lang['userewrite']            = 'URL rewriting';
 $lang['useslash']              = 'Schrägstrich (/) als Namensraumtrenner in URLs verwenden';
@@ -114,13 +122,15 @@ $lang['notify']                = 'Änderungsmitteilungen an diese E-Mail-Adresse
 $lang['registernotify']        = 'Information über neu registrierte Nutzer an diese E-Mail-Adresse senden';
 $lang['mailfrom']              = 'Absender-E-Mail-Adresse für automatische Mails';
 $lang['mailprefix']            = 'Präfix für E-Mail-Betreff beim automatischen Versand von Benachrichtigungen';
+$lang['htmlmail']              = 'Versendet optisch angenehmere, aber größere E-Mails im HTML-Format (multipart). Deaktivieren, um Text-Mails zu versenden.';
 $lang['gzip_output']           = 'Seiten mit gzip komprimiert ausliefern';
 $lang['gdlib']                 = 'GD Lib Version';
-$lang['im_convert']            = 'Pfad zu ImageMagicks Konvertierwerkzeug';
+$lang['im_convert']            = 'Pfad zu ImageMagicks-Konvertierwerkzeug';
 $lang['jpg_quality']           = 'JPEG Kompressionsqualität (0-100)';
 $lang['subscribers']           = 'E-Mail-Abos zulassen';
 $lang['subscribe_time']        = 'Zeit nach der Zusammenfassungs- und Änderungslisten-E-Mails verschickt werden; Dieser Wert sollte kleiner als die in recent_days konfigurierte Zeit sein.';
 $lang['compress']              = 'JavaScript und Stylesheets komprimieren';
+$lang['cssdatauri']            = 'Größe in Bytes, bis zu der Bilder in css-Dateien referenziert werden können, um HTTP-Anfragen zu minimieren. Diese Technik funktioniert nicht im IE 7 und älter!  Empfohlene Einstellung: <code>400</code> to <code>600</code> Bytes. Setzen Sie die Einstellung auf <code>0</code> um die Funktion zu deaktivieren.';
 $lang['hidepages']             = 'Seiten verstecken (Regulärer Ausdruck)';
 $lang['send404']               = 'Bei nicht vorhandenen Seiten mit 404 Fehlercode antworten';
 $lang['sitemap']               = 'Google Sitemap erzeugen (Tage)';
@@ -136,11 +146,13 @@ $lang['rss_content']           = 'Welche Inhalte sollen im XML-Feed dargestellt 
 $lang['rss_update']            = 'XML-Feed Aktualisierungsintervall (Sekunden)';
 $lang['recent_days']           = 'Wieviele letzte Änderungen sollen einsehbar bleiben? (Tage)';
 $lang['rss_show_summary']      = 'Bearbeitungs-Zusammenfassung im XML-Feed anzeigen';
+$lang['rss_media']             = 'Welche Änderungen sollen im XML-Feed angezeigt werden?';
 $lang['target____wiki']        = 'Zielfenster für interne Links (target Attribut)';
 $lang['target____interwiki']   = 'Zielfenster für InterWiki-Links (target Attribut)';
 $lang['target____extern']      = 'Zielfenster für Externe Links (target Attribut)';
 $lang['target____media']       = 'Zielfenster für (Bild-)Dateien (target Attribut)';
 $lang['target____windows']     = 'Zielfenster für Windows Freigaben (target Attribut)';
+$lang['dnslookups']            = 'DokuWiki löst die IP-Adressen von Benutzern zu deren Hostnamen auf. Wenn du einen langsamen, unbrauchbaren DNS-Server verwendest oder die Funktion nicht benötigst, dann sollte diese Option deaktivert sein.';
 $lang['proxy____host']         = 'Proxy-Server';
 $lang['proxy____port']         = 'Proxy-Port';
 $lang['proxy____user']         = 'Proxy Nutzername';

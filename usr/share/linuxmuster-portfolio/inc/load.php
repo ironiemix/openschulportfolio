@@ -43,12 +43,13 @@ require_once(DOKU_INC.'inc/auth.php');
  * require()s their associated php files when an object is instantiated.
  *
  * @author Andreas Gohr <andi@splitbrain.org>
- * @todo   add generic loading of plugins and other generically named classes
+ * @todo   add generic loading of renderers and auth backends
  */
 function load_autoload($name){
     static $classes = null;
     if(is_null($classes)) $classes = array(
         'DokuHTTPClient'        => DOKU_INC.'inc/HTTPClient.php',
+        'HTTPClient'            => DOKU_INC.'inc/HTTPClient.php',
         'JSON'                  => DOKU_INC.'inc/JSON.php',
         'adLDAP'                => DOKU_INC.'inc/adLDAP.php',
         'Diff'                  => DOKU_INC.'inc/DifferenceEngine.php',
@@ -61,6 +62,7 @@ function load_autoload($name){
         'Doku_Event'            => DOKU_INC.'inc/events.php',
         'Doku_Event_Handler'    => DOKU_INC.'inc/events.php',
         'EmailAddressValidator' => DOKU_INC.'inc/EmailAddressValidator.php',
+        'Input'                 => DOKU_INC.'inc/Input.class.php',
         'JpegMeta'              => DOKU_INC.'inc/JpegMeta.php',
         'SimplePie'             => DOKU_INC.'inc/SimplePie.php',
         'FeedParser'            => DOKU_INC.'inc/FeedParser.php',
@@ -76,15 +78,31 @@ function load_autoload($name){
         'SafeFN'                => DOKU_INC.'inc/SafeFN.class.php',
         'Sitemapper'            => DOKU_INC.'inc/Sitemapper.php',
         'PassHash'              => DOKU_INC.'inc/PassHash.class.php',
+        'Mailer'                => DOKU_INC.'inc/Mailer.class.php',
+        'RemoteAPI'             => DOKU_INC.'inc/remote.php',
+        'RemoteAPICore'         => DOKU_INC.'inc/RemoteAPICore.php',
 
         'DokuWiki_Action_Plugin' => DOKU_PLUGIN.'action.php',
         'DokuWiki_Admin_Plugin'  => DOKU_PLUGIN.'admin.php',
         'DokuWiki_Syntax_Plugin' => DOKU_PLUGIN.'syntax.php',
+        'DokuWiki_Remote_Plugin' => DOKU_PLUGIN.'remote.php',
 
     );
 
     if(isset($classes[$name])){
         require_once($classes[$name]);
+        return;
+    }
+
+    // Plugin loading
+    if(preg_match('/^(helper|syntax|action|admin|renderer|remote)_plugin_('.DOKU_PLUGIN_NAME_REGEX.')(?:_([^_]+))?$/',
+                  $name, $m)) {
+        // try to load the wanted plugin file
+        $c = ((count($m) === 4) ? "/{$m[3]}" : '');
+        $plg = DOKU_PLUGIN . "{$m[2]}/{$m[1]}$c.php";
+        if(@file_exists($plg)){
+            include_once DOKU_PLUGIN . "{$m[2]}/{$m[1]}$c.php";
+        }
         return;
     }
 }

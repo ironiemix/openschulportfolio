@@ -9,6 +9,7 @@
  * @author schilling.janos@gmail.com
  * @author Szabó Dávid <szabo.david@gyumolcstarhely.hu>
  * @author Sándor TIHANYI <stihanyi+dw@gmail.com>
+ * @author David Szabo <szabo.david@gyumolcstarhely.hu>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -44,7 +45,6 @@ $lang['btn_backtomedia']       = 'Vissza a médiafájlok kezeléséhez';
 $lang['btn_subscribe']         = 'Oldalváltozások-hírlevél feliratkozás';
 $lang['btn_profile']           = 'Személyes beállítások';
 $lang['btn_reset']             = 'Alaphelyzet';
-$lang['btn_resendpwd']         = 'Új jelszó küldése';
 $lang['btn_draft']             = 'Piszkozat szerkesztése';
 $lang['btn_recover']           = 'Piszkozat folytatása';
 $lang['btn_draftdel']          = 'Piszkozat törlése';
@@ -79,7 +79,6 @@ $lang['profnoempty']           = 'A név és e-mail mező nem maradhat üresen!'
 $lang['profchanged']           = 'A személyes beállítások változtatása megtörtént.';
 $lang['pwdforget']             = 'Elfelejtetted a jelszavad? Itt kérhetsz újat';
 $lang['resendna']              = 'Ez a wiki nem támogatja a jelszó újraküldést.';
-$lang['resendpwd']             = 'Új jelszó kiküldése ennek a felhasználónak';
 $lang['resendpwdmissing']      = 'Sajnáljuk, az összes mezőt ki kell töltened.';
 $lang['resendpwdnouser']       = 'Sajnáljuk, ilyen azonosítójú felhasználónk nem létezik.';
 $lang['resendpwdbadauth']      = 'Sajnáljuk, ez a megerősítő kód nem helyes. Biztos, hogy a teljes megerősítés linket beírtad pontosan?';
@@ -94,7 +93,7 @@ $lang['txt_filename']          = 'feltöltési név (elhagyható)';
 $lang['txt_overwrt']           = 'Létező fájl felülírása';
 $lang['lockedby']              = 'Jelenleg zárolta:';
 $lang['lockexpire']            = 'A zárolás lejár:';
-$lang['willexpire']            = 'Az oldalszerkesztési zárolásod körülbelül egy percen belül lejár.\nAz ütközések elkerülése végett használd az előnézet gombot a zárolási időzítés frissítéséhez.';
+$lang['js']['willexpire']            = 'Az oldalszerkesztési zárolásod körülbelül egy percen belül lejár.\nAz ütközések elkerülése végett használd az előnézet gombot a zárolási időzítés frissítéséhez.';
 $lang['js']['notsavedyet']     = 'Elmentetlen változások vannak, amelyek el fognak veszni.
 Tényleg ezt akarod?';
 $lang['js']['searchmedia']     = 'Fájlok keresése';
@@ -126,7 +125,6 @@ A hivatkozást másolni és beszúrni ettől fügetlenül mndig tudod.';
 $lang['js']['linkwiz']         = 'Hivatkozás varázsló';
 $lang['js']['linkto']          = 'Hivatkozás erre:';
 $lang['js']['del_confirm']     = 'Valóban törölni akarod a kiválasztott elem(ek)et?';
-$lang['js']['mu_btn']          = 'Több fájl feltöltése egyszerre';
 $lang['rssfailed']             = 'Hiba történt ennek a betöltésekor: ';
 $lang['nothingfound']          = 'Semmit sem találtam.';
 $lang['mediaselect']           = 'Médiafájl kiválasztása';
@@ -262,21 +260,6 @@ $lang['i_pol1']                = 'Publikus Wiki (mindenki olvashatja, de csak re
 $lang['i_pol2']                = 'Zárt Wiki (csak regisztrált felhasználók olvashatják, írhatják és tölthetnek fel fájlokat)';
 $lang['i_retry']               = 'Újra';
 $lang['i_license']             = 'Kérlek válassz licenszt a feltöltött tartalomhoz:';
-$lang['mu_intro']              = 'Itt több fájlt is fel tudsz tölteni egyszerre. Kattints a "Kiválaszt" gombra és add hozzá a listához. Nyomd meg a Feltöltés gombot, amikor elkészültél.';
-$lang['mu_gridname']           = 'Fájlnév';
-$lang['mu_gridsize']           = 'Méret';
-$lang['mu_gridstat']           = 'Állapot';
-$lang['mu_namespace']          = 'Névtér';
-$lang['mu_browse']             = 'Kiválaszt';
-$lang['mu_toobig']             = 'túl nagy';
-$lang['mu_ready']              = 'feltöltésre kész';
-$lang['mu_done']               = 'kész';
-$lang['mu_fail']               = 'hibás';
-$lang['mu_authfail']           = 'session lejárt';
-$lang['mu_progress']           = '@PCT@% feltöltve';
-$lang['mu_filetypes']          = 'Megengedett fájltípusok';
-$lang['mu_info']               = 'Fájlok feltöltve.';
-$lang['mu_lasterr']            = 'Utolsó hiba:';
 $lang['recent_global']         = 'Jelenleg csak a <b>%s</b> névtér friss változásai látszanak. Megtekinthetők <a href="%s">a teljes wiki friss változásai</a> is.';
 $lang['years']                 = '%d évvel ezelőtt';
 $lang['months']                = '%d hónappal ezelőtt';

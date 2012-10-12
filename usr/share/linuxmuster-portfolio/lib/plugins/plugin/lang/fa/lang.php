@@ -7,6 +7,7 @@
  * @author omidmr@gmail.com
  * @author Omid Mottaghi <omidmr@gmail.com>
  * @author Mohammad Reza Shoaei <shoaei@gmail.com>
+ * @author Milad DZand <M.DastanZand@gmail.com>
  */
 $lang['menu']                  = 'مدیریت افزونه‌ها';
 $lang['download']              = 'دریافت و نصب افزونه';
@@ -52,4 +53,4 @@ $lang['enabled']               = 'افزونه‌ی %s فعال شد.';
 $lang['notenabled']            = 'افزونه‌ی %s قابلیت فعال کردن ندارد، دسترسی‌ها را چک کنید.';
 $lang['disabled']              = 'افزونه‌ی %s غیرفعال شد.';
 $lang['notdisabled']           = 'افزونه‌ی %s قابلیت غیرفعال کردن ندارد، دسترسی‌ها را چک کنید.';
-$lang['packageinstalled']      = 'بسته‌ی افزوده‌ها (%d افزونه%s: %s) با موفقیت نصب شد.';
+$lang['packageinstalled']      = 'بسته افزونه (%d افزونه: %s) به درستی نصب شد.';
