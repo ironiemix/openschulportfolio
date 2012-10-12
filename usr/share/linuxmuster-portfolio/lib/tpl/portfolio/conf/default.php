@@ -49,11 +49,11 @@ $conf["vector_discuss_ns"] = ":wiki:discussion:"; //namespace to use for discuss
 
 //site notice
 $conf["vector_sitenotice"]          = true; //TRUE: use/show sitenotice
-$conf["vector_sitenotice_location"] = ":allusers:topmenu"; //page/article used to store the sitenotice
+$conf["vector_sitenotice_location"] = ":wiki:topmenu"; //page/article used to store the sitenotice
 
 //navigation
 $conf["vector_navigation"]          = true; //TRUE: use/show navigation
-$conf["vector_navigation_location"] = ":allusers:sidebar"; //page/article used to store the navigation
+$conf["vector_navigation_location"] = ":wiki:sidebar"; //page/article used to store the navigation
 
 //exportbox ("print/export")
 $conf["vector_exportbox"]          = true; //TRUE: use/show exportbox

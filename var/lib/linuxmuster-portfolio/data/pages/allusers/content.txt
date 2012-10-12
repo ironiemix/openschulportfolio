@@ -1,6 +1,0 @@
-{{tag> }}
-
-====== Seitenübersicht ======
-
-
-{{indexmenu>..#1|js navbar}}

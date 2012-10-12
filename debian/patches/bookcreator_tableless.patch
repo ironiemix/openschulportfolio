@@ -438,27 +438,3 @@ Index: trunk/usr/share/linuxmuster-portfolio/lib/plugins/bookcreator/style.css
 +
 +
  
-Index: trunk/usr/share/linuxmuster-portfolio/lib/plugins/bookcreator/conf/default.php
-===================================================================
---- trunk.orig/usr/share/linuxmuster-portfolio/lib/plugins/bookcreator/conf/default.php	2010-11-27 20:48:59.000000000 +0100
-+++ trunk/usr/share/linuxmuster-portfolio/lib/plugins/bookcreator/conf/default.php	2010-11-27 20:52:25.000000000 +0100
-@@ -4,14 +4,8 @@
-  *
-  * @author  Luigi Micco <l.micco@tiscali.it>
-  */
--
- $conf['toolbar']         = 'noempty';
--
--$conf['book_page']       = 'wiki:ebook'; 
--$conf['help_page']       = 'wiki:ebook_help'; 
--$conf['save_namespace']  = 'wiki:ebook'; 
--
--$conf['skip_ids']        = 'sidebar,user,group,playground,wiki:syntax,wiki:ebook';
--
--
--//Setup VIM: ex: et ts=2 enc=utf-8 :
-\ No newline at end of file
-+$conf['book_page']       = 'bookcreator:start';
-+$conf['help_page']       = 'bookcreator:help';
-+$conf['save_namespace']  = 'bookcreator:saved';
-+$conf['skip_ids']        = 'sidebar,user,group,playground,wiki:syntax,wiki:ebook,bookcreator';

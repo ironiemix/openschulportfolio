@@ -34,7 +34,8 @@ body {
 }
 /* OSP */
 #pf-container {
-  max-width:1038px;
+  min-width:860px;
+  width:98%;
 }
 
 /* Admin Lazy Sunday: Version */

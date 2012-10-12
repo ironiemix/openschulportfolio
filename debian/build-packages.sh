@@ -32,6 +32,7 @@ PACKAGENAME=`head -n 1 changelog  | awk '{print $1}'`
 TARFILE=${PACKAGENAME}_${VERSION}.tar.gz
 SOURCEVERSION=`echo $VERSION | awk -F- '{print $1}'`
 SOURCE=${PACKAGENAME}-${SOURCEVERSION}
+SOURCE=openschulportfolio
 
 # Statusmeldung
 echo "Paketname:        $PACKAGENAME"
@@ -43,8 +44,7 @@ echo "Tar-Build-Dir:    $BUILDDIR"
 echo "Version:          $VERSION"
 echo "Source-Version:   $SOURCEVERSION"
 
-
-sleep 1 
+sleep 10
 
 # Anpassungen einpatchen
 export QUILT_PATCHES=debian/patches
@@ -52,7 +52,7 @@ quilt --quiltrc /dev/null push -a
 
 # debian Paket bauen
 cd ..
-svn-buildpackage --svn-ignore-new
+dpkg-buildpackage
 cd debian
 
 # Patches entfernen
@@ -62,6 +62,7 @@ quilt --quiltrc /dev/null pop -a
 if [ $opt = "zip" ]; then 
 # ZIP Pakete erzeugen 
 # Nach TDIR wechseln
+mkdir -p $TDIR
 cd $TDIR
 
 # checking
@@ -69,17 +70,19 @@ if [ -d $BUILDDIR ]; then
 rm -rf $BUILDDIR
 fi
 
-if [ ! -f $TARFILE ]; then 
-echo "Unable to open source tarball $TARFILE"
+if [ ! -f ../$TARFILE ]; then 
+echo "Unable to open source tarball ../$TARFILE"
 exit 1
 fi
 
 # Builddir anlegen
 mkdir $BUILDDIR > /dev/null 2>&1
 # Quellen auspacken
-tar -C $BUILDDIR -xzf $TARFILE
+tar -C $BUILDDIR -xzf ../$TARFILE
 # Ins Builddir wechseln
 cd $BUILDDIR
+
+
 # conf und data Verzeichnis anlegen
 mkdir -p portfolio/conf > /dev/null 2>&1
 mkdir portfolio/data > /dev/null 2>&1
@@ -132,7 +135,7 @@ echo "   done."
 # modifiyng for schuqwiki
 cp -r portfolio/lib/tpl/portfolio/ portfolio/lib/tpl/schuqwiki
 cp -r ${SCHUQWIKIDIR}/* portfolio/lib/tpl/schuqwiki/
-cp -r ${SCHUQWIKIDIR}/../schuqwiki.credits portfolio/data/pages/shared/credits.txt
+cp -r ${SCHUQWIKIDIR}/../schuqwiki.credits portfolio/data/pages/wiki/credits.txt
 rm portfolio/lib/tpl/schuqwiki/user/.htaccess 
 
 sed -i "s/conf\['template'\].*/conf\['template'\] = 'schuqwiki';/" portfolio/conf/local.php 
