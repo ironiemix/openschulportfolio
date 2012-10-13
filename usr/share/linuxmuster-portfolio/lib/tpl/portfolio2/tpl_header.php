@@ -72,16 +72,5 @@ if (!defined('DOKU_INC')) die();
         </div>
 
     </div>
-
-
-    <!-- BREADCRUMBS -->
-    <?php if($conf['breadcrumbs'] || $conf['youarehere']): ?>
-        <div class="breadcrumbs">
-            <?php if($conf['youarehere']): ?>
-                <div class="youarehere"><?php tpl_youarehere() ?></div>
-            <?php endif ?>
-        </div>
-    <?php endif ?>
-    <?php html_msgarea() ?>
     <hr class="a11y" />
 </div></div><!-- /header -->

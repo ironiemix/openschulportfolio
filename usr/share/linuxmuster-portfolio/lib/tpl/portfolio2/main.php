@@ -29,6 +29,7 @@ $showSidebar = $hasSidebar && ($ACT=='show');
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <?php echo tpl_favicon(array('favicon', 'mobile')) ?>
     <?php tpl_includeFile('meta.html') ?>
+    <?php tpl_portfolio2_css() ?>
 </head>
 
 <body>
@@ -62,8 +63,11 @@ $showSidebar = $hasSidebar && ($ACT=='show');
                 <div class="page group">
                     <?php tpl_flush() ?>
                     <?php tpl_includeFile('pageheader.html') ?>
+                    <?php tpl_portfolio2_topbar() ?>
                     <!-- wikipage start -->
+                    <div id="innercontent">
                     <?php tpl_content() ?>
+                    </div>
                     <!-- wikipage stop -->
                     <?php tpl_includeFile('pagefooter.html') ?>
                 </div>
