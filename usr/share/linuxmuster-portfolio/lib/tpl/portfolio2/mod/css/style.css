@@ -152,3 +152,12 @@ div.include_edit:hover a.editlink {
     background: transparent;
 }
 
+pre {
+    border: 1px solid #CCCCCC;
+    border-radius: 2px 2px 2px 2px;
+    box-shadow: 0 0 0.5em #CCCCCC inset;
+    overflow: auto;
+    padding: 0.7em 1em;
+    word-wrap: normal;
+}
+
