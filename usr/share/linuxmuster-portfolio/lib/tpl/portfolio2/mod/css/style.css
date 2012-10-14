@@ -1,12 +1,21 @@
+#dokuwiki__header h1 span {
+    display: block;
+    padding:0;
+    margin:0;
+}
+
 div.topmenu {
     overflow: hidden;
     text-align:center;
+}
+div.topmenu div#menu {
+    width: 100%;
+    overflow:hidden;
 }
 
 .dokuwiki div.breadcrumbs {
     border:0 !important;
 }
-
 
 .dokuwiki div.page {
     padding: 0 !important;
@@ -16,6 +25,7 @@ div.topmenu {
 .dokuwiki div.pageId span {
     border: 0 !important;
 }
+
 #dokuwiki__aside h1 {
     box-shadow: 0 0 2px #999999;
     color: #555555;
@@ -27,8 +37,22 @@ div.topmenu {
 }
 
 #dokuwiki__aside h2 {
-    font-size: 1em;
+    font-size: 1.1em;
     font-weight: bold;
+    margin-left: 4px;
+    color: #888;
+    text-shadow: 1px 1px 0 #FFFFFF;
+}
+
+#dokuwiki__aside #ospversionpic {
+    background: url("mod/img/ospversion.png") no-repeat scroll center top transparent;
+    height: 45px;
+    margin-top: 40px;
+}
+#dokuwiki__aside #ospversion {
+    font-size: 80%;
+    color: #ccc;
+    text-align: center;
 }
 div.youarehere {
     margin: 0 2px 0 2px;
@@ -99,5 +123,31 @@ div#topbar ul li.active {
 
 #innercontent {
     padding: 0 2em 2em 2em;
+}
+
+
+div.include_edit a.editlink {
+    background-color: #CCCCCC !important;
+    border: 1px solid #AAAAAA;
+    box-shadow: 0 0 2px #999999;
+    color: #555555 !important;
+    display: inline;
+    font-size: 10px;
+    position: absolute;;
+    left: -99999em;
+    padding: 2px;
+    text-shadow: 1px 1px 0 #FFFFFF;
+}
+
+div.include_edit:hover a.editlink {
+    position: absolute;
+    left: 18em;
+    top: 11em;
+}
+
+
+
+#mediamanager__page dl dd {
+    background: transparent;
 }
 

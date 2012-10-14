@@ -13,7 +13,12 @@ if (!defined("DOKU_INC")){
 // portfolio title
 $conf["sitetitle"]    = "Schulportfolio"; //TRUE: use/show user pages
 $conf["schoolname"]    = "Schulname hier eintragen"; //TRUE: use/show user pages
-$conf["accentcolor"]  = "#ccc)";
+
+//styling
+$conf["sitetitle_css"]  = "color:#999; text-shadow: 2px 2px 0 #FFFFFF; font-size: 1.5em; font-weight: bold;";
+$conf["schoolname_css"]  = "color: #333; font-size: 1em;";
+$conf["barcolor_css"]  = "background-color: #ffe4ae; color: #555; text-shadow: 1px 1px 0 #FFFFFF;";
+$conf["pageid_css"]  = "background-color: #ffe4ae; color: #555;";
 
 
 //user pages
@@ -45,10 +50,4 @@ $conf["winML_logout"]   = false; //Logout link according to WinMl SSO?
 $conf["winML_logout_argument"] = "CMD=logoff"; // String to attach to url for logging out
 $conf["winML_hide_loginlogout"] = false; // Hide login/logout functions
 $conf["winML_hide_loginlogout_subnet"] = "10.1.x.x"; // wehn hiding, for wicht subnets?
-if (!empty($_SERVER["HTTP_HOST"])){
-  $conf["cite_author"] = "Contributors of ".hsc($_SERVER["HTTP_HOST"]); //name to use for the author on the citation page (hostname included)
-} else {
-  $conf["cite_author"] = "Anonymous Contributors"; //name to use for the author on the citation page
-}
-$conf["loaduserjs"]            = false; //TRUE: vector/user/user.js will be loaded
 

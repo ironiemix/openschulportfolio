@@ -13,6 +13,13 @@ if (!defined('DOKU_INC')) die(); /* must be run from within DokuWiki */
 // include template functions for osp mod
 require_once("mod/php/functions.php");
 
+//get needed language array
+include DOKU_TPLINC."lang/en/lang.php";
+$tpl_language = DOKU_TPLINC."/lang/".$conf["lang"]."/lang.php";
+if (!empty($conf["lang"]) && $conf["lang"] !== "en" && file_exists($tpl_language)){
+        include $tpl_language;
+}
+
 $hasSidebar = page_findnearest($conf['sidebar']);
 if ( ! $hasSidebar && page_exists(tpl_getConf('sidebar_page'))) {
     $hasSidebar = tpl_getConf('sidebar_page');
@@ -49,7 +56,7 @@ $showSidebar = $hasSidebar && ($ACT=='show');
                     <div class="content">
                         <?php tpl_flush() ?>
                         <?php tpl_includeFile('sidebarheader.html') ?>
-                        <?php tpl_include_page($hasSidebar, 1, 1) ?>
+                        <?php tpl_portfolio2_boxes($hasSidebar) ?>
                         <?php tpl_includeFile('sidebarfooter.html') ?>
                     </div>
                 </div></div><!-- /aside -->

@@ -20,12 +20,12 @@ if (!defined('DOKU_INC')) die();
         <h1><?php
             // get logo either out of the template images folder or data/media folder
             $logoSize = array();
-            $logo = tpl_getMediaFile(array(':wiki:logo.png', 'images/logo.png'), false, $logoSize);
+            $logo = tpl_getMediaFile(array(':wiki:logo.png', ':wiki:logo:logo.png', 'images/logo.png' ), false, $logoSize);
 
             // display logo and wiki title in a link to the home page
             tpl_link(
                 wl(),
-                '<img src="'.$logo.'" '.$logoSize[3].' alt="" /> <span>'.$conf['title'].'</span>',
+                '<img src="'.$logo.'" '.$logoSize[3].' alt="" /> <span id="sitetitle">'.tpl_getConf('sitetitle').'</span><span id="schoolname">'.tpl_getConf('schoolname').'</span>',
                 'accesskey="h" title="[H]"'
             );
         ?></h1>
@@ -49,7 +49,7 @@ if (!defined('DOKU_INC')) die();
                         tpl_action('admin', 1, 'li');
                         tpl_action('profile', 1, 'li');
                         tpl_action('register', 1, 'li');
-                        tpl_action('login', 1, 'li');
+                        tpl_portfolio2_login();
                     ?>
                 </ul>
             </div>

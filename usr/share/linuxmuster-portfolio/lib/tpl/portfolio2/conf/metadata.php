@@ -12,7 +12,11 @@ if (!defined("DOKU_INC")){
 $meta["sitetitle"]    = array("string"); 
 $meta["schoolname"]    = array("string"); 
 
-$meta["accentcolor"]    = array("string"); 
+//styling
+$meta["sitetitle_css"]  = array("string");
+$meta["schoolname_css"]  = array("string");
+$meta["barcolor_css"]  = array("string");
+$meta["pageid_css"]  = array("string");
 
 
 //user pages
@@ -44,7 +48,4 @@ $meta["winML_logout"]          = array("onoff");
 $meta["winML_logout_argument"] = array("string");
 $meta["winML_hide_loginlogout"] = array("onoff");
 $meta["winML_hide_loginlogout_subnet"] = array("string");
-$meta["cite_author"]           = array("string");
-$meta["loaduserjs"]            = array("onoff");
-$meta["closedwiki"]            = array("onoff");
 
