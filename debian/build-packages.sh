@@ -20,7 +20,7 @@ BUILDDIR="tarbuild"
 
 
 # ospversion.php erzeugen und Version hineinschreiben
-OSPVERSION=../usr/share/linuxmuster-portfolio/lib/tpl/portfolio/ospversion.php
+OSPVERSION=../usr/share/linuxmuster-portfolio/lib/tpl/portfolio2/ospversion.php
 VERSION=`head -n 1 changelog  | awk '{print $2}' | sed 's/(//' | sed 's/)//'`
 echo "<?php" > $OSPVERSION
 echo -n 'print "' >> $OSPVERSION

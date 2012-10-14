@@ -3,7 +3,8 @@
     width: 50%;
     left: 25%;
     top: 25%;
-    background: white;
+    background: #fdfdfd;
+    box-shadow: 8px 8px 8px #aaa , -8px 8px 8px #aaa, 8px -8px 8px #aaa, -8px -8px 8px #aaa;
     border: 1px solid #ccc;
     z-index: 4;
 }

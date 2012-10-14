@@ -73,9 +73,9 @@ basedn=`grep basedn $NETWORKSETTINGS | sed "s/^.*\"\(.*\)\".*$/\1/"`
 if [ -f /etc/linuxmuster-portfolio/local.php ]; then
     sed -i'' -e"s/\(ou=accounts,\).*;/\1 $basedn\';/" /etc/linuxmuster-portfolio/local.php
     sed -i'' -e"s/\(ou=groups,\).*;/\1 $basedn\';/" /etc/linuxmuster-portfolio/local.php
+    sed -i "s/\(\$conf\['template'\].*=\).*/\1 'portfolio2';/" /etc/linuxmuster-portfolio/local.php
 fi
-VERSION=`dpkg -p linuxmuster-portfolio | grep Version`
-sed -i "s/\#\#\#PAKETINFO\#\#\#/linuxmuster-portfolio<br\/>(${VERSION})/" /usr/share/linuxmuster-portfolio/lib/tpl/portfolio/main.php 
+
 
 if [ -x /etc/init.d/apache2 ]; then
 /etc/init.d/apache2 reload
