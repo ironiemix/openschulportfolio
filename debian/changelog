@@ -1,3 +1,10 @@
+linuxmuster-portfolio (12.11-marie.7) openlml; urgency=low
+
+  * Changed architecture to all for compytibility to linuxmuster.net 6.x
+  * Added borders to page and sidebar h1 for IE styling
+
+ -- Frank Schiebel <frank@linuxmuster.net>  Sat, 27 Oct 2012 19:58:03 +0200
+
 linuxmuster-portfolio (12.11-marie.6) openlml; urgency=low
 
   * New dokuwiki "Adora Belle"

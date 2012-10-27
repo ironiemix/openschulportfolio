@@ -19,11 +19,9 @@ div.topmenu div#menu {
 
 .dokuwiki div.page {
     padding: 0 !important;
-    border: 0 !important;
 }
 
 .dokuwiki div.pageId span {
-    border: 0 !important;
 }
 
 #dokuwiki__aside h1 {
@@ -34,6 +32,7 @@ div.topmenu div#menu {
     padding: 3px 1px 5px 5px;
     margin:3px;
     text-shadow: 1px 1px 0 #FFFFFF;
+    border: 1px solid #eee;
 }
 
 #dokuwiki__aside h2 {
