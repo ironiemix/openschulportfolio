@@ -19,7 +19,8 @@ $lang["sitetitle_css"]  = "CSS Regeln zur Formatierung des Wikititels";
 $lang["schoolname_css"]  = "CSS Regeln zur Formatierunbg des Untertitels";
 $lang["barcolor_css"]  = "CSS Regeln zur Formatierung der akzetuierten Elemente (Topbar, Sidebarheadings)";
 $lang["pageid_css"]  = "CSS Regeln zur Formatierung der PageID (Kleiner Seitenname oben rechts)";
-
+// ns search
+$lang["searchnamespaces"] = "Namensräume, die zur Suche ausgewählt werden können. Schreibweise: namensraum>Anzuzeigende Bezeichnung. Durch Kommata getrennt.";
 
 //user pages
 $lang["userpage"]    = "Benutzerseiten verwenden?";

@@ -180,5 +180,21 @@ function tpl_portfolio2_boxes($sidebar) {
     return true;
 }
 
+function fancysearchbox() {
+    $searchnamespaces = explode(",",tpl_getConf('searchnamespaces'));
+    foreach ($searchnamespaces as $ns) {
+        list($namespace,$displayname) = explode(">",$ns);
+        trim($namespace);
+        trim($displayname);
+        $namespaces[$namespace] = $displayname;
+    }
+    $fancysearch = plugin_load('action', 'fancysearch');
+    if (!is_null($fancysearch)) {
+        $fancysearch->tpl_searchform($namespaces, 'allpagesimg');
+    } else {
+        tpl_searchform();
+    }
+}
+
 
 ?>

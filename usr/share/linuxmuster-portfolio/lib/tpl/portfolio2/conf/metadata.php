@@ -18,6 +18,8 @@ $meta["schoolname_css"]  = array("string");
 $meta["barcolor_css"]  = array("string");
 $meta["pageid_css"]  = array("string");
 
+//ns search
+$meta["searchnamespaces"] = array("string");
 
 //user pages
 $meta["userpage"]    = array("onoff");

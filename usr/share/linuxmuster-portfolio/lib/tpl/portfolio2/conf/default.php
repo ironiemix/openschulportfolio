@@ -20,6 +20,9 @@ $conf["schoolname_css"]  = "color: #333; font-size: 1em;";
 $conf["barcolor_css"]  = "background-color: #ffe4ae; color: #555; text-shadow: 1px 1px 0 #FFFFFF;";
 $conf["pageid_css"]  = "background-color: #ffe4ae; color: #555;";
 
+//ns search
+$conf["searchnamespaces"] = ">Alles,portfolio>Portfolio,hilfe>Hilfe";
+
 
 //user pages
 $conf["userpage"]    = false; //TRUE: use/show user pages
