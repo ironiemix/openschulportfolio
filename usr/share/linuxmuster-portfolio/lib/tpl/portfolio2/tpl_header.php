@@ -58,7 +58,7 @@ if (!defined('DOKU_INC')) die();
         <!-- SITE TOOLS -->
         <div id="dokuwiki__sitetools">
             <h3 class="a11y"><?php echo $lang['site_tools']; ?></h3>
-            <?php fancysearchbox(); ?>
+            <?php selectsearchbox(); ?>
             <div class="mobileTools">
                 <?php tpl_actiondropdown($lang['tools']); ?>
             </div>

@@ -1,11 +1,10 @@
-linuxmuster-portfolio (12.11-marie.8) openlml; urgency=low
+linuxmuster-portfolio (12.11-marie.9) openlml; urgency=low
 
   * Changed architecture to all for compytibility to linuxmuster.net 6.x
   * Added borders to page and sidebar h1 for IE styling
-  * Added fancysearch plugin for namespace searches in a non-fancy way
-  * Moved configuration of namespaces to search to template config
+  * Moved search in namespaces to selectsearch plugin
 
- -- Frank Schiebel <frank@linuxmuster.net>  Wed, 31 Oct 2012 21:12:54 +0100
+ -- Frank Schiebel <frank@linuxmuster.net>  Thu, 01 Nov 2012 18:55:22 +0100
 
 linuxmuster-portfolio (12.11-marie.6) openlml; urgency=low
 

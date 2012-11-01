@@ -1,0 +1,7 @@
+base     selectsearch
+author   Frank Schiebel
+email    frank@linuxmuster.net
+date     2012-11-01
+name     Selectsearch Plugin
+desc     Provides a dropdown list for common namespaces enhancing the search input, based on, in fact copied from Adran Langs fancysearch plugin - but not fancy ;)
+url      http://www.openschulportfolio.de/
