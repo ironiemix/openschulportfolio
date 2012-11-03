@@ -52,7 +52,7 @@ quilt --quiltrc /dev/null push -a
 
 # debian Paket bauen
 cd ..
-dpkg-buildpackage
+dpkg-buildpackage -i\.git -I.git
 cd debian
 
 # Patches entfernen

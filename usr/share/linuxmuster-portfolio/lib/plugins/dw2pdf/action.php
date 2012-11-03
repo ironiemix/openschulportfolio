@@ -1,245 +1,307 @@
 <?php
  /**
- * dw2Pdf Plugin: Conversion from dokuwiki content to pdf.
- *
- * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * @author     Luigi Micco <l.micco@tiscali.it>
- */
+  * dw2Pdf Plugin: Conversion from dokuwiki content to pdf.
+  *
+  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+  * @author     Luigi Micco <l.micco@tiscali.it>
+  * @author     Andreas Gohr <andi@splitbrain.org>
+  */
 
 // must be run within Dokuwiki
 if (!defined('DOKU_INC')) die();
 if (!defined('DOKU_PLUGIN')) define('DOKU_PLUGIN', DOKU_INC . 'lib/plugins/');
 
-require_once (DOKU_PLUGIN . 'action.php');
- 
-class action_plugin_dw2pdf extends DokuWiki_Action_Plugin
-{
-    /**
-     * Constructor.
-     */
-    function action_plugin_dw2pdf(){
-    }
+class action_plugin_dw2pdf extends DokuWiki_Action_Plugin {
+
+    private $tpl;
 
     /**
-     * return some info
+     * Constructor. Sets the correct template
      */
-    function getInfo(){
-      return array (
-        'author' => 'Luigi Micco',
-        'email' => 'l.micco@tiscali.it',
-        'date' => '2010-02-04',
-        'name' => 'Dw2Pdf plugin (action component)',
-        'desc' => 'DokuWiki to Pdf converter',
-        'url' => 'http://www.bitlibero.com/dokuwiki/dw2pdf-02.04.2010.zip',
-      );
+    function __construct(){
+        $tpl;
+        if(isset($_REQUEST['tpl'])){
+            $tpl = trim(preg_replace('/[^A-Za-z0-9_\-]+/','',$_REQUEST['tpl']));
+        }
+        if(!$tpl) $tpl = $this->getConf('template');
+        if(!$tpl) $tpl = 'default';
+        if(!is_dir(DOKU_PLUGIN.'dw2pdf/tpl/'.$tpl)) $tpl = 'default';
+
+        $this->tpl = $tpl;
     }
 
     /**
      * Register the events
      */
-    function register(&$controller)
-    {
+    function register(&$controller) {
         $controller->register_hook('ACTION_ACT_PREPROCESS', 'BEFORE', $this, 'convert',array());
     }
 
-    function convert(&$event, $param)
-    {
-      global $ACT;
-      global $REV;
-      global $ID;
-      global $conf;
+    /**
+     * Do the HTML to PDF conversion work
+     */
+    function convert(&$event, $param) {
+        global $ACT;
+        global $REV;
+        global $ID;
+        global $conf;
 
-      if (( $ACT == 'export_pdfbook' ) || ( $ACT == 'export_pdf' )) {
+        // our event?
+        if (( $ACT != 'export_pdfbook' ) && ( $ACT != 'export_pdf' )) return false;
+
         // check user's rights
-        if ( auth_quickaclcheck($ID) < AUTH_READ ) {
-          return false;
-        }  
+        if ( auth_quickaclcheck($ID) < AUTH_READ ) return false;
 
+        // it's ours, no one else's
         $event->preventDefault();
-        
-        require_once(dirname(__FILE__)."/mpdf/mpdf.php");
-        $mpdf=new mPDF('UTF-8-s'); 
-        $mpdf->SetAutoFont(AUTOFONT_ALL);
-      
-        // Temp dir
-        define("_MPDF_TEMP_PATH", $conf['savedir'].'/tmp/');
 
-        $mpdf->ignore_invalid_utf8 = true;
-        $mpdf->mirrorMargins = 1;	// Use different Odd/Even headers and footers and mirror margins
-
-        $mpdf->defaultheaderfontsize = 8;	/* in pts */
-        $mpdf->defaultheaderfontstyle = '';	/* blank, B, I, or BI */
-        $mpdf->defaultheaderline = 1; 	/* 1 to include line below header/above footer */
-
-        $mpdf->defaultfooterfontsize = 8;	/* in pts */
-        $mpdf->defaultfooterfontstyle = '';	/* blank, B, I, or BI */
-        $mpdf->defaultfooterline = 1; 	/* 1 to include line below header/above footer */
-      
-        $html = '<html><head>';
-        $html = $html . "<style>
-        table {
-          border: 1px solid #808080;
-          border-collapse: collapse;
-        }
-        td, th {
-          border: 1px solid #808080;
-        }";   
-        
-        //load userdefined CSS?
-        if ($this->getConf("loadusercss") && @file_exists(DOKU_PLUGIN.'dw2pdf/user/user.css')) {
-          $html = $html . io_readFile(DOKU_PLUGIN.'dw2pdf/user/user.css');
-        }        
-        $html = $html . "</style>";
-        $html = $html . '</head><body>';
-
-        
+        // one or multiple pages?
+        $list = array();
         if ( $ACT == 'export_pdf' ) {
-          $list = array();
-          $list[0] = $ID;
-        } else {
-          if (isset($_COOKIE['list-pagelist'])) {
+            $list[0] = $ID;
+        } elseif (isset($_COOKIE['list-pagelist'])) {
             $list = explode("|", $_COOKIE['list-pagelist']);
-          }  
-          if ($_GET['pdfbook_title']) {
-            $pdftitle = $_GET['pdfbook_title'];
-          } else {  
-            $pdftitle = $conf['title'];
-          }  
         }
 
-        for ($n = 0; $n < count($list); $n++) {            
-          $page = $list[$n];
-          
-          $idparam = $page;
-          if ($REV != 0) {  $idparam = $idparam."&rev=".$REV; };
+        // prepare cache
+        $cache = new cache(join(',',$list).$REV.$this->tpl,'.dw2.pdf');
+        $depends['files']   = array_map('wikiFN',$list);
+        $depends['files'][] = __FILE__;
+        $depends['files'][] = dirname(__FILE__).'/renderer.php';
+        $depends['files'][] = dirname(__FILE__).'/mpdf/mpdf.php';
+        $depends['files']   = array_merge($depends['files'], getConfigFiles('main'));
 
-          $pos = strrpos(utf8_decode($ID), ':');
-          $pageName = p_get_first_heading($ID);
-          if($pageName == NULL) {
-            if($pos != FALSE) {
-              $pageName = utf8_substr($page, $pos+1, utf8_strlen($page));
-            } else {
-              $pageName = $page;
+        // hard work only when no cache available
+        if(!$this->getConf('usecache') || !$cache->useCache($depends)){
+            // initialize PDF library
+            require_once(dirname(__FILE__)."/DokuPDF.class.php");
+            $mpdf = new DokuPDF();
+
+            // let mpdf fix local links
+            $self = parse_url(DOKU_URL);
+            $url  = $self['scheme'].'://'.$self['host'];
+            if($self['port']) $url .= ':'.$port;
+            $mpdf->setBasePath($url);
+
+            // Set the title
+            $title = $_GET['pdfbook_title'];
+            if(!$title) $title = p_get_first_heading($ID);
+            $mpdf->SetTitle($title);
+
+            // some default settings
+            $mpdf->mirrorMargins = 1;
+            $mpdf->useOddEven    = 1;
+            $mpdf->setAutoTopMargin = 'stretch';
+            $mpdf->setAutoBottomMargin = 'stretch';
+
+            // load the template
+            $template = $this->load_template($title);
+
+            // prepare HTML header styles
+            $html  = '<html><head>';
+            $html .= '<style>';
+            $html .= $this->load_css();
+            $html .= '@page { size:auto; '.$template['page'].'}';
+            $html .= '@page :first {'.$template['first'].'}';
+            $html .= $template['css'];
+            $html .= '</style>';
+            $html .= '</head><body>';
+            $html .= $template['html'];
+            $html .= '<div class="dokuwiki">';
+
+            // loop over all pages
+            $cnt = count($list);
+            for($n=0; $n<$cnt; $n++){
+                $page = $list[$n];
+
+                $html .= p_cached_output(wikiFN($page,$REV),'dw2pdf',$page);
+                $html .= $template['cite'];
+                if ($n < ($cnt - 1)){
+                    $html .= '<pagebreak />';
+                }
             }
-            $pageName = str_replace('_', ' ', $pageName);
-          }
-                    
-          $iddata = p_get_metadata($page,'date');
 
-          $html = $html . p_wiki_xhtml($page,$REV,false);
+            $html .= '</div>';
+            $mpdf->WriteHTML($html);
 
-          if ($n == 0) {
-            // standard replacements
-            $replace = array(
-                    '@ID@'   => $ID,
-                    '@PAGE@' => '{PAGENO}',
-                    '@PAGES@' => '{nb}',
-                    '@TITLE@' => $pageName,
-                    '@WIKI@' => $conf['title'],
-                    '@WIKIURL@' => DOKU_URL,
-                    '@UPDATE@' => dformat($iddata['modified']),
-                    '@PAGEURL@' => wl($idparam, false, true, "&"),
-                    '@DATE@' => strftime($conf['dformat']),
-                    );
-          
-            // do the replace
-            $footer_odd = str_replace(array_keys($replace), array_values($replace), $this->getConf("footer_odd"));
-            $footer_even = str_replace(array_keys($replace), array_values($replace), $this->getConf("footer_even"));
-            $header_odd = str_replace(array_keys($replace), array_values($replace), $this->getConf("header_odd"));
-            $header_even = str_replace(array_keys($replace), array_values($replace), $this->getConf("header_even"));
-
-            $mpdf->SetHeader($header_odd);
-            $mpdf->SetHeader($header_even, 'E');
-            
-            $mpdf->SetFooter($footer_odd);
-            $mpdf->SetFooter($footer_even, 'E');
-          }  
-
-          $html = $this->citation($html, $conf['title'], $idparam, $iddata, $this->getConf('addcitation'));
-          
-          if ($n < (count($list) - 1)) $html = $html . "<pagebreak />";
-          
+            // write to cache file
+            $mpdf->Output($cache->cache, 'F');
         }
 
-        $html = $this->arrangeHtml($html, $this->getConf("maxbookmarks"), $this->getConf("norender"));
+        // deliver the file
+        header('Content-Type: application/pdf');
+        header('Cache-Control: must-revalidate, no-transform, post-check=0, pre-check=0');
+        header('Pragma: public');
+        http_conditionalRequest(filemtime($cache->cache));
 
-        $mpdf->SetTitle($pageName);
-        $mpdf->WriteHTML($html);
-
-        if (count($list) == 1) $pdftitle = $pageName;
-
-        $output = 'I';
-        if($this->getConf('output') == 'file') $output = 'D';
-        $mpdf->Output(urlencode($pdftitle).'.pdf', $output);
-
-        die();
-      }
-    }
-
-    // thanks to Jared Ong
-    // Custom function for help in stripping span tags
-    function strip_only($str, $tags) {
-      if(!is_array($tags)) {
-          $tags = (strpos($str, '>') !== false ? explode('>', str_replace('<', '', $tags)) : array($tags));
-          if(end($tags) == '') array_pop($tags);
-      }
-      foreach($tags as $tag) $str = preg_replace('#</?'.$tag.'[^>]*>#is', '', $str);
-      return $str;
-    }
-    // Custom function for help in stripping span tags
-
-    // Custom function for help in replacing &#039; &quot; &gt; &lt; &amp;
-    function strip_htmlencodedchars($str) {
-      $str = str_replace('&#039;', '\'', $str);
-      $str = str_replace('&quot;', '"', $str);
-      $str = str_replace('&gt;', '>', $str);
-      $str = str_replace('&lt;', '<', $str);
-      $str = str_replace('&amp;', '&', $str);
-      return $str;
-    }
-    // Custom function for help in replacing &#039; &quot; &gt; &lt; &amp;
-
-
-    function arrangeHtml($html, $bookmark = 0, $norendertags = '' ) {
-    
-      // add bookmark links
-      if ($bookmark > 0) {
-        $html = preg_replace("/\<a name=(.+?)\>(.+?)\<\/a\>/s",'$2',$html);
-        for ($j = 1; $j<=$bookmark; $j++) { 
-          $html = preg_replace("/\<h".$j."\>(.+?)\<\/h".$j."\>/s",'<h'.$j.'>$1<bookmark content="$1" level="'.($j-1).'"/></h'.$j.'>',$html);
+        $filename = rawurlencode(cleanID(strtr($title, ':/;"','    ')));
+        if($this->getConf('output') == 'file'){
+            header('Content-Disposition: attachment; filename="'.$filename.'.pdf";');
+        }else{
+            header('Content-Disposition: inline; filename="'.$filename.'.pdf";');
         }
-      }  
-      // add bookmark links
 
-      // insert a pagebreak for support of WRAP and PAGEBREAK plugins 
-      $html = str_replace('<br style="page-break-after:always;">','<pagebreak />',$html);
-      $html = str_replace('<div class="wrap_pagebreak"></div>','<pagebreak />',$html);
+        if (http_sendfile($cache->cache)) exit;
 
-      // thanks to Jared Ong
-      // Customized to strip all span tags so that the wiki <code> SQL would display properly
-      $norender = explode(',',$norendertags);
-      $html = $this->strip_only($html, $norender ); //array('span','acronym'));
-      $html = $this->strip_htmlencodedchars($html);
-      // Customized to strip all span tags so that the wiki <code> SQL would display properly
-
-      $html = str_replace('href="/','href="http://'.$_SERVER['HTTP_HOST'].'/',$html);
-
-      return $html;
+        $fp = @fopen($cache->cache,"rb");
+        if($fp){
+            http_rangeRequest($fp,filesize($cache->cache),'application/pdf');
+        }else{
+            header("HTTP/1.0 500 Internal Server Error");
+            print "Could not read file - bad permissions?";
+        }
+        exit();
     }
-    
-    function citation($html, $title, $idparam, $date, $flag = false) {
 
-      if($flag) {
-        $html = $html . "<br><br><div style='font-size: 80%; border: solid 0.5mm #DDDDDD;background-color: #EEEEEE; padding: 2mm; border-radius: 2mm 2mm; width: 100%;'>";
-        $html = $html . "From:<br>";
-        $html = $html . "<a href='".DOKU_URL."'>".DOKU_URL."</a>&nbsp;-&nbsp;"."<b>".$title."</b>";
-        $html = $html . "<br><br>Permanent link:<br>";
-        $html = $html . "<b><a href='".wl($idparam, false, true, "&")."'>".wl($idparam, false, true, "&")."</a></b>";
-        $html = $html . "<br><br>Last update: <b>".dformat($date['modified'])."</b><br>";
-        $html = $html . "</div>";
-      }  
-      return $html;
+
+    /**
+     * Load the various template files and prepare the HTML/CSS for insertion
+     */
+    protected function load_template($title){
+        global $ID;
+        global $REV;
+        global $conf;
+        $tpl = $this->tpl;
+
+        // this is what we'll return
+        $output = array(
+            'html'  => '',
+            'css'   => '',
+            'page'  => '',
+            'first' => '',
+            'cite'  => '',
+        );
+
+        // prepare header/footer elements
+        $html = '';
+        foreach(array('header','footer') as $t){
+            foreach(array('','_odd','_even','_first') as $h){
+                if(file_exists(DOKU_PLUGIN.'dw2pdf/tpl/'.$tpl.'/'.$t.$h.'.html')){
+                    $html .= '<htmlpage'.$t.' name="'.$t.$h.'">'.DOKU_LF;
+                    $html .= file_get_contents(DOKU_PLUGIN.'dw2pdf/tpl/'.$tpl.'/'.$t.$h.'.html').DOKU_LF;
+                    $html .= '</htmlpage'.$t.'>'.DOKU_LF;
+
+                    // register the needed pseudo CSS
+                    if($h == '_first'){
+                        $output['first'] .= $t.': html_'.$t.$h.';'.DOKU_LF;
+                    }elseif($h == '_even'){
+                        $output['page'] .= 'even-'.$t.'-name: html_'.$t.$h.';'.DOKU_LF;
+                    }elseif($h == '_odd'){
+                        $output['page'] .= 'odd-'.$t.'-name: html_'.$t.$h.';'.DOKU_LF;
+                    }else{
+                        $output['page'] .= $t.': html_'.$t.$h.';'.DOKU_LF;
+                    }
+                }
+            }
+        }
+
+        // generate qr code for this page using google infographics api
+        $qr_code = '';
+        if ($this->getConf('qrcodesize')) {
+            $url = urlencode(wl($ID,'','&',true));
+            $qr_code = '<img src="https://chart.googleapis.com/chart?chs='.
+                       $this->getConf('qrcodesize').'&cht=qr&chl='.$url.'" />';
+        }
+
+        // prepare replacements
+        $replace = array(
+                '@ID@'      => $ID,
+                '@PAGE@'    => '{PAGENO}',
+                '@PAGES@'   => '{nb}',
+                '@TITLE@'   => hsc($title),
+                '@WIKI@'    => $conf['title'],
+                '@WIKIURL@' => DOKU_URL,
+                '@UPDATE@'  => dformat(filemtime(wikiFN($ID,$REV))),
+                '@PAGEURL@' => wl($ID,($REV)?array('rev'=>$REV):false, true, "&"),
+                '@DATE@'    => dformat(time()),
+                '@BASE@'    => DOKU_BASE,
+                '@TPLBASE@' => DOKU_BASE.'lib/plugins/dw2pdf/tpl/'.$tpl.'/',
+                '@TPLBASE@' => DOKU_PLUGIN.'dw2pdf/tpl/'.$tpl.'/',
+                '@QRCODE@'  => $qr_code,
+        );
+
+        // set HTML element
+        $output['html'] = str_replace(array_keys($replace), array_values($replace), $html);
+
+        // citation box
+        if(file_exists(DOKU_PLUGIN.'dw2pdf/tpl/'.$tpl.'/citation.html')){
+            $output['cite'] = file_get_contents(DOKU_PLUGIN.'dw2pdf/tpl/'.$tpl.'/citation.html');
+            $output['cite'] = str_replace(array_keys($replace), array_values($replace), $output['cite']);
+        }
+
+        // set custom styles
+        if(file_exists(DOKU_PLUGIN.'dw2pdf/tpl/'.$tpl.'/style.css')){
+            $output['css'] = file_get_contents(DOKU_PLUGIN.'dw2pdf/tpl/'.$tpl.'/style.css');
+        }
+
+        return $output;
+    }
+
+    /**
+     * Load all the style sheets and apply the needed replacements
+     */
+    protected function load_css(){
+        //reusue the CSS dispatcher functions without triggering the main function
+        define('SIMPLE_TEST',1);
+        require_once(DOKU_INC.'lib/exe/css.php');
+
+        // prepare CSS files
+        $files = array_merge(
+                    array(
+                        DOKU_INC.'lib/styles/screen.css'
+                            => DOKU_BASE.'lib/styles/',
+                        DOKU_INC.'lib/styles/print.css'
+                            => DOKU_BASE.'lib/styles/',
+                    ),
+                    css_pluginstyles('all'),
+                    $this->css_pluginPDFstyles(),
+                    array(
+                        DOKU_PLUGIN.'dw2pdf/conf/style.css'
+                            => DOKU_BASE.'lib/plugins/dw2pdf/conf/',
+                        DOKU_PLUGIN.'dw2pdf/tpl/'.$this->tpl.'/style.css'
+                            => DOKU_BASE.'lib/plugins/dw2pdf/tpl/'.$this->tpl.'/',
+                        DOKU_PLUGIN.'dw2pdf/conf/style.local.css'
+                            => DOKU_BASE.'lib/plugins/dw2pdf/conf/',
+                    )
+                 );
+        $css = '';
+        foreach($files as $file => $location){
+            $css .= css_loadfile($file, $location);
+        }
+
+        // apply pattern replacements
+        $css = css_applystyle($css,DOKU_INC.'lib/tpl/'.$conf['template'].'/');
+
+        return $css;
+    }
+
+
+    /**
+     * Returns a list of possible Plugin PDF Styles
+     *
+     * Checks for a pdf.css, falls back to print.css
+     *
+     * @author Andreas Gohr <andi@splitbrain.org>
+     */
+    function css_pluginPDFstyles(){
+        global $lang;
+        $list = array();
+        $plugins = plugin_list();
+
+        $usestyle = explode(',',$this->getConf('usestyles'));
+        foreach ($plugins as $p){
+            if(in_array($p,$usestyle)){
+                $list[DOKU_PLUGIN."$p/screen.css"] = DOKU_BASE."lib/plugins/$p/";
+                $list[DOKU_PLUGIN."$p/style.css"] = DOKU_BASE."lib/plugins/$p/";
+            }
+
+            if(file_exists(DOKU_PLUGIN."$p/pdf.css")){
+                $list[DOKU_PLUGIN."$p/pdf.css"] = DOKU_BASE."lib/plugins/$p/";
+            }else{
+                $list[DOKU_PLUGIN."$p/print.css"] = DOKU_BASE."lib/plugins/$p/";
+            }
+        }
+        return $list;
     }
 
 }
-?>

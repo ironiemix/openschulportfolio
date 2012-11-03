@@ -1,6 +1,6 @@
 auth_ad_remove_winmlgroupprefix.patch
 notes_plugin.patch
-dw2pdf_quick_fix.patch
 auth_ldap_remove_lmlgroupprefix.patch
 plugin_filelist_syntax_doubleslash.patch
 bookcreator_tableless.patch
+edit_txt.patch

@@ -30,9 +30,14 @@ function tpl_portfolio2_topbar() {
     print "<div id=\"topbar\">";
     print "<ul class=\"topbar-left\">";
     print "<li><a href=\"".wl($ID)."\" title=\"". $lang['readpage_tooltip']. "\">".$lang['readpage']."</a></li>";
-    if(isset($_SERVER['REMOTE_USER']) && tpl_getConf('infomail')) {
+    // infomail when enabled
+    if(isset($_SERVER['REMOTE_USER']) && tpl_getConf('infomail') && ! plugin_isdisabled("infomail") ) {
         $lang['btn_infomail'] = 'Infomail';
-        echo "<li class=\"infomail\">" . html_btn('infomail',$ID,null,array('do' => 'infomail', 'id' => $ID)) . "</li>";
+        print "<li class=\"infomail\">" . html_btn('infomail',$ID,null,array('do' => 'infomail', 'id' => $ID)) . "</li>";
+    }
+    if(isset($_SERVER['REMOTE_USER']) && tpl_getConf('discuss') && ! plugin_isdisabled("discussion") ) {
+        $discussionpage = str_replace("::",":",tpl_getConf('discuss_ns') . ':' . $ID);
+        print "<li><a href=\"".wl($discussionpage)."\" title=\"". $lang['discussion_tooltip']. "\">".$lang['discussion']."</a></li>";
     }
     print "</ul>";
     print "<ul class=\"topbar-right\">";
@@ -75,7 +80,7 @@ function tpl_portfolio2_topbar() {
 
     // errors and messages
     html_msgarea();
-}
+ }
 
 function tpl_portfolio2_css() {
 
@@ -126,7 +131,7 @@ function tpl_portfolio2_boxes($sidebar) {
     //get boxes config
     include DOKU_TPLINC."/conf/boxes.php"; //default
 
-    //include siedbar page
+    //include sidebar page
     echo "<div class= \"include_edit\">";
     tpl_include_page($sidebar, 1, 1);
     if (auth_quickaclcheck($sidebar) > AUTH_READ) {
@@ -134,7 +139,8 @@ function tpl_portfolio2_boxes($sidebar) {
         echo "<a href=\"". $link . "\" class=\"editlink\">". $lang["edit_include"] . "</a>\n";
     }
     echo "</div>";
-    // checking argument
+ 
+   // checking argument
     if (empty($boxes) || !is_array($boxes)) {
         return false;
     }
@@ -180,14 +186,29 @@ function tpl_portfolio2_boxes($sidebar) {
     return true;
 }
 
-function selectsearchbox() {
+function tpl_portfolio2_selectsearchbox() {
     $selectsearch = plugin_load('action', 'selectsearch');
     if (!is_null($selectsearch)) {
         $selectsearch->tpl_searchform();
     } else {
         tpl_searchform();
     }
+} 
+
+function tpl_portfolio2_userinfo(){
+    global $lang;
+    global $INFO;
+
+    $loginname = $_SERVER['REMOTE_USER'];
+    if ( tpl_getConf('userpage') ) {
+        $userpage = str_replace("::",":",tpl_getConf('userpage_ns') .':' . $loginname .':start');
+        $loginname = "<a href='".wl($userpage)."'>" . $loginname ."</a>";
+    }
+
+    if(isset($_SERVER['REMOTE_USER'])){
+      print $lang['loggedinas'].': '.$INFO['userinfo']['name'].' ('.$loginname.')';
+      return true;
+    }
+    return false;
 }
-
-
 ?>

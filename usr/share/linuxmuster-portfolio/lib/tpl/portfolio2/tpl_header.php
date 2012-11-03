@@ -33,7 +33,7 @@ if (!defined('DOKU_INC')) die();
             <p class="claim"><?php echo $conf['tagline']; ?></p>
         <?php endif ?>
     </div>
-
+    <?php if( $_SERVER['REMOTE_USER'] || ! tpl_getConf('closedwiki') ): ?>
     <div class="tools group">
         <!-- USER TOOLS -->
         <?php if ($conf['useacl']): ?>
@@ -43,7 +43,7 @@ if (!defined('DOKU_INC')) die();
                     <?php
                         if ($_SERVER['REMOTE_USER']) {
                             echo '<li class="user">';
-                            tpl_userinfo(); /* 'Logged in as ...' */
+                            tpl_portfolio2_userinfo(); /* 'Logged in as ...' */
                             echo '</li>';
                         }
                         tpl_action('admin', 1, 'li');
@@ -58,7 +58,7 @@ if (!defined('DOKU_INC')) die();
         <!-- SITE TOOLS -->
         <div id="dokuwiki__sitetools">
             <h3 class="a11y"><?php echo $lang['site_tools']; ?></h3>
-            <?php selectsearchbox(); ?>
+            <?php tpl_portfolio2_selectsearchbox(); ?>
             <div class="mobileTools">
                 <?php tpl_actiondropdown($lang['tools']); ?>
             </div>
@@ -72,5 +72,6 @@ if (!defined('DOKU_INC')) die();
         </div>
 
     </div>
+    <?php endif ?>
     <hr class="a11y" />
 </div></div><!-- /header -->

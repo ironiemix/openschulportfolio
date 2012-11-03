@@ -65,8 +65,9 @@ $showSidebar = $hasSidebar && ($ACT=='show');
             <!-- ********** CONTENT ********** -->
             <div id="dokuwiki__content"><div class="pad group">
 
-                <div class="pageId"><span><?php echo hsc($ID) ?></span></div>
-
+            <?php if( ! tpl_getConf('closedwiki') || $_SERVER['REMOTE_USER'] ): ?>
+                <div class="pageId"><span>&nbsp;[[<?php echo hsc($ID) ?>]]&nbsp;</span></div>
+            <?php endif ?>
                 <div class="page group">
                     <?php tpl_flush() ?>
                     <?php tpl_includeFile('pageheader.html') ?>
@@ -87,6 +88,7 @@ $showSidebar = $hasSidebar && ($ACT=='show');
             <hr class="a11y" />
 
             <!-- PAGE ACTIONS -->
+            <?php if( ! tpl_getConf('closedwiki') || $_SERVER['REMOTE_USER'] ): ?>
             <div id="dokuwiki__pagetools">
                 <h3 class="a11y"><?php echo $lang['page_tools']; ?></h3>
                 <div class="tools">
@@ -102,6 +104,7 @@ $showSidebar = $hasSidebar && ($ACT=='show');
                     </ul>
                 </div>
             </div>
+            <?php endif ?>
         </div><!-- /wrapper -->
 
         <?php include('tpl_footer.php') ?>

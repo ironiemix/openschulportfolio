@@ -13,7 +13,7 @@ if (!defined("DOKU_INC")){
 // portfolio title
 $lang["sitetitle"]    = "Titel des Portfoliowikis"; //TRUE: use/show user pages
 $lang["schoolname"]    = "Untertitel des Portfoliowikis, z.B. der Schulname"; //TRUE: use/show user pages
-
+$lang["closedwiki"]     = "Sollen die Navigationselemente und Seitenwerkzeuge für nicht angemeldete Benutzer versteckt werden?";
 //styling
 $lang["sitetitle_css"]  = "CSS Regeln zur Formatierung des Wikititels";
 $lang["schoolname_css"]  = "CSS Regeln zur Formatierunbg des Untertitels";
@@ -47,8 +47,8 @@ $lang["exportbox"]          = "Exportfunktionen in der Sidebar anzeigen?"; //TRU
 $lang["toolbox"]          = "Werkzeugfunktionen in der Sidebar anzeigen?"; //TRUE: use/show toolbox
 
 // Winmuster
-$lang["winML_logout"]   = ""; //Logout link according to WinMl SSO?
-$lang["winML_logout_argument"] = ""; // String to attach to url for logging out
-$lang["winML_hide_loginlogout"] = ""; // Hide login/logout functions
-$lang["winML_hide_loginlogout_subnet"] = ""; // wehn hiding, for wicht subnets?
+$lang["winML_logout"]   = "Logout Link für Windows Musterlösung SSO anpassen?"; //Logout link according to WinMl SSO?
+$lang["winML_logout_argument"] = "Welches Argument soll der Windows Logout Link haben?"; // String to attach to url for logging out
+$lang["winML_hide_loginlogout"] = "Sollen die Login/Logout Links versteckt werden, wenn der Benutzer von einem Rechner im Intranet zugreift?"; // Hide login/logout functions
+$lang["winML_hide_loginlogout_subnet"] = "Welche Adressen befinden sich im Intranet? Beliebige Stellen mit 'x' angeben."; // wehn hiding, for wicht subnets?
 

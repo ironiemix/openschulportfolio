@@ -11,7 +11,7 @@ if (!defined("DOKU_INC")){
 // portfolio title
 $meta["sitetitle"]    = array("string"); 
 $meta["schoolname"]    = array("string"); 
-
+$meta["closedwiki"]     = array("onoff");
 //styling
 $meta["sitetitle_css"]  = array("string");
 $meta["schoolname_css"]  = array("string");

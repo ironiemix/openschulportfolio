@@ -21,7 +21,12 @@ div.topmenu div#menu {
     padding: 0 !important;
 }
 
+.dokuwiki .pageId {
+    top: -2.05em;
+}
 .dokuwiki div.pageId span {
+    font-family: Consolas,"Andale Mono WT","Andale Mono","Bitstream Vera Sans Mono","Liberation Mono",Monaco,"Courier New",monospace;
+    font-size: 70%;
 }
 
 #dokuwiki__aside h1 {
@@ -30,7 +35,7 @@ div.topmenu div#menu {
     font-size: 1.1em;
     font-weight: bold;
     padding: 3px 1px 5px 5px;
-    margin:3px;
+    margin:3px 3px 0.5em 3px;
     text-shadow: 1px 1px 0 #FFFFFF;
     border: 1px solid #eee;
 }
