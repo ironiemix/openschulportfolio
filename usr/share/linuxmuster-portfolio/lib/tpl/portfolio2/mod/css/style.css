@@ -132,22 +132,17 @@ div#topbar ul li.active {
 
 
 div.include_edit a.editlink {
-    background-color: #CCCCCC !important;
-    border: 1px solid #AAAAAA;
-    box-shadow: 0 0 2px #999999;
-    color: #555555 !important;
-    display: inline;
-    font-size: 10px;
-    position: absolute;;
-    left: -99999em;
-    padding: 2px;
-    text-shadow: 1px 1px 0 #FFFFFF;
+    float: right;
+    position: relative;
+    top: -2em;
+    display: none;
+    margin: 0 5px 0 0;
+    color: #555 !important;
 }
 
 div.include_edit:hover a.editlink {
-    position: absolute;
-    left: 18em;
-    top: 11em;
+display: inline;
+    height:0px;
 }
 
 

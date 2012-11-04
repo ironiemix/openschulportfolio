@@ -82,6 +82,22 @@ function tpl_portfolio2_topbar() {
     html_msgarea();
  }
 
+function tpl_portfolio2_breadcrumbs() {
+
+    global $conf;
+
+    // breadcrumbs
+    if($conf['breadcrumbs'] || $conf['youarehere']) {
+        print "<div class=\"breadcrumbs\">";
+            if($conf['youarehere']) {
+                print "<div class=\"youarehere\">";
+                tpl_breadcrumbs();
+                print "</div>";
+            }
+        print "</div>";
+    }
+}
+
 function tpl_portfolio2_css() {
 
     $accentcolor = tpl_getConf('accentcolor');

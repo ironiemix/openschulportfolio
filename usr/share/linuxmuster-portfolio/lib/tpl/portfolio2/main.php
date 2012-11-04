@@ -76,12 +76,14 @@ $showSidebar = $hasSidebar && ($ACT=='show');
                     <div id="innercontent">
                     <?php tpl_content() ?>
                     </div>
+                    <?php if( ! tpl_getConf('closedwiki') || $_SERVER['REMOTE_USER'] ): ?>
+                    <?php tpl_portfolio2_breadcrumbs() ?>
+                    <?php endif ?>
                     <!-- wikipage stop -->
                     <?php tpl_includeFile('pagefooter.html') ?>
                 </div>
 
-                <div class="docInfo"><?php tpl_pageinfo() ?></div>
-
+                <div class="docInfo"><span>&nbsp;[[<?php echo hsc($ID) ?>]]&nbsp;</span><?php tpl_pageinfo() ?></div>
                 <?php tpl_flush() ?>
             </div></div><!-- /content -->
 

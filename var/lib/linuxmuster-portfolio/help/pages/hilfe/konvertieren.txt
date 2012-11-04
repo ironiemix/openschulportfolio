@@ -1,6 +1,6 @@
 
 {{tag> redaktion hilfe}}
-====== Wie überführt man ein vorhandenes Office Dokument ist Wiki-Format? ======
+====== Wie überführt man ein vorhandenes Office Dokument ins Wiki-Format? ======
 
 
 ===== Möglichkeit A - Cut'n'Paste =====
@@ -11,20 +11,37 @@ Nun muss man den unformatiert vorliegenden Text mit dem Wiki Editor strukturiere
 
 ===== Möglichkeit B - Verwendung des Openoffice Makros =====
 
-Für [[http://de.openoffice.org/|Openoffice]] gibt es ein Makro, mit dem vorhandene Dokumente in die DoluWiki Syntax umgewandelt werden können. Damit kann man einen großen Teil der Formatierungsarbeit automatisieren. [[http://de.openoffice.org/|Openoffice ist für Windows/Mac/Linux kostenlos hier erhältlich]]. Ein portable Version für Windows können Sie [[http://downloads.sourceforge.net/portableapps/OpenOfficePortable_3.1.1_German.paf.exe?download|hier herunterladen]]
+Wenn man über strukturiert formatierte Office-Dokumente verfügt, kann man diese mit Hilfe eines Open-Office-Makros ins Wiki Format überführen. Dabei werden Strukturelemente wie Überschriften, Aufzählungen, Nummerierungen, Tabellen sowie Formate wie fett, kursiv u.ä. vom Makro ins die entsprechenden Wiki Auszeichnungen übersetzt.
 
-Da Openoffice auch Word-Dokumente öffnen kann, kann man auf diese Weise auch Word Dokumente vergleichsweise einfach ins Wiki-Format umwandeln:
+Außerdem ist es möglich, mit Hilfe eines weiteren Makros Teile von Tabellenblättern aus OO-Calc als Wiki-Tabelle zu übernehmen.
 
-  * Datei mit Openoffice öffnen
-  * Makro ausführen. Der konvertierte Text landet automatisch in der Zwischenablage
-  * Zwischenablage in den Wiki-Editor einfügen
+Open-Office erhalten Sie kostenlos unter der Adresse http://de.openoffice.org/ ((Die Plugins funktionieren auch mit LibreOffice: http://de.libreoffice.org/))
 
-Um diese Möglichkeit komfortabel zu nutzen, sollte man 
 
-  * Openoffice installieren 
+=== Installation der Erweiterungen ===
 
-<note important>Damit die folgenden Schritte funktionieren, muss die Makrosicherheit in Openoffice auf "Mittel" eingestellt werden - [[oomakrosicherheit|das geht so]] </note>
+Speichern Sie die folgenden beiden Erweiterungsdateien auf Ihrer Festplatte. Klicken Sie den Link mit der rechten Maustaste an und wählen Sie die Option "Ziel speichern unter" ((oder entsprechendes, hängt vom verwendeten Browser ab)), sicher Sie die oxt-Datei auf Ihrer Festplatte.
 
-  * Das in der Datei {{:hilfe:002dokuwiki.odt|OO2DokuWiki.odt}} enthaltene Makro [[oomakroimport|in die Makrosammlung von Openoffice importieren]].
-  * [[oomakrobutton|Eine Schaltfläche anlegen, welche das Makro einfach startet]]
+  * {{:hilfe:writer2dokuwiki.oxt|Writer2Dokuwiki:}} writer2dokuwiki.oxt
+  * {{:hilfe:calc2dokuwiki.oxt|Calc2Dokuwiki:}} calc2dokuwiki.oxt 
+
+Starten Sie anschließend OpenOffice, öffnen Sie den Menüpunkt "Extras->Extension Manager", wählen Sie dort die Datei ''writer2dokuwiki.oxt'' aus, wiederholen Sie die Dateiauswahl mit der Datei ''calc2dokuwiki.oxt''. 
+
+Wenn Sie gefragt werden, ob Sie die Erweiterung nur für sich oder für alle Benutzer installieren wollen, sind sie mit der Antwort "nur für mich" auf der sicheren Seite.
+
+Starten Sie OpenOffice anschließend neu.
+
+==== Anwenden der Plugins ====
+{{ :hilfe:arbeitsflaeche_1_013.png?nolink|}}
+
+Nachdem Sie OpenOffice neu gestartet haben, sehen Sie bei Textdokumenten den neuen Menüeintrag ''writer2dokuwiki'', bei Tabellendokumenten den Menüeintrag ''calc2dokuwiki''. Die beiden Menüs haben jeweils nur einen Menüpunkt, der die Konvertierung des geladenen Dokuments auslöst.
+
+**Gehen Sie wie folgt vor:**
+
+  - Öffnen Sie Ihr Office Dokument mit OpenOffice
+  - Beim Calc Makro muss man zuerst den Bereich der Tabelle markieren und dann das Makro ausführen
+  - Führen Sie das Makro aus: Es wird ein neues Office-Textdokument erzeugt, welches den Text im Wikiformat enthält. 
+  - Kopieren Sie den konvertierten Text in die gewünschte Wikiseite
+
+Auch bei Verwendung der Makros werden Sie in den meisten Fällen von Hand nacharbeiten müssen, da jedoch meist bereits Überschriften vorhanden sind, kann man die Seite Abschnittsweise bis zum gewünschten Zustand bearbeiten.
 
