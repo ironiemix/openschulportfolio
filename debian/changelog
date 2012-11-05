@@ -1,4 +1,4 @@
-linuxmuster-portfolio (12.11-marie.12) openlml; urgency=low
+linuxmuster-portfolio (12.11-marie.14) openlml; urgency=low
 
   * Changed architecture to all for compytibility to linuxmuster.net 6.x
   * Added borders to page and sidebar h1 for IE styling
@@ -9,8 +9,9 @@ linuxmuster-portfolio (12.11-marie.12) openlml; urgency=low
   * Updated wiki pagepack with alphindex page
   * Reorganised help pages for fresh installs
   * Private testing begins now...
+  * Added forcessl plugin for fullsite ssl access
 
- -- Frank Schiebel <frank@linuxmuster.net>  Sun, 04 Nov 2012 21:11:46 +0100
+ -- Frank Schiebel <frank@linuxmuster.net>  Mon, 05 Nov 2012 20:37:00 +0100
 
 linuxmuster-portfolio (12.11-marie.6) openlml; urgency=low
 
