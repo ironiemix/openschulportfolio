@@ -18,9 +18,6 @@ function tpl_portfolio2_topbar() {
             echo "<br />";
             return;
     }
-    if(!isset($_SERVER['REMOTE_USER'])) {
-            return;
-    }
     if (!empty($conf["useacl"]) && auth_quickaclcheck($sitenotice_page_id) < AUTH_READ) {
         return;
     }

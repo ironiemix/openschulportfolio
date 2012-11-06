@@ -1,11 +1,12 @@
-linuxmuster-portfolio (12.11-hiccup.3) openml5-testing; urgency=low
+linuxmuster-portfolio (12.11-hiccup.4) openml5-testing; urgency=low
 
   * Moved styling option to headercss plugin for more flexibility
   * Removed old default template
   * Removed old portfolio template
   * Fixed some minor flaws
+  * Removed obsolete parts in headercss configuration
 
- -- Frank Schiebel <frank@linuxmuster.net>  Tue, 06 Nov 2012 19:14:16 +0100
+ -- Frank Schiebel <frank@linuxmuster.net>  Tue, 06 Nov 2012 21:00:56 +0100
 
 linuxmuster-portfolio (12.11-hiccup.1) openml5-testing; urgency=low
 
