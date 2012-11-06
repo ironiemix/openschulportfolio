@@ -12,11 +12,6 @@ if (!defined("DOKU_INC")){
 $meta["sitetitle"]    = array("string"); 
 $meta["schoolname"]    = array("string"); 
 $meta["closedwiki"]     = array("onoff");
-//styling
-$meta["sitetitle_css"]  = array("string");
-$meta["schoolname_css"]  = array("string");
-$meta["barcolor_css"]  = array("string");
-$meta["pageid_css"]  = array("string");
 
 //ns search
 $meta["searchnamespaces"] = array("string");

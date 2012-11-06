@@ -1,3 +1,19 @@
+linuxmuster-portfolio (12.11-hiccup.2) openml5-testing; urgency=low
+
+  * Moved styling option to headercss plugin for more flexibility
+  * Removed old default template
+  * Removed old portfolio template
+
+ -- Frank Schiebel <frank@linuxmuster.net>  Tue, 06 Nov 2012 16:08:24 +0100
+
+linuxmuster-portfolio (12.11-hiccup.1) openml5-testing; urgency=low
+
+  * DokuWiki updated to 2012-10-13 "AdoraBelle"
+  * Changed release name to "hiccup", the main charakter of the motion picture
+    "How To Train Qour Dragon"
+
+ -- Frank Schiebel <frank@linuxmuster.net>  Mon, 05 Nov 2012 20:57:35 +0100
+
 linuxmuster-portfolio (12.11-marie.14) openlml; urgency=low
 
   * Changed architecture to all for compytibility to linuxmuster.net 6.x
@@ -11,11 +27,11 @@ linuxmuster-portfolio (12.11-marie.14) openlml; urgency=low
   * Private testing begins now...
   * Added forcessl plugin for fullsite ssl access
 
- -- Frank Schiebel <frank@linuxmuster.net>  Mon, 05 Nov 2012 20:37:00 +0100
+ -- Frank Schiebel <frank@linuxmuster.net>  Mon, 05 Nov 2012 20:53:33 +0100
 
 linuxmuster-portfolio (12.11-marie.6) openlml; urgency=low
 
-  * New dokuwiki "Adora Belle"
+  * New dokuwiki "Adora Belle" RC1
   * New template based upon the new dokuwiki default template
 
  -- Frank Schiebel <frank@linuxmuster.net>  Fri, 12 Oct 2012 14:56:02 +0200

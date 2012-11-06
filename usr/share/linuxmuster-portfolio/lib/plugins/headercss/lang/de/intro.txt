@@ -1,0 +1,5 @@
+====== Benutzerdefinierte CSS Styles ======
+
+Im folgenen Textfeld können Sie eigene CSS Styles festlegen. Die Styles in dieser Datei werden als *letztes* im Head des Tamplates eingebunden, so dass man die Standardstyles überschreiben kann.
+
+Das Template muss die Verwendung des Plugins unterstützen!

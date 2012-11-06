@@ -1,0 +1,7 @@
+base   headercss
+author Frank Schiebel
+email  frank@linuxmuster.net
+date   2012-11-06
+name   HeaderCSS Plugin
+desc   Makes it possible to edit a user defined css-file in the admin section of dokuwiki which is included in the page header
+url    http://www.dokuwiki.org/plugin:headercss

@@ -15,11 +15,6 @@ $conf["sitetitle"]    = "Schulportfolio"; //TRUE: use/show user pages
 $conf["schoolname"]    = "Schulname hier eintragen"; //TRUE: use/show user pages
 $conf["closedwiki"]     = true;
 
-//styling
-$conf["sitetitle_css"]  = "color:#999; text-shadow: 2px 2px 0 #FFFFFF; font-size: 1.5em; font-weight: bold;";
-$conf["schoolname_css"]  = "color: #333; font-size: 1em;";
-$conf["barcolor_css"]  = "background-color: #ffe4ae; color: #555; text-shadow: 1px 1px 0 #FFFFFF;";
-$conf["pageid_css"]  = "background-color: #ffe4ae; color: #555;";
 //user pages
 $conf["userpage"]    = false; //TRUE: use/show user pages
 $conf["userpage_ns"] = ":wiki:benutzer"; //namespace to use for user page storage

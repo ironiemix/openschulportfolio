@@ -14,11 +14,6 @@ if (!defined("DOKU_INC")){
 $lang["sitetitle"]    = "Titel des Portfoliowikis"; //TRUE: use/show user pages
 $lang["schoolname"]    = "Untertitel des Portfoliowikis, z.B. der Schulname"; //TRUE: use/show user pages
 $lang["closedwiki"]     = "Sollen die Navigationselemente und Seitenwerkzeuge für nicht angemeldete Benutzer versteckt werden?";
-//styling
-$lang["sitetitle_css"]  = "CSS Regeln zur Formatierung des Wikititels";
-$lang["schoolname_css"]  = "CSS Regeln zur Formatierunbg des Untertitels";
-$lang["barcolor_css"]  = "CSS Regeln zur Formatierung der akzetuierten Elemente (Topbar, Sidebarheadings)";
-$lang["pageid_css"]  = "CSS Regeln zur Formatierung der PageID (Kleiner Seitenname oben rechts)";
 // ns search
 $lang["searchnamespaces"] = "Namensräume, die zur Suche ausgewählt werden können. Schreibweise: namensraum>Anzuzeigende Bezeichnung. Durch Kommata getrennt.";
 

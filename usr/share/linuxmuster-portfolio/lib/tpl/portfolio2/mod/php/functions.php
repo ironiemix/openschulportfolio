@@ -99,19 +99,11 @@ function tpl_portfolio2_breadcrumbs() {
 }
 
 function tpl_portfolio2_css() {
-
-    $accentcolor = tpl_getConf('accentcolor');
-    echo "<style type=\"text/css\">\n";
-    echo "<!--\n";
-    echo "#dokuwiki__header h1 a span#sitetitle { ". tpl_getConf('sitetitle_css') ."}\n";
-    echo "#dokuwiki__header h1 a span#schoolname { ". tpl_getConf('schoolname_css') ."}\n";
-    echo "div#topbar ul li a { ". tpl_getConf('barcolor_css') ."}\n";
-    echo "div#topbar form input.button { ". tpl_getConf('barcolor_css') ."}\n";
-    echo "div#topbar { ". tpl_getConf('barcolor_css') ."}\n";
-    echo "#dokuwiki__aside h1 {  ". tpl_getConf('barcolor_css') ."}\n";
-    echo ".dokuwiki div.pageId span  { ". tpl_getConf('pageid_css') ."}\n";
-    echo "\n-->\n";
-    echo "</style>";
+    $headercss = plugin_load('helper', 'headercss');
+    if (!is_null($headercss)) {
+        $headercss->outputCSS();
+    }
+    return;
 }
 
 function tpl_portfolio2_login() {

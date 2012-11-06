@@ -16,11 +16,6 @@ if (!defined("DOKU_INC")){
 $lang["sitetitle"]    = "Portfolio title"; //TRUE: use/show user pages
 $lang["schoolname"]    = "Portfolio subtitle, i.e. name of school or institution"; //TRUE: use/show user pages
 $lang["closedwiki"]     = "Should navigation and page tools be hidden when no user ist logged in?";
-//styling
-$lang["sitetitle_css"]  = "CSS rules for title formatting";
-$lang["schoolname_css"]  = "CSS rules for subtitle formatting";
-$lang["barcolor_css"]  = "CSS rules for accented elements (topbar, sidebarheadings)";
-$lang["pageid_css"]  = "CSS rules for the PageID (small pagename to right)";
 //user pages
 $lang["userpage"]    = "Use userpages?";
 $lang["userpage_ns"] = "Namespace for the userpages";
