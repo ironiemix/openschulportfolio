@@ -31,9 +31,9 @@ class action_plugin_selectsearch extends DokuWiki_Action_Plugin {
 
         global $QUERY;
 
-        $searchnamespaces = explode(",",$this->getConf('searchnamespaces'));
+        $searchnamespaces = explode("\n",$this->getConf('searchnamespaces'));
         foreach ($searchnamespaces as $ns) {
-            list($namespace,$displayname) = explode(">",$ns);
+            list($namespace,$displayname) = explode("|",$ns);
             trim($namespace);
             trim($displayname);
             $namespaces[$namespace] = $displayname;
