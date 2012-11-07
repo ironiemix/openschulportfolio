@@ -58,6 +58,9 @@ function tpl_portfolio2_topbar() {
 
     if (auth_quickaclcheck($sitenotice_page_id) > AUTH_READ) {
         $link = wl($topMenu, array("do"=>"edit"));
+        if ( $conf['useslash'] ) {
+            $link = wl($topMenu, array("do"=>"edit"),true);
+        }
         echo "<a href=\"". $link . "\" class=\"editlink\">". $lang["edit_include"] . "</a>\n";
     }
 
@@ -133,6 +136,8 @@ $showloginlogout = true;
 
 function tpl_portfolio2_boxes($sidebar) {
 
+    global $conf;
+
     //get boxes config
     include DOKU_TPLINC."/conf/boxes.php"; //default
 
@@ -141,6 +146,9 @@ function tpl_portfolio2_boxes($sidebar) {
     tpl_include_page($sidebar, 1, 1);
     if (auth_quickaclcheck($sidebar) > AUTH_READ) {
         $link = wl($sidebar, array("do"=>"edit"));
+         if ( $conf['useslash'] ) {
+            $link = wl($topMenu, array("do"=>"edit"),true);
+        }
         echo "<a href=\"". $link . "\" class=\"editlink\">". $lang["edit_include"] . "</a>\n";
     }
     echo "</div>";
