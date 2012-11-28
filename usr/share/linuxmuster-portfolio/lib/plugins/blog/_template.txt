@@ -1,0 +1,9 @@
+====== @TITLE@ ======
+
+Dieser Text erscheint in der Artikelliste
+
+===== Zwischenüberschrift =====
+
+Der Text von hier an wird erst nach Klick auf "Weiterlesen" in der Artikelliste sichtbar.
+
+

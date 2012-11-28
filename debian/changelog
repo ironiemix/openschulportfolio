@@ -1,3 +1,9 @@
+linuxmuster-portfolio (12.11-hiccup.5) openml5-testing; urgency=low
+
+  * Added blog plugin on request
+
+ -- Frank Schiebel <frank@linuxmuster.net>  Wed, 28 Nov 2012 21:11:20 +0100
+
 linuxmuster-portfolio (12.11-hiccup.4) openml5-testing; urgency=low
 
   * Moved styling option to headercss plugin for more flexibility
@@ -5,8 +11,9 @@ linuxmuster-portfolio (12.11-hiccup.4) openml5-testing; urgency=low
   * Removed old portfolio template
   * Fixed some minor flaws
   * Removed obsolete parts in headercss configuration
+  * Added moving of topmenu and sidebar pages for deb postinst
 
- -- Frank Schiebel <frank@linuxmuster.net>  Tue, 06 Nov 2012 21:00:56 +0100
+ -- Frank Schiebel <frank@linuxmuster.net>  Wed, 28 Nov 2012 14:28:21 +0100
 
 linuxmuster-portfolio (12.11-hiccup.1) openml5-testing; urgency=low
 

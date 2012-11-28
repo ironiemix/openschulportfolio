@@ -2,8 +2,10 @@
 
 DATADIR="/home/linuxmuster-portfolio/data/"
 EXAMPLES="/var/lib/linuxmuster-portfolio/data/"
+UPDATES="/var/lib/linuxmuster-portfolio/updates/"
 HELP="/var/lib/linuxmuster-portfolio/help/"
 TEMPLATE="/usr/share/linuxmuster-portfolio/lib/tpl/portfolio"
+PAGESDIR="${DATADIR}/pages/"
 
 
 # Only install examples on fresh install
@@ -50,6 +52,18 @@ if [ ! -d /home/linuxmuster-portfolio/data/media_meta ]; then
     mkdir -p /home/linuxmuster-portfolio/data/media_meta
 fi
 
+if [ ! -f ${PAGESDIR}/wiki/sidebar.txt ]; then
+    mv ${PAGESDIR}/allusers/sidebar.txt ${PAGESDIR}/wiki/sidebar.txt
+fi
+
+if [ ! -f ${PAGESDIR}/wiki/topmenu.txt ]; then
+    mv ${PAGESDIR}/allusers/topmenu.txt ${PAGESDIR}/wiki/topmenu.txt
+fi
+
+if [ ! -f ${PAGESDIR}/wiki/blog/start.txt ]; then
+    mkdir -p ${PAGESDIR}/wiki/blog/
+    cp  ${UPDATES}/blog/blog.txt ${PAGESDIR}/wiki/blog/start.txt
+fi
 
 # Permissions of data dir: must be writable for www-data
 if [ -d /home/linuxmuster-portfolio/data ]; then
