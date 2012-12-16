@@ -37,6 +37,8 @@ $lang["sidebar_page"] = "Seite, die als Sidebar verwendet wird."; //page/article
 
 //exportbox ("print/export")
 $lang["exportbox"]          = "Exportfunktionen in der Sidebar anzeigen?"; //TRUE: use/show exportbox
+$lang["print_new_window"]   = "Druckversion in neuem Browserfenster/tab öffnen?";
+
 
 //toolbox
 $lang["toolbox"]          = "Werkzeugfunktionen in der Sidebar anzeigen?"; //TRUE: use/show toolbox

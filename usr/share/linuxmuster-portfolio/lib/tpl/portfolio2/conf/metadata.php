@@ -37,6 +37,7 @@ $meta["sidebar_page"] = array("string");
 
 //exportbox ("print/export")
 $meta["exportbox"]          = array("onoff");
+$meta["print_new_window"]   = array("onoff");
 
 //toolbox
 $meta["toolbox"]          = array("onoff");

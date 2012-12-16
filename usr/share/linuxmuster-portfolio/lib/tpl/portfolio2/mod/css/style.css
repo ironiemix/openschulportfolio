@@ -127,7 +127,7 @@ div#topbar ul li.active {
 }
 
 #innercontent {
-    padding: 0 2em 2em 2em;
+    padding: 0.7em 2em 2em 2em;
 }
 
 
@@ -159,4 +159,16 @@ pre {
     padding: 0.7em 1em;
     word-wrap: normal;
 }
+
+.img_detail dd, .img_detail dt {
+    background: transparent !important;
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+div#dokuwiki__detail div#dokuwiki__content div.page {
+    padding: 1em !important;
+}
+
 

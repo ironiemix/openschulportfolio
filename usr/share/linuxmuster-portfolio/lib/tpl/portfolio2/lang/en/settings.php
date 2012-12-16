@@ -36,7 +36,7 @@ $lang["sidebar_page"] = "Page to be included as sidebar"; //page/article used to
 
 //exportbox ("print/export")
 $lang["exportbox"]          = "Show exportbox in sidebar?"; //TRUE: use/show exportbox
-
+$lang["print_new_window"]   = "Open print version of page in new browser-window/tab?";
 //toolbox
 $lang["toolbox"]          = "Show toolbox in sidebar?"; //TRUE: use/show toolbox
 

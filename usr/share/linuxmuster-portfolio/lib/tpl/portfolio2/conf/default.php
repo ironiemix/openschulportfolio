@@ -31,6 +31,7 @@ $conf["sidebar"]          = true; //TRUE: use/show navigation
 $conf["sidebar_page"] = ":wiki:sidebar"; //page/article used to store the navigation
 //exportbox ("print/export")
 $conf["exportbox"]          = true; //TRUE: use/show exportbox
+$conf["print_new_window"]   = false;
 //toolbox
 $conf["toolbox"]          = true; //TRUE: use/show toolbox
 // Winmuster

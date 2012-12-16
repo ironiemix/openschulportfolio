@@ -7,4 +7,6 @@
  * @author     Mykola Ostrovskyy <spambox03@mail.ru>
  */
 
+$conf['kwcolumns'] = '';
+$conf['kwnewcol'] = '';
 $conf['wrapnewcol'] = 1;

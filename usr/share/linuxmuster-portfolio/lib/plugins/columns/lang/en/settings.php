@@ -8,5 +8,5 @@
  */
 
 $lang['kwcolumns'] = 'Columns tag (default: columns); must be specified within angle brackets (&lt;columns&gt;...&lt;/columns&gt;)';
-$lang['kwnewcol']  = 'New column tag (default: newcolumn)';
-$lang['wrapnewcol']  = 'Wrap the new column tag in angle brackets (&lt;newcolumn&gt;)';
+$lang['kwnewcol'] = 'New column tag (default: newcolumn)';
+$lang['wrapnewcol'] = 'Wrap the new column tag in angle brackets (&lt;newcolumn&gt;)';

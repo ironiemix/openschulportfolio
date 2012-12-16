@@ -13,7 +13,6 @@ if(!defined('DOKU_INC')) die();
 
 if(!defined('DOKU_PLUGIN')) define('DOKU_PLUGIN', DOKU_INC . 'lib/plugins/');
 require_once(DOKU_PLUGIN . 'syntax.php');
-require_once(DOKU_PLUGIN . 'columns/info.php');
 
 class syntax_plugin_columns extends DokuWiki_Syntax_Plugin {
 
@@ -48,13 +47,6 @@ class syntax_plugin_columns extends DokuWiki_Syntax_Plugin {
         $this->syntax[DOKU_LEXER_ENTER] = '/' . $enterHandler . '/';
         $this->syntax[DOKU_LEXER_MATCHED] = '/' . $newColumnHandler . '/';
         $this->syntax[DOKU_LEXER_EXIT] = '/' . $exit . '/';
-    }
-
-    /**
-     * Return some info
-     */
-    function getInfo() {
-        return columns_getInfo('syntax & rendering');
     }
 
     /**
@@ -118,6 +110,12 @@ class syntax_plugin_columns extends DokuWiki_Syntax_Plugin {
 
                 case DOKU_LEXER_EXIT:
                     $renderer->doc .= '</td></tr></table>' . DOKU_LF;
+                    break;
+
+                case 987:
+                    if (method_exists($renderer, 'finishSectionEdit')) {
+                        $renderer->finishSectionEdit($data[1]);
+                    }
                     break;
             }
             return true;
@@ -186,20 +184,10 @@ class syntax_plugin_columns extends DokuWiki_Syntax_Plugin {
      *
      */
     function _renderTd($attribute) {
-        $class = $this->_getAttribute($attribute, 'class');
-        $textAlign = $this->_getAttribute($attribute, 'text-align');
-        if ($textAlign != '') {
-            if ($class != '') {
-                $class .= ' ';
-            }
-            $class .= $textAlign;
-        }
-        if ($class == '') {
-            $html = '<td';
-        }
-        else {
-            $html = '<td class="' . $class . '"';
-        }
+        $class[] = 'columns-plugin';
+        $class[] = $this->_getAttribute($attribute, 'class');
+        $class[] = $this->_getAttribute($attribute, 'text-align');
+        $html = '<td class="' . implode(' ', array_filter($class)) . '"';
         $style = $this->_getStyle($attribute, 'column-width', 'width');
         $style .= $this->_getStyle($attribute, 'vertical-align');
         if ($style != '') {

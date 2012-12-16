@@ -66,7 +66,9 @@ if (tpl_getConf("exportbox")) {
     if (file_exists(DOKU_PLUGIN."bookcreator/syntax.php") && !plugin_isdisabled("bookcreator")) {
         $boxes["export"]["xhtml"]  .= "<li id=\"export-book\"><a href=\"".wl(cleanID(getId()), array("do" => "addtobook"))."\" rel=\"nofollow\">".hsc($lang["export_book"])."</a></li>\n";
     }
-    $boxes["export"]["xhtml"] .=  "<li id=\"export-print\"><a href=\"".wl(cleanID(getId()), array("rev" =>(int)$rev, "vecdo" => "print"))."\" rel=\"nofollow\">".hsc($lang["export_print"])."</a></li>\n</ul>\n";
+    $target = "";
+    if (tpl_getConf("print_new_window")) { $target=" target=\"_blank\" "; }
+    $boxes["export"]["xhtml"] .=  "<li id=\"export-print\"><a href=\"".wl(cleanID(getId()), array("do" => "export_html"))."\" ". $target ." rel=\"nofollow\">".hsc($lang["export_print"])."</a></li>\n</ul>\n";
 }
 
 if (tpl_getConf("toolbox")) {

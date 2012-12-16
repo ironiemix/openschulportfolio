@@ -12,7 +12,6 @@ if(!defined('DOKU_INC')) die();
 
 if(!defined('DOKU_PLUGIN')) define('DOKU_PLUGIN', DOKU_INC . 'lib/plugins/');
 require_once(DOKU_PLUGIN . 'action.php');
-require_once(DOKU_PLUGIN . 'columns/info.php');
 require_once(DOKU_PLUGIN . 'columns/rewriter.php');
 
 class action_plugin_columns extends DokuWiki_Action_Plugin {
@@ -21,13 +20,6 @@ class action_plugin_columns extends DokuWiki_Action_Plugin {
     var $currentBlock;
     var $currentSectionLevel;
     var $sectionEdit;
-
-    /**
-     * Return some info
-     */
-    function getInfo() {
-        return columns_getInfo('layout parser');
-    }
 
     /**
      * Register callbacks
@@ -101,15 +93,19 @@ class action_plugin_columns extends DokuWiki_Action_Plugin {
                     /* Skip these instructions */
                     break;
 
-                case 'section_edit':
+                case 'header':
                     if (end($this->sectionEdit) != $c) {
                         $this->sectionEdit[] = $c;
-                        $result = array('call' => $c, 'data' => $call[$c][1]);
+                        $result = $call[$c][2];
                     }
                     break 2;
 
                 case 'plugin':
-                    break ($call[$c][1][0] == 'columns') ? 1 : 2;
+                    if ($call[$c][1][0] == 'columns') {
+                        break;
+                    } else {
+                        break 2;
+                    }
 
                 default:
                     break 2;
@@ -637,7 +633,7 @@ class columns_column extends columns_attributes_bag {
             /* Remove first section_close from the column to prevent </div> in the middle of the column */
             $result[] = new instruction_rewriter_delete($this->sectionClose);
         }
-        if (($closeSection) || ($this->sectionEnd != null)) {
+        if ($closeSection || ($this->sectionEnd != null)) {
             $result = array_merge($result, $this->_closeLastSection($closeSection));
         }
         return $result;
@@ -649,8 +645,7 @@ class columns_column extends columns_attributes_bag {
     function _moveStartSectionEdit() {
         $result = array();
         $result[0] = new instruction_rewriter_insert($this->open);
-        $result[0]->addCall('section_edit', $this->sectionStart['data']);
-        $result[1] = new instruction_rewriter_delete($this->sectionStart['call']);
+        $result[0]->addPluginCall('columns', array(987, $this->sectionStart - 1), DOKU_LEXER_MATCHED);
         return $result;
     }
 
@@ -673,8 +668,7 @@ class columns_column extends columns_attributes_bag {
             $result[0]->addCall('section_close', array());
         }
         if ($this->sectionEnd != null) {
-            $result[0]->addCall('section_edit', $this->sectionEnd['data']);
-            $result[1] = new instruction_rewriter_delete($this->sectionEnd['call']);
+            $result[0]->addPluginCall('columns', array(987, $this->sectionEnd - 1), DOKU_LEXER_MATCHED);
         }
         return $result;
     }

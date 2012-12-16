@@ -1,8 +1,16 @@
-linuxmuster-portfolio (12.11-hiccup.5) openml5-testing; urgency=low
+linuxmuster-portfolio (12.11-hiccup.8) openml5-testing; urgency=low
 
-  * Added blog plugin on request
+  * Added blog plugin on user-request
+  * Updated colums plugin for compatibility with AdoraBelle
+  * Fixed printversion issue, added option to select wether the print version
+    is opened in an new browsertab or not.
+  * fixed media details bug (github issue #11) by including the mods php
+    functions in detail.php
+  * improved detail view by css
+  * fixed tableeditor bug
+  * Deleted charset modifications in filetree import plugin
 
- -- Frank Schiebel <frank@linuxmuster.net>  Wed, 28 Nov 2012 21:11:20 +0100
+ -- Frank Schiebel <frank@linuxmuster.net>  Sun, 16 Dec 2012 19:45:28 +0100
 
 linuxmuster-portfolio (12.11-hiccup.4) openml5-testing; urgency=low
 

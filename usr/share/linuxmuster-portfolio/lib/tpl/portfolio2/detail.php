@@ -10,6 +10,9 @@
 // must be run from within DokuWiki
 if (!defined('DOKU_INC')) die();
 
+// include template functions for osp mod
+require_once("mod/php/functions.php");
+
 ?><!DOCTYPE html>
 <html lang="<?php echo $conf['lang']?>" dir="<?php echo $lang['direction'] ?>" class="no-js">
 <head>

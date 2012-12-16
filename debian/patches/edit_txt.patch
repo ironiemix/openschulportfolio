@@ -1,7 +1,7 @@
 Index: openschulportfolio/usr/share/linuxmuster-portfolio/inc/lang/de/edit.txt
 ===================================================================
---- openschulportfolio.orig/usr/share/linuxmuster-portfolio/inc/lang/de/edit.txt	2012-11-02 09:24:23.000000000 +0100
-+++ openschulportfolio/usr/share/linuxmuster-portfolio/inc/lang/de/edit.txt	2012-11-02 09:26:36.000000000 +0100
+--- openschulportfolio.orig/usr/share/linuxmuster-portfolio/inc/lang/de/edit.txt	2012-12-16 19:38:10.000000000 +0100
++++ openschulportfolio/usr/share/linuxmuster-portfolio/inc/lang/de/edit.txt	2012-12-16 19:40:19.000000000 +0100
 @@ -1,4 +1,4 @@
  Bitte nur editieren, falls das Dokument **verbessert** werden kann.
  

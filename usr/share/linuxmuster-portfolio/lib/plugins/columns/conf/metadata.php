@@ -8,5 +8,5 @@
  */
 
 $meta['kwcolumns'] = array('string');
-$meta['kwnewcol']  = array('string');
-$meta['wrapnewcol']  = array('onoff');
+$meta['kwnewcol'] = array('string');
+$meta['wrapnewcol'] = array('onoff');
