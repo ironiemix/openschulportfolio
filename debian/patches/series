@@ -1,3 +1,4 @@
+auth_ldap_mailconf.patch
 auth_ad_remove_winmlgroupprefix.patch
 notes_plugin.patch
 auth_ldap_remove_lmlgroupprefix.patch

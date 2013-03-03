@@ -1,3 +1,9 @@
+linuxmuster-portfolio (12.11-hiccup.9) openml5-testing; urgency=low
+
+  * Added option to auth ldap to midify mailadresses. Has to be tested
+
+ -- Frank Schiebel <frank@linuxmuster.net>  Sun, 03 Mar 2013 18:51:42 +0100
+
 linuxmuster-portfolio (12.11-hiccup.8) openml5-testing; urgency=low
 
   * Added blog plugin on user-request

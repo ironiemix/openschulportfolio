@@ -65,6 +65,15 @@ if [ ! -f ${PAGESDIR}/wiki/blog/start.txt ]; then
     cp  ${UPDATES}/blog/blog.txt ${PAGESDIR}/wiki/blog/start.txt
 fi
 
+# ebook/bookcreator 
+if [ -d ${PAGESDIR}/bookcreator ]; then
+    mv ${PAGESDIR}/bookcreator/start.txt ${PAGESDIR}/wiki/ebook.txt
+    mv ${PAGESDIR}/bookcreator/help.txt ${PAGESDIR}/wiki/ebook_help.txt
+    mv ${PAGESDIR}/bookcreator/saved ${PAGESDIR}/wiki/ebook
+    rmdir ${PAGESDIR}/bookcreator/
+    sed -i "s/\[\[bookcreator:start\]\]/[[wiki:ebook]]/" ${PAGESDIR}/wiki/ebook_help.txt
+fi
+
 # Permissions of data dir: must be writable for www-data
 if [ -d /home/linuxmuster-portfolio/data ]; then
     chown -R www-data: /home/linuxmuster-portfolio/data 
