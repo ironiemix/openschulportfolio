@@ -122,7 +122,6 @@ class helper_plugin_tag extends DokuWiki_Plugin {
         if (empty($tags) || ($tags[0] == '')) return '';
 
         foreach ($tags as $tag) {
-            $svtag = $tag;
             $title = str_replace('_', ' ', noNS($tag));
             resolve_pageid($this->namespace, $tag, $exists); // resolve shortcuts
             if ($exists) {
@@ -135,7 +134,7 @@ class helper_plugin_tag extends DokuWiki_Plugin {
                 }
             } else {
                 $class = 'wikilink1';
-                $url   = wl($tag, array('do'=>'showtag', 'tag'=>$svtag));
+                $url   = wl($tag, array('do'=>'showtag', 'tag'=>$tag));
             }
             $links[] = '<a href="'.$url.'" class="'.$class.'" title="'.hsc($tag).
                 '" rel="tag">'.hsc($title).'</a>';
@@ -161,15 +160,9 @@ class helper_plugin_tag extends DokuWiki_Plugin {
 
         // check metadata for matching subject
         foreach ($docs as $match) {
-            
-            // filter by namespace, root namespace is identified with a dot
-            if($ns == '.') {
-                // root namespace is specified, discard all pages who lay outside the root namespace
-                if(getNS($match) != false) continue;
-            } else {
-                // ("!==0" namespace found at position 0)
-                if ($ns && (strpos(':'.getNS($match), ':'.$ns) !== 0)) continue;
-            }
+
+            // filter by namespace
+            if ($ns && (strpos(':'.getNS($match), ':'.$ns) !== 0)) continue;
 
             // check ACL permission; if okay, then add the page
             $perm = auth_quickaclcheck($match);
@@ -247,126 +240,6 @@ class helper_plugin_tag extends DokuWiki_Plugin {
             }
         }
         return $pages;
-   }
-   
-   /**
-    * Get count of occurences for a list of tags
-    * @params tags array of tags 
-    * @params ns array of namespaces where to count the tags
-    * @params allTags boolean if all available tags should be counted
-    */
-   function tagOccurences($tags, $ns = NULL, $allTags = false) {
-        $otags = array();
-        
-        if($allTags) {
-            $tags = array_keys($this->topic_idx);    // all tags should be displayed
-        }
-
-        // kick out unwanted pages
-        if($ns && $ns[0] != '') {
-
-            $tmptags = $this->topic_idx;
-
-            if($allTags) { // count occurences of all tags
-                foreach($tmptags as $tagname => $pages) {
-
-                    foreach ($pages as $key => $page) {
-                        $inNS = false;
-                        $deleteID = false;
-
-                        // display tags also if the page is inside a subnamespace of a specified namespace
-                        if($this->getConf('list_tags_of_subns')) {
-                            foreach($ns as $value) {
-                                if((getNS($page) != false) && strpos(getNS($page), $value) !== false ) {
-                                    $inNS = true;
-                                }
-                            }    
-                        } else {
-                            // discard tags inside subnamespaces of valid namespaces
-                            // check if the page is in the allowed namespaces
-                            if(in_array(getNS($page), $ns)) { 
-                                $inNS = true;
-                            }
-                        }
-                        
-                        // root namespace is specified with a dot
-                        if(getNS($page) == false && in_array('.', $ns)) {
-                            $inNS = true;   
-                        }
-
-                        if($conf['debug']) {
-                            var_dump("Tagname: ". $tagname);
-                            var_dump("Pagename: " . $page);
-                            var_dump("Within valid namespace: " . $inNS);
-                        }
-                                              
-                        // delete the pages inside the output array which aren't in the specified namespaces
-                        if($this->getConf('list_tags_of_subns')) {
-                            foreach($ns as $value) {
-                                $deleteID = true;
-                                if((getNS($page) != false) && strpos(getNS($page), $value) !== false ) {
-                                    $deleteID = false;
-                                }
-                            }    
-                        } else {
-                            if(!in_array(getNS($page), $ns)) $deleteID = true;
-                        }
-                        
-                        // condition for root namespace
-                        if(getNS($page) == false && in_array('.', $ns)) $deleteID = false;
-                        
-                        if($deleteID) unset($tmptags[$tagname][$key]);
-                    }
-                }
-                $tagsnew = $tmptags;
-                
-            } else { // if($allTags == true)
-                // show only specified tags
-                
-                // when only a few tags are given
-                foreach($tags as $index => $tagname) {
-                    // get pages for $tagname
-                    $pages = $this->topic_idx[$tagname];
-                    
-                    // $pages is null when non-existing tags are specified 
-                    if($pages != null) {
-                        foreach($pages as $key => $page) {
-                                $deleteID = false;
-                                
-                                // check if the namespace of the current page is in a given namespace
-                                if(getNS($page) != false && !in_array(getNS($page), $ns)) $deleteID = true;
-                                
-                                // condition for root namespace 
-                                if(getNS($page) == false && !in_array('.', $ns)) $deleteID = true;
-                                
-                                // remove the page in the array
-                                if($deleteID) unset($pages[$key]);
-
-                                // add valid pages to array
-                                $tagsnew[$tagname] = $pages;
-                        }
-                    }
-                }                
-            }
-
-            $otags = array();         
-            // count the filtered tags
-            // $tagsnew: tags are stored as keys
-            if(!empty($tagsnew)) {
-                foreach($tagsnew as $tagname => $pages) {
-                    $count = count($tagsnew[$tagname]);
-                    $otags[$tagname] = $count; 
-                }
-            }
-        } else { // if($ns && $ns[0] != '')
-            // no namespaces are specified
-            foreach($tags as $key => $tag) {
-                $count = count($this->topic_idx[$tag]);
-                $otags[$tag] = $count; 
-            }
-        }
-        
-        return $otags;
     }
 
     /**
@@ -623,4 +496,4 @@ class helper_plugin_tag extends DokuWiki_Plugin {
     }
 
 }
-// vim:ts=4:sw=4:et:  
+// vim:ts=4:sw=4:et:enc=utf-8:  

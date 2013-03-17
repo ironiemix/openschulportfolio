@@ -43,17 +43,13 @@ class syntax_plugin_tag_tag extends DokuWiki_Syntax_Plugin {
 
     function handle($match, $state, $pos, &$handler) {
         global $ID;
-        global $REV;
 
         $tags = trim(substr($match, 6, -2));     // strip markup & whitespace
-        $tags = preg_replace(array('/[[:blank:]]+/', '/\s+/'), " ", $tags);    // replace linebreaks and multiple spaces with one space character
-
         if (!$tags) return false;
         if (!$my =& plugin_load('helper', 'tag')) return false;
         $tags = $my->_parseTagList($tags); // split tags
         $this->tags = array_merge($this->tags, $tags);
-        // disable update of tags when viewing old page revisions
-        if($ACT != 'preview' && !$REV) $my->_updateTagIndex($ID, $this->tags);
+        $my->_updateTagIndex($ID, $this->tags);
         return $tags;
     }      
 
@@ -71,7 +67,7 @@ class syntax_plugin_tag_tag extends DokuWiki_Syntax_Plugin {
             return true;
 
         // for metadata renderer
-        } elseif ($mode == 'metadata' && $ACT != 'preview' && !$REV) {
+        } elseif ($mode == 'metadata') {
             if ($renderer->capture) $renderer->doc .= DOKU_LF.strip_tags($tags).DOKU_LF;
             foreach ($my->references as $ref => $exists) {
                 $renderer->meta['relation']['references'][$ref] = $exists;
@@ -83,4 +79,4 @@ class syntax_plugin_tag_tag extends DokuWiki_Syntax_Plugin {
         return false;
     }
 }
-// vim:ts=4:sw=4:et: 
+// vim:ts=4:sw=4:et:enc=utf-8: 

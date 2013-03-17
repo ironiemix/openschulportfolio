@@ -46,7 +46,6 @@ class syntax_plugin_task_task extends DokuWiki_Syntax_Plugin {
         global $ID;
         global $INFO;
         global $ACT;
-        global $REV;
      
         // strip markup and split arguments
         $match = substr($match, 6, -2);
@@ -64,14 +63,13 @@ class syntax_plugin_task_task extends DokuWiki_Syntax_Plugin {
                     );
 
             // save task meta file if changes were made 
-            // but only for already existing tasks, or when the page is saved 
-            // $REV prevents overwriting current task information with old revision ones
-            if(@file_exists(metaFN($ID, '.task')) && $ACT != 'preview' && !$REV) {
+            // but only for already existing tasks or when the page is saved
+            if(@file_exists(metaFN($ID, '.task')) && $ACT == 'save') {
                 $current = $my->readTask($ID);
                 if (($current['user']['name'] != $user) || ($current['date']['due'] != $date) || ($current['priority'] != $priority)) {
                     $my->writeTask($ID, $task);
                 }
-            } elseif ($ACT != 'preview' && !$REV) {
+            } elseif ($ACT == 'save') {
                 $my->writeTask($ID, $task);
             }
         }
@@ -135,7 +133,7 @@ class syntax_plugin_task_task extends DokuWiki_Syntax_Plugin {
                 $this->_tablerow('status', $status, $renderer);
             }
 
-            $renderer->doc .= '</table>'.DOKU_LF;
+            $renderer->table_close();
             $renderer->doc .= '</fieldset>'.DOKU_LF.
             '</div>'.DOKU_LF;
 

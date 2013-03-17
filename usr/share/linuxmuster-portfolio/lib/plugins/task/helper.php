@@ -122,7 +122,7 @@ class helper_plugin_task extends DokuWiki_Plugin {
             }
 
             // skip other's tasks if filter is 'my'
-            if (($filter == 'my') && (!$responsible)) continue;
+            if ($user && !$responsible) continue;
 
             // skip assigned and not new tasks if filter is 'new'
             if (($filter == 'new') && ($task['user']['name'] || ($task['status'] != 0))) continue;
@@ -316,9 +316,7 @@ class helper_plugin_task extends DokuWiki_Plugin {
         global $ID;
 
         if ((!$conf['subscribers']) && (!$conf['notify'])) return; //subscribers enabled?
-        $data = array('id' => $ID, 'addresslist' => '', 'self' => false);
-        trigger_event('COMMON_NOTIFY_ADDRESSLIST', $data, 'subscription_addresslist');
-        $bcc = $data['addresslist'];
+        $bcc  = subscriber_addresslist($ID);
         if ((empty($bcc)) && (!$conf['notify'])) return;
         $to   = $conf['notify'];
         $text = io_readFile($this->localFN('subscribermail'));

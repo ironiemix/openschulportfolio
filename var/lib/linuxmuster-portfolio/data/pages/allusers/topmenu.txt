@@ -1,5 +1,0 @@
-<menu col=1,align=left,caption="",type="menubar">
-  <item>Start|Startseite|:start|:shared:icons:go-home-40x40.png</item>
-  <item>Formularcenter|Anträge, Vorlagen und Formulare|portfolio:formulare:start|:shared:icons:document-open-40x40.png</item>
- <item>Portfolio|Beispielhafte Portfoliostruktur|portfolio:start|:shared:icons:portfolio2-40x40.png</item> 
-</menu> 

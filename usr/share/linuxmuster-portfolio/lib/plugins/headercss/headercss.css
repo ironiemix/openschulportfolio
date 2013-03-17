@@ -1,0 +1,43 @@
+/* Benutzerdefinierte CSS Styles */
+
+/* Großer Schriftzug */
+#dokuwiki__header h1 a span#sitetitle {
+    color:#999;
+    text-shadow: 2px 2px 0 #FFFFFF;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+/* Kleiner Schriftzug */
+#dokuwiki__header h1 a span#schoolname {
+    color: #333;
+    font-size: 1em;
+}
+/* Elemente in der Werkzeugleiste oben /*
+div#topbar ul li a {
+    background-color: #ffe4ae;
+    color: #555;
+    text-shadow: 1px 1px 0 #FFFFFF;
+}
+/* Mailinfo Button */
+div#topbar form input.button {
+    background-color: #ffe4ae;
+    color: #555;
+    text-shadow: 1px 1px 0 #FFFFFF;
+}
+/* Topbar Farbe */
+div#topbar {
+    background-color: #ffe4ae;
+    color: #555;
+    text-shadow: 1px 1px 0 #FFFFFF;
+}
+
+/* Überschriften der Sidebar */
+#dokuwiki__aside h1 {
+    background-color: #ffe4ae;
+    color: #555; text-shadow: 1px 1px 0 #FFFFFF;
+}
+/* Page ID oben rechts */
+.dokuwiki div.pageId span  {
+    background-color: #ffe4ae;
+    color: #555;
+}

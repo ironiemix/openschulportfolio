@@ -26,14 +26,6 @@ class syntax_plugin_changes extends DokuWiki_Syntax_Plugin {
     function getType(){
         return 'substition';
     }
-
-    /**
-     * What type of XHTML do we create?
-     */
-    function getPType(){
-        return 'block';
-    }
-
     /**
      * Where to sort in?
      */
@@ -58,7 +50,6 @@ class syntax_plugin_changes extends DokuWiki_Syntax_Plugin {
             'type' => array(),
             'render' => 'list',
             'render-flags' => array(),
-            'maxage' => null
         );
 
         $match = explode('&',$match);
@@ -109,14 +100,6 @@ class syntax_plugin_changes extends DokuWiki_Syntax_Plugin {
                     }
                 }
                 break;
-           case 'user':
-               foreach(preg_split('/\s*,\s*/', $value) as $value){
-                   $data[$name][] = $value;
-               }
-               break;
-           case 'maxage':
-               $data[$name] = intval($value);
-               break;
         }
     }
 
@@ -136,7 +119,7 @@ class syntax_plugin_changes extends DokuWiki_Syntax_Plugin {
      */
     function render($mode, &$R, $data) {
         if($mode == 'xhtml'){
-            $changes = $this->getChanges($data['count'], $data['ns'], $data['type'], $data['user'], $data['maxage']);
+            $changes = $this->getChanges($data['count'], $data['ns'], $data['type']);
             if(!count($changes)) return true;
 
             switch($data['render']){
@@ -155,17 +138,15 @@ class syntax_plugin_changes extends DokuWiki_Syntax_Plugin {
     /**
      * Based on getRecents() from inc/changelog.php
      */
-    function getChanges($num, $ns, $type, $user, $maxage) {
+    function getChanges($num, $ns, $type) {
         global $conf;
         $changes = array();
         $seen = array();
         $count = 0;
         $lines = @file($conf['changelog']);
 
-        if(is_null($maxage)) $maxage = (int) $this->getConf('maxage');
-
         for($i = count($lines)-1; $i >= 0; $i--){
-            $change = $this->handleChangelogLine($lines[$i], $ns, $type, $user, $maxage, $seen);
+            $change = $this->handleChangelogLine($lines[$i], $ns, $type, $seen);
             if($change !== false){
                 $changes[] = $change;
                 // break when we have enough entries
@@ -178,7 +159,7 @@ class syntax_plugin_changes extends DokuWiki_Syntax_Plugin {
     /**
      * Based on _handleRecent() from inc/changelog.php
      */
-    function handleChangelogLine($line, $ns, $type, $user, $maxage, &$seen) {
+    function handleChangelogLine($line, $ns, $type, &$seen) {
         // split the line into parts
         $change = parseChangelogLine($line);
         if($change===false) return false;
@@ -189,18 +170,8 @@ class syntax_plugin_changes extends DokuWiki_Syntax_Plugin {
         // filter type
         if(!empty($type) && !in_array($change['type'], $type)) return false;
 
-        // filter user
-        if(!empty($user) && (empty($change['user']) ||
-                            !in_array($change['user'], $user))) return false;
-
-
         // remember in seen to skip additional sights
         $seen[$change['id']] = 1;
-
-        // filter maxage
-        if($maxage && $change['date']<(time()-$maxage)){
-            return false;
-        }
 
         // check if it's a hidden page
         if(isHiddenPage($change['id'])) return false;
@@ -244,7 +215,6 @@ class syntax_plugin_changes extends DokuWiki_Syntax_Plugin {
                 $page['id'] = $change['id'];
                 $page['date'] = $change['date'];
                 $page['user'] = $this->getUserName($change);
-                $page['desc'] = $change['sum'];
                 $pagelist->addPage($page);
             }
             $R->doc .= $pagelist->finishList();
@@ -255,45 +225,16 @@ class syntax_plugin_changes extends DokuWiki_Syntax_Plugin {
     }
 
     /**
-     * Render the day header
-     */
-    function dayheader(&$R,$date){
-        if($R->getFormat() == 'xhtml'){
-            $R->doc .= '<h3 class="changes">';
-            $R->cdata(dformat($date,$this->getConf('dayheaderfmt')));
-            $R->doc .= '</h3>';
-        }else{
-            $R->header(dformat($date,$this->getConf('dayheaderfmt')),3,0);
-        }
-    }
-
-    /**
      *
      */
     function renderSimpleList($changes, &$R, $flags = null) {
         global $conf;
         $flags = $this->parseSimpleListFlags($flags);
-
-        if($flags['dayheaders']){
-            $date = date('Ymd',$changes[0]['date']);
-            $this->dayheader($R,$changes[0]['date']);
-        }
-
         $R->listu_open();
         foreach($changes as $change){
-            if($flags['dayheaders']){
-                $tdate = date('Ymd',$change['date']);
-                if($tdate != $date){
-                    $R->listu_close(); // break list to insert new header
-                    $this->dayheader($R,$change['date']);
-                    $R->listu_open();
-                    $date = $tdate;
-                }
-            }
-
             $R->listitem_open(1);
             $R->listcontent_open();
-            $R->internallink(':'.$change['id'],null,null,false,'navigation');
+            $R->internallink(':'.$change['id']);
             if($flags['summary']){
                 $R->cdata(' '.$change['sum']);
             }
@@ -317,7 +258,7 @@ class syntax_plugin_changes extends DokuWiki_Syntax_Plugin {
      *
      */
     function parseSimpleListFlags($flags) {
-        $outFlags = array('summary' => true, 'signature' => false, 'dayheaders' => false);
+        $outFlags = array('summary' => true, 'signature' => false);
         if(!empty($flags)){
             foreach($flags as $flag){
                 if(array_key_exists($flag, $outFlags)){
@@ -347,3 +288,4 @@ class syntax_plugin_changes extends DokuWiki_Syntax_Plugin {
     }
 }
 
+//Setup VIM: ex: et ts=4 enc=utf-8 :

@@ -30,7 +30,7 @@ Ein genauere Erklärung der Optionen finden Sie auf [[http://www.dokuwiki.org/pl
 
 ===== Zeilenmenü für das Hauptmenü =====
 
-Die in OSP enthaltene Version des Menu-Plugins kann zu den vom Autor vorgesehenen Spaltenmenüs außerdem ein Zeilenmeü erzeugen, wie Sie es im Hauptmenü oder in folgenden Screenshot sehen.
+Die in OSP enthaltene Version des Menu-Plugins kann zu den vom Autor vorgesehenen Spaltenmenüs außerdem ein Zeilenmenü erzeugen, wie Sie es im Hauptmenü oder in folgenden Screenshot sehen.
 
 {{  :hilfe:menu02.png  |}}
 

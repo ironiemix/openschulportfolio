@@ -19,7 +19,7 @@ class action_plugin_tag extends DokuWiki_Action_Plugin {
         return array(
                 'author' => 'Gina Häußge, Michael Klier, Esther Brunner',
                 'email'  => 'dokuwiki@chimeric.de',
-                'date'   => '2011-03-20',
+                'date'   => @file_get_contents(DOKU_PLUGIN.'tag/VERSION'),
                 'name'   => 'Tag Plugin (ping component)',
                 'desc'   => 'Ping technorati when a new page is created',
                 'url'    => 'http://www.dokuwiki.org/plugin:tag',
@@ -33,8 +33,6 @@ class action_plugin_tag extends DokuWiki_Action_Plugin {
         $contr->register_hook('IO_WIKIPAGE_WRITE', 'BEFORE', $this, 'ping', array());
         $contr->register_hook('ACTION_ACT_PREPROCESS', 'BEFORE', $this, '_handle_act', array());
         $contr->register_hook('TPL_ACT_UNKNOWN', 'BEFORE', $this, '_handle_tpl_act', array());
-        $contr->register_hook('TPL_METAHEADER_OUTPUT', 'BEFORE', $this, '_handle_keywords', array());
-        if($this->getConf('toolbar_icon'))	$contr->register_hook('TOOLBAR_DEFINE', 'AFTER', $this, 'insert_toolbar_button', array ());
     }
 
     /**
@@ -86,7 +84,7 @@ class action_plugin_tag extends DokuWiki_Action_Plugin {
         $event->preventDefault();
 
         $tagns = $this->getConf('namespace');
-        $flags = explode(',', str_replace(" ", "", $this->getConf('pagelist_flags')));
+        $flags = explode(',', trim($this->getConf('pagelist_flags')));
 
         $tag   = trim(str_replace($this->getConf('namespace').':', '', $_REQUEST['tag']));
         $ns    = trim($_REQUEST['ns']);
@@ -107,7 +105,7 @@ class action_plugin_tag extends DokuWiki_Action_Plugin {
                 $pagelist->addPage($page);
             }
 
-            print '<h1>TAG: ' . str_replace('_', ' ', $_REQUEST['tag']) . '</h1>' . DOKU_LF;
+            print '<h1>TAG: ' . $tag . '</h1>' . DOKU_LF;
             print '<div class="level1">' . DOKU_LF;
             print $pagelist->finishList();      
             print '</div>' . DOKU_LF;
@@ -116,37 +114,5 @@ class action_plugin_tag extends DokuWiki_Action_Plugin {
             print '<div class="level1"><p>' . $lang['nothingfound'] . '</p></div>';
         }
     }
-    
-	/**
-	 * Inserts the tag toolbar button
-	 */
-	function insert_toolbar_button(&$event, $param) {
-	    $event->data[] = array (
-	        'type' => 'format',
-	        'title' => $this->getLang('toolbar_icon'),
-	        'icon' => '../../plugins/tag/images/tag-toolbar.png',
-	        'open' => '{{tag>',
-	    	'close' => '}}'
-	    );
-	}
-	
-	/**
-	 * Prevent displaying underscores instead of blanks inside the page keywords
-	 */
-	function _handle_keywords(&$data) {
-	    global $ID;
-
-	    // Fetch tags for the page; stop proceeding when no tags specified
-	    $tags = p_get_metadata($ID, 'subject', METADATA_DONT_RENDER);
-	    if(is_null($tags)) true;
-
-	    // Replace underscores with blanks
-	    foreach($data->data['meta'] as &$meta) {
-	        if($meta['name'] == 'keywords') {
-	            $meta['content'] = str_replace('_', ' ', $meta['content']);
-	        }
-	    }	    
-	}
 }
-
-// vim:ts=4:sw=4:et:
+// vim:ts=4:sw=4:et:enc=utf-8:

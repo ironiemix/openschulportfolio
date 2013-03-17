@@ -36,7 +36,7 @@ class admin_plugin_doctree2filelist extends DokuWiki_Admin_Plugin
         return array(
             'author' => 'Frank Schiebel',
             'email'  => 'frank@linuxmuster.net',
-            'date'   => '2010-11-27',
+            'date'   => '2011-12-03',
             'name'   => 'doctree2filelist: Imports document tree into dokuwiki',
             'desc'   => 'This plugin is for importing a whole tree with (office-)documents to a wiki page-structure. It has been written for openschulportfolio, a dokuwiki based portfolio-system for schools.',
             'url'    => 'http://www.openschulportfolio.de/',
@@ -278,7 +278,7 @@ class admin_plugin_doctree2filelist extends DokuWiki_Admin_Plugin
         $this->create_startpages($media_dest);
 
         # determine if we are running under openschulportfolio
-        if (file_exists(DOKU_INC . "/lib/tpl/portfolio/ospversion.php")) {
+        if (file_exists(DOKU_INC . "/lib/tpl/portfolio2/ospversion.php")) {
             $pfstartfile_in  = realpath(dirname(__FILE__))."/start.txt";
             $pfstartfile_out = $pagespath."portfolio/start.txt";
             copy($pfstartfile_in, $pfstartfile_out);
@@ -371,20 +371,20 @@ class admin_plugin_doctree2filelist extends DokuWiki_Admin_Plugin
 
       $fixpath = $this->_strip_doubleslashes($conf['savedir'] . "/media/");
       $dest = str_replace("$fixpath", "", $dest);
-      # Fix windows encoding: this is really bad, but i could not figure out how to 
+      # Fix windows encoding: this is really bad, but i could not figure out how to
       # change the filename to utf8 from wathever encoding comes in...
-      $dest = urlencode($dest);
-      $dest = str_replace('%2F','/', $dest);
-      $dest = str_replace('%25','%', $dest);
-      $dest = str_replace('%C2','', $dest);
-      $dest = str_replace('%C3','', $dest);
-      $dest = str_replace('%81','ue', $dest);
-      $dest = str_replace('%84','ae', $dest);
-      $dest = str_replace('%94','oe', $dest);
-      $dest = str_replace('%A1','ss', $dest);
-      $dest = str_replace('+','_', $dest);
-      $dest = str_replace('-','_', $dest);
-     
+      #$dest = urlencode($dest);
+      #$dest = str_replace('%2F','/', $dest);
+      #$dest = str_replace('%25','%', $dest);
+      #$dest = str_replace('%C2','', $dest);
+      #$dest = str_replace('%C3','', $dest);
+      #$dest = str_replace('%81','ue', $dest);
+      #$dest = str_replace('%84','ae', $dest);
+      #$dest = str_replace('%94','oe', $dest);
+      #$dest = str_replace('%A1','ss', $dest);
+      #$dest = str_replace('+','_', $dest);
+      #$dest = str_replace('-','_', $dest);
+
       $dest = str_replace('__','_', $dest);
       $dest = str_replace("//", "/", $dest);
       $dest = str_replace("/", ":", $dest);

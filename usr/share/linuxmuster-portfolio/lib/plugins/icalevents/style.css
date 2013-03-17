@@ -1,15 +1,10 @@
 table.icalevents {
- width: 100%;
+    width: 95%;
 }
-table.icalevents th.when {
- width: 7.5em;
-}
-
-table.icalevents acronym {
- border-bottom: 1px dotted #aaa !important;
+table.icalevents th.date {
+    width: 21em;
 }
 
-span.icaltime {
-  font-size: 70%;
-  color: #999;
+table.icalevents td span {
+    font-size: 80%;
 }

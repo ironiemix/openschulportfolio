@@ -309,6 +309,11 @@ class syntax_plugin_menu extends DokuWiki_Syntax_Plugin {
                     }
 
                     $renderer->doc .= '</div>'."\n";
+
+                    if ($data['float'] == "right") /* center: clear text floating */
+                        $renderer->doc .= '<p style="clear:both;" />';
+                    if ($data['float'] == "left") /* center: clear text floating */
+                        $renderer->doc .= '<p style="clear:both;" />';
                     if ($data['float'] == "center") /* center: clear text floating */
                         $renderer->doc .= '<p style="clear:both;" />';
 

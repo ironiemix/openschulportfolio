@@ -1,0 +1,26 @@
+Index: openschulportfolio/usr/share/linuxmuster-portfolio/inc/auth/ldap.class.php
+===================================================================
+--- openschulportfolio.orig/usr/share/linuxmuster-portfolio/inc/auth/ldap.class.php	2013-03-03 18:50:02.000000000 +0100
++++ openschulportfolio/usr/share/linuxmuster-portfolio/inc/auth/ldap.class.php	2013-03-03 18:50:48.000000000 +0100
+@@ -198,6 +198,21 @@
+         $info['name'] = $user_result['cn'][0];
+         $info['grps'] = array();
+ 
++        # Substitutions for mailaddresses for openSchulportfolio
++        if ( file_exists(DOKU_CONF."ldap_maildomains.conf") ){
++            $mailsubs = confToHash(DOKU_CONF."ldap_maildomains.conf");
++            foreach ($mailsubs as $old => $new) {
++                $info['mail'] = preg_replace("/\@$old/","@$new",$info['mail']);
++            }
++        }
++        if ( file_exists(DOKU_CONF."ldap_mailaccounts.conf") ){
++            $mailsubs = confToHash(DOKU_CONF."ldap_mailaccounts.conf");
++            foreach ($mailsubs as $old => $new) {
++                $info['mail'] = preg_replace("/$old\@/","$new@",$info['mail']);
++            }
++        }
++        # end modifications
++
+         // overwrite if other attribs are specified.
+         if(is_array($this->cnf['mapping'])){
+             foreach($this->cnf['mapping'] as $localkey => $key) {

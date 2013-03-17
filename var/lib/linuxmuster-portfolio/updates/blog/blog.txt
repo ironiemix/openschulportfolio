@@ -1,0 +1,4 @@
+
+====== Neueste Infos ======
+
+{{blog>wiki:blog:artikel?10&firstseconly}}

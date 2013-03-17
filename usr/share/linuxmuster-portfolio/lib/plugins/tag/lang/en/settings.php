@@ -9,7 +9,6 @@
 // for the configuration manager
 $lang['namespace']      = 'Default namespace for tags';
 $lang['pingtechnorati'] = 'Ping Technorati';
-$lang['toolbar_icon']   = 'Show toolbar icon (clear data/cache/* and browser cache if it\'s not displayed)';
 
 $lang['sortkey']                = 'sort topic lists by';
 $lang['sortkey_o_cdate']        = 'creation date';
@@ -24,6 +23,4 @@ $lang['sortorder_o_descending'] = 'descending';
 
 $lang['pagelist_flags'] = 'Formatting flags for the taglist (comma-separated, for available flags see the documentation of the pagelist plugin)';
 
-$lang['list_tags_of_subns'] = 'List also tags in subnamespaces of a specified namespace (count syntax)';
-
-//Setup VIM: ex: et ts=2 :
+//Setup VIM: ex: et ts=2 enc=utf-8 :

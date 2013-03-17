@@ -358,7 +358,7 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
             $show = true;
             // section title
             $title = ($data['title'] ? hsc($data['title']) : $this->getLang('discussion'));
-            ptln('<div class="comment_wrapper" id="comment_wrapper">'); // the id value is used for visibility toggling the section
+            ptln('<div class="comment_wrapper">');
             ptln('<h2><a name="discussion__section" id="discussion__section">', 2);
             ptln($title, 4);
             ptln('</a></h2>', 2);
@@ -386,12 +386,6 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
         if($show) {
             ptln('</div>', 2); // level2 hfeed
             ptln('</div>'); // comment_wrapper
-        }
-        
-        // check for toggle print configuration
-        if($this->getConf('visibilityButton')) {           
-            // print the hide/show discussion section button
-            $this->_print_toggle_button();
         }
 
         return true;
@@ -660,7 +654,6 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
         $this->_print_replies($cid, $data, $reply, $visible);
         // reply form
         $this->_print_form($cid, $reply);
-
     }
 
     function _print_comment($cid, &$data, $parent, $reply, $visible, $hidden)
@@ -719,13 +712,12 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
         } else {
             $head .= '<span class="fn">'.$showname.'</span>';
         }
-
         if ($address) $head .= ', <span class="adr">'.$address.'</span>';
         $head .= '</span>, '.
-            '<abbr class="published" title="'. strftime('%Y-%m-%dT%H:%M:%SZ', $created) .'">'.
-            dformat($created, $conf['dformat']).'</abbr>';
+            '<abbr class="published" title="'.strftime('%Y-%m-%dT%H:%M:%SZ', $created).'">'.
+            strftime($conf['dformat'], $created).'</abbr>';
         if ($comment['edited']) $head .= ' (<abbr class="updated" title="'.
-                strftime('%Y-%m-%dT%H:%M:%SZ', $modified).'">'.dformat($modified, $conf['dformat']).
+                strftime('%Y-%m-%dT%H:%M:%SZ', $modified).'">'.strftime($conf['dformat'], $modified).
                 '</abbr>)';
         ptln($head, 8);
         ptln('</div>', 6); // class="comment_head"
@@ -801,15 +793,6 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
         return $this->style;
     }
 
-    /**
-     * Show the button which toggle the visibility of the discussion section
-     */
-    function _print_toggle_button() {
-        ptln('<div id="toggle_button" class="toggle_button" style="text-align: right;">');
-        ptln('<input type="submit" id="discussion__btn_toggle_visibility" title="Toggle Visibiliy" class="button" value="Hide/Show">');
-        ptln('</div>');
-    }
-    
     /**
      * Outputs the comment form
      */
@@ -907,16 +890,10 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
         <?php
         }
         ?>
-                <div class="comment_text">
-                  <?php echo $this->getLang('entercomment'); echo ($this->getConf('wikisyntaxok') ? "" : ":");
-                        if($this->getConf('wikisyntaxok')) echo '. ' . $this->getLang('wikisyntax') . ':'; ?>
-                 
-                  <!-- Fix for disable the toolbar when wikisyntaxok is set to false. See discussion's script.jss -->
-                  <?php if($this->getConf('wikisyntaxok')) { ?>                
-                    <div id="discussion__comment_toolbar">
-                  <?php } else { ?>
-                    <div id="discussion__comment_toolbar_disabled">
-                  <?php } ?>
+              <div class="comment_text">
+                <div id="discussion__comment_toolbar">
+                  <?php echo $this->getLang('entercomment')?>
+                  <?php if($this->getLang('wikisyntaxok')) echo ', ' . $this->getLang('wikisyntax') . ':';?>
                 </div>
                 <textarea class="edit<?php if($_REQUEST['comment'] == 'add' && empty($_REQUEST['text'])) echo ' error'?>" name="text" cols="80" rows="10" id="discussion__comment_text" tabindex="5"><?php
                   if($raw) {
@@ -1139,36 +1116,28 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
                 '@COMMENTURL@',
                 '@UNSUBSCRIBE@',
                 '@DOKUWIKIURL@',
-        );
+                );
 
-        // prepare email body
-        if($conf['notify'] || $conf['subscribers']) {
+        // notify page subscribers
+        if ($conf['subscribers'] || $conf['notify']) {
+            $to   = $conf['notify'];
+            $data = array('id' => $ID, 'addresslist' => '', 'self' => false);
+            trigger_event('COMMON_NOTIFY_ADDRESSLIST', $data, 'subscription_addresslist');
+            $bcc = $data['addresslist'];
+
             $replace = array(
                     $ID,
                     $conf['title'],
-                    dformat($comment['date']['created'], $conf['dformat']),
+                    strftime($conf['dformat'], $comment['date']['created']),
                     $comment['user']['name'],
                     $comment['raw'],
                     wl($ID, '', true) . '#comment_' . $comment['cid'],
                     wl($ID, 'do=unsubscribe', true, '&'),
                     DOKU_URL,
                     );
-            $body = str_replace($search, $replace, $notify_text);
-        }
-        
-        // send mail to notify address
-        if ($conf['notify']) {
-            $to = $conf['notify'];
-            mail_send($to, $subject_notify, $body, $from, '', '');
-        }
-        
-        // notify page subscribers
-        if ($conf['subscribers']) {
-            $to   = ''; // put all recipients in bcc field
-            $data = array('id' => $ID, 'addresslist' => '', 'self' => false);
-            trigger_event('COMMON_NOTIFY_ADDRESSLIST', $data, 'subscription_addresslist');
-            $bcc = $data['addresslist'];            
-            mail_send($to, $subject_notify, $body, $from, '', $bcc);
+
+                $body = str_replace($search, $replace, $notify_text);
+                mail_send($to, $subject_notify, $body, $from, '', $bcc);
         }
 
         // notify comment subscribers
@@ -1181,7 +1150,7 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
                     $replace = array(
                             $ID,
                             $conf['title'],
-                            dformat($comment['date']['created'], $conf['dformat']),
+                            strftime($conf['dformat'], $comment['date']['created']),
                             $comment['user']['name'],
                             $comment['raw'],
                             wl($ID, '', true) . '#comment_' . $comment['cid'],
@@ -1331,7 +1300,7 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
                 '@USER@' => $user,
                 '@NAME@' => $INFO['userinfo']['name'],
                 '@MAIL@' => $INFO['userinfo']['mail'],
-                '@DATE@' => dformat($conf['dformat']),
+                '@DATE@' => strftime($conf['dformat']),
                 );
 
         // additional replacements

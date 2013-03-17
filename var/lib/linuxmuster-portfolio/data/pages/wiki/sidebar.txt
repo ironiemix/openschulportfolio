@@ -1,0 +1,12 @@
+** Hauptmenü **
+
+  * [[..start|Start]]
+
+---- 
+**Hilfe**
+
+  * [[hilfe:start|Hilfe für Benutzer]]
+  * [[hilfe:editorhelp|Hilfe für Redakteure]]
+
+----
+  * [[wiki:credits|Über OSP]]

@@ -26,11 +26,14 @@ class helper_plugin_shorturl extends DokuWiki_Plugin {
         $this->configtocache = $this->getConf('saveconftocachedir');
 
         if ( $this->configtocache ) {
-            $this->savedir = rtrim($conf['savedir'],"/") . "/cache";
+            if ( $conf['savedir'] != "./data" ){
+                $this->savedir = rtrim($conf['savedir'],"/") . "/cache";
+            } else {
+                $this->savedir = DOKU_INC . rtrim($conf['savedir'],"/") . "/cache";
+            }
         } else {
             $this->savedir = dirname(__FILE__);
         }
-
     }
 
 

@@ -8,5 +8,5 @@
  */
 
 $lang['kwcolumns'] = 'columnas';
-$lang['kwnewcol'] =  'nueva_columna';
+$lang['kwnewcol'] = 'nueva_columna';
 

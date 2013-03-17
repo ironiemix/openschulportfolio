@@ -2,8 +2,10 @@
 
 DATADIR="/home/linuxmuster-portfolio/data/"
 EXAMPLES="/var/lib/linuxmuster-portfolio/data/"
+UPDATES="/var/lib/linuxmuster-portfolio/updates/"
 HELP="/var/lib/linuxmuster-portfolio/help/"
 TEMPLATE="/usr/share/linuxmuster-portfolio/lib/tpl/portfolio"
+PAGESDIR="${DATADIR}/pages/"
 
 
 # Only install examples on fresh install
@@ -21,11 +23,6 @@ if [ ! -d $DATADIR/media/wiki/logo/ ]; then
      echo "Creating logo directory..."
      mkdir -p $DATADIR/media/wiki/logo/
      touch $DATADIR/media/wiki/logo/dummy_dont_delete.png
-     echo "   done."
-fi
-if [ ! -d $DATADIR/pages/bookcreator/ ]; then
-     echo "Copying pages for bookcreator plugin"
-     cp -r $EXAMPLES/pages/bookcreator/ $DATADIR/pages/
      echo "   done."
 fi
 
@@ -46,6 +43,36 @@ PLUGINNAME=`echo $PLUGIN | awk -F/ '{print $5}'`
     fi
   fi
 done
+
+# check for media_attic and media_meta upon upgrading
+if [ ! -d /home/linuxmuster-portfolio/data/media_attic ]; then
+    mkdir -p /home/linuxmuster-portfolio/data/media_attic
+fi
+if [ ! -d /home/linuxmuster-portfolio/data/media_meta ]; then
+    mkdir -p /home/linuxmuster-portfolio/data/media_meta
+fi
+
+if [ ! -f ${PAGESDIR}/wiki/sidebar.txt ]; then
+    mv ${PAGESDIR}/allusers/sidebar.txt ${PAGESDIR}/wiki/sidebar.txt
+fi
+
+if [ ! -f ${PAGESDIR}/wiki/topmenu.txt ]; then
+    mv ${PAGESDIR}/allusers/topmenu.txt ${PAGESDIR}/wiki/topmenu.txt
+fi
+
+if [ ! -f ${PAGESDIR}/wiki/blog/start.txt ]; then
+    mkdir -p ${PAGESDIR}/wiki/blog/
+    cp  ${UPDATES}/blog/blog.txt ${PAGESDIR}/wiki/blog/start.txt
+fi
+
+# ebook/bookcreator 
+if [ -d ${PAGESDIR}/bookcreator ]; then
+    mv ${PAGESDIR}/bookcreator/start.txt ${PAGESDIR}/wiki/ebook.txt
+    mv ${PAGESDIR}/bookcreator/help.txt ${PAGESDIR}/wiki/ebook_help.txt
+    mv ${PAGESDIR}/bookcreator/saved ${PAGESDIR}/wiki/ebook
+    rmdir ${PAGESDIR}/bookcreator/
+    sed -i "s/\[\[bookcreator:start\]\]/[[wiki:ebook]]/" ${PAGESDIR}/wiki/ebook_help.txt
+fi
 
 # Permissions of data dir: must be writable for www-data
 if [ -d /home/linuxmuster-portfolio/data ]; then
@@ -69,9 +96,9 @@ basedn=`grep basedn $NETWORKSETTINGS | sed "s/^.*\"\(.*\)\".*$/\1/"`
 if [ -f /etc/linuxmuster-portfolio/local.php ]; then
     sed -i'' -e"s/\(ou=accounts,\).*;/\1 $basedn\';/" /etc/linuxmuster-portfolio/local.php
     sed -i'' -e"s/\(ou=groups,\).*;/\1 $basedn\';/" /etc/linuxmuster-portfolio/local.php
+    sed -i "s/\(\$conf\['template'\].*=\).*/\1 'portfolio2';/" /etc/linuxmuster-portfolio/local.php
 fi
-VERSION=`dpkg -p linuxmuster-portfolio | grep Version`
-sed -i "s/\#\#\#PAKETINFO\#\#\#/linuxmuster-portfolio<br\/>(${VERSION})/" /usr/share/linuxmuster-portfolio/lib/tpl/portfolio/main.php 
+
 
 if [ -x /etc/init.d/apache2 ]; then
 /etc/init.d/apache2 reload

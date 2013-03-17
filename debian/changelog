@@ -1,34 +1,83 @@
-linuxmuster-portfolio (12.02.indie.9) openlml; urgency=low
+linuxmuster-portfolio (12.11-hiccup.10) openml5-testing; urgency=low
 
-    * Updated underlying DokuWiki to release 2012-01-25 "Angua"
-    * Improved infomail-plugin:
-      * Hint for sending infomail to multiple recipients
-      * Failsafe dividers between multiple mail adresses
-      * Form remembers input in case of no recipients-error
-      * Localized confirmation message
-   * Removed newpage-plugin
-   * Updated dw2pdf-plugin to release "2012/01/30 15:26"
-   * Added Hack to task plugin, so hopefully new tasks will show up in the
-     task list again. (http://www.dokuwiki.org/plugin:task:hacks_discussions)
-   * Updated cloud-plugin to "2011/12/26 15:09"
-   * Updated changes-plugin to "2011/07/20 14:58"
-   * Updated tag-plugin to "2011/09/04 12:43"
-   * Updated disussion-plugin to "2011/07/10 22:39
-   * Removed plugin "definitionlist" due to incompatibility width the new
-     fullscreen mediamanager
-   * modified the template to a wider, cleaner look width media manager
-     integration
-   * fixed z-index bug preventing picker to show up in editing mode
-   * fixed non-fullscreen media insert dialog
+  * Added option to auth ldap to modify mailadresses - experimental, has to be
+    tested, needs documentation
+  * Fixed missing ":" in simplefilelists when using document based structure
+  * Enhanced Template "seminar with documents"
+  * Fixed shorturl bug, closes (#13)
 
- -- Frank Schiebel <frank@linuxmuster.net>  Fri, 09 Mar 2012 18:08:00 +0100
+ -- Frank Schiebel <root@linuxmuster.lokal>  Sun, 17 Mar 2013 11:14:04 +0100
 
-linuxmuster-portfolio (11.05-ada.3) openlml; urgency=low
+linuxmuster-portfolio (12.11-hiccup.8) openml5-testing; urgency=low
 
-    * First import of new DokuWiki RC1 "angua"
-    * fixed missing js files in svn
+  * Added blog plugin on user-request
+  * Updated colums plugin for compatibility with AdoraBelle
+  * Fixed printversion issue, added option to select wether the print version
+    is opened in an new browsertab or not.
+  * fixed media details bug (github issue #11) by including the mods php
+    functions in detail.php
+  * improved detail view by css
+  * fixed tableeditor bug
+  * Deleted charset modifications in filetree import plugin
 
- -- Frank Schiebel <frank@linuxmuster.net>  Tue, 13 Dec 2011 16:37:00 +0100
+ -- Frank Schiebel <frank@linuxmuster.net>  Sun, 16 Dec 2012 19:45:28 +0100
+
+linuxmuster-portfolio (12.11-hiccup.4) openml5-testing; urgency=low
+
+  * Moved styling option to headercss plugin for more flexibility
+  * Removed old default template
+  * Removed old portfolio template
+  * Fixed some minor flaws
+  * Removed obsolete parts in headercss configuration
+  * Added moving of topmenu and sidebar pages for deb postinst
+
+ -- Frank Schiebel <frank@linuxmuster.net>  Wed, 28 Nov 2012 14:28:21 +0100
+
+linuxmuster-portfolio (12.11-hiccup.1) openml5-testing; urgency=low
+
+  * DokuWiki updated to 2012-10-13 "AdoraBelle"
+  * Changed release name to "hiccup", the main charakter of the motion picture
+    "How To Train Qour Dragon"
+
+ -- Frank Schiebel <frank@linuxmuster.net>  Mon, 05 Nov 2012 20:57:35 +0100
+
+linuxmuster-portfolio (12.11-marie.14) openlml; urgency=low
+
+  * Changed architecture to all for compytibility to linuxmuster.net 6.x
+  * Added borders to page and sidebar h1 for IE styling
+  * Moved search in namespaces to selectsearch plugin
+  * Changed edit text
+  * Updated dw2pdf plugin
+  * Removed indexmenu plugin
+  * Updated wiki pagepack with alphindex page
+  * Reorganised help pages for fresh installs
+  * Private testing begins now...
+  * Added forcessl plugin for fullsite ssl access
+
+ -- Frank Schiebel <frank@linuxmuster.net>  Mon, 05 Nov 2012 20:53:33 +0100
+
+linuxmuster-portfolio (12.11-marie.6) openlml; urgency=low
+
+  * New dokuwiki "Adora Belle" RC1
+  * New template based upon the new dokuwiki default template
+
+ -- Frank Schiebel <frank@linuxmuster.net>  Fri, 12 Oct 2012 14:56:02 +0200
+
+linuxmuster-portfolio (12.07-marie.4) openlml; urgency=low
+
+   * Restuctured system information such as credits, icons,
+     sidebar and the like to reside in namespace "wiki"
+   * Removed page structure
+   * Added pagepacks plugin to provide multiple page structures
+     on installation
+   * Added permission check to pagepacks
+   * Removed newpage plugin
+   * Fixed bookcreator link
+   * Added document based structure for schulportfolio
+   * Changed container width to 98%
+   * Fixed startseite only structure
+
+ -- Frank Schiebel <frank@linuxmuster.net>  Mon, 02 Jul 2012 10:14:06 +0200
 
 linuxmuster-portfolio (11.05-ada.1) openlml; urgency=low
 

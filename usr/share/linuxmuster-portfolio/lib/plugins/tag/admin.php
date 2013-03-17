@@ -24,7 +24,7 @@ class admin_plugin_tag extends DokuWiki_Admin_Plugin {
         return array(
             'author' => 'Gina Häußge, Michael Klier',
             'email'  => 'dokuwiki@chimeric.de',
-            'date'   => '2010-11-12',
+            'date'   => @file_get_contents(DOKU_PLUGIN.'tag/VERSION'),
             'name'   => 'Tagindex Manager',
             'desc'   => 'Allows to rebuild the tag index',
             'url'    => 'http://www.dokuwiki.org/plugin:tag',
@@ -53,7 +53,7 @@ class admin_plugin_tag extends DokuWiki_Admin_Plugin {
         print '<fieldset class="pl_si_out">';
         
         print '<button class="button" id="pl_si_gobtn" onclick="plugin_tagindex_go()">';
-        print $this->getLang('rebuildindex');
+        print 'Rebuild Tagindex'; #FIXME localize
         print '</button>';
         print '<div id="pl_si_out"></div>';
         print '<img src="'.DOKU_BASE.'lib/images/loading.gif" id="pl_si_throbber" style="visibility: hidden" />';

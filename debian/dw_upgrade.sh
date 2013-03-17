@@ -9,7 +9,6 @@ ROOTTARGET=../usr/share/linuxmuster-portfolio/
 
 if [ ! $1 ]; then 
  echo "Quellverzeichnis muss als Argument angegeben werden!"
- echo "  i.e. ./dw-upgrade.sh /root/dokuwiki-2012-01-25/ "
  exit 1
 fi
 
@@ -44,7 +43,7 @@ for delete in $DELETES; do
  ftd=${LIBTARGET}${delete}
  if [ -e $ftd ]; then 
   echo "removing $ftd"
-  svn rm $ftd
+  git rm $ftd
  fi
 done
 cp -r $DWSOURCE/lib $LIBTARGET

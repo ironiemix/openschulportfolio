@@ -1,3 +1,0 @@
-===== Allusers =====
-
-Dieser Namensraum kann von allen angemeldeten Benutzers eingesehen werden.

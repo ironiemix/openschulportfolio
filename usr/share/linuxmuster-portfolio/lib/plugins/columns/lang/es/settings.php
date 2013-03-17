@@ -8,5 +8,5 @@
  */
 
 $lang['kwcolumns'] = 'Etiqueta de columnas (por defecto: columnas); Se debe especificar entre paréntesis angulares (&lt;columnas&gt;...&lt;/columnas&gt;)';
-$lang['kwnewcol']  = 'Etiqueta de nueva columna (por defecto: nueva_columna)';
-$lang['wrapnewcol']  = 'Encerrar la etiqueta de nueva columna entre paréntesis angulares (&lt;nueva_columna&gt;)';
+$lang['kwnewcol'] = 'Etiqueta de nueva columna (por defecto: nueva_columna)';
+$lang['wrapnewcol'] = 'Encerrar la etiqueta de nueva columna entre paréntesis angulares (&lt;nueva_columna&gt;)';

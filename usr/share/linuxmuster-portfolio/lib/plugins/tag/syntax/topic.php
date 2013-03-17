@@ -71,13 +71,6 @@ class syntax_plugin_tag_topic extends DokuWiki_Syntax_Plugin {
                 msg($this->getLang('missing_pagelistplugin'), -1);
                 return false;
             }
-
-            $configflags = explode(',', str_replace(" ", "", $this->getConf('pagelist_flags')));
-           	$flags = array_merge($configflags, $flags);	
-           	foreach($flags as $key => $flag) {
-           		if($flag == "")	unset($flags[$key]);
-           	}     
-
             $pagelist->setFlags($flags);
             $pagelist->startList();
             foreach ($pages as $page) {
@@ -97,4 +90,4 @@ class syntax_plugin_tag_topic extends DokuWiki_Syntax_Plugin {
         return false;
     }
 }
-// vim:ts=4:sw=4:et: 
+// vim:ts=4:sw=4:et:enc=utf-8: 

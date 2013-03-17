@@ -19,4 +19,4 @@ Man sollte Texte strukturieren, nicht formatieren. Eine Einteilung der Informati
 
 Wichtige Abschnitte können durch vier verschiedene Infoboxen kenntlich gemacht werden, erreichbar in der Menüleiste des Editors.
 
-Ungeeigtet zur Strukturierung von Informationen sind meist Tabellen - sie eignen sich nur zur Darstellung tabellarischer Daten.
+Ungeeignet zur Strukturierung von Informationen sind meist Tabellen - sie eignen sich nur zur Darstellung tabellarischer Daten.

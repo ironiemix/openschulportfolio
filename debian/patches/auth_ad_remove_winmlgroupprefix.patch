@@ -1,26 +1,22 @@
-Index: trunk/usr/share/linuxmuster-portfolio/inc/auth/ad.class.php
+Index: openschulportfolio/usr/share/linuxmuster-portfolio/inc/auth/ad.class.php
 ===================================================================
---- trunk.orig/usr/share/linuxmuster-portfolio/inc/auth/ad.class.php	2011-03-31 23:38:24.000000000 +0200
-+++ trunk/usr/share/linuxmuster-portfolio/inc/auth/ad.class.php	2011-03-31 23:40:14.000000000 +0200
-@@ -30,6 +30,9 @@
+--- openschulportfolio.orig/usr/share/linuxmuster-portfolio/inc/auth/ad.class.php	2012-10-12 18:39:37.000000000 +0200
++++ openschulportfolio/usr/share/linuxmuster-portfolio/inc/auth/ad.class.php	2012-10-12 18:40:06.000000000 +0200
+@@ -33,6 +33,9 @@
   *   // add a list of comma separated ldap contact fields.
   *   $conf['auth']['ad']['additional'] = 'field1,field2';
   *
 + *   // patched for openschulportfolio
 + *   $conf['auth']['ad']['groupdelprefix']     = 'g_,g_projekt_'
 + *
-  *  @license GPL 2 (http://www.gnu.org/licenses/gpl.html)
-  *  @author  James Van Lommel <jamesvl@gmail.com>
-  *  @link    http://www.nosq.com/blog/2005/08/ldap-activedirectory-and-dokuwiki/
-@@ -187,9 +190,28 @@
-      * @author  James Van Lommel (jamesvl@gmail.com)
-      */
-     function cleanGroup($name) {
-+
+  * @license GPL 2 (http://www.gnu.org/licenses/gpl.html)
+  * @author  James Van Lommel <jamesvl@gmail.com>
+  * @link    http://www.nosq.com/blog/2005/08/ldap-activedirectory-and-dokuwiki/
+@@ -237,6 +240,24 @@
          $sName = str_replace('\\', '', $name);
          $sName = str_replace('#', '', $sName);
          $sName = preg_replace('[\s]', '_', $sName);
-+
++        // changes for ad auth in openschulportfolio
 +        if (isset($this->cnf['groupdelprefix'])) {
 +            if ($this->cnf['debug'])
 +                msg("auth ad: cleanGroup removing prefix is " . $this->cnf['groupdelprefix']);
@@ -28,8 +24,8 @@ Index: trunk/usr/share/linuxmuster-portfolio/inc/auth/ad.class.php
 +                msg("auth ad: found ad group ". $sName);
 +            $sName = strtolower($sName);
 +            $prefixes = explode(",", $this->cnf['groupdelprefix']);
-+            usort($prefixes, create_function(   '$a, $b', 'if (strlen($a) == strlen($b)) return 0;
-+                                                else return (strlen($a) < strlen($b)) ? 1 : -1;'    ));
++            usort($prefixes, create_function('$a, $b', 'if (strlen($a) == strlen($b)) return 0;
++                                                else return (strlen($a) < strlen($b)) ? 1 : -1;'));
 +            foreach ($prefixes as $prefix) {
 +                $prefix = trim($prefix);
 +                $sName = preg_replace("/^$prefix/i", '',$sName);
