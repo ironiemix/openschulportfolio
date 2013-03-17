@@ -9,7 +9,6 @@ $conf['lang'] = 'de';
 $conf['template'] = 'portfolio2';
 $conf['license'] = '';
 $conf['recent'] = 35;
-$conf['breadcrumbs'] = 0;
 $conf['youarehere'] = 1;
 $conf['breadcrumbs'] = 7;
 $conf['dformat'] = '%d.%m.%Y %H:%M';
