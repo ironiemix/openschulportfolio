@@ -46,6 +46,18 @@ Am besten kopiert man die folgende Zeila an Ort und Stelle und passt dann das Ve
            
 {{filelist>:formulare:inventarliste:*&style=table&tableheader=1&tableshowdate=1&tableshowsize=1}}
 
+
+\\
+<note tip>
+Eine Vereinfachung für das schnelle Einfügen einer tabellarischen Dateiliste ist:
+  {{simplefilelist>:formulare:inventarliste:*}}
+Dabei muss man keine weiteren Optionen angeben.
+  
+{{simplefilelist>:formulare:inventarliste:*}}
+
+\\ Nun wird am oberen Rand der Tabelle ein Verweis zu direkten Befüllen der Liste angezeigt.
+
+</note>
 ===== Alle Dateien eines Verzeichnisses und seiner Unterverzeichnisse als Liste =====
 
 Man kann auch einen ganzen Dateibaum rekursiv darstellen lassen, allerdings nicht als Tabelle sondern als Liste.
