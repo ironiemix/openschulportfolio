@@ -1,12 +1,13 @@
-linuxmuster-portfolio (12.11-hiccup.10) openml5-testing; urgency=low
+linuxmuster-portfolio (13.03-fishlegs.1) openml5-testing; urgency=low
 
   * Added option to auth ldap to modify mailadresses - experimental, has to be
     tested, needs documentation
   * Fixed missing ":" in simplefilelists when using document based structure
   * Enhanced Template "seminar with documents"
   * Fixed shorturl bug, closes (#13)
+  * Reworked editor help
 
- -- Frank Schiebel <root@linuxmuster.lokal>  Sun, 17 Mar 2013 11:14:04 +0100
+ -- Frank Schiebel <frank@linuxmuster.net>  Tue, 19 Mar 2013 22:11:00 +0100
 
 linuxmuster-portfolio (12.11-hiccup.8) openml5-testing; urgency=low
 
