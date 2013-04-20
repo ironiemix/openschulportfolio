@@ -1,11 +1,10 @@
 {{tag> hilfe}}
 
 ====== Hilfe für Redakteure ======
-  * [[:hilfe:userhelp|Hilfe für Portfolio-Benutzer]]
-  * [[:hilfe:warum_als_wiki|Warum als Wiki?]]
-  * {{:hilfe:qe_schuq-handbuch-qe-12-1_2012-05_web.pdf|Redaktionshandbuch des Landesinstituts für Schulentwicklung Baden-Württemberg}}
  
+
 ===== Infos & Erklärungen =====
+
 
   * [[prinzipien|Leitlinien für Redakteure]]
   * [[grundlagen|Grundlegende Strukturen und Formate]]
@@ -18,6 +17,7 @@
 
 ===== Fragen & Antworten =====
 
-  * [[seitenmanipulation|Wie erstellt man eine neue Seite, wie löscht man eine Seite, wie verschiebt man eine Seite?]]
+  * [[neueseite|Wie erstellt man eine neue Seite?]]
+  * [[loeschen|Wie löscht oder verschiebt man eine Seite?]]
   * [[seitewiederherstellen| Wie stellt man eine frühere Version einer Seite wieder her?]]
   * [[konvertieren|Wie überführt man ein vorhandenes Office-Dokument ins Wiki Format?]]
