@@ -30,7 +30,7 @@ for delete in $DELETES; do
  ftd=${INCTARGET}${delete}
  if [ -e $ftd ]; then 
   echo "removing $ftd"
-  svn rm  $ftd
+  git rm  $ftd
  fi
 done
 

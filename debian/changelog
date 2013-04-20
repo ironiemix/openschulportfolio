@@ -1,3 +1,9 @@
+linuxmuster-portfolio (13.04-fishlegs.4) precise; urgency=low
+
+  * Updated DokuWiki to "Weatherwax RC1" 2013-03-06
+
+ -- Frank Schiebel <frank@linuxmuster.net>  Sat, 20 Apr 2013 17:43:33 +0200
+
 linuxmuster-portfolio (13.03-fishlegs.1) openml5-testing; urgency=low
 
   * Added option to auth ldap to modify mailadresses - experimental, has to be

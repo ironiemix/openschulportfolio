@@ -99,6 +99,29 @@ if [ -f /etc/linuxmuster-portfolio/local.php ]; then
     sed -i "s/\(\$conf\['template'\].*=\).*/\1 'portfolio2';/" /etc/linuxmuster-portfolio/local.php
 fi
 
+# auth fixes for auth plugins since DW weatherwax
+if [ -f /etc/linuxmuster-portfolio/local.php ]; then
+    sed -i "s|$conf\['auth'\]\['ldap'\]|$conf['plugin']['authldap']|" /etc/linuxmuster-portfolio/local.php
+    sed -i "s|$conf\['authtype'\]\s*=\s*'ldap'|$conf['authtype'] = 'authldap'|" /etc/linuxmuster-portfolio/local.php
+fi
+
+# move auth options to local.protected.php
+if [ -f /etc/linuxmuster-portfolio/local.protected.php ]; then
+    sed -i "s|$conf\['auth'\]\['ldap'\]|$conf['plugin']['authldap']|" /etc/linuxmuster-portfolio/local.protected.php
+    sed -i "s|$conf\['authtype'\]\s*=\s*'ldap'|$conf['authtype'] = 'authldap'|" /etc/linuxmuster-portfolio/local.protected.php
+fi
+
+
+if [ ! -f /etc/linuxmuster-portfolio/local.protected.php ]; then
+    echo "<?php " > /etc/linuxmuster-portfolio/local.protected.php
+    grep auth /etc/linuxmuster-portfolio/local.php >> /etc/linuxmuster-portfolio/local.protected.php
+    sed -i "/auth/d" /etc/linuxmuster-portfolio/local.php
+    chown www-data.root /etc/linuxmuster-portfolio/local.protected.php
+    chmod 400 /etc/linuxmuster-portfolio/local.protected.php
+fi
+
+# disable ldap debugging explicitly
+grep auth /etc/linuxmuster-portfolio/local.protected.php | grep debug || echo "\$conf['plugin']['authldap']['debug'] = 0;" >> /etc/linuxmuster-portfolio/local.protected.php
 
 if [ -x /etc/init.d/apache2 ]; then
 /etc/init.d/apache2 reload

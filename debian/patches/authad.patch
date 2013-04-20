@@ -1,0 +1,32 @@
+Index: openschulportfolio/usr/share/linuxmuster-portfolio/lib/plugins/authad/auth.php
+===================================================================
+--- openschulportfolio.orig/usr/share/linuxmuster-portfolio/lib/plugins/authad/auth.php	2013-04-20 17:33:07.126685456 +0200
++++ openschulportfolio/usr/share/linuxmuster-portfolio/lib/plugins/authad/auth.php	2013-04-20 17:40:31.990666223 +0200
+@@ -254,6 +254,27 @@
+         $group = str_replace('#', '', $group);
+         $group = preg_replace('[\s]', '_', $group);
+         $group = utf8_strtolower(trim($group));
++
++        # begin OSP modification
++        # removing project prefixes for compatibility with
++        # linuxmuster.net
++        # 2013-04-20 Frank Schiebel <frank@linuxmuster.net>
++        if (isset($this->conf['groupdelprefix'])) {
++            if ($this->conf['debug'])
++                msg("auth AD: cleanGroup removing prefix is " . $this->conf['groupdelprefix']);
++            if ($this->conf['debug'])
++                msg("auth AD: found ad group ". $group);
++            $prefixes = explode(",", $this->conf['groupdelprefix']);
++            usort($prefixes, create_function('$a, $b', 'if (strlen($a) == strlen($b)) return 0; else return (strlen($a) < strlen($b)) ? 1 : -1;'));
++            foreach ($prefixes as $prefix) {
++                $prefix = trim($prefix);
++                $group = preg_replace("/^$prefix/i", '',$group);
++            }
++            $group = str_replace('_', '', $group);
++            if ($this->conf['debug'])
++                msg("         mapped to wiki group ". $group);
++        }
++        # end OSP modification
+         return $group;
+     }
+ 
