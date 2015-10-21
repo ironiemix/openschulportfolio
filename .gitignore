@@ -1,0 +1,9 @@
+.pc/
+build-arch-stamp
+build-indep-stamp
+configure-stamp
+debian/compat
+debian/files
+debian/linuxmuster-portfolio.debhelper.log
+debian/linuxmuster-portfolio.substvars
+debian/linuxmuster-portfolio/

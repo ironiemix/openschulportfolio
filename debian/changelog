@@ -1,3 +1,9 @@
+linuxmuster-portfolio (13.03-fishlegs.2-quickfix1) openml5-testing; urgency=low
+
+  * Updated bookcreator to latest version for php5.5 compatibility
+
+ -- Frank Schiebel <frank@linuxmuster.net>  Wed, 21 Oct 2015 11:45:00 +0100
+
 linuxmuster-portfolio (13.03-fishlegs.1) openml5-testing; urgency=low
 
   * Added option to auth ldap to modify mailadresses - experimental, has to be

@@ -1,48 +1,47 @@
 <?php
- 
-$lang['bookcreator_nocookies']       = "Vous n'avez pas encore sÈlectionnÈ de pages. VÈrifier que votre navigateur accepte les cookies et essayez de nouveau.";
-$lang['bookcreator_empty']           = "Vous n'avez pas encore sÈlÈctionnÈ de pages.";
-$lang['bookcreator_toprint']         = "Pages sÈlectionnÈes";
-$lang['bookcreator_removed']         = "Pages retirÈes de la sÈlection";
- 
-$lang['bookcreator_reserconfirm']    = "Etes-vous s˚r de vouloir vider la sÈlection ?";
-$lang['bookcreator_reset']           = "Vider la sÈlection";
- 
-$lang['bookcreator_include']         = "Ajouter ‡ la sÈlection";
-$lang['bookcreator_remove']          = "Retirer la page de la sÈlection";
-$lang['bookcreator_export']          = "Exporter la sÈlection";
-$lang['bookcreator_create']          = "Exporter";
 
-$lang['bookcreator_exportpdf']       = "Exporter en PDF";
-$lang['bookcreator_exportprint']     = "Version imprimable";
-$lang['bookcreator_exporttext']      = "Version seul texte";
-
-$lang['bookcreator_title']           = "Titre du document (optionnel)";
- 
-$lang['bookcreator_pageadded']       = "Page ajoutÈe ‡ la sÈlection";
-$lang['bookcreator_pageremoved']     = "Page retirÈe de la sÈlection";
- 
-$lang['bookcreator_addpage']         = "Ajouter cette page ‡ votre livre";
-$lang['bookcreator_removepage']      = "Retirer cette page de votre livre";
-$lang['bookcreator_showbook']        = "Voir ou modifier le livre";
- 
-$lang['bookcreator_pages']           = "page/s";
-$lang['bookcreator_help']            = "Aide";
- 
-$lang['bookcreator_toolbar']         = "CrÈateur de livres";
-
-$lang['bookcreator_saveselection']   = "Enregistrer la sÈlection";
-$lang['bookcreator_needtitle']       = "Il faut indiquer un titre";
-$lang['bookcreator_saved']           = "SÈlectionnez sauvegardÈs avec succËs";
-$lang['bookcreator_deleted']         = "SÈlection supprimÈ avec succËs";
-
-$lang['bookcreator_save']            = "Enregistrer";
-$lang['bookcreator_listselections']  = "Liste de sÈlection sauvÈ";
-
-$lang['bookcreator_delselection']    = "Supprimer la sÈlection sauvÈ";
-$lang['bookcreator_showpage']        = "Afficher la page";
-$lang['bookcreator_loadselection']   = "Charger la sÈlection sauvÈ";
-
-$lang['bookcreator_confirmdel']      = "Voulez-vous vraiment supprimer cette sÈlection dans les archives?";
-$lang['bookcreator_confirmload']     = "Voulez-vous vraiment charge cette sÈlection, en remplacement de toutes les pages dÈj‡ choisi?";
-
+/**
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
+ * @author Schplurtz le D√©boulonn√© <schplurtz@laposte.net>
+ * @author Schplurtz le D√©boulonn√© <Schplurtz@laposte.net>
+ */
+$lang['nocookies']             = 'Vous n\'avez pas encore s√©lectionn√© de pages. V√©rifier que votre navigateur accepte les cookies et essayez de nouveau.';
+$lang['empty']                 = 'Vous n\'avez pas encore s√©lectionn√© de pages.';
+$lang['toprint']               = 'Pages s√©lectionn√©es';
+$lang['removed']               = 'Pages retir√©es de la s√©lection';
+$lang['reserconfirm']          = 'Etes-vous s√ªr de vouloir vider la s√©lection ?';
+$lang['reset']                 = 'Vider la s√©lection';
+$lang['js']['include']         = 'Ajouter √† la s√©lection.';
+$lang['js']['remove']          = 'Retirer la page de la s√©lection.';
+$lang['js']['confirmdel']      = 'Voulez-vous vraiment supprimer cette s√©lection des archives ?';
+$lang['js']['confirmload']     = 'Voulez-vous vraiment charger cette s√©lection en remplacement de la s√©lection actuelle ?';
+$lang['js']['btn_addtobook']   = 'Ajouter au livre.';
+$lang['js']['btn_removetobook'] = 'Retirer du livre.';
+$lang['export']                = 'Exporter la s√©lection.';
+$lang['create']                = 'Exporter';
+$lang['exportpdf']             = 'Exporter en PDF';
+$lang['exportodt']             = 'Exporter la s√©lection en ODT.';
+$lang['exportprint']           = 'Version imprimable';
+$lang['exporttext']            = 'Version texte seul';
+$lang['title']                 = 'Titre du document (optionnel)';
+$lang['pageadded']             = 'Page ajout√©e √† la s√©lection';
+$lang['pageremoved']           = 'Page retir√©e de la s√©lection';
+$lang['addpage']               = 'Ajouter cette page √† votre livre';
+$lang['removepage']            = 'Retirer cette page de votre livre';
+$lang['showbook']              = 'Voir ou modifier le livre';
+$lang['sortable']              = 'Cliquez et d√©placer pour trier, supprimer, ajouter des pages.';
+$lang['pages']                 = 'pages';
+$lang['help']                  = 'Aide';
+$lang['toolbar']               = 'Cr√©ateur de livres';
+$lang['saveselection']         = 'Enregistrer la s√©lection';
+$lang['needtitle']             = 'Il faut indiquer un titre.';
+$lang['saved']                 = 'S√©lection enregistr√©e avec succ√®s.';
+$lang['deleted']               = 'S√©lection supprim√©e avec succ√®s.';
+$lang['duplicate']             = '&lt;La liste des s√©lections sauv√©es est d√©j√† affich√©e sur cette page.&gt;';
+$lang['save']                  = 'Enregistrer';
+$lang['listselections']        = 'Liste des s√©lections enregistr√©es';
+$lang['showpage']              = 'Afficher la page.';
+$lang['delselection']          = 'Supprimer cette s√©lection enregistr√©e.';
+$lang['loadselection']         = 'Charger cette s√©lection enregistr√©e.';
+$lang['nobookmanageraccess']   = 'Vous ne pouvez pas changer la s√©lection. Uniquement autoris√© quand vous avez aussi acc√®s au gestionnaire de livre.';

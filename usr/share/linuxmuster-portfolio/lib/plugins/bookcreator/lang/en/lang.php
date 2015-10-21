@@ -1,48 +1,55 @@
 <?php
 
-$lang['bookcreator_nocookies']       = "You don't have pages selected yet. Check your browser to allow cookies and try again.";
-$lang['bookcreator_empty']           = "You don't have pages selected yet.";
-$lang['bookcreator_toprint']         = "Selected pages";
-$lang['bookcreator_removed']         = "Pages removed from selection";
+$lang['nocookies']       = "You don't have pages selected yet. Check your browser to allow cookies and try again.";
+$lang['empty']           = "You don't have pages selected yet.";
+$lang['toprint']         = "Selected pages";
+$lang['removed']         = "Pages removed from selection";
 
-$lang['bookcreator_reserconfirm']    = "Do you really clear selection ?";
-$lang['bookcreator_reset']           = "Clear selection";
+$lang['reserconfirm']    = "Do you really clear selection?";
+$lang['reset']           = "Clear selection";
 
-$lang['bookcreator_include']         = "Add to selection";
-$lang['bookcreator_remove']          = "Remove page from selection";
-$lang['bookcreator_export']          = "Export selection";
-$lang['bookcreator_create']          = "Export";
+$lang['js']['include']   = "Add to selection";
+$lang['js']['remove']    = "Remove page from selection";
+$lang['export']          = "Export selection";
+$lang['create']          = "Export";
 
-$lang['bookcreator_exportpdf']       = "Export selection to PDF";
-$lang['bookcreator_exportprint']     = "Printable version";
-$lang['bookcreator_exporttext']      = "Text only";
+$lang['exportpdf']       = "Export selection to PDF";
+$lang['exportodt']       = "Export selection to ODT";
+$lang['exportprint']     = "Printable version";
+$lang['exporttext']      = "Text only";
 
-$lang['bookcreator_title']           = "Document's title (optional)";
+$lang['title']           = "Document's title (optional)";
 
-$lang['bookcreator_pageadded']       = "Page add to selection";
-$lang['bookcreator_pageremoved']     = "Page removed from selection";
+$lang['pageadded']       = "Page add to selection";
+$lang['pageremoved']     = "Page removed from selection";
 
-$lang['bookcreator_addpage']         = "Add this page to your book";
-$lang['bookcreator_removepage']      = "Remove this page from your book";
-$lang['bookcreator_showbook']        = "Show, modify book";
+$lang['addpage']         = "Add this page to your book";
+$lang['removepage']      = "Remove this page from your book";
+$lang['showbook']        = "Show, modify book";
+$lang['sortable']        = "Drag and drop to sort/remove/add pages";
 
-$lang['bookcreator_pages']           = "page/s";
-$lang['bookcreator_help']            = "Help'";
+$lang['pages']           = "page/s";
+$lang['help']            = "Help";
 
-$lang['bookcreator_toolbar']         = "Book creator";
+$lang['toolbar']         = "Book creator";
 
-$lang['bookcreator_saveselection']   = "Save selection";
-$lang['bookcreator_needtitle']       = "should indicate a title";
-$lang['bookcreator_saved']           = "Select saved successfully";
-$lang['bookcreator_deleted']         = "Selecting successfully removed";
+$lang['saveselection']   = "Save selection";
+$lang['needtitle']       = "Please provide a title";
+$lang['saved']           = "Selection saved successfully";
+$lang['deleted']         = "Selection successfully removed";
+$lang['duplicate']       = "&lt;The list with saved selections is already displayed on this page&gt;";
 
-$lang['bookcreator_save']            = "Save";
-$lang['bookcreator_listselections']  = "Selection List saved";
+$lang['save']            = "Save";
+$lang['listselections']  = "Selection Lists saved";
 
-$lang['bookcreator_delselection']    = "Remove saved selection";
-$lang['bookcreator_showpage']        = "Show page";
-$lang['bookcreator_loadselection']   = "Load saved selection";
+$lang['showpage']        = "Show page";
+$lang['delselection']    = "Remove saved selection";
+$lang['loadselection']   = "Load saved selection";
 
-$lang['bookcreator_confirmdel']      = "Do you really delete this selection from the archive?";
-$lang['bookcreator_confirmload']     = "Do you really load this selection, replacing any pages already selected?";
+$lang['nobookmanageraccess'] = "You may not change the selection. Only allowed when you have access to the bookmanager as well.";
 
+$lang['js']['confirmdel']  = "Do you really delete this selection from the archive?";
+$lang['js']['confirmload'] = "Do you really load this selection, replacing any pages already selected?";
+
+$lang['js']['btn_addtobook']    = "Add to book";
+$lang['js']['btn_removetobook'] = "Remove from book";
