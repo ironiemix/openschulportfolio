@@ -1,15 +1,24 @@
 ====== Backup Tool ======
 
-Das Dokuwiki-Backup-Tool ermÃ¶glicht es Ihnen, Ihre Wiki-Seiten, Dateien, Konfigurationsdaten, Plugins und Templates auf einfache Weise zu
-sichern, falls in naher Zukunft ein [[wp>Meteorit]] dummerweise auf Ihrem Server landet oder etwas Ã¤hnlich miÃŸliches geschieht.
+Dieses Tool erstellt Sicherungskopien vom Wiki und den Metadaten, der
+Konfiguration des Wikis, von Templates und Plugins, sowie allen anderen
+Daten, die Sie sichern möchten, für den Fall das ein [[wp>Meteorit]]
+Ihren Hoster trifft oder etwas ähnlich Schlimmes passiert. 
+  
+Das Tool wird eine [[wp>tar_(file format)|tar]]-Datei erzeugen, die
+entweder mit [[wp>bzip2]] oder [[wp>gzip]] komprimiert wird, welche Sie
+herunterladen können. Wenn Backup Tool keine Komprimierungssoftware zur Verfügung
+steht, wird die tar-Datei unkomprimiert erzeugt.
 
-Das Plugin sichert die Daten in einem [[wp>tar_(file format)|tar]] Archiv, das entweder mit [[wp>bzip2]], [[wp>gzip]] oder gar nicht komprimiert 
-wird, je nachdem welche Programme auf ihrem Server verfÃ¼gbar sind. Das Backuparchiv wird auf dem Server abgelegt, von wo aus Sie es anschlieÃŸend
-herunterladen kÃ¶nnen.
+**Hinweis:**
 
-==== Bemerkungen:====
-  * Wenn die maximale Skriptlaufzeit des Server nicht ausreicht, um das Backup vollstÃ¤ndig abzuschlieÃŸen, versuchen Sie, nicht alle Objekte gleichzeitig zu sichern.
-  * Die Backup-Datei hat einen Namen wie //dw-backup-JahrMonatTag-StundeMinuteSekunde.tar.bz2//, die Zeit wird im **24 Stundenformat** angegeben. Auf diese Weise werden die Backup-Dateien **immer** chronologisch korrekt sortiert und angezeigt. Aus diesem Grund sollte man das Namensformat nicht Ã¤ndern - aber das mÃ¼ssen Sie selbst entscheiden.
+  * Wenn das Erstellen der Sicherungskopie einen Timeout erzeugt, versuchen Sie durch Auswahl von weniger Punkten eine geringere Datenmenge in eine Sicherungskopie zu packen.
+  * Die erstellte Datei erhält einen Namen nach dem Format //dw-backup-JahrMonatTag-StundeMinuteSekunde.tar.bz2//, mit der Zeit im 24-Stunden-Format.
+    * Die Datei ist in dieser Form formatiert, damit Sicherungskopien in chronologischer Folge sortiert werden.
+  * **Wenn Sie sicherheitsrelevante Daten** (z.B. private Seiten oder Konfigurationsdateien in denen Passwörter enthalten sind) abspeichern, ist es empfehlenswert, den backup-Namensraum so zu konfigurieren, dass nur Administratoren ihn einsehen können oder Sie löschen die Sicherungskopien sofort, nachdem sie heruntergeladen wurden.
+  * Sie können spezifische Verzeichnisse von der Sicherungskopie ausschließen, z.B. alte Sicherungskopien oder Cacheverzeichnisse vom [[doku>plugin:latex|LateX plugin]]. Schauen Sie dazu in die Konfigurationsdatei für dieses Plugin.
+    * Die Sicherungsmethode mit "GNU Tar (fast;unfiltered)" ignoriert normalerweise diese Filter.
 
-==== Bitte wÃ¤hlen Sie aus, welche daten gesichert werden sollen:===== 
+
+Bitte wählen Sie aus den folgenden Punkten, was Sie sichern wollen ...
 

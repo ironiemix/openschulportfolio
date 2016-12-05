@@ -1,7 +1,7 @@
-div.dokuwiki div.include div.secedit {
+div.dokuwiki div.plugin_include_content div.secedit {
   float: right;
   margin-left: 1em;
-  margin-top: -18px;
+  margin-top: 0;
 }
 
 div.dokuwiki div.inclmeta {
@@ -10,7 +10,7 @@ div.dokuwiki div.inclmeta {
   color: __text_neu__;
   font-size: 80%;
   line-height: 1.25;
-  margin-top: 0.5em;
+  /*margin-top: 0.5em;*/
   margin-bottom: 2em;
 }
 
@@ -30,6 +30,12 @@ div.dokuwiki div.inclmeta span.author {
   padding: 1px 0px 1px 16px;
 }
 
+/* Disable the default interwiki icon for the user link (if there is any) */
+div.dokuwiki div.inclmeta span.author a.interwiki {
+    background: none;
+    padding: 0;
+}
+
 div.dokuwiki div.inclmeta span.comment {
   background: transparent url(images/comment.gif) 0px 1px no-repeat;
   padding: 1px 0px 1px 16px;
@@ -40,4 +46,8 @@ div.dokuwiki div.inclmeta div.tags {
   font-size: 100%;
   float: right;
   clear: none;
+}
+
+div.dokuwiki p.include_readmore {
+  text-align: right;
 }

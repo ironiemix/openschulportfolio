@@ -1,11 +1,10 @@
 ====== Backup Tool ======
 
-**Ihre Konfiguration ist fehlerhaft, Dokiwiki-Backup-Tool wird nicht funktionieren!**
+**Backup Tool ist mir Ihrer aktuellen Konfiguration nicht funktionsfähig.**
 
-==== Es gibt zwei MÃ¶glichkeiten, das Problem zu lÃ¶sen: ====
+Es gibt zwei Wege dieses Problem zu lösen:
+  * Installieren Sie [[http://pear.php.net/package/PEAR|PEAR]], eine PHP-Bibliothek die eine Archivierungsklasse enthält, die von Backup Tool genutzt werden kann.
+  * Erlauben Sie den Zugriff auf die PHP [[http://us.php.net/exec|exec]]-Funktion und zusätzlichen Zugriff auf die Kommandozeilen basierten Tools **tar** und entweder **gzip** oder **bzip2**.
 
-  * Entweder Sie installieren [[http://pear.php.net/package/PEAR|PEAR]] auf Ihrem Server (oder lassen Ihren Provider dies tun).  PEAR ist eine Bibliiothek fÃ¼r PHP, die ein Klasse bereitstellt, die Backup-Tool zum Erstellen des Backups verwenden kann.
-  * Veranlassen Sie, dass die PHP-Installation Ihres Servers die [[http://us.php.net/exec|exec]] Funktion von PHP verwenden darf und Zugriff auf die Kommandozeilenwerkzeuge **tar** und entweder **gzip** oder **bzip2** hat.
-
-Wenn Sie eine der beiden LÃ¶sungen umgesetzt haben, rufen Sie diese Seite erneut auf. Dann sollte diese Mitteilung verschwunden sein und es sollte Ihnen mÃ¶glich sein, ein Backup durchzufÃ¼hren.
+Wenn eines der beiden Probleme auf Ihrem System gelöst ist, aktualisieren Sie die Backup-Tool-Seite. Diese Fehlermeldung wird dann verschwinden und Sie können eine Sicherheitskopie anstoßen.
 

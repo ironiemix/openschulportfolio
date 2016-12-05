@@ -15,11 +15,13 @@ div.dokuwiki table.pagelist tr {
 div.dokuwiki table.pagelist th,
 div.dokuwiki table.pagelist td {
   padding: 1px 1em 1px 0;
+  border: 0;
 }
 
 div.dokuwiki table.ul th,
 div.dokuwiki table.ul td {
   padding: 0 1em 0 0;
+  border: 0;
 }
 
 div.dokuwiki table.ul ul {
@@ -38,16 +40,18 @@ div.dokuwiki th.desc,
 div.dokuwiki th.comments,
 div.dokuwiki th.linkbacks,
 div.dokuwiki th.tags,
+div.dokuwiki th.diff,
 div.dokuwiki td.date,
 div.dokuwiki td.user,
 div.dokuwiki td.desc,
 div.dokuwiki td.comments,
 div.dokuwiki td.linkbacks,
-div.dokuwiki td.tags {
+div.dokuwiki td.tags,
+div.dokuwiki td.diff {
   color: __text_neu__;
   font-size: 80%;
 }
 
 div.dokuwiki td.date {
-  text-align: right;
+  text-align: left;
 }

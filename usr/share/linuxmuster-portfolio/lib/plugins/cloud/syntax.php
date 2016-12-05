@@ -16,17 +16,6 @@ require_once(DOKU_PLUGIN.'syntax.php');
 
 class syntax_plugin_cloud extends DokuWiki_Syntax_Plugin {
 
-    function getInfo() {
-        return array(
-                'author' => 'Gina Häußge, Michael Klier, Esther Brunner',
-                'email'  => 'dokuwiki@chimeric.de',
-                'date'   => @file_get_contents(DOKU_PLUGIN . 'cloud/VERSION'),
-                'name'   => 'Cloud Plugin',
-                'desc'   => 'displays the most used words in a word cloud',
-                'url'    => 'http://wiki.splitbrain.org/plugin:cloud',
-                );
-    }
-
     function getType() { return 'substition'; }
     function getPType() { return 'block'; }
     function getSort() { return 98; }
@@ -35,30 +24,57 @@ class syntax_plugin_cloud extends DokuWiki_Syntax_Plugin {
         $this->Lexer->addSpecialPattern('~~\w*?CLOUD.*?~~', $mode, 'plugin_cloud');
     }
 
-    function handle($match, $state, $pos, &$handler) {
+    function handle($match, $state, $pos, Doku_Handler $handler) {
         $match = substr($match, 2, -2); // strip markup
-        if (substr($match, 0, 3) == 'TAG') $type = 'tag';
-        else $type = 'word';
 
-        list($junk, $num) = explode(':', $match, 2);
+        if (substr($match, 0, 3) == 'TAG') {
+            $type = 'tag';
+        } elseif (substr($match, 0, 6) == 'SEARCH') {
+            $type = 'search';
+        } else {
+            $type = 'word';
+        }
+
+        list($num, $ns) = explode('>', $match, 2);
+        list($junk, $num) = explode(':', $num, 2);
+
         if (!is_numeric($num)) $num = 50;
-
-        return array($type, $num);
+        if(!is_null($ns)) $namespaces = explode('|', $ns);
+        else $namespaces = null;
+        
+        return array($type, $num, $namespaces);
     }            
 
-    function render($mode, &$renderer, $data) {
+    function render($mode, Doku_Renderer $renderer, $data) {
         global $conf;
 
-        list($type, $num) = $data;
+        list($type, $num, $namespaces) = $data;
 
         if ($mode == 'xhtml') {
 
             if ($type == 'tag') { // we need the tag helper plugin
+                /** @var helper_plugin_tag $tag */
                 if (plugin_isdisabled('tag') || (!$tag = plugin_load('helper', 'tag'))) {
                     msg('The Tag Plugin must be installed to display tag clouds.', -1);
                     return false;
                 }
-                $cloud = $this->_getTagCloud($num, $min, $max, $tag);
+                $cloud = $this->_getTagCloud($num, $min, $max, $namespaces, $tag);
+            } elseif($type == 'search') {
+                /** @var helper_plugin_searchstats $helper */
+                $helper = plugin_load('helper', 'searchstats');
+                if($helper) {
+                    $cloud = $helper->getSearchWordArray($num);
+                    // calculate min/max values
+                    $min = PHP_INT_MAX;
+                    $max = 0;
+                    foreach ($cloud as $size) {
+                        $min = min($size, $min);
+                        $max = max($size, $max);
+                    }
+                } else {
+                    msg('You have to install the searchstats plugin to use this feature.', -1);
+                    return false;
+                }
             } else {
                 $cloud = $this->_getWordCloud($num, $min, $max);
             }
@@ -69,7 +85,7 @@ class syntax_plugin_cloud extends DokuWiki_Syntax_Plugin {
             $renderer->info['cache'] = false;
 
             // and render the cloud
-            $renderer->doc .= '<div id="cloud">'.DOKU_LF;
+            $renderer->doc .= '<div class="cloud">'.DOKU_LF;
             foreach ($cloud as $word => $size) {
                 if ($size < $min+round($delta)) $class = 'cloud1';
                 elseif ($size < $min+round(2*$delta)) $class = 'cloud2';
@@ -78,18 +94,22 @@ class syntax_plugin_cloud extends DokuWiki_Syntax_Plugin {
                 else $class = 'cloud5';
 
                 $name = $word;
-                if ($type == 'tag') {
+                if ($type == 'tag' && isset($tag)) {
                     $id = $word;
+                    $exists = false;
                     resolve_pageID($tag->namespace, $id, $exists);
                     if($exists) {
                         $link = wl($id);
                         if($conf['useheading']) {
                             $name = p_get_first_heading($id, false);
-                        }
+                            if (empty($name)) {
+                                $name = $word;
+                            }
+			}
                     } else {
-                        $link = wl($id, array('do'=>'showtag', 'tag'=>noNS($id)));
+                        $link = wl($id, array('do'=>'showtag', 'tag'=>$word));
                     }
-                    $title = $id;
+                    $title = $word;
                     $class .= ($exists ? '_tag1' : '_tag2');
                 } else {
                     if($conf['userewrite'] == 2) {
@@ -102,7 +122,7 @@ class syntax_plugin_cloud extends DokuWiki_Syntax_Plugin {
                 }
 
                 $renderer->doc .= DOKU_TAB . '<a href="' . $link . '" class="' . $class .'"'
-                               .' title="' . $title . '">' . $name . '</a>' . DOKU_LF;
+                               .' title="' . $title . '">' . hsc($name) . '</a>' . DOKU_LF;
             }
             $renderer->doc .= '</div>' . DOKU_LF;
             return true;
@@ -118,19 +138,19 @@ class syntax_plugin_cloud extends DokuWiki_Syntax_Plugin {
 
         // load stopwords
         $swfile   = DOKU_INC.'inc/lang/'.$conf['lang'].'/stopwords.txt';
-        if (@file_exists($swfile)) $stopwords = file($swfile);
+        if (@file_exists($swfile)) $stopwords = file($swfile, FILE_IGNORE_NEW_LINES);
         else $stopwords = array();
 
         // load extra local stopwords
         $swfile = DOKU_CONF.'stopwords.txt';
-        if (@file_exists($swfile)) $stopwords = array_merge($stopwords, file($swfile));
+        if (@file_exists($swfile)) $stopwords = array_merge($stopwords, file($swfile, FILE_IGNORE_NEW_LINES));
 
         $cloud = array();
 
-        if (@file_exists($conf['indexdir'].'/page.idx')) { // new word-lenght based index
+        if (@file_exists($conf['indexdir'].'/page.idx')) { // new word-length based index
             require_once(DOKU_INC.'inc/indexer.php');
 
-            $n = 2; // minimum word length
+            $n = $this->getConf('minimum_word_length'); // minimum word length
             $lengths = idx_indexLengths($n);
             foreach ($lengths as $len) {
                 $idx      = idx_getIndex('i', $len);
@@ -157,7 +177,7 @@ class syntax_plugin_cloud extends DokuWiki_Syntax_Plugin {
         // collect the frequency of the words
         for ($i = 0; $i < $wcount; $i++) {
             $key = trim($word_idx[$i]);
-            if (!is_int(array_search("$key\n", $stopwords))) {
+            if (!is_int(array_search($key, $stopwords))) {
                 $value = explode(':', $idx[$i]);
                 if (!trim($value[0])) continue;
                 $cloud[$key] = count($value);
@@ -168,21 +188,20 @@ class syntax_plugin_cloud extends DokuWiki_Syntax_Plugin {
     /**
      * Returns the sorted tag cloud array
      */
-    function _getTagCloud($num, &$min, &$max, &$tag) {
-        $cloud = array();
-        if(!is_array($tag->topic_idx)) return;
-        foreach ($tag->topic_idx as $key => $value) {
-            if (!is_array($value) || empty($value) || (!trim($value[0]))) {
-                continue;
-            } else {
-                $pages = array();
-                foreach($value as $page) {
-                    if(auth_quickaclcheck($page) < AUTH_READ) continue;
-                    array_push($pages, $page);
-                }
-                if(!empty($pages)) $cloud[$key] = count($pages);
+    function _getTagCloud($num, &$min, &$max, $namespaces = NULL, helper_plugin_tag &$tag) {
+        $cloud = $tag->tagOccurrences(NULL, $namespaces, true, $this->getConf('list_tags_of_subns'));
+
+        $blacklist = $this->getConf('tag_blacklist');
+        if(!empty($blacklist)) {
+            $blacklist = explode(',', $blacklist);
+            $blacklist = str_replace(' ', '', $blacklist);	// remove spaces
+
+            foreach ($blacklist as $tag) {
+                if (isset($cloud[$tag]))
+                    unset($cloud[$tag]);
             }
         }
+
         return $this->_sortCloud($cloud, $num, $min, $max);
     }
 
@@ -190,7 +209,7 @@ class syntax_plugin_cloud extends DokuWiki_Syntax_Plugin {
      * Sorts and slices the cloud
      */
     function _sortCloud($cloud, $num, &$min, &$max) {
-        if(empty($cloud)) return;
+        if(empty($cloud)) return $cloud;
 
         // sort by frequency, then alphabetically
         arsort($cloud);
@@ -202,4 +221,4 @@ class syntax_plugin_cloud extends DokuWiki_Syntax_Plugin {
         return $cloud[0];
     }
 }
-// vim:ts=4:sw=4:et:enc=utf-8: 
+// vim:ts=4:sw=4:et: 

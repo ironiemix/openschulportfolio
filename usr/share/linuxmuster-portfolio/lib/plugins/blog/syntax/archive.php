@@ -1,7 +1,7 @@
 <?php
 /**
  * Archive Plugin: displays links to all wiki pages from a given month
- * 
+ *
  * @license  GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author   Esther Brunner <wikidesign@gmail.com>
  */
@@ -18,17 +18,6 @@ require_once(DOKU_PLUGIN.'syntax.php');
  */
 class syntax_plugin_blog_archive extends DokuWiki_Syntax_Plugin {
 
-    function getInfo() {
-        return array(
-                'author' => 'Gina Häußge, Michael Klier, Esther Brunner',
-                'email'  => 'dokuwiki@chimeric.de',
-                'date'   => @file_get_contents(DOKU_PLUGIN . 'blog/VERSION'),
-                'name'   => 'Blog Plugin (archive component)',
-                'desc'   => 'Displays a list of wiki pages from a given month',
-                'url'    => 'http://dokuwiki.org/plugin:blog',
-                );
-    }
-
     function getType() { return 'substition'; }
     function getPType() { return 'block'; }
     function getSort() { return 309; }
@@ -37,7 +26,7 @@ class syntax_plugin_blog_archive extends DokuWiki_Syntax_Plugin {
         $this->Lexer->addSpecialPattern('\{\{archive>.*?\}\}', $mode, 'plugin_blog_archive');
     }
 
-    function handle($match, $state, $pos, &$handler) {
+    function handle($match, $state, $pos, Doku_Handler $handler) {
         global $ID;
 
         $match = substr($match, 10, -2); // strip {{archive> from start and }} from end
@@ -45,6 +34,16 @@ class syntax_plugin_blog_archive extends DokuWiki_Syntax_Plugin {
         $flags = explode('&', $flags);
         list($match, $refine) = explode(' ', $match, 2);
         list($ns, $rest) = explode('?', $match, 2);
+
+        $author = NULL;
+        foreach($flags as $i=>$flag) {
+            if(preg_match('/(\w+)\s*=(.+)/', $flag, $temp) == 1) {
+                if ($temp[1] == 'author') {
+                    $author = trim($temp[2]);
+                    unset($flags[$i]);
+                }
+            }
+        }
 
         if (!$rest) {
             $rest = $ns;
@@ -86,24 +85,27 @@ class syntax_plugin_blog_archive extends DokuWiki_Syntax_Plugin {
             // all entries from that namespace up to now
         } elseif ($rest == '*') {
             $start  = 0;
-            $end    = time();
+            $end    = PHP_INT_MAX;
 
             // unknown format
         } else {
             return false;
         }
 
-        return array($ns, $start, $end, $flags, $refine);
+        return array($ns, $start, $end, $flags, $refine, $author);
     }
 
-    function render($mode, &$renderer, $data) {
-        list($ns, $start, $end, $flags, $refine) = $data;
+    function render($mode, Doku_Renderer $renderer, $data) {
+        list($ns, $start, $end, $flags, $refine, $author) = $data;
 
         // get the blog entries for our namespace
-        if ($my =& plugin_load('helper', 'blog')) $entries = $my->getBlog($ns);
+        /** @var helper_plugin_blog $my */
+        if ($my =& plugin_load('helper', 'blog')) $entries = $my->getBlog($ns, NULL, $author);
+        else return false;
 
         // use tag refinements?
         if ($refine) {
+            /** @var helper_plugin_tag $tag */
             if (plugin_isdisabled('tag') || (!$tag = plugin_load('helper', 'tag'))) {
                 msg($this->getLang('missing_tagplugin'), -1);
             } else {
@@ -114,98 +116,22 @@ class syntax_plugin_blog_archive extends DokuWiki_Syntax_Plugin {
         if (!$entries) return true; // nothing to display
 
         if ($mode == 'xhtml') {
-            // Configuration
-            $archive_mode = $this->getConf('archive_mode');
-            $max_months = $this->getConf('max_months');
-            $histogram_height = $this->getConf('histogram_height');
-
-
-            // prevent caching for current month to ensure content is always fresh
-            if (time() < $end) $renderer->info['cache'] = false;
-
             if ($this->getConf('showhistogram')) {
-                $current_year ='';
-                $current_month ='';
-                $ul_open = false;
+                $alt_list = $this->_build_alternative_list($start, $end, $entries);
 
-                $histogram = '';
-                $histogram_count = array();
-                $histogram_higher = 0;
-                $posts_count = 0;
-
-                $list = '';
-
-                // Generate posts list
-                foreach ($entries as $entry) {
-                    // entry in the right date range?
-                    if (($start > $entry['date']) || ($entry['date'] >= $end)) continue;
-
-                    if ($current_year != date('o',$entry['date'])) {
-                        if ($ul_open) {
-                            $list .= '</ul>' . DOKU_LF;
-                            $ul_open = false;
-                        }
-                        $current_year = date('o',$entry['date']);
-                        $list .= '<h2>' . $current_year . '</h2>' . DOKU_LF;
-                    }
-                    if ($current_month != date('m',$entry['date'])) {
-                        if ($ul_open) {
-                            $list .= '</ul>' . DOKU_LF;
-                        }
-                        $current_month = date('m',$entry['date']);
-                        $list .= '<h3 id="m' . date('o-m',$entry['date']) . '">' . $this->getLang('month_' . $current_month) . '</h3><ul>' . DOKU_LF;
-                        $ul_open = true;
-                    }
-                    $posts_count += 1;
-                    $histogram_count[date('o-m',$entry['date'])] += 1;
-                    if ($histogram_higher < $histogram_count[date('o-m',$entry['date'])]) {
-                        $histogram_higher = $histogram_count[date('o-m',$entry['date'])];
-                    }
-                    $list .= '<li>' . date('d',$entry['date']) . ' - <a href="' . wl($entry['id']) . '" title="' . $entry['id'] . '">' . $entry['title'] . '</a></li>' . DOKU_LF;
-                }
-                $list .= '</ul>' . DOKU_LF;
-
-                if ($posts_count > $max_posts) {
-                    $posts_count = $max_posts;
-                }
-                // Generate histogram
-                $histogram_count = array_reverse($histogram_count);
-                $month_count = 0;
-                foreach ($histogram_count as $key => $month_reference) {
-                    // Check the max_months parameter
-                    if ($month_count >= $max_months) {
-                        break;
-                    }
-                    if ($month_reference > 0) {
-                        // Height in "px"
-                        $current_height = $histogram_height / $histogram_higher * $month_reference;
-                    } else {
-                        // Height in "px"
-                        $current_height = 1;
-                    }
-                    // Generate the alt attribute
-                    $alt = $key.': '.$month_reference.' ';
-                    if ($month_reference > 1) {
-                        $alt .= $this->getLang('entries');
-                    } else {
-                        $alt .= $this->getLang('entry');
-                    }
-                    $histogram .= '<a href="#m' . $key . '" title="#m' . $key . '">';
-                    $histogram .= '<img class="blog_archive_bar" alt="' . $alt . '" height="' . $current_height . '" src="lib/images/blank.gif"/></a>' . DOKU_LF;
-                    $month_count += 1;
-                }
                 // Add histogram and posts list
-                $renderer->doc .= '<div class="level1"><h1>' . $this->getLang('archive_title') . '</h1>' . $histogram . '<br/><br/>' . $list . '</div>' . DOKU_LF; 
+                $renderer->doc .= '<div class="level1">';
+                $renderer->doc .= '<h1>' . $this->getLang('archive_title') . '</h1>';
+                $renderer->doc .= $alt_list;
+                $renderer->doc .= '</div>' . DOKU_LF;
             } else {
-                // prevent caching for current month to ensure content is always fresh
-                if (time() < $end) $renderer->info['cache'] = false;
-
                 // let Pagelist Plugin do the work for us
                 if (plugin_isdisabled('pagelist')
                         || (!$pagelist =& plugin_load('helper', 'pagelist'))) {
                     msg($this->getLang('missing_pagelistplugin'), -1);
                     return false;
                 }
+                /** @var helper_plugin_pagelist $pagelist */
                 $pagelist->setFlags($flags);
                 $pagelist->startList();
                 foreach ($entries as $entry) {
@@ -221,17 +147,105 @@ class syntax_plugin_blog_archive extends DokuWiki_Syntax_Plugin {
 
             // for metadata renderer
         } elseif ($mode == 'metadata') {
+            /** @var Doku_Renderer_metadata $renderer */
+            // use the blog plugin cache handler in order to ensure that the cache is expired whenever a page, comment
+            // or linkback is added
+            if (time() < $end) $renderer->meta['plugin_blog']['purgefile_cache'] = true;
+
             foreach ($entries as $entry) {
 
                 // entry in the right date range?
                 if (($start > $entry['date']) || ($entry['date'] >= $end)) continue;
 
                 $renderer->meta['relation']['references'][$entry['id']] = true;
+                $renderer->meta['plugin_blog']['archive_pages'][] = $entry['id'];
             }
 
             return true;
         }
         return false;
     }
+
+    // Generate alternative posts list
+    function _build_alternative_list($start, $end, $entries) {
+        $current_year ='';
+        $current_month ='';
+        $ul_open = false;
+
+        $histogram_count = array();
+        $histogram_higher = 0;
+
+        $list = '';
+        foreach ($entries as $entry) {
+            // entry in the right date range?
+            if (($start > $entry['date']) || ($entry['date'] >= $end)) continue;
+
+            if ($current_year != date('o',$entry['date'])) {
+                if ($ul_open) {
+                    $list .= '</ul>' . DOKU_LF;
+                    $ul_open = false;
+                }
+                $current_year = date('o',$entry['date']);
+                $list .= '<h2>' . $current_year . '</h2>' . DOKU_LF;
+                $current_month = '';
+            }
+            if ($current_month != date('m',$entry['date'])) {
+                if ($ul_open) {
+                    $list .= '</ul>' . DOKU_LF;
+                }
+                $current_month = date('m',$entry['date']);
+                $list .= '<h3 id="m' . date('o-m',$entry['date']) . '">' . $this->getLang('month_' . $current_month) . '</h3><ul>' . DOKU_LF;
+                $ul_open = true;
+            }
+            $histogram_count[date('o-m',$entry['date'])] += 1;
+            if ($histogram_higher < $histogram_count[date('o-m',$entry['date'])]) {
+                $histogram_higher = $histogram_count[date('o-m',$entry['date'])];
+            }
+            $list .= '<li>' . date('d',$entry['date']) . ' - <a href="' . wl($entry['id']) . '" title="' . $entry['id'] . '">' . $entry['title'] . '</a></li>' . DOKU_LF;
+        }
+        $list .= '</ul>' . DOKU_LF;
+
+        $histogram = $this->_build_histogram($histogram_count, $histogram_higher);
+
+        return $histogram . $list;
+    }
+
+    // Generate histogram
+    function _build_histogram($histogram_count, $histogram_higher) {
+        if (empty($histogram_count)) return '';
+
+        $histogram = '<p>';
+        $max_months = $this->getConf('max_months');
+        $histogram_height = $this->getConf('histogram_height');
+        $histogram_count = array_reverse($histogram_count);
+        $month_count = 0;
+        foreach ($histogram_count as $key => $month_reference) {
+            // Check the max_months parameter
+            if ($month_count >= $max_months) {
+                break;
+            }
+            if ($month_reference > 0) {
+                // Height in "px"
+                $current_height = $histogram_height / $histogram_higher * $month_reference;
+            } else {
+                // Height in "px"
+                $current_height = 1;
+            }
+            // Generate the alt attribute
+            $alt = $key.': '.$month_reference.' ';
+            if ($month_reference > 1) {
+                $alt .= $this->getLang('entries');
+            } else {
+                $alt .= $this->getLang('entry');
+            }
+            $histogram .= '<a href="#m' . $key . '" title="' . $alt . '">';
+            $histogram .= '<img class="blog_archive_bar" alt="' . $alt . '" style="height: ' . $current_height . 'px;" src="'.DOKU_BASE.'lib/images/blank.gif"/></a>' . DOKU_LF;
+            $month_count += 1;
+        }
+        $histogram .= '</p>';
+
+        return $histogram;
+    }
+
 }
 // vim:ts=4:sw=4:et:enc=utf-8:

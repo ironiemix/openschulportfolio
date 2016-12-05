@@ -16,24 +16,24 @@ require_once(DOKU_PLUGIN . 'columns/rewriter.php');
 
 class action_plugin_columns extends DokuWiki_Action_Plugin {
 
-    var $block;
-    var $currentBlock;
-    var $currentSectionLevel;
-    var $sectionEdit;
+    private $block;
+    private $currentBlock;
+    private $currentSectionLevel;
+    private $sectionEdit;
 
     /**
      * Register callbacks
      */
-    function register(&$controller) {
+    public function register(Doku_Event_Handler $controller) {
         $controller->register_hook('PARSER_HANDLER_DONE', 'AFTER', $this, 'handle');
     }
 
     /**
      *
      */
-    function handle(&$event, $param) {
-        $this->_reset();
-        $this->_buildLayout($event);
+    public function handle(&$event, $param) {
+        $this->reset();
+        $this->buildLayout($event);
         $rewriter = new instruction_rewriter();
         foreach ($this->block as $block) {
             $block->processAttributes($event);
@@ -45,7 +45,7 @@ class action_plugin_columns extends DokuWiki_Action_Plugin {
     /**
      * Find all columns instructions and construct columns layout based on them
      */
-    function _buildLayout(&$event) {
+    private function buildLayout(&$event) {
         $calls = count($event->data->calls);
         for ($c = 0; $c < $calls; $c++) {
             $call =& $event->data->calls[$c];
@@ -61,7 +61,7 @@ class action_plugin_columns extends DokuWiki_Action_Plugin {
 
                 case 'plugin':
                     if ($call[1][0] == 'columns') {
-                        $this->_handleColumns($c, $call[1][1][0], $this->_detectSectionEdit($event->data->calls, $c));
+                        $this->handleColumns($c, $call[1][1][0], $this->detectSectionEdit($event->data->calls, $c));
                     }
                     break;
             }
@@ -71,7 +71,7 @@ class action_plugin_columns extends DokuWiki_Action_Plugin {
     /**
      * Reset internal state
      */
-    function _reset() {
+    private function reset() {
         $this->block = array();
         $this->block[0] = new columns_root_block();
         $this->currentBlock = $this->block[0];
@@ -82,7 +82,7 @@ class action_plugin_columns extends DokuWiki_Action_Plugin {
     /**
      *
      */
-    function _detectSectionEdit($call, $start) {
+    private function detectSectionEdit($call, $start) {
         $result = null;
         $calls = count($call);
         for ($c = $start + 1; $c < $calls; $c++) {
@@ -117,7 +117,7 @@ class action_plugin_columns extends DokuWiki_Action_Plugin {
     /**
      *
      */
-    function _handleColumns($callIndex, $state, $sectionEdit) {
+    private function handleColumns($callIndex, $state, $sectionEdit) {
         switch ($state) {
             case DOKU_LEXER_ENTER:
                 $this->currentBlock = new columns_block(count($this->block), $this->currentBlock);
@@ -142,13 +142,13 @@ class action_plugin_columns extends DokuWiki_Action_Plugin {
 
 class columns_root_block {
 
-    var $sectionLevel;
-    var $call;
+    private $sectionLevel;
+    private $call;
 
     /**
      * Constructor
      */
-    function columns_root_block() {
+    public function __construct() {
         $this->sectionLevel = 0;
         $this->call = array();
     }
@@ -156,28 +156,28 @@ class columns_root_block {
     /**
      *
      */
-    function getParent() {
+    public function getParent() {
         return $this;
     }
 
     /**
      * Collect stray <newcolumn> tags
      */
-    function addColumn($callIndex, $sectionLevel) {
+    public function addColumn($callIndex, $sectionLevel) {
         $this->call[] = $callIndex;
     }
 
     /**
      *
      */
-    function openSection() {
+    public function openSection() {
         $this->sectionLevel++;
     }
 
     /**
      *
      */
-    function closeSection($callIndex) {
+    public function closeSection($callIndex) {
         if ($this->sectionLevel > 0) {
             $this->sectionLevel--;
         }
@@ -189,32 +189,32 @@ class columns_root_block {
     /**
      *
      */
-    function startSection($callInfo) {
+    public function startSection($callInfo) {
     }
 
     /**
      *
      */
-    function endSection($callInfo) {
+    public function endSection($callInfo) {
     }
 
     /**
      * Collect stray </colums> tags
      */
-    function close($callIndex) {
+    public function close($callIndex) {
         $this->call[] = $callIndex;
     }
 
     /**
      *
      */
-    function processAttributes(&$event) {
+    public function processAttributes(&$event) {
     }
 
     /**
      * Delete all captured tags
      */
-    function getCorrections() {
+    public function getCorrections() {
         $correction = array();
         foreach ($this->call as $call) {
             $correction[] = new instruction_rewriter_delete($call);
@@ -225,16 +225,16 @@ class columns_root_block {
 
 class columns_block {
 
-    var $id;
-    var $parent;
-    var $column;
-    var $currentColumn;
-    var $closed;
+    private $id;
+    private $parent;
+    private $column;
+    private $currentColumn;
+    private $closed;
 
     /**
      * Constructor
      */
-    function columns_block($id, $parent) {
+    public function __construct($id, $parent) {
         $this->id = $id;
         $this->parent = $parent;
         $this->column = array();
@@ -245,14 +245,14 @@ class columns_block {
     /**
      *
      */
-    function getParent() {
+    public function getParent() {
         return $this->parent;
     }
 
     /**
      *
      */
-    function addColumn($callIndex, $sectionLevel) {
+    public function addColumn($callIndex, $sectionLevel) {
         if ($this->currentColumn != null) {
             $this->currentColumn->close($callIndex);
         }
@@ -263,35 +263,35 @@ class columns_block {
     /**
      *
      */
-    function openSection() {
+    public function openSection() {
         $this->currentColumn->openSection();
     }
 
     /**
      *
      */
-    function closeSection($callIndex) {
+    public function closeSection($callIndex) {
         $this->currentColumn->closeSection($callIndex);
     }
 
     /**
      *
      */
-    function startSection($callInfo) {
+    public function startSection($callInfo) {
         $this->currentColumn->startSection($callInfo);
     }
 
     /**
      *
      */
-    function endSection($callInfo) {
+    public function endSection($callInfo) {
         $this->currentColumn->endSection($callInfo);
     }
 
     /**
      *
      */
-    function close($callIndex) {
+    public function close($callIndex) {
         $this->currentColumn->close($callIndex);
         $this->closed = true;
     }
@@ -299,17 +299,17 @@ class columns_block {
     /**
      * Convert raw attributes and layout information into column attributes
      */
-    function processAttributes(&$event) {
+    public function processAttributes(&$event) {
         $columns = count($this->column);
         for ($c = 0; $c < $columns; $c++) {
             $call =& $event->data->calls[$this->column[$c]->getOpenCall()];
             if ($c == 0) {
-                $this->_loadBlockAttributes($call[1][1][1]);
+                $this->loadBlockAttributes($call[1][1][1]);
                 $this->column[0]->addAttribute('columns', $columns);
                 $this->column[0]->addAttribute('class', 'first');
             }
             else {
-                $this->_loadColumnAttributes($c, $call[1][1][1]);
+                $this->loadColumnAttributes($c, $call[1][1][1]);
                 if ($c == ($columns - 1)) {
                     $this->column[$c]->addAttribute('class', 'last');
                 }
@@ -323,11 +323,11 @@ class columns_block {
     /**
      * Convert raw attributes into column attributes
      */
-    function _loadBlockAttributes($attribute) {
+    private function loadBlockAttributes($attribute) {
         $column = -1;
         $nextColumn = -1;
         foreach ($attribute as $a) {
-            list($name, $temp) = $this->_parseAttribute($a);
+            list($name, $temp) = $this->parseAttribute($a);
             if ($name == 'width') {
                 if (($column == -1) && array_key_exists('column-width', $temp)) {
                     $this->column[0]->addAttribute('table-width', $temp['column-width']);
@@ -344,9 +344,9 @@ class columns_block {
     /**
      * Convert raw attributes into column attributes
      */
-    function _loadColumnAttributes($column, $attribute) {
+    private function loadColumnAttributes($column, $attribute) {
         foreach ($attribute as $a) {
-            list($name, $temp) = $this->_parseAttribute($a);
+            list($name, $temp) = $this->parseAttribute($a);
             $this->column[$column]->addAttributes($temp);
         }
     }
@@ -354,7 +354,7 @@ class columns_block {
     /**
      *
      */
-    function _parseAttribute($attribute) {
+    private function parseAttribute($attribute) {
         static $syntax = array(
             '/^left|right|center|justify$/' => 'text-align',
             '/^top|middle|bottom$/' => 'vertical-align',
@@ -377,7 +377,7 @@ class columns_block {
                 break;
 
             case 'align':
-                $result = $this->_parseAlignAttribute($match[0]);
+                $result = $this->parseAlignAttribute($match[0]);
                 break;
 
             case 'continue':
@@ -385,7 +385,7 @@ class columns_block {
                 break;
 
             case 'width':
-                $result = $this->_parseWidthAttribute($match);
+                $result = $this->parseWidthAttribute($match);
                 break;
         }
         return array($attributeName, $result);
@@ -394,18 +394,18 @@ class columns_block {
     /**
      *
      */
-    function _parseAlignAttribute($syntax) {
+    private function parseAlignAttribute($syntax) {
         $result = array();
-        $align1 = $this->_getAlignStyle($syntax{0});
+        $align1 = $this->getAlignStyle($syntax{0});
         if (strlen($syntax) == 2) {
-            $align2 = $this->_getAlignStyle($syntax{1});
+            $align2 = $this->getAlignStyle($syntax{1});
             if ($align1 != $align2) {
-                $result[$align1] = $this->_getAlignment($syntax{0});
-                $result[$align2] = $this->_getAlignment($syntax{1});
+                $result[$align1] = $this->getAlignment($syntax{0});
+                $result[$align2] = $this->getAlignment($syntax{1});
             }
         }
         else{
-            $result[$align1] = $this->_getAlignment($syntax{0});
+            $result[$align1] = $this->getAlignment($syntax{0});
         }
         return $result;
     }
@@ -413,21 +413,21 @@ class columns_block {
     /**
      *
      */
-    function _getAlignStyle($align) {
+    private function getAlignStyle($align) {
         return preg_match('/[lrcj]/', $align) ? 'text-align' : 'vertical-align';
     }
 
     /**
      *
      */
-    function _parseWidthAttribute($syntax) {
+    private function parseWidthAttribute($syntax) {
         $result = array();
         if ($syntax[2] != '-') {
             $result['column-width'] = $syntax[2];
         }
         $align = $syntax[1] . '-' . $syntax[3];
         if ($align != '-') {
-            $result['text-align'] = $this->_getAlignment($align);
+            $result['text-align'] = $this->getAlignment($align);
         }
         return $result;
     }
@@ -435,7 +435,7 @@ class columns_block {
     /**
      * Returns column text alignment
      */
-    function _getAlignment($syntax) {
+    private function getAlignment($syntax) {
         static $align = array(
             'l' => 'left', '-*' => 'left',
             'r' => 'right', '*-' => 'right',
@@ -456,12 +456,12 @@ class columns_block {
     /**
      * Returns a list of corrections that have to be applied to the instruction array
      */
-    function getCorrections() {
+    public function getCorrections() {
         if ($this->closed) {
-            $correction = $this->_fixSections();
+            $correction = $this->fixSections();
         }
         else {
-            $correction = $this->_deleteColumns();
+            $correction = $this->deleteColumns();
         }
         return $correction;
     }
@@ -470,7 +470,7 @@ class columns_block {
      * Re-write section open/close instructions to produce valid HTML
      * See columns:design#section_fixing for details
      */
-    function _fixSections() {
+    private function fixSections() {
         $correction = array();
         foreach ($this->column as $column) {
             $correction = array_merge($correction, $column->getCorrections());
@@ -481,7 +481,7 @@ class columns_block {
     /**
      *
      */
-    function _deleteColumns() {
+    private function deleteColumns() {
         $correction = array();
         foreach ($this->column as $column) {
             $correction[] = $column->delete();
@@ -492,26 +492,26 @@ class columns_block {
 
 class columns_attributes_bag {
 
-    var $attribute;
+    private $attribute;
 
     /**
      * Constructor
      */
-    function columns_attributes_bag() {
+    public function __construct() {
         $this->attribute = array();
     }
 
     /**
      *
      */
-    function addAttribute($name, $value) {
+    public function addAttribute($name, $value) {
         $this->attribute[$name] = $value;
     }
 
     /**
      *
      */
-    function addAttributes($attribute) {
+    public function addAttributes($attribute) {
         if (is_array($attribute) && (count($attribute) > 0)) {
             $this->attribute = array_merge($this->attribute, $attribute);
         }
@@ -520,7 +520,7 @@ class columns_attributes_bag {
     /**
      *
      */
-    function getAttribute($name) {
+    public function getAttribute($name) {
         $result = '';
         if (array_key_exists($name, $this->attribute)) {
             $result = $this->attribute[$name];
@@ -531,26 +531,26 @@ class columns_attributes_bag {
     /**
      *
      */
-    function getAttributes() {
+    public function getAttributes() {
         return $this->attribute;
     }
 }
 
 class columns_column extends columns_attributes_bag {
 
-    var $open;
-    var $close;
-    var $sectionLevel;
-    var $sectionOpen;
-    var $sectionClose;
-    var $sectionStart;
-    var $sectionEnd;
+    private $open;
+    private $close;
+    private $sectionLevel;
+    private $sectionOpen;
+    private $sectionClose;
+    private $sectionStart;
+    private $sectionEnd;
 
     /**
      * Constructor
      */
-    function columns_column($open, $sectionLevel) {
-        parent::columns_attributes_bag();
+    public function __construct($open, $sectionLevel) {
+        parent::__construct();
 
         $this->open = $open;
         $this->close = -1;
@@ -564,21 +564,21 @@ class columns_column extends columns_attributes_bag {
     /**
      *
      */
-    function getOpenCall() {
+    public function getOpenCall() {
         return $this->open;
     }
 
     /**
      *
      */
-    function openSection() {
+    public function openSection() {
         $this->sectionOpen = true;
     }
 
     /**
      *
      */
-    function closeSection($callIndex) {
+    public function closeSection($callIndex) {
         if ($this->sectionClose == -1) {
             $this->sectionClose = $callIndex;
         }
@@ -587,28 +587,28 @@ class columns_column extends columns_attributes_bag {
     /**
      *
      */
-    function startSection($callInfo) {
+    public function startSection($callInfo) {
         $this->sectionStart = $callInfo;
     }
 
     /**
      *
      */
-    function endSection($callInfo) {
+    public function endSection($callInfo) {
         $this->sectionEnd = $callInfo;
     }
 
     /**
      *
      */
-    function close($callIndex) {
+    public function close($callIndex) {
         $this->close = $callIndex;
     }
 
     /**
      *
      */
-    function delete() {
+    public function delete() {
         return new instruction_rewriter_delete($this->open);
     }
 
@@ -616,15 +616,15 @@ class columns_column extends columns_attributes_bag {
      * Re-write section open/close instructions to produce valid HTML
      * See columns:design#section_fixing for details
      */
-    function getCorrections() {
+    public function getCorrections() {
         $result = array();
         $deleteSectionClose = ($this->sectionClose != -1);
         $closeSection = $this->sectionOpen;
         if ($this->sectionStart != null) {
-            $result = array_merge($result, $this->_moveStartSectionEdit());
+            $result = array_merge($result, $this->moveStartSectionEdit());
         }
         if (($this->getAttribute('continue') == 'on') && ($this->sectionLevel > 0)) {
-            $result[] = $this->_openStartSection();
+            $result[] = $this->openStartSection();
             /* Ensure that this section will be properly closed */
             $deleteSectionClose = false;
             $closeSection = true;
@@ -634,7 +634,7 @@ class columns_column extends columns_attributes_bag {
             $result[] = new instruction_rewriter_delete($this->sectionClose);
         }
         if ($closeSection || ($this->sectionEnd != null)) {
-            $result = array_merge($result, $this->_closeLastSection($closeSection));
+            $result = array_merge($result, $this->closeLastSection($closeSection));
         }
         return $result;
     }
@@ -642,7 +642,7 @@ class columns_column extends columns_attributes_bag {
     /**
      * Moves section_edit at the start of the column out of the column
      */
-    function _moveStartSectionEdit() {
+    private function moveStartSectionEdit() {
         $result = array();
         $result[0] = new instruction_rewriter_insert($this->open);
         $result[0]->addPluginCall('columns', array(987, $this->sectionStart - 1), DOKU_LEXER_MATCHED);
@@ -652,7 +652,7 @@ class columns_column extends columns_attributes_bag {
     /**
      * Insert section_open at the start of the column
      */
-    function _openStartSection() {
+    private function openStartSection() {
         $insert = new instruction_rewriter_insert($this->open + 1);
         $insert->addCall('section_open', array($this->sectionLevel));
         return $insert;
@@ -661,7 +661,7 @@ class columns_column extends columns_attributes_bag {
     /**
      * Close last open section in the column
      */
-    function _closeLastSection($closeSection) {
+    private function closeLastSection($closeSection) {
         $result = array();
         $result[0] = new instruction_rewriter_insert($this->close);
         if ($closeSection) {

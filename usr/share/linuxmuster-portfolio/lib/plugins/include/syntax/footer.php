@@ -22,7 +22,7 @@ class syntax_plugin_include_footer extends DokuWiki_Syntax_Plugin {
         return 300;
     }
 
-    function handle($match, $state, $pos, &$handler) {
+    function handle($match, $state, $pos, Doku_Handler $handler) {
         // this is a syntax plugin that doesn't offer any syntax, so there's nothing to handle by the parser
     }
 
@@ -32,7 +32,7 @@ class syntax_plugin_include_footer extends DokuWiki_Syntax_Plugin {
      * Code heavily copied from the header renderer from inc/parser/xhtml.php, just
      * added an href parameter to the anchor tag linking to the wikilink.
      */
-    function render($mode, &$renderer, $data) {
+    function render($mode, Doku_Renderer $renderer, $data) {
 
         list($page, $sect, $sect_title, $flags, $redirect_id, $footer_lvl) = $data;
         
@@ -45,6 +45,8 @@ class syntax_plugin_include_footer extends DokuWiki_Syntax_Plugin {
 
     /**
      * Returns the meta line below the included page
+     * @param $renderer Doku_Renderer_xhtml The (xhtml) renderer
+     * @return string The HTML code of the footer
      */
     function html_footer($page, $sect, $sect_title, $flags, $footer_lvl, &$renderer) {
         global $conf, $ID;
@@ -52,11 +54,11 @@ class syntax_plugin_include_footer extends DokuWiki_Syntax_Plugin {
         if(!$flags['footer']) return '';
 
         $meta  = p_get_metadata($page);
+        $exists = page_exists($page);
         $xhtml = array();
-
         // permalink
         if ($flags['permalink']) {
-            $class = (page_exists($page) ? 'wikilink1' : 'wikilink2');
+            $class = ($exists ? 'wikilink1' : 'wikilink2');
             $url   = ($sect) ? wl($page) . '#' . $sect : wl($page);
             $name  = ($sect) ? $sect_title : $page;
             $title = ($sect) ? $page . '#' . $sect : $page;
@@ -73,7 +75,7 @@ class syntax_plugin_include_footer extends DokuWiki_Syntax_Plugin {
         }
 
         // date
-        if ($flags['date']) {
+        if ($flags['date'] && $exists) {
             $date = $meta['date']['created'];
             if ($date) {
                 $xhtml[] = '<abbr class="published" title="'.strftime('%Y-%m-%dT%H:%M:%SZ', $date).'">'
@@ -81,24 +83,26 @@ class syntax_plugin_include_footer extends DokuWiki_Syntax_Plugin {
                        . '</abbr>';
             }
         }
+        
+        // modified date
+        if ($flags['mdate'] && $exists) {
+            $mdate = $meta['date']['modified'];
+            if ($mdate) {
+                $xhtml[] = '<abbr class="published" title="'.strftime('%Y-%m-%dT%H:%M:%SZ', $mdate).'">'
+                       . strftime($conf['dformat'], $mdate)
+                       . '</abbr>';
+            }
+        }
 
         // author
-        if ($flags['user']) {
-            $author   = $meta['creator'];
+        if ($flags['user'] && $exists) {
+            $author   = $meta['user'];
             if ($author) {
-                $userpage = cleanID($this->getConf('usernamespace').':'.$author);
-                resolve_pageid(getNS($ID), $userpage, $exists);
-                $class = ($exists ? 'wikilink1' : 'wikilink2');
-                $link = array(
-                        'url'    => wl($userpage),
-                        'title'  => $userpage,
-                        'name'   => hsc($author),
-                        'target' => $conf['target']['wiki'],
-                        'class'  => $class.' url fn',
-                        'pre'    => '<span class="vcard author">',
-                        'suf'    => '</span>',
-                        );
-                $xhtml[]    = $renderer->_formatLink($link);
+                if (function_exists('userlink')) {
+                    $xhtml[] = '<span class="vcard author">' . userlink($author) . '</span>';
+                } else { // DokuWiki versions < 2014-05-05 doesn't have userlink support, fall back to not providing a link
+                    $xhtml[] = '<span class="vcard author">' . editorinfo($author) . '</span>';
+                }
             }
         }
 

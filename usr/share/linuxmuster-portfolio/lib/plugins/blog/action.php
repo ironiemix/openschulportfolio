@@ -13,38 +13,22 @@ require_once(DOKU_PLUGIN.'action.php');
 class action_plugin_blog extends DokuWiki_Action_Plugin {
 
     /**
-     * return some info
-     */
-    function getInfo() {
-        return array(
-                'author' => 'Gina Häußge, Michael Klier, Esther Brunner',
-                'email'  => 'dokuwiki@chimeric.de',
-                'date'   => @file_get_contents(DOKU_PLUGIN . 'blog/VERSION'),
-                'name'   => 'Blog Plugin (action component)',
-                'desc'   => 'Brings blog functionality to DokuWiki',
-                'url'    => 'http://dokuwiki.org/plugin:blog',
-                );
-    }
-
-    /**
      * register the eventhandlers
      */
-    function register(&$contr) {
+    function register(Doku_Event_Handler $contr) {
         $contr->register_hook('ACTION_ACT_PREPROCESS', 'BEFORE', $this, 'handle_act_preprocess', array());
         $contr->register_hook('FEED_ITEM_ADD', 'BEFORE', $this, 'handle_feed_item');
+        $contr->register_hook('PARSER_CACHE_USE', 'BEFORE', $this, 'handle_cache');
     }
 
     /**
      * Checks if 'newentry' was given as action, if so we
      * do handle the event our self and no further checking takes place
      */
-    function handle_act_preprocess(&$event, $param) {
+    function handle_act_preprocess(Doku_Event $event, $param) {
         if ($event->data != 'newentry') return; // nothing to do for us
-        // we can handle it -> prevent others
-        // $event->stopPropagation();
-        $event->preventDefault();    
 
-        $event->data = $this->_handle_newEntry();
+        $event->data = $this->_handle_newEntry($event);
     }
 
     /**
@@ -97,7 +81,7 @@ class action_plugin_blog extends DokuWiki_Action_Plugin {
     /**
      * Creates a new entry page
      */
-    function _handle_newEntry() {
+    function _handle_newEntry(Doku_Event $event) {
         global $ID, $INFO;
 
         $ns    = cleanID($_REQUEST['ns']);
@@ -108,17 +92,21 @@ class action_plugin_blog extends DokuWiki_Action_Plugin {
         // check if we are allowed to create this file
         if ($INFO['perm'] >= AUTH_CREATE) {
 
-            //check if locked by anyone - if not lock for my self      
-            if ($INFO['locked']) return 'locked';
-            else lock($ID);
-
             // prepare the new thread file with default stuff
             if (!@file_exists($INFO['filepath'])) {
+
+                // prevent default edit action and further processing of the event
+                $event->preventDefault();
+
+                //check if locked by anyone - if not lock for my self
+                if ($INFO['locked']) return 'locked';
+                else lock($ID);
+
                 global $TEXT;
 
                 $TEXT = pageTemplate(array(($ns ? $ns.':' : '').$title));
                 if (!$TEXT) {
-                    $data = array('id' => $ID, 'ns' => $ns, 'title' => $title);
+                    $data = array('id' => $ID, 'ns' => $ns, 'title' => $_REQUEST['title']);
                     $TEXT = $this->_pageTemplate($data);
                 }
                 return 'preview';
@@ -211,6 +199,47 @@ class action_plugin_blog extends DokuWiki_Action_Plugin {
         }
         $pre = strftime($dateprefix);
         return ($ns ? $ns.':' : '').$pre.cleanID($title);
+    }
+
+    /**
+     * Expire the renderer cache of archive pages whenever a page is updated or a comment or linkback is added
+     *
+     * @author Michael Hamann <michael@content-space.de>
+     */
+    function handle_cache(Doku_Event $event, $params) {
+        global $conf;
+        /** @var cache_parser $cache */
+        $cache = $event->data;
+        if (!in_array($cache->mode, array('xhtml', 'metadata'))) return;
+        $page = $cache->page;
+
+        // try to extract the page id from the file if possible
+        if (empty($page)) {
+            if (strpos($cache->file, $conf['datadir']) === 0) {
+                $page = pathID(substr($cache->file, strlen($conf['datadir'])+1));
+            } else {
+                return;
+            }
+        }
+
+        $meta = p_get_metadata($page, 'plugin_blog');
+        if ($meta === null) return;
+
+        if (isset($meta['purgefile_cache'])) {
+            $cache->depends['files'][] = $conf['cachedir'].'/purgefile';
+            $cache->depends['files'][] = $conf['metadir'].'/_comments.changes';
+            $cache->depends['files'][] = $conf['metadir'].'/_linkbacks.changes';
+        }
+
+        // purge the cache when a page is listed that the current user can't access
+        if (isset($meta['archive_pages'])) {
+            foreach ($meta['archive_pages'] as $page) {
+                if (auth_quickaclcheck($page) < AUTH_READ) {
+                    $cache->depends['purge'] = true;
+                    return;
+                }
+            }
+        }
     }
 }
 // vim:ts=4:sw=4:et:enc=utf-8:  

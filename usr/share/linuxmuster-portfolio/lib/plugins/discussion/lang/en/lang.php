@@ -19,11 +19,12 @@ $lang['discussion']      = 'Discussion';
 $lang['comment']         = 'Comment';
 $lang['comments']        = 'Comments';
 $lang['nocomments']      = 'Comments';
+$lang['threads']         = 'Discussions';
 $lang['url']             = 'Website';
 $lang['address']         = 'Address';
 $lang['date']            = 'Date';
 $lang['entercomment']    = 'Enter your comment';
-$lang['wikisyntax']      = 'wiki syntax is allowed';
+$lang['wikisyntax']      = 'Wiki syntax is allowed';
 $lang['older']           = 'Older discussions';
 $lang['newer']           = 'Newer discussions';
 $lang['btn_reply']       = 'Reply';
@@ -44,7 +45,7 @@ $lang['closed']          = 'closed';
 
 $lang['reply']           = 'Reply';
 $lang['replies']         = 'Replies';
-$lang['newthread']       = 'New thread';
-$lang['threads']         = 'Threads';
+$lang['newthread']       = 'New discussion page';
+$lang['toggle_display']  = 'Hide/Show';
 
 //Setup VIM: ex: et ts=2 enc=utf-8 :

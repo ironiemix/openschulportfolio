@@ -7,7 +7,7 @@
  */
 
 $meta['style']        = array('multichoice',
-                          '_choices' => array('default', 'table', 'list'));
+                          '_choices' => array('default', 'table', 'list', 'simplelist'));
 $meta['showheader']   = array('onoff');
 $meta['showdate']     = array('multichoice', '_choices' => array('0', '1', '2'));
 $meta['showuser']     = array('multichoice', '_choices' => array('0', '1', '2'));
@@ -16,5 +16,8 @@ $meta['showcomments'] = array('onoff');
 $meta['showlinkbacks']= array('onoff');
 $meta['showtags']     = array('onoff');
 $meta['showfirsthl']  = array('onoff');
+$meta['showdiff']     = array('onoff');
+$meta['sort']         = array('onoff');
+$meta['rsort']        = array('onoff');
 
-//Setup VIM: ex: et ts=2 enc=utf-8 :
+//Setup VIM: ex: et ts=2 :

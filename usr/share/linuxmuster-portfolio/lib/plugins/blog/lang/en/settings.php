@@ -12,6 +12,9 @@ $lang['namespace']              = 'default namespace for blog';
 $lang['formposition']           = 'position of the new entry form';
 $lang['formposition_o_top']     = 'top';
 $lang['formposition_o_bottom']  = 'bottom';
+$lang['formposition_o_none']    = 'none';
+
+$lang['newentrytitle']          = 'title of the new entry form';
 
 $lang['dateprefix']             = 'prefix date to new entry IDs';
 

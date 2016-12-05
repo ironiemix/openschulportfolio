@@ -15,7 +15,6 @@ $lang['useavatar']   = 'Usa l\'immagine dell\'avatar per identificare gli utenti
 $lang['urlfield']     = 'Permetti agli utenti di inserire un URL';
 $lang['addressfield'] = 'Permetti agli utenti di inserire un indirizzo email';
 $lang['adminimport']  = 'Permetti agli admin di impostare tutti i campi da importare';
-$lang['usecocomment'] = 'Usa tracciamento commento coComment';
 $lang['wikisyntaxok'] = 'Permetti sintassi wiki nei commenti';
 $lang['subscribe']    = 'Abilita/disabilita sottoscrizione dei commenti';
 $lang['newestfirst']  = 'Elenca i nuovi commenti per primi';
@@ -26,4 +25,6 @@ $lang['threads_formposition']          = 'Posizione della casella del nuovo comm
 $lang['threads_formposition_o_top']    = 'In alto';
 $lang['threads_formposition_o_bottom'] = 'In basso';
 
+$lang['moderatorgroups']  = 'Lista dei moderatori dei commenti (gruppi e/o utenti, separati da virgola)';
+$lang['moderatorsnotify']  = 'Invia ai moderatori le notifiche email dei nuovi commenti';
 //Setup VIM: ex: et ts=2 enc=utf-8 :

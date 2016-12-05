@@ -7,30 +7,31 @@
 // must be run within Dokuwiki
 if (!defined('DOKU_INC')) die();
 
-if (!defined('DOKU_LF')) define('DOKU_LF', "\n");
-if (!defined('DOKU_TAB')) define('DOKU_TAB', "\t");
-if (!defined('DOKU_PLUGIN')) define('DOKU_PLUGIN',DOKU_INC.'lib/plugins/');
-
-require_once(DOKU_PLUGIN.'action.php');
-
+/**
+ * Class action_plugin_discussion
+ */
 class action_plugin_discussion extends DokuWiki_Action_Plugin{
 
+    /** @var helper_plugin_avatar */
     var $avatar = null;
     var $style = null;
     var $use_avatar = null;
+    /** @var helper_plugin_discussion */
+    var $helper = null;
 
-    function getInfo() {
-        return array(
-                'author' => 'Gina Häußge, Michael Klier, Esther Brunner',
-                'email'  => 'dokuwiki@chimeric.de',
-                'date'   => @file_get_contents(DOKU_PLUGIN.'discussion/VERSION'),
-                'name'   => 'Discussion Plugin (action component)',
-                'desc'   => 'Enables discussion features',
-                'url'    => 'http://wiki.splitbrain.org/plugin:discussion',
-                );
+    /**
+     * load helper
+     */
+    public function __construct() {
+        $this->helper = plugin_load('helper', 'discussion');
     }
 
-    function register(&$contr) {
+    /**
+     * Register the handlers
+     *
+     * @param Doku_Event_Handler $contr DokuWiki's event controller object.
+     */
+    public function register(Doku_Event_Handler $contr) {
         $contr->register_hook(
                 'ACTION_ACT_PREPROCESS',
                 'BEFORE',
@@ -50,8 +51,36 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
                 'AFTER',
                 $this,
                 'idx_add_discussion',
+                array('id' => 'page', 'text' => 'body')
+                );
+        $contr->register_hook(
+                'FULLTEXT_SNIPPET_CREATE',
+                'BEFORE',
+                $this,
+                'idx_add_discussion',
+                array('id' => 'id', 'text' => 'text')
+                );
+        $contr->register_hook(
+                'INDEXER_VERSION_GET',
+                'BEFORE',
+                $this,
+                'idx_version',
                 array()
                 );
+        $contr->register_hook(
+                'FULLTEXT_PHRASE_MATCH',
+                'AFTER',
+                $this,
+                'ft_phrase_match',
+                array()
+        );
+        $contr->register_hook(
+                'PARSER_METADATA_RENDER',
+                'AFTER',
+                $this,
+                'update_comment_status',
+                array()
+        );
         $contr->register_hook(
                 'TPL_METAHEADER_OUTPUT',
                 'BEFORE',
@@ -86,8 +115,11 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
      * Preview Comments
      *
      * @author Michael Klier <chi@chimeric.de>
+     *
+     * @param Doku_Event $event
+     * @param $params
      */
-    function handle_ajax_call(&$event, $params) {
+    public function handle_ajax_call(Doku_Event $event, $params) {
         if($event->data != 'discussion_preview') return;
         $event->preventDefault();
         $event->stopPropagation();
@@ -105,9 +137,11 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
      * Adds a TOC item if a discussion exists
      *
      * @author Michael Klier <chi@chimeric.de>
+     *
+     * @param Doku_Event $event
+     * @param $params
      */
-    function handle_toc_render(&$event, $params) {
-        global $ID;
+    public function handle_toc_render(Doku_Event $event, $params) {
         global $ACT;
         if($this->_hasDiscussion($title) && $event->data && $ACT != 'admin') {
             $tocitem = array( 'hid' => 'discussion__section',
@@ -123,8 +157,11 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
      * Modify Tollbar for use with discussion plugin
      *
      * @author Michael Klier <chi@chimeric.de>
+     *
+     * @param Doku_Event $event
+     * @param $param
      */
-    function handle_toolbar_define(&$event, $param) {
+    public function handle_toolbar_define(Doku_Event $event, $param) {
         global $ACT;
         if($ACT != 'show') return;
 
@@ -134,6 +171,7 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
                 if($btn['type'] == 'mediapopup') continue;
                 if($btn['type'] == 'signature') continue;
                 if($btn['type'] == 'linkwiz') continue;
+                if($btn['type'] == 'NewTable') continue; //skip button for Edittable Plugin
                 if(preg_match("/=+?/", $btn['open'])) continue;
                 array_push($toolbar, $btn);
             }
@@ -145,8 +183,11 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
      * Dirty workaround to add a toolbar to the discussion plugin
      *
      * @author Michael Klier <chi@chimeric.de>
+     *
+     * @param Doku_Event $event
+     * @param $param
      */
-    function handle_tpl_metaheader_output(&$event, $param) {
+    public function handle_tpl_metaheader_output(Doku_Event $event, $param) {
         global $ACT;
         global $ID;
         if($ACT != 'show') return;
@@ -164,11 +205,14 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
 
     /**
      * Handles comment actions, dispatches data processing routines
+     *
+     * @param Doku_Event $event
+     * @param $param
+     * @return bool
      */
-    function handle_act_preprocess(&$event, $param) {
+    public function handle_act_preprocess(Doku_Event $event, $param) {
         global $ID;
         global $INFO;
-        global $conf;
         global $lang;
 
         // handle newthread ACTs
@@ -180,12 +224,8 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
 
         // enable captchas
         if (in_array($_REQUEST['comment'], array('add', 'save'))) {
-            if (@file_exists(DOKU_PLUGIN.'captcha/action.php')) {
-                $this->_captchaCheck();
-            }
-            if (@file_exists(DOKU_PLUGIN.'recaptcha/action.php')) {
-                $this->_recaptchaCheck();
-            }
+            $this->_captchaCheck();
+            $this->_recaptchaCheck();
         }
 
         // if we are not in show mode or someone wants to unsubscribe, that was all for now
@@ -196,7 +236,7 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
             $event->preventDefault();
 
             if (!isset($_REQUEST['hash'])) {
-                return false;
+                return;
             } else {
                 $file = metaFN($ID, '.comments');
                 $data = unserialize(io_readFile($file));
@@ -218,17 +258,16 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
                 if($themail != '') {
                     if($event->data == 'discussion_unsubscribe') {
                         unset($data['subscribers'][$themail]);
-                        msg(sprintf($lang['unsubscribe_success'], $themail, $ID), 1);
+                        msg(sprintf($lang['subscr_unsubscribe_success'], $themail, $ID), 1);
                     } elseif($event->data == 'discussion_confirmsubscribe') {
                         $data['subscribers'][$themail]['active'] = true;
-                        msg(sprintf($lang['subscribe_success'], $themail, $ID), 1);
+                        msg(sprintf($lang['subscr_subscribe_success'], $themail, $ID), 1);
                     }
                     io_saveFile($file, serialize($data));
                     $event->data = 'show';
-                    return true;
-                } else {
-                    return false;
                 }
+                return;
+
             }
         } else {
             // do the data processing for comments
@@ -240,7 +279,7 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
                         $comment['user']['id'] = $_SERVER['REMOTE_USER'];
                         $comment['user']['name'] = $INFO['userinfo']['name'];
                         $comment['user']['mail'] = $INFO['userinfo']['mail'];
-                    } elseif((isset($_SERVER['REMOTE_USER']) && $this->getConf('adminimport') && auth_ismanager()) || !isset($_SERVER['REMOTE_USER'])) {
+                    } elseif((isset($_SERVER['REMOTE_USER']) && $this->getConf('adminimport') && $this->helper->isDiscussionMod()) || !isset($_SERVER['REMOTE_USER'])) {
                         if(empty($_REQUEST['name']) or empty($_REQUEST['mail'])) return; // don't add anonymous comments
                         if(!mail_isvalid($_REQUEST['mail'])) {
                             msg($lang['regbadmail'], -1);
@@ -257,7 +296,7 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
                     $comment['date'] = array('created' => $_REQUEST['date']);
                     $comment['raw'] = cleanText($_REQUEST['text']);
                     $repl = $_REQUEST['reply'];
-                    if($this->getConf('moderate') && !auth_ismanager()) {
+                    if($this->getConf('moderate') && !$this->helper->isDiscussionMod()) {
                         $comment['show'] = false;
                     } else {
                         $comment['show'] = true;
@@ -267,15 +306,15 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
 
                 case 'save':
                     $raw  = cleanText($_REQUEST['text']);
-                    $this->_save(array($cid), $raw);
+                    $this->save(array($cid), $raw);
                     break;
 
                 case 'delete':
-                    $this->_save(array($cid), '');
+                    $this->save(array($cid), '');
                     break;
 
                 case 'toogle':
-                    $this->_save(array($cid), '', 'toogle');
+                    $this->save(array($cid), '', 'toogle');
                     break;
             }
         }
@@ -284,10 +323,13 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
     /**
      * Main function; dispatches the visual comment actions
      */
-    function comments(&$event, $param) {
+    public function comments(Doku_Event $event, $param) {
         if ($event->data != 'show') return; // nothing to do for us
 
         $cid  = $_REQUEST['cid'];
+        if(!$cid) {
+            $cid = $_REQUEST['reply'];
+        }
         switch ($_REQUEST['comment']) {
             case 'edit':
                 $this->_show(NULL, $cid);
@@ -301,13 +343,13 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
     /**
      * Redirects browser to given comment anchor
      */
-    function _redirect($cid) {
+    protected function _redirect($cid) {
         global $ID;
         global $ACT;
 
         if ($ACT !== 'show') return;
 
-        if($this->getConf('moderate') && !auth_ismanager()) {
+        if($this->getConf('moderate') && !$this->helper->isDiscussionMod()) {
             msg($this->getLang('moderation'), 1);
             @session_start();
             global $MSG;
@@ -327,25 +369,53 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
     }
 
     /**
+     * Checks config settings to enable/disable discussions
+     *
+     * @return bool
+     */
+    public function isDiscussionEnabled() {
+        global $INFO;
+
+        if($this->getConf('excluded_ns') == '') {
+            $isNamespaceExcluded = false;
+        } else {
+            $isNamespaceExcluded = preg_match($this->getConf('excluded_ns'), $INFO['namespace']);
+        }
+
+        if($this->getConf('automatic')) {
+            if($isNamespaceExcluded) {
+                return false;
+            } else {
+                return true;
+            }
+        } else {
+            if($isNamespaceExcluded) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
+    /**
      * Shows all comments of the current page
      */
-    function _show($reply = NULL, $edit = NULL) {
+    protected function _show($reply = null, $edit = null) {
         global $ID;
         global $INFO;
-        global $ACT;
 
         // get .comments meta file name
         $file = metaFN($ID, '.comments');
 
-        if (!$INFO['exists']) return;
-        if (!@file_exists($file) && !$this->getConf('automatic')) return false;
+        if (!$INFO['exists']) return false;
+        if (!@file_exists($file) && !$this->isDiscussionEnabled()) return false;
         if (!$_SERVER['REMOTE_USER'] && !$this->getConf('showguests')) return false;
 
         // load data
         if (@file_exists($file)) {
             $data = unserialize(io_readFile($file, false));
             if (!$data['status']) return false; // comments are turned off
-        } elseif (!@file_exists($file) && $this->getConf('automatic') && $INFO['exists']) {
+        } elseif (!@file_exists($file) && $this->isDiscussionEnabled() && $INFO['exists']) {
             // set status to show the comment form
             $data['status'] = 1;
             $data['number'] = 0;
@@ -354,11 +424,12 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
         // show discussion wrapper only on certain circumstances
         $cnt = count($data['comments']);
         $keys = @array_keys($data['comments']);
+        $show = false;
         if($cnt > 1 || ($cnt == 1 && $data['comments'][$keys[0]]['show'] == 1) || $this->getConf('allowguests') || isset($_SERVER['REMOTE_USER'])) {
             $show = true;
             // section title
             $title = ($data['title'] ? hsc($data['title']) : $this->getLang('discussion'));
-            ptln('<div class="comment_wrapper">');
+            ptln('<div class="comment_wrapper" id="comment_wrapper">'); // the id value is used for visibility toggling the section
             ptln('<h2><a name="discussion__section" id="discussion__section">', 2);
             ptln($title, 4);
             ptln('</a></h2>', 2);
@@ -369,7 +440,7 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
         if (isset($data['comments'])) {
             if (!$this->getConf('usethreading')) {
                 $data['comments'] = $this->_flattenThreads($data['comments']);
-                uasort($data['comments'], '_sortCallBack');
+                uasort($data['comments'], '_sortCallback');
             }
             if($this->getConf('newestfirst')) {
                 $data['comments'] = array_reverse($data['comments']);
@@ -387,11 +458,22 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
             ptln('</div>', 2); // level2 hfeed
             ptln('</div>'); // comment_wrapper
         }
+        
+        // check for toggle print configuration
+        if($this->getConf('visibilityButton')) {           
+            // print the hide/show discussion section button
+            $this->_print_toggle_button();
+        }
 
         return true;
     }
 
-    function _flattenThreads($comments, $keys = null) {
+    /**
+     * @param array      $comments
+     * @param null|array $keys
+     * @return array
+     */
+    protected function _flattenThreads($comments, $keys = null) {
         if (is_null($keys))
             $keys = array_keys($comments);
 
@@ -408,9 +490,12 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
 
     /**
      * Adds a new comment and then displays all comments
+     *
+     * @param array $comment
+     * @param string $parent
+     * @return bool
      */
-    function _add($comment, $parent) {
-        global $lang;
+    protected function _add($comment, $parent) {
         global $ID;
         global $TEXT;
 
@@ -424,8 +509,10 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
         }
 
         if ((!$this->getConf('allowguests'))
-                && ($comment['user']['id'] != $_SERVER['REMOTE_USER']))
+                && ($comment['user']['id'] != $_SERVER['REMOTE_USER'])
+        ) {
             return false; // guest comments not allowed
+        }
 
         $TEXT = $otxt; // restore global $TEXT
 
@@ -437,7 +524,6 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
             $data = array('status' => 1, 'number' => 0);
             io_saveFile($file, serialize($data));
         } else {
-            $data = array();
             $data = unserialize(io_readFile($file, false));
             if ($data['status'] != 1) return false; // comments off or closed
         }
@@ -465,7 +551,6 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
         $data['comments'][$cid] = array(
                 'user'    => $comment['user'],
                 'date'    => array('created' => $date),
-                'show'    => true,
                 'raw'     => $comment['raw'],
                 'xhtml'   => $xhtml,
                 'parent'  => $parent,
@@ -497,7 +582,9 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
         }
 
         // update parent comment
-        if ($parent) $data['comments'][$parent]['replies'][] = $cid;
+        if ($parent) {
+            $data['comments'][$parent]['replies'][] = $cid;
+        }
 
         // update the number of comments
         $data['number']++;
@@ -516,11 +603,16 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
 
     /**
      * Saves the comment with the given ID and then displays all comments
+     *
+     * @param array|string $cids
+     * @param string $raw
+     * @param string $act
+     * @return bool
      */
-    function _save($cids, $raw, $act = NULL) {
+    public function save($cids, $raw, $act = NULL) {
         global $ID;
 
-        if(!$cids) return; // do nothing if we get no comment id
+        if(!$cids) return false; // do nothing if we get no comment id
 
         if ($raw) {
             global $TEXT;
@@ -553,7 +645,7 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
             }
 
             // someone else was trying to edit our comment -> abort
-            if (($user != $_SERVER['REMOTE_USER']) && (!auth_ismanager())) return false;
+            if (($user != $_SERVER['REMOTE_USER']) && (!$this->helper->isDiscussionMod())) return false;
 
             $date = time();
 
@@ -619,7 +711,7 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
     /**
      * Recursive function to remove a comment
      */
-    function _removeComment($cid, $comments) {
+    protected function _removeComment($cid, $comments) {
         if (is_array($comments[$cid]['replies'])) {
             foreach ($comments[$cid]['replies'] as $rid) {
                 $comments = $this->_removeComment($rid, $comments);
@@ -631,9 +723,15 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
 
     /**
      * Prints an individual comment
+     *
+     * @param string $cid
+     * @param array $data
+     * @param string $parent
+     * @param string $reply
+     * @param bool $visible
+     * @return bool
      */
-    function _print($cid, &$data, $parent = '', $reply = '', $visible = true) {
-
+    protected function _print($cid, &$data, $parent = '', $reply = '', $visible = true) {
         if (!isset($data['comments'][$cid])) return false; // comment was removed
         $comment = $data['comments'][$cid];
 
@@ -642,7 +740,7 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
         if ($comment['parent'] != $parent) return true;    // reply to an other comment
 
         if (!$comment['show']) {                            // comment hidden
-            if (auth_ismanager()) $hidden = ' comment_hidden';
+            if ($this->helper->isDiscussionMod()) $hidden = ' comment_hidden';
             else return true;
         } else {
             $hidden = '';
@@ -654,11 +752,19 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
         $this->_print_replies($cid, $data, $reply, $visible);
         // reply form
         $this->_print_form($cid, $reply);
+        return true;
     }
 
-    function _print_comment($cid, &$data, $parent, $reply, $visible, $hidden)
-    {
-        global $conf, $lang, $ID, $HIGH;
+    /**
+     * @param $cid
+     * @param $data
+     * @param $parent
+     * @param $reply
+     * @param $visible
+     * @param $hidden
+     */
+    protected function _print_comment($cid, &$data, $parent, $reply, $visible, $hidden) {
+        global $conf, $lang, $HIGH;
         $comment = $data['comments'][$cid];
 
         // comment head with date and user data
@@ -712,19 +818,24 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
         } else {
             $head .= '<span class="fn">'.$showname.'</span>';
         }
-        if ($address) $head .= ', <span class="adr">'.$address.'</span>';
+
+        if ($address) {
+            $head .= ', <span class="adr">'.$address.'</span>';
+        }
         $head .= '</span>, '.
-            '<abbr class="published" title="'.strftime('%Y-%m-%dT%H:%M:%SZ', $created).'">'.
-            strftime($conf['dformat'], $created).'</abbr>';
-        if ($comment['edited']) $head .= ' (<abbr class="updated" title="'.
-                strftime('%Y-%m-%dT%H:%M:%SZ', $modified).'">'.strftime($conf['dformat'], $modified).
+            '<abbr class="published" title="'. strftime('%Y-%m-%dT%H:%M:%SZ', $created) .'">'.
+            dformat($created, $conf['dformat']).'</abbr>';
+        if ($comment['edited']) {
+            $head .= ' (<abbr class="updated" title="'.
+                strftime('%Y-%m-%dT%H:%M:%SZ', $modified).'">'.dformat($modified, $conf['dformat']).
                 '</abbr>)';
+        }
         ptln($head, 8);
         ptln('</div>', 6); // class="comment_head"
 
         // main comment content
         ptln('<div class="comment_body entry-content"'.
-                ($this->getConf('useavatar') ? $this->_get_style() : '').'>', 6);
+                ($this->_use_avatar() ? $this->_get_style() : '').'>', 6);
         echo ($HIGH?html_hilight($comment['xhtml'],$HIGH):$comment['xhtml']).DOKU_LF;
         ptln('</div>', 6); // class="comment_body"
 
@@ -733,11 +844,13 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
 
             // show reply button?
             if (($data['status'] == 1) && !$reply && $comment['show']
-                    && ($this->getConf('allowguests') || $_SERVER['REMOTE_USER']) && $this->getConf('usethreading'))
+                    && ($this->getConf('allowguests') || $_SERVER['REMOTE_USER']) && $this->getConf('usethreading')
+            ) {
                 $this->_button($cid, $this->getLang('btn_reply'), 'reply', true);
+            }
 
             // show edit, show/hide and delete button?
-            if ((($user == $_SERVER['REMOTE_USER']) && ($user != '')) || (auth_ismanager())) {
+            if ((($user == $_SERVER['REMOTE_USER']) && ($user != '')) || ($this->helper->isDiscussionMod())) {
                 $this->_button($cid, $lang['btn_secedit'], 'edit', true);
                 $label = ($comment['show'] ? $this->getLang('btn_hide') : $this->getLang('btn_show'));
                 $this->_button($cid, $label, 'toogle');
@@ -748,7 +861,11 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
         ptln('</div>', 4); // class="hentry"
     }
 
-    function _print_form($cid, $reply)
+    /**
+     * @param string $cid
+     * @param string $reply
+     */
+    protected function _print_form($cid, $reply)
     {
         if ($this->getConf('usethreading') && $reply == $cid) {
             ptln('<div class="comment_replies">', 4);
@@ -757,7 +874,13 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
         }
     }
 
-    function _print_replies($cid, &$data, $reply, &$visible)
+    /**
+     * @param string $cid
+     * @param array  $data
+     * @param string $reply
+     * @param bool $visible
+     */
+    protected function _print_replies($cid, &$data, $reply, &$visible)
     {
         $comment = $data['comments'][$cid];
         if (!count($comment['replies'])) {
@@ -771,7 +894,12 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
         ptln('</div>', 4);
     }
 
-    function _use_avatar()
+    /**
+     * Is an avatar displayed?
+     *
+     * @return bool
+     */
+    protected function _use_avatar()
     {
         if (is_null($this->use_avatar)) {
             $this->use_avatar = $this->getConf('useavatar')
@@ -781,8 +909,12 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
         return $this->use_avatar;
     }
 
-    function _get_style()
-    {
+    /**
+     * Calculate width of indent
+     *
+     * @return string
+     */
+    protected function _get_style() {
         if (is_null($this->style)){
             if ($this->_use_avatar()) {
                 $this->style = ' style="margin-left: '.($this->avatar->getConf('size') + 14).'px;"';
@@ -794,13 +926,21 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
     }
 
     /**
+     * Show the button which toggle the visibility of the discussion section
+     */
+    protected function _print_toggle_button() {
+        ptln('<div id="toggle_button" class="toggle_button" style="text-align: right;">');
+        ptln('<input type="submit" id="discussion__btn_toggle_visibility" title="Toggle Visibiliy" class="button" value="'.$this->getLang('toggle_display').'">');
+        ptln('</div>');
+    }
+    
+    /**
      * Outputs the comment form
      */
-    function _form($raw = '', $act = 'add', $cid = NULL) {
+    protected function _form($raw = '', $act = 'add', $cid = NULL) {
         global $lang;
         global $conf;
         global $ID;
-        global $INFO;
 
         // not for unregistered users when guest comments aren't allowed
         if (!$_SERVER['REMOTE_USER'] && !$this->getConf('allowguests')) {
@@ -809,11 +949,13 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
                 <?php echo $this->getLang('noguests'); ?>
             </div>
             <?php
-            return false;
+            return;
         }
 
         // fill $raw with $_REQUEST['text'] if it's empty (for failed CAPTCHA check)
-        if (!$raw && ($_REQUEST['comment'] == 'show')) $raw = $_REQUEST['text'];
+        if (!$raw && ($_REQUEST['comment'] == 'show')) {
+            $raw = $_REQUEST['text'];
+        }
         ?>
 
         <div class="comment_form">
@@ -829,7 +971,7 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
               <input type="hidden" name="reply" value="<?php echo $cid ?>" />
         <?php
         // for guest/adminimport: show name, e-mail and subscribe to comments fields
-        if(!$_SERVER['REMOTE_USER'] or ($this->getConf('adminimport') && auth_ismanager())) {
+        if(!$_SERVER['REMOTE_USER'] or ($this->getConf('adminimport') && $this->helper->isDiscussionMod())) {
         ?>
               <input type="hidden" name="user" value="<?php echo clientIP() ?>" />
               <div class="comment_name">
@@ -872,7 +1014,7 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
         }
 
         // allow setting the comment date
-        if ($this->getConf('adminimport') && (auth_ismanager())) {
+        if ($this->getConf('adminimport') && ($this->helper->isDiscussionMod())) {
         ?>
               <div class="comment_date">
                 <label class="block" for="discussion__comment_date">
@@ -890,23 +1032,40 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
         <?php
         }
         ?>
-              <div class="comment_text">
-                <div id="discussion__comment_toolbar">
-                  <?php echo $this->getLang('entercomment')?>
-                  <?php if($this->getLang('wikisyntaxok')) echo ', ' . $this->getLang('wikisyntax') . ':';?>
+                <div class="comment_text">
+                  <?php echo $this->getLang('entercomment'); echo ($this->getConf('wikisyntaxok') ? "" : ":");
+                        if($this->getConf('wikisyntaxok')) echo '. ' . $this->getLang('wikisyntax') . ':'; ?>
+
+                  <!-- Fix for disable the toolbar when wikisyntaxok is set to false. See discussion's script.jss -->
+                  <?php if($this->getConf('wikisyntaxok')) { ?>
+                    <div id="discussion__comment_toolbar" class="toolbar group">
+                  <?php } else { ?>
+                    <div id="discussion__comment_toolbar_disabled">
+                  <?php } ?>
                 </div>
                 <textarea class="edit<?php if($_REQUEST['comment'] == 'add' && empty($_REQUEST['text'])) echo ' error'?>" name="text" cols="80" rows="10" id="discussion__comment_text" tabindex="5"><?php
                   if($raw) {
                       echo formText($raw);
                   } else {
-                      echo $_REQUEST['text'];
+                      echo hsc($_REQUEST['text']);
                   }
                 ?></textarea>
               </div>
-        <?php //bad and dirty event insert hook
-        $evdata = array('writable' => true);
-        trigger_event('HTML_EDITFORM_INJECTION', $evdata);
-        ?>
+
+              <?php
+              /** @var helper_plugin_captcha $captcha */
+              $captcha = $this->loadHelper('captcha', false);
+              if ($captcha && $captcha->isEnabled()) {
+                  echo $captcha->getHTML();
+              }
+
+              /** @var helper_plugin_recaptcha $recaptcha */
+              $recaptcha = $this->loadHelper('recaptcha', false);
+              if ($recaptcha && $recaptcha->isEnabled()) {
+                  echo $recaptcha->getHTML();
+              }
+              ?>
+
               <input class="button comment_submit" id="discussion__btn_submit" type="submit" name="submit" accesskey="s" value="<?php echo $lang['btn_save'] ?>" title="<?php echo $lang['btn_save']?> [S]" tabindex="7" />
               <input class="button comment_preview_button" id="discussion__btn_preview" type="button" name="preview" accesskey="p" value="<?php echo $lang['btn_preview'] ?>" title="<?php echo $lang['btn_preview']?> [P]" />
 
@@ -925,52 +1084,18 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
           </form>
         </div>
         <?php
-        if ($this->getConf('usecocomment')) echo $this->_coComment();
-    }
-
-    /**
-     * Adds a javascript to interact with coComments
-     */
-    function _coComment() {
-        global $ID;
-        global $conf;
-        global $INFO;
-
-        $user = $_SERVER['REMOTE_USER'];
-
-        ?>
-        <script type="text/javascript"><!--//--><![CDATA[//><!--
-          var blogTool  = "DokuWiki";
-          var blogURL   = "<?php echo DOKU_URL ?>";
-          var blogTitle = "<?php echo $conf['title'] ?>";
-          var postURL   = "<?php echo wl($ID, '', true) ?>";
-          var postTitle = "<?php echo tpl_pagetitle($ID, true) ?>";
-        <?php
-        if ($user) {
-        ?>
-          var commentAuthor = "<?php echo $INFO['userinfo']['name'] ?>";
-        <?php
-        } else {
-        ?>
-          var commentAuthorFieldName = "name";
-        <?php
-        }
-        ?>
-          var commentAuthorLoggedIn = <?php echo ($user ? 'true' : 'false') ?>;
-          var commentFormID         = "discussion__comment_form";
-          var commentTextFieldName  = "text";
-          var commentButtonName     = "submit";
-          var cocomment_force       = false;
-        //--><!]]></script>
-        <script type="text/javascript" src="http://www.cocomment.com/js/cocomment.js">
-        </script>
-        <?php
     }
 
     /**
      * General button function
+     *
+     * @param string $cid
+     * @param string $label
+     * @param string $act
+     * @param bool $jump
+     * @return bool
      */
-    function _button($cid, $label, $act, $jump = false) {
+    protected function _button($cid, $label, $act, $jump = false) {
         global $ID;
 
         $anchor = ($jump ? '#discussion__comment_form' : '' );
@@ -994,13 +1119,22 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
      *
      * @author Esther Brunner <wikidesign@gmail.com>
      * @author Ben Coburn <btcoburn@silicodon.net>
+     *
+     * @param int    $date
+     * @param string $id page id
+     * @param string $type
+     * @param string $summary
+     * @param string $extra
      */
-    function _addLogEntry($date, $id, $type = 'cc', $summary = '', $extra = '') {
+    protected function _addLogEntry($date, $id, $type = 'cc', $summary = '', $extra = '') {
         global $conf;
 
         $changelog = $conf['metadir'].'/_comments.changes';
 
-        if(!$date) $date = time(); //use current time if none supplied
+        //use current time if none supplied
+        if(!$date) {
+            $date = time();
+        }
         $remote = $_SERVER['REMOTE_ADDR'];
         $user   = $_SERVER['REMOTE_USER'];
 
@@ -1030,13 +1164,17 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
      * The trimming is only done once a day.
      *
      * @author Ben Coburn <btcoburn@silicodon.net>
+     *
+     * @param string $changelog file path
+     * @return bool
      */
-    function _trimRecentCommentsLog($changelog) {
+    protected function _trimRecentCommentsLog($changelog) {
         global $conf;
 
         if (@file_exists($changelog) &&
                 (filectime($changelog) + 86400) < time() &&
-                !@file_exists($changelog.'_tmp')) {
+                !@file_exists($changelog.'_tmp')
+        ) {
 
             io_lock($changelog);
             $lines = file($changelog);
@@ -1083,99 +1221,132 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
             }
             return true;
         }
+        return true;
     }
 
     /**
      * Sends a notify mail on new comment
      *
      * @param  array  $comment  data array of the new comment
+     * @param  array  $subscribers data of the subscribers
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      * @author Esther Brunner <wikidesign@gmail.com>
      */
-    function _notify($comment, &$subscribers) {
+    protected function _notify($comment, &$subscribers) {
         global $conf;
         global $ID;
-        global $INFO;
 
         $notify_text = io_readfile($this->localfn('subscribermail'));
         $confirm_text = io_readfile($this->localfn('confirmsubscribe'));
         $subject_notify = '['.$conf['title'].'] '.$this->getLang('mail_newcomment');
         $subject_subscribe = '['.$conf['title'].'] '.$this->getLang('subscribe');
-        $from = $conf['mailfrom'];
-        $from = str_replace('@USER@',$_SERVER['REMOTE_USER'],$from);
-        $from = str_replace('@NAME@',$INFO['userinfo']['name'],$from);
-        $from = str_replace('@MAIL@',$INFO['userinfo']['mail'],$from);
 
-        $search = array(
-                '@PAGE@',
-                '@TITLE@',
-                '@DATE@',
-                '@NAME@',
-                '@TEXT@',
-                '@COMMENTURL@',
-                '@UNSUBSCRIBE@',
-                '@DOKUWIKIURL@',
-                );
+        $mailer = new Mailer();
+        if (empty($_SERVER['REMOTE_USER'])) {
+            $mailer->from($conf['mailfromnobody']);
+        }
+
+        $replace = array(
+            'PAGE' => $ID,
+            'TITLE' => $conf['title'],
+            'DATE' => dformat($comment['date']['created'], $conf['dformat']),
+            'NAME' => $comment['user']['name'],
+            'TEXT' => $comment['raw'],
+            'COMMENTURL' => wl($ID, '', true) . '#comment_' . $comment['cid'],
+            'UNSUBSCRIBE' => wl($ID, 'do=subscribe', true, '&'),
+            'DOKUWIKIURL' => DOKU_URL
+        );
+
+        $confirm_replace = array(
+            'PAGE' => $ID,
+            'TITLE' => $conf['title'],
+            'DOKUWIKIURL' => DOKU_URL
+        );
+
+
+        $mailer->subject($subject_notify);
+        $mailer->setBody($notify_text, $replace);
+
+        // send mail to notify address
+        if ($conf['notify']) {
+            $mailer->bcc($conf['notify']);
+            $mailer->send();
+        }
+
+        // send email to moderators
+        if ($this->getConf('moderatorsnotify')) {
+            $mods = trim($this->getConf('moderatorgroups'));
+            if (!empty($mods)) {
+                global $auth;
+                // create a clean mods list
+                $mods = explode(',', $mods);
+                $mods = array_map('trim', $mods);
+                $mods = array_unique($mods);
+                $mods = array_filter($mods);
+                // search for moderators users
+                foreach($mods as $mod) {
+                    if(!$auth->isCaseSensitive()) $mod = utf8_strtolower($mod);
+                    // create a clean mailing list
+                    $dests = array();
+                    if($mod[0] == '@') {
+                        foreach($auth->retrieveUsers(0, 0, array('grps' => $auth->cleanGroup(substr($mod, 1)))) as $user) {
+                            if (!empty($user['mail'])) {
+                                array_push($dests, $user['mail']);
+                            }
+                        }
+                    } else {
+                        $userdata = $auth->getUserData($auth->cleanUser($mod));
+                        if (!empty($userdata['mail'])) {
+                            array_push($dests, $userdata['mail']);
+                        }
+                    }
+                    $dests = array_unique($dests);
+                    // notify the users
+                    $mailer->bcc(implode(',', $dests));
+                    $mailer->send();
+                }
+            }
+        }
 
         // notify page subscribers
-        if ($conf['subscribers'] || $conf['notify']) {
-            $to   = $conf['notify'];
+        if (actionOK('subscribe')) {
             $data = array('id' => $ID, 'addresslist' => '', 'self' => false);
-            trigger_event('COMMON_NOTIFY_ADDRESSLIST', $data, 'subscription_addresslist');
-            $bcc = $data['addresslist'];
-
-            $replace = array(
-                    $ID,
-                    $conf['title'],
-                    strftime($conf['dformat'], $comment['date']['created']),
-                    $comment['user']['name'],
-                    $comment['raw'],
-                    wl($ID, '', true) . '#comment_' . $comment['cid'],
-                    wl($ID, 'do=unsubscribe', true, '&'),
-                    DOKU_URL,
-                    );
-
-                $body = str_replace($search, $replace, $notify_text);
-                mail_send($to, $subject_notify, $body, $from, '', $bcc);
+            if (class_exists('Subscription')) { /* Introduced in DokuWiki 2013-05-10 */
+                trigger_event(
+                    'COMMON_NOTIFY_ADDRESSLIST', $data,
+                    array(new Subscription(), 'notifyaddresses')
+                );
+            } else { /* Old, deprecated default handler */
+                trigger_event(
+                    'COMMON_NOTIFY_ADDRESSLIST', $data,
+                    'subscription_addresslist'
+                );
+            }
+            $to = $data['addresslist'];
+            if(!empty($to)) {
+                $mailer->bcc($to);
+                $mailer->send();
+            }
         }
 
         // notify comment subscribers
         if (!empty($subscribers)) {
 
             foreach($subscribers as $mail => $data) {
-                $to = $mail;
-
+                $mailer->bcc($mail);
                 if($data['active']) {
-                    $replace = array(
-                            $ID,
-                            $conf['title'],
-                            strftime($conf['dformat'], $comment['date']['created']),
-                            $comment['user']['name'],
-                            $comment['raw'],
-                            wl($ID, '', true) . '#comment_' . $comment['cid'],
-                            wl($ID, 'do=discussion_unsubscribe&hash=' . $data['hash'], true, '&'),
-                            DOKU_URL,
-                            );
+                    $replace['UNSUBSCRIBE'] = wl($ID, 'do=discussion_unsubscribe&hash=' . $data['hash'], true, '&');
 
-                    $body = str_replace($search, $replace, $notify_text);
-                    mail_send($to, $subject_notify, $body, $from);
+                    $mailer->subject($subject_notify);
+                    $mailer->setBody($notify_text, $replace);
+                    $mailer->send();
                 } elseif(!$data['active'] && !$data['confirmsent']) {
-                    $search = array(
-                            '@PAGE@',
-                            '@TITLE@',
-                            '@SUBSCRIBE@',
-                            '@DOKUWIKIURL@',
-                            );
-                    $replace = array(
-                            $ID,
-                            $conf['title'],
-                            wl($ID, 'do=discussion_confirmsubscribe&hash=' . $data['hash'], true, '&'),
-                            DOKU_URL,
-                            );
+                    $confirm_replace['SUBSCRIBE'] = wl($ID, 'do=discussion_confirmsubscribe&hash=' . $data['hash'], true, '&');
 
-                    $body = str_replace($search, $replace, $confirm_text);
-                    mail_send($to, $subject_subscribe, $body, $from);
+                    $mailer->subject($subject_subscribe);
+                    $mailer->setBody($confirm_text, $confirm_replace);
+                    $mailer->send();
                     $subscribers[$mail]['confirmsent'] = true;
                 }
             }
@@ -1184,37 +1355,55 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
 
     /**
      * Counts the number of visible comments
+     *
+     * @param array $data
+     * @return int
      */
-    function _count($data) {
+    protected function _count($data) {
         $number = 0;
-        foreach ($data['comments'] as $cid => $comment) {
+        foreach ($data['comments'] as $comment) {
             if ($comment['parent']) continue;
             if (!$comment['show']) continue;
             $number++;
             $rids = $comment['replies'];
-            if (count($rids)) $number = $number + $this->_countReplies($data, $rids);
+            if (count($rids)) {
+                $number = $number + $this->_countReplies($data, $rids);
+            }
         }
         return $number;
     }
 
-    function _countReplies(&$data, $rids) {
+    /**
+     * @param array $data
+     * @param array $rids
+     * @return int
+     */
+    protected function _countReplies(&$data, $rids) {
         $number = 0;
         foreach ($rids as $rid) {
             if (!isset($data['comments'][$rid])) continue; // reply was removed
             if (!$data['comments'][$rid]['show']) continue;
             $number++;
             $rids = $data['comments'][$rid]['replies'];
-            if (count($rids)) $number = $number + $this->_countReplies($data, $rids);
+            if (count($rids)) {
+                $number = $number + $this->_countReplies($data, $rids);
+            }
         }
         return $number;
     }
 
     /**
      * Renders the comment text
+     *
+     * @param string $raw
+     * @return null|string
      */
-    function _render($raw) {
+    protected function _render($raw) {
         if ($this->getConf('wikisyntaxok')) {
-            $xhtml = $this->render($raw);
+            // Note the warning for render_text:
+            //   "very ineffecient for small pieces of data - try not to use"
+            // in dokuwiki/inc/plugin.php
+            $xhtml = $this->render_text($raw);
         } else { // wiki syntax not allowed -> just encode special chars
             $xhtml = hsc(trim($raw));
             $xhtml = str_replace("\n", '<br />', $xhtml);
@@ -1224,14 +1413,17 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
 
     /**
      * Finds out whether there is a discussion section for the current page
+     *
+     * @param string $title
+     * @return bool
      */
-    function _hasDiscussion(&$title) {
+    protected function _hasDiscussion(&$title) {
         global $ID;
 
         $cfile = metaFN($ID, '.comments');
 
         if (!@file_exists($cfile)) {
-            if ($this->getConf('automatic')) {
+            if ($this->isDiscussionEnabled()) {
                 return true;
             } else {
                 return false;
@@ -1240,7 +1432,9 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
 
         $comments = unserialize(io_readFile($cfile, false));
 
-        if ($comments['title']) $title = hsc($comments['title']);
+        if ($comments['title']) {
+            $title = hsc($comments['title']);
+        }
         $num = $comments['number'];
         if ((!$comments['status']) || (($comments['status'] == 2) && (!$num))) return false;
         else return true;
@@ -1248,8 +1442,10 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
 
     /**
      * Creates a new thread page
+     *
+     * @return string
      */
-    function _newThread() {
+    protected function _newThread() {
         global $ID, $INFO;
 
         $ns    = cleanID($_REQUEST['ns']);
@@ -1262,8 +1458,11 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
         if ($INFO['perm'] >= AUTH_CREATE) {
 
             //check if locked by anyone - if not lock for my self
-            if ($INFO['locked']) return 'locked';
-            else lock($ID);
+            if ($INFO['locked']) {
+                return 'locked';
+            } else {
+                lock($ID);
+            }
 
             // prepare the new thread file with default stuff
             if (!@file_exists($INFO['filepath'])) {
@@ -1285,8 +1484,11 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
 
     /**
      * Adapted version of pageTemplate() function
+     *
+     * @param array $data
+     * @return string
      */
-    function _pageTemplate($data) {
+    protected function _pageTemplate($data) {
         global $conf, $INFO;
 
         $id   = $data['id'];
@@ -1300,7 +1502,7 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
                 '@USER@' => $user,
                 '@NAME@' => $INFO['userinfo']['name'],
                 '@MAIL@' => $INFO['userinfo']['mail'],
-                '@DATE@' => strftime($conf['dformat']),
+                '@DATE@' => dformat(time(), $conf['dformat']),
                 );
 
         // additional replacements
@@ -1310,7 +1512,8 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
         // avatar if useavatar and avatar plugin available
         if ($this->getConf('useavatar')
                 && (@file_exists(DOKU_PLUGIN.'avatar/syntax.php'))
-                && (!plugin_isdisabled('avatar'))) {
+                && (!plugin_isdisabled('avatar'))
+        ) {
             $replace['@AVATAR@'] = '{{avatar>'.$user.' }} ';
         } else {
             $replace['@AVATAR@'] = '';
@@ -1318,7 +1521,8 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
 
         // tag if tag plugin is available
         if ((@file_exists(DOKU_PLUGIN.'tag/syntax/tag.php'))
-                && (!plugin_isdisabled('tag'))) {
+                && (!plugin_isdisabled('tag'))
+        ) {
             $replace['@TAG@'] = "\n\n{{tag>}}";
         } else {
             $replace['@TAG@'] = '';
@@ -1331,31 +1535,19 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
 
     /**
      * Checks if the CAPTCHA string submitted is valid
-     *
-     * @author     Andreas Gohr <gohr@cosmocode.de>
-     * @adaption   Esther Brunner <wikidesign@gmail.com>
      */
-    function _captchaCheck() {
+    protected function _captchaCheck() {
+        /** @var helper_plugin_captcha $captcha */
         if (plugin_isdisabled('captcha') || (!$captcha = plugin_load('helper', 'captcha')))
             return; // CAPTCHA is disabled or not available
 
-        // do nothing if logged in user and no CAPTCHA required
-        if (!$captcha->getConf('forusers') && $_SERVER['REMOTE_USER']) return;
-
-        // compare provided string with decrypted captcha
-        $rand = PMA_blowfish_decrypt($_REQUEST['plugin__captcha_secret'], auth_cookiesalt());
-        $code = $captcha->_generateCAPTCHA($captcha->_fixedIdent(), $rand);
-
-        if (!$_REQUEST['plugin__captcha_secret'] ||
-                !$_REQUEST['plugin__captcha'] ||
-                strtoupper($_REQUEST['plugin__captcha']) != $code) {
-
-            // CAPTCHA test failed! Continue to edit instead of saving
-            msg($captcha->getLang('testfailed'), -1);
-            if ($_REQUEST['comment'] == 'save') $_REQUEST['comment'] = 'edit';
-            elseif ($_REQUEST['comment'] == 'add') $_REQUEST['comment'] = 'show';
+        if ($captcha->isEnabled() && !$captcha->check()) {
+            if ($_REQUEST['comment'] == 'save') {
+                $_REQUEST['comment'] = 'edit';
+            } elseif ($_REQUEST['comment'] == 'add') {
+                $_REQUEST['comment'] = 'show';
+            }
         }
-        // if we arrive here it was a valid save
     }
 
     /**
@@ -1363,7 +1555,8 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
      *
      * @author Adrian Schlegel <adrian@liip.ch>
      */
-    function _recaptchaCheck() {
+    protected function _recaptchaCheck() {
+        /** @var $recaptcha helper_plugin_recaptcha */
         if (plugin_isdisabled('recaptcha') || (!$recaptcha = plugin_load('helper', 'recaptcha')))
             return; // reCAPTCHA is disabled or not available
 
@@ -1373,34 +1566,143 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
         $resp = $recaptcha->check();
         if (!$resp->is_valid) {
             msg($recaptcha->getLang('testfailed'),-1);
-            if ($_REQUEST['comment'] == 'save') $_REQUEST['comment'] = 'edit';
-            elseif ($_REQUEST['comment'] == 'add') $_REQUEST['comment'] = 'show';
+            if ($_REQUEST['comment'] == 'save') {
+                $_REQUEST['comment'] = 'edit';
+            } elseif ($_REQUEST['comment'] == 'add') {
+                $_REQUEST['comment'] = 'show';
+            }
         }
     }
 
     /**
-     * Adds the comments to the index
+     * Add discussion plugin version to the indexer version
+     * This means that all pages will be indexed again in order to add the comments
+     * to the index whenever there has been a change that concerns the index content.
+     *
+     * @param Doku_Event $event
+     * @param $param
      */
-    function idx_add_discussion(&$event, $param) {
+    public function idx_version(Doku_Event $event, $param) {
+        $event->data['discussion'] = '0.1';
+    }
+
+    /**
+     * Adds the comments to the index
+     *
+     * @param Doku_Event $event
+     * @param $param
+     */
+    public function idx_add_discussion(Doku_Event $event, $param) {
 
         // get .comments meta file name
-        $file = metaFN($event->data[0], '.comments');
+        $file = metaFN($event->data[$param['id']], '.comments');
 
-        if (@file_exists($file)) $data = unserialize(io_readFile($file, false));
+        if (!@file_exists($file)) return;
+        $data = unserialize(io_readFile($file, false));
         if ((!$data['status']) || ($data['number'] == 0)) return; // comments are turned off
 
         // now add the comments
         if (isset($data['comments'])) {
             foreach ($data['comments'] as $key => $value) {
-                $event->data[1] .= $this->_addCommentWords($key, $data);
+                $event->data[$param['text']] .= DOKU_LF.$this->_addCommentWords($key, $data);
+            }
+        }
+    }
+
+    function ft_phrase_match(Doku_Event $event, $param) {
+        if ($event->result === true) return;
+
+        // get .comments meta file name
+        $file = metaFN($event->data['id'], '.comments');
+
+        if (!@file_exists($file)) return;
+        $data = unserialize(io_readFile($file, false));
+        if ((!$data['status']) || ($data['number'] == 0)) return; // comments are turned off
+
+        $matched = false;
+
+        // now add the comments
+        if (isset($data['comments'])) {
+            foreach ($data['comments'] as $key => $value) {
+                $matched = $this->comment_phrase_match($event->data['phrase'], $key, $data);
+                if ($matched) break;
+            }
+        }
+
+        if ($matched)
+            $event->result = true;
+    }
+
+    function comment_phrase_match($phrase, $cid, &$data, $parent = '') {
+        if (!isset($data['comments'][$cid])) return false; // comment was removed
+        $comment = $data['comments'][$cid];
+
+        if (!is_array($comment)) return false;             // corrupt datatype
+        if ($comment['parent'] != $parent) return false;   // reply to an other comment
+        if (!$comment['show']) return false;               // hidden comment
+
+        $text = utf8_strtolower($comment['raw']);
+        if (strpos($text, $phrase) !== false) {
+            return true;
+        }
+
+        if (is_array($comment['replies'])) {             // and the replies
+            foreach ($comment['replies'] as $rid) {
+                if ($this->comment_phrase_match($phrase, $rid, $data, $cid)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Saves the current comment status and title in the .comments file
+     *
+     * @param Doku_Event $event
+     * @param $param
+     */
+    public function update_comment_status(Doku_Event $event, $param) {
+        global $ID;
+
+        $meta = $event->data['current'];
+        $file = metaFN($ID, '.comments');
+        $status = ($this->isDiscussionEnabled() ? 1 : 0);
+        $title = NULL;
+        if (isset($meta['plugin_discussion'])) {
+            $status = $meta['plugin_discussion']['status'];
+            $title = $meta['plugin_discussion']['title'];
+        } else if ($status == 1) {
+            // Don't enable comments when automatic comments are on - this already happens automatically
+            // and if comments are turned off in the admin this only updates the .comments file
+            return;
+        }
+
+        if ($status || @file_exists($file)) {
+            $data = array();
+            if (@file_exists($file)) {
+                $data = unserialize(io_readFile($file, false));
+            }
+
+            if (!array_key_exists('title', $data) || $data['title'] !== $title || !isset($data['status']) || $data['status'] !== $status) {
+                $data['title']  = $title;
+                $data['status'] = $status;
+                if (!isset($data['number']))
+                    $data['number'] = 0;
+                io_saveFile($file, serialize($data));
             }
         }
     }
 
     /**
      * Adds the words of a given comment to the index
+     *
+     * @param string $cid
+     * @param array  $data
+     * @param string $parent
+     * @return string
      */
-    function _addCommentWords($cid, &$data, $parent = '') {
+    protected function _addCommentWords($cid, &$data, $parent = '') {
 
         if (!isset($data['comments'][$cid])) return ''; // comment was removed
         $comment = $data['comments'][$cid];
@@ -1420,8 +1722,11 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
 
     /**
      * Only allow http(s) URLs and append http:// to URLs if needed
+     *
+     * @param string $url
+     * @return string
      */
-    function _checkURL($url) {
+    protected function _checkURL($url) {
         if(preg_match("#^http://|^https://#", $url)) {
             return hsc($url);
         } elseif(substr($url, 0, 4) == 'www.') {
@@ -1432,23 +1737,31 @@ class action_plugin_discussion extends DokuWiki_Action_Plugin{
     }
 }
 
-function _sortCallback($a, $b) {
-    if (is_array($a['date'])) { // new format
-        $createdA  = $a['date']['created'];
-    } else {                         // old format
-        $createdA  = $a['date'];
-    }
+/**
+ * Sort threads
+ *
+ * @param $a
+ * @param $b
+ * @return int
+ */
+    function _sortCallback($a, $b) {
+        if (is_array($a['date'])) { // new format
+            $createdA  = $a['date']['created'];
+        } else {                         // old format
+            $createdA  = $a['date'];
+        }
 
-    if (is_array($b['date'])) { // new format
-        $createdB  = $b['date']['created'];
-    } else {                         // old format
-        $createdB  = $b['date'];
-    }
+        if (is_array($b['date'])) { // new format
+            $createdB  = $b['date']['created'];
+        } else {                         // old format
+            $createdB  = $b['date'];
+        }
 
-    if ($createdA == $createdB)
-        return 0;
-    else
-        return ($createdA < $createdB) ? -1 : 1;
-}
+        if ($createdA == $createdB) {
+            return 0;
+        } else {
+            return ($createdA < $createdB) ? -1 : 1;
+        }
+    }
 
 // vim:ts=4:sw=4:et:enc=utf-8:

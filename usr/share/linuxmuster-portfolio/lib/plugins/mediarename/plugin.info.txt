@@ -1,0 +1,7 @@
+base   mediarename
+author STADTWERKSTATT
+email  target@servus.at
+date   2015-01-27
+name   mediarename plugin
+desc   Add a quicklink to mediamanager to allow automatic renaming of all invalid filenames in a namespace to valid media-file-names
+url    https://www.dokuwiki.org/plugin:mediarename

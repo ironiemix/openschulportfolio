@@ -27,7 +27,7 @@ class syntax_plugin_pagelist extends DokuWiki_Syntax_Plugin {
     /**
      * Handle the match
      */
-    function handle($match, $state, $pos, &$handler) {
+    function handle($match, $state, $pos, Doku_Handler $handler) {
         global $ID;
 
         $match = substr($match, 9, -11);  // strip markup
@@ -39,7 +39,7 @@ class syntax_plugin_pagelist extends DokuWiki_Syntax_Plugin {
         $c = count($items);
         for ($i = 0; $i < $c; $i++) {
             if (!preg_match('/\[\[(.+?)\]\]/', $items[$i], $match)) continue;
-            list($id, $title) = explode('|', $match[1], 2);
+            list($id, $title, $description) = explode('|', $match[1], 3);
             list($id, $section) = explode('#', $id, 2);
             if (!$id) $id = $ID;
             resolve_pageid(getNS($ID), $id, $exists);
@@ -50,20 +50,22 @@ class syntax_plugin_pagelist extends DokuWiki_Syntax_Plugin {
                 list($ext, $mime) = mimetype($image);
                 if (!substr($mime, 0, 5) == 'image') $image = '';
                 $pages[] = array(
-                        'id'      => $id,
-                        'section' => cleanID($section),
-                        'title'   => trim($title),
-                        'image'   => trim($image),
-                        'exists'  => $exists,
+                        'id'          => $id,
+                        'section'     => cleanID($section),
+                        'title'       => trim($title),
+                        'image'       => trim($image),
+                        'description' => trim($description), // Holds the added parameter for own descriptions
+                        'exists'      => $exists,
                         );
 
             // text title (if any)
             } else {
                 $pages[] = array(
-                        'id'      => $id,
-                        'section' => cleanID($section),
-                        'title'   => trim($title),
-                        'exists'  => $exists,
+                        'id'          => $id,
+                        'section'     => cleanID($section),
+                        'title'       => trim($title),
+                        'description' => trim($description), // Holds the added parameter for own descriptions
+                        'exists'      => $exists,
                         );
             }
         }
@@ -73,7 +75,7 @@ class syntax_plugin_pagelist extends DokuWiki_Syntax_Plugin {
     /**
      * Create output
      */
-    function render($mode, &$renderer, $data) {
+    function render($mode, Doku_Renderer $renderer, $data) {
         list($flags, $pages) = $data;
 
         // for XHTML output
@@ -81,6 +83,15 @@ class syntax_plugin_pagelist extends DokuWiki_Syntax_Plugin {
             if (!$my =& plugin_load('helper', 'pagelist')) return false;
             $my->setFlags($flags);
             $my->startList();
+            
+            if($my->sort || $my->rsort) {		// pages should be sorted by pagename
+            	$keys = array();
+            	$fnc = create_function('$a, $b', 'return strcmp(noNS($a["id"]), noNS($b["id"])); ');
+            	usort($pages, $fnc);
+            	// rsort is true - revserse sort the pages
+            	if($my->rsort) krsort($pages);
+            }
+            
             foreach($pages as $page) {
                 $my->addPage($page);
             }
@@ -97,4 +108,4 @@ class syntax_plugin_pagelist extends DokuWiki_Syntax_Plugin {
         return false;
     }
 }
-// vim:ts=4:sw=4:et:enc=utf-8: 
+// vim:ts=4:sw=4:et: 

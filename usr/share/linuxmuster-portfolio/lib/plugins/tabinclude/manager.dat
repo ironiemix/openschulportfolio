@@ -1,2 +1,3 @@
 installed=Sat, 27 Feb 2010 18:29:52 +0100
-url=http://www.dokuwiki.org/lib/exe/fetch.php?hash=dca7c6&media=http%3A%2F%2Fwww.symplus.com%2Flegacy%2Fwiki%2F_media%2Fcomputer%2Fsource%2Ftabinclude.zip
+downloadurl=https://github.com/iobataya/dokuwiki-plugin-tabinclude/zipball/master
+updated=Mon, 05 Dec 2016 18:04:22 +0100

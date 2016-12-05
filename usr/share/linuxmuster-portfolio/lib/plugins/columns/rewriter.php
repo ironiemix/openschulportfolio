@@ -11,19 +11,19 @@ if (!class_exists('instruction_rewriter', false)) {
 
 class instruction_rewriter {
 
-    var $correction;
+    private $correction;
 
     /**
      * Constructor
      */
-    function instruction_rewriter() {
+    public function __construct() {
         $this->correction = array();
     }
 
     /**
      *
      */
-    function addCorrections($correction) {
+    public function addCorrections($correction) {
         foreach ($correction as $c) {
             $this->correction[$c->getIndex()][] = $c;
         }
@@ -32,9 +32,9 @@ class instruction_rewriter {
     /**
      *
      */
-    function process(&$instruction) {
+    public function process(&$instruction) {
         if (count($this->correction) > 0) {
-            $index = $this->_getCorrectionIndex();
+            $index = $this->getCorrectionIndex();
             $corrections = count($index);
             $instructions = count($instruction);
             $output = array();
@@ -67,7 +67,7 @@ class instruction_rewriter {
     /**
      *
      */
-    function _getCorrectionIndex() {
+    private function getCorrectionIndex() {
         $result = array_keys($this->correction);
         asort($result);
         /* Remove appends */
@@ -80,19 +80,19 @@ class instruction_rewriter {
 
 class instruction_rewriter_correction {
 
-    var $index;
+    private $index;
 
     /**
      * Constructor
      */
-    function instruction_rewriter_correction($index) {
+    public function __construct($index) {
         $this->index = $index;
     }
 
     /**
      *
      */
-    function getIndex() {
+    public function getIndex() {
         return $this->index;
     }
 }
@@ -102,48 +102,48 @@ class instruction_rewriter_delete extends instruction_rewriter_correction {
     /**
      * Constructor
      */
-    function instruction_rewriter_delete($index) {
-        parent::instruction_rewriter_correction($index);
+    public function __construct($index) {
+        parent::__construct($index);
     }
 
     /**
      *
      */
-    function apply($input, &$output) {
+    public function apply($input, &$output) {
         return true;
     }
 }
 
 class instruction_rewriter_call_list extends instruction_rewriter_correction {
 
-    var $call;
+    private $call;
 
     /**
      * Constructor
      */
-    function instruction_rewriter_call_list($index) {
-        parent::instruction_rewriter_correction($index);
+    public function __construct($index) {
+        parent::__construct($index);
         $this->call = array();
     }
 
     /**
      *
      */
-    function addCall($name, $data) {
+    public function addCall($name, $data) {
         $this->call[] = array($name, $data);
     }
 
     /**
      *
      */
-    function addPluginCall($name, $data, $state, $text = '') {
+    public function addPluginCall($name, $data, $state, $text = '') {
         $this->call[] = array('plugin', array($name, $data, $state, $text));
     }
 
     /**
      *
      */
-    function appendCalls(&$output, $position) {
+    public function appendCalls(&$output, $position) {
         foreach ($this->call as $call) {
             $output[] = array($call[0], $call[1], $position);
         }
@@ -155,14 +155,14 @@ class instruction_rewriter_insert extends instruction_rewriter_call_list {
     /**
      * Constructor
      */
-    function instruction_rewriter_insert($index) {
-        parent::instruction_rewriter_call_list($index);
+    public function __construct($index) {
+        parent::__construct($index);
     }
 
     /**
      *
      */
-    function apply($input, &$output) {
+    public function apply($input, &$output) {
         $this->appendCalls($output, $input[$this->index][2]);
         return false;
     }
@@ -173,14 +173,14 @@ class instruction_rewriter_append extends instruction_rewriter_call_list {
     /**
      * Constructor
      */
-    function instruction_rewriter_append() {
-        parent::instruction_rewriter_call_list(-1);
+    public function __construct() {
+        parent::__construct(-1);
     }
 
     /**
      *
      */
-    function apply($input, &$output) {
+    public function apply($input, &$output) {
         $lastCall = end($output);
         $this->appendCalls($output, $lastCall[2]);
         return false;

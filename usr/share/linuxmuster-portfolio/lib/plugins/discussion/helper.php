@@ -7,22 +7,14 @@
 // must be run within Dokuwiki
 if (!defined('DOKU_INC')) die();
 
-if (!defined('DOKU_LF')) define('DOKU_LF', "\n");
-if (!defined('DOKU_TAB')) define('DOKU_TAB', "\t");
-
+/**
+ * Class helper_plugin_discussion
+ */
 class helper_plugin_discussion extends DokuWiki_Plugin {
 
-    function getInfo() {
-        return array(
-                'author' => 'Gina Häußge, Michael Klier, Esther Brunner',
-                'email'  => 'dokuwiki@chimeric.de',
-                'date'   => @file_get_contents(DOKU_PLUGIN.'discussion/VERSION'),
-                'name'   => 'Discussion Plugin (helper class)',
-                'desc'   => 'Functions to get info about comments to a wiki page',
-                'url'    => 'http://wiki.splitbrain.org/plugin:discussion',
-                );
-    }
-
+    /**
+     * @return array
+     */
     function getMethods() {
         $result = array();
         $result[] = array(
@@ -59,6 +51,8 @@ class helper_plugin_discussion extends DokuWiki_Plugin {
 
     /**
      * Returns the column header for the Pagelist Plugin
+     *
+     * @return string
      */
     function th() {
         return $this->getLang('discussion');
@@ -66,8 +60,12 @@ class helper_plugin_discussion extends DokuWiki_Plugin {
 
     /**
      * Returns the link to the discussion section of a page
+     *
+     * @param string $id
+     * @param null|int $num
+     * @return string
      */
-    function td($id, $num = NULL) {
+    function td($id, $num = null) {
         $section = '#discussion__section';
 
         if (!isset($num)) {
@@ -78,9 +76,13 @@ class helper_plugin_discussion extends DokuWiki_Plugin {
             if ((!$comments['status']) || (($comments['status'] == 2) && (!$num))) return '';
         }
 
-        if ($num == 0) $comment = '0&nbsp;'.$this->getLang('nocomments');
-        elseif ($num == 1) $comment = '1&nbsp;'.$this->getLang('comment');
-        else $comment = $num.'&nbsp;'.$this->getLang('comments');
+        if ($num == 0) {
+            $comment = '0&nbsp;'.$this->getLang('nocomments');
+        } elseif ($num == 1) {
+            $comment = '1&nbsp;'.$this->getLang('comment');
+        } else {
+            $comment = $num.'&nbsp;'.$this->getLang('comments');
+        }
 
         return '<a href="'.wl($id).$section.'" class="wikilink1" title="'.$id.$section.'">'.
             $comment.'</a>';
@@ -88,17 +90,23 @@ class helper_plugin_discussion extends DokuWiki_Plugin {
 
     /**
      * Returns an array of pages with discussion sections, sorted by recent comments
+     * Note: also used for content by Feed Plugin
+     *
+     * @param string $ns
+     * @param null|int $num
+     * @param string|bool $skipEmpty
+     * @return array
      */
-    function getThreads($ns, $num = NULL) {
+    function getThreads($ns, $num = null, $skipEmpty = false) {
         global $conf;
 
         require_once(DOKU_INC.'inc/search.php');
 
-        $dir = $conf['datadir'].($ns ? '/'.str_replace(':', '/', $ns): '');
+        $dir = $conf['datadir'].utf8_encodeFN(($ns ? '/'.str_replace(':', '/', $ns): ''));
 
         // returns the list of pages in the given namespace and it's subspaces
         $items = array();
-        search($items, $dir, 'search_allpages', '');
+        search($items, $dir, 'search_allpages', array());
 
         // add pages with comments to result
         $result = array();
@@ -112,12 +120,14 @@ class helper_plugin_discussion extends DokuWiki_Plugin {
             if (!@file_exists($file)) continue; // skip if no comments file
             $data = unserialize(io_readFile($file, false));
             $status = $data['status'];
-            $number = $data['number']; // skip if comments are off or closed without comments
-            if (!$status || (($status == 2) && (!$number))) continue;
+            $number = $data['number'];
+
+            if (!$status || (($status == 2) && (!$number))) continue; // skip if comments are off or closed without comments
+            if($skipEmpty == 'y' && $number == 0) continue; // skip if discussion is empty and flag is set
 
             $date = filemtime($file);
             $meta = p_get_metadata($id);
-            $result[$date] = array(
+            $result[$date.'_'.$id] = array(
                     'id'       => $id,
                     'file'     => $file,
                     'title'    => $meta['title'],
@@ -143,6 +153,11 @@ class helper_plugin_discussion extends DokuWiki_Plugin {
 
     /**
      * Returns an array of recently added comments to a given page or namespace
+     * Note: also used for content by Feed Plugin
+     *
+     * @param string $ns
+     * @param int|null $num
+     * @return array
      */
     function getComments($ns, $num = NULL) {
         global $conf;
@@ -191,6 +206,11 @@ class helper_plugin_discussion extends DokuWiki_Plugin {
      * @author Andreas Gohr <andi@splitbrain.org>
      * @author Ben Coburn <btcoburn@silicodon.net>
      * @author Esther Brunner <wikidesign@gmail.com>
+     *
+     * @param string $line
+     * @param string $ns
+     * @param array  $seen
+     * @return array|bool
      */
     function _handleRecentComment($line, $ns, &$seen) {
         if (empty($line)) return false;  //skip empty lines
@@ -234,17 +254,43 @@ class helper_plugin_discussion extends DokuWiki_Plugin {
         // check if discussion is turned off
         if ($data['status'] === 0) return false;
 
-        // check if the comment still exists
-        if (!isset($data['comments'][$cid])) return false;
+        $parent_id = $cid;
+        // Check for the comment and all parents if they exist and are visible.
+        do  {
+            $tcid = $parent_id;
+
+            // check if the comment still exists
+            if (!isset($data['comments'][$tcid])) return false;
+            // check if the comment is visible
+            if ($data['comments'][$tcid]['show'] != 1) return false;
+
+            $parent_id = $data['comments'][$tcid]['parent'];
+        } while ($parent_id && $parent_id != $tcid);
 
         // okay, then add some additional info
-        if (is_array($data['comments'][$cid]['user']))
+        if (is_array($data['comments'][$cid]['user'])) {
             $recent['name'] = $data['comments'][$cid]['user']['name'];
-        else $recent['name'] = $data['comments'][$cid]['name'];
+        } else {
+            $recent['name'] = $data['comments'][$cid]['name'];
+        }
         $recent['desc'] = strip_tags($data['comments'][$cid]['xhtml']);
         $recent['anchor'] = 'comment_'.$cid;
 
         return $recent;
+    }
+
+    /**
+     * @return bool
+     */
+    function isDiscussionMod() {
+        global $USERINFO;
+        $groups = trim($this->getConf('moderatorgroups'));
+
+        if(auth_ismanager()) return true;
+        // Check if user is member of the moderator groups
+        if(!empty($groups) && auth_isMember($groups, $_SERVER['REMOTE_USER'], (array)$USERINFO['grps'])) return true;
+
+        return false;
     }
 }
 // vim:ts=4:sw=4:et:enc=utf-8:

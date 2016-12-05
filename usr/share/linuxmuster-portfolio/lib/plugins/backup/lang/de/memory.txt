@@ -1,17 +1,13 @@
-=== Ein Fehler ist aufgetreten =====
+**Ein Fehler ist aufgetreten und die Sicherungskopie konnte nicht erstellt werden**
 
-**Es wurde kein Backup erstellt!** 
+Höchstwahrscheinlich ist eines der folgenden Probleme aufgetreten:
+  * Das Plugin hat keinen schreibenden Zugriff auf das media-Verzeichnis ...
+  * Das Programm hat nicht genug Arbeitsspeicher erhalten (RAM) ...
+  * Sie haben nicht genügend Festplattenspeicher zur Verfügung ...
+  * Ein Hardwarefehler ist aufgetreten (z.B. ein Festplattenfehler)
 
-MÃ¶glicherweise leigt eine der folgenden Ursachen vor:
+Andere Möglichkeiten sind -- Beschränkung der Ausführungszeit, nicht Standard-tar, gzip, bzip2 oder irgendwas ganz anderes, aber deren Auftreten ist sehr unwahrscheinlich.
 
-  * Das Plugin besitzt keine Schreibrechte im media-Verzeichnis.
-  * Das Programm hat mehr Speicher (RAM) beansprucht, als im zur VerfÃ¼gung steht.
-  * Der Festplattenplatz reicht nicht aus, um das Backup zu speichern.
-  * Ihre Hardware ist defekt, besipielsweise die Festplatte.
+Die Bbste Lösung ist, die oben aufgeführten Punkte zu überprüfen, zu beheben und es erneut zu versuchen.
 
-Es gibt weitere MÃ¶gliche Ursachen, diese sind jedoch weniger wahrscheinlich.
-
-Am besten Ã¼berprÃ¼fen Sie die obigen Punkte und versuchen Sie es erneut.
-
-Vergessen Sie nicht, Ihre Disk- und RAM-Quotas zu Ã¼berprÃ¼fen, wenn Sie welche haben. Denken Sie auch an mÃ¶gliche Probleme auf Dateiebene, zum
-Beispiel sehr groÃŸe Dateien o.Ã¤.
+Vergessen Sie nicht, Ihre Festplatten- und Arbeitsspeicher-Zuweisungen von Ihrem Hoster zu überprüfen, wenn diese bestehen. Schauen Sie als mögliche Ursache auch nach sehr großen Dateien in Ihrem dokuwiki.

@@ -1,9 +1,6 @@
 ====== @TITLE@ ======
 
-Dieser Text erscheint in der Artikelliste
+@TAG@
 
-===== Zwischenüberschrift =====
-
-Der Text von hier an wird erst nach Klick auf "Weiterlesen" in der Artikelliste sichtbar.
-
-
+@LINKBACK@
+@DISCUSSION@

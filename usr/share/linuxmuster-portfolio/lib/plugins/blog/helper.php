@@ -21,17 +21,6 @@ class helper_plugin_blog extends DokuWiki_Plugin {
         $this->sort = $this->getConf('sortkey');
     }
 
-    function getInfo() {
-        return array(
-                'author' => 'Gina Häußge, Michael Klier, Esther Brunner',
-                'email'  => 'dokuwiki@chimeric.de',
-                'date'   => @file_get_contents(DOKU_PLUGIN . 'blog/VERSION'),
-                'name'   => 'Blog Plugin (helper component)',
-                'desc'   => 'Returns a number of recent entries from a given namespace',
-                'url'    => 'http://dokuwiki.org/plugin:blog',
-                );
-    }
-
     function getMethods() {
         $result = array();
         $result[] = array(
@@ -42,13 +31,19 @@ class helper_plugin_blog extends DokuWiki_Plugin {
                     'number (optional)' => 'integer'),
                 'return' => array('pages' => 'array'),
                 );
+        $result[] = array(
+                'name'   => 'getFlags',
+                'desc'   => 'get values for flags, or defaults where not supplied',
+                'params' => array('flags' => 'array'),
+                'return' => array('flags' => 'array'),
+                );
         return $result;
     }
 
     /**
      * Get blog entries from a given namespace
      */
-    function getBlog($ns, $num = NULL) {
+    function getBlog($ns, $num = NULL, $author = NULL) {
         global $conf;
 
         // add pages in given namespace
@@ -82,16 +77,23 @@ class helper_plugin_blog extends DokuWiki_Plugin {
             $draft = ($meta['type'] == 'draft');
             if ($draft && ($perm < AUTH_CREATE)) continue;
 
-            if ($this->sort == 'mdate') {
-                $date = $meta['date']['modified'];
-                if (!$date) $date = filemtime(wikiFN($id));
-            } else {
-                $date = $meta['date']['created'];
+            // filter by author
+            if ($author && ($meta['user'] != $author)) continue;
+
+            $date = $meta['date']['modified'];
+            if (!$date) $date = filemtime(wikiFN($id));
+            if ($this->sort != 'mdate') {
+                $cdate = $meta['date']['created'];
+                if (!$cdate) $cdate = filectime(wikiFN($id));
                 // prefer the date further in the past:
-                if (!$date) $date = min(filectime(wikiFN($id)), filemtime(wikiFN($id)));
+                $date = min($date, $cdate);
             }
 
-            $title = $meta['title'];
+            if (isset($meta['title'])) {
+                $title = $meta['title'];
+            } else {
+                $title = $id;
+            }
 
             // determine the sort key
             if ($this->sort == 'id') $key = $id;
@@ -121,6 +123,47 @@ class helper_plugin_blog extends DokuWiki_Plugin {
         if (is_numeric($num)) $result = array_slice($result, 0, $num);
 
         return $result;
+    }
+
+    /**
+     * Turn a list of user-supplied flags into a complete list of all flags
+     * required by the Blog plugin (not including those for the Include plugin),
+     * using global configuration options or plugin defaults where flags have
+     * not been supplied.
+     *
+     * Currently handles 'formpos' and 'newentrytitle'.
+     *
+     * @author Sam Wilson <sam@samwilson.id.au>
+     * @param array $setflags Flags that have been set by the user
+     * @return array All flags required by the Blog plugin (only)
+     */
+    function getFlags($setflags) {
+        $flags = array();
+
+        // Form Position
+        $flags['formpos'] = $this->getConf('formposition');
+        if(in_array('topform', $setflags)) {
+            $flags['formpos'] = 'top';
+        }elseif(in_array('bottomform', $setflags)) {
+            $flags['formpos'] = 'bottom';
+        }elseif(in_array('noform', $setflags)) {
+            $flags['formpos'] = 'none';
+        }
+
+        // New Entry Title
+        $newentrytitle = preg_grep('|newentrytitle=.*|', $setflags);
+        if (count($newentrytitle) > 0) {
+            $newentrytitle = array_pop(explode('=', array_pop($newentrytitle), 2));
+            if (!empty($newentrytitle)) {
+                $flags['newentrytitle'] = $newentrytitle;
+            }
+        } elseif ($conf_title = $this->getConf('newentrytitle')) {
+            $flags['newentrytitle'] = $conf_title;
+        } else {
+            $flags['newentrytitle'] = $this->getLang('newentry');
+        }
+
+        return $flags;
     }
 
     /**

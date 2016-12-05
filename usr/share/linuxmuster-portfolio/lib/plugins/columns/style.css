@@ -7,6 +7,7 @@ div.dokuwiki table.columns-plugin {
 
 div.dokuwiki table.columns-plugin td.columns-plugin {
     border: 0;
+    text-align: justify;
     vertical-align: top;
     padding: 0 0.5em 0 0.5em;
 }

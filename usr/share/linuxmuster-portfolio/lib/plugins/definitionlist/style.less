@@ -1,0 +1,42 @@
+/* plugin: definitionlist */
+ 
+dl.plugin_definitionlist {
+  margin: 0;
+  padding: 1px 0 0.5em 0;
+  border-bottom: 1px dashed #e0e0e0;
+  font-size: 90%;
+
+  dt {
+    clear: left;
+    margin: 0.5em 0 0;
+  }
+
+  dt+dt {
+    margin-top: 0;
+  }
+
+  dd+dt {
+    border-top: 1px dashed #e0e0e0;
+    padding-top: 0.5em;
+  }
+
+  /* fancy */
+  dt span.term {
+    float: left;
+    width: 10em;
+  }
+
+  dd {
+    margin: 0 0 0 10.3em;
+    padding: 0 0 0 0.8em;
+    background: url(images/bullet.gif) no-repeat 0 0.4em;
+  }
+   
+  dd p {
+    margin: 0;
+    padding: 0;
+  }
+
+}
+
+/* end plugin: definitionlist */

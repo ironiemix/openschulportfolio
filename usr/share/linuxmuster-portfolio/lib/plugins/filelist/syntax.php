@@ -23,28 +23,15 @@ define('DOKU_PLUGIN_FILELIST_OUTSIDEJAIL', -2);
 class syntax_plugin_filelist extends DokuWiki_Syntax_Plugin {
 
     var $mediadir;
+    var $is_odt_export = false;
 
-    function syntax_plugin_filelist() {
+    function __construct() {
         global $conf;
-        $basedir = $conf['savedir'];
-        if (!$this->_path_is_absolute($basedir)) {
-            $basedir = DOKU_INC . '/' . $basedir;
+        $mediadir = $conf['mediadir'];
+        if (!$this->_path_is_absolute($mediadir)) {
+            $mediadir = DOKU_INC . '/' . $mediadir;
         }
-        $this->mediadir = $this->_win_path_convert($this->_realpath($basedir.'/media').'/');
-    }
-
-    /**
-     * return some info
-     */
-    function getInfo() {
-        return array(
-            'author' => 'Gina Haeussge',
-            'email'  => 'gina@foosel.net',
-            'date'   => '2009-11-16',
-            'name'   => 'Filelist Plugin',
-            'desc'   => 'Lists files matching a given glob pattern.',
-            'url'    => 'http://foosel.org/snippets/dokuwiki/filelist',
-        );
+        $this->mediadir = $this->_win_path_convert($this->_realpath($mediadir).'/');
     }
 
     function getType(){ return 'substition'; }
@@ -59,25 +46,28 @@ class syntax_plugin_filelist extends DokuWiki_Syntax_Plugin {
     /**
      * Handle the match
      */
-    function handle($match, $state, $pos, &$handler) {
+    function handle($match, $state, $pos, Doku_Handler $handler) {
 
         // do not allow the syntax in comments
         if (!$this->getConf('allow_in_comments') && isset($_REQUEST['comment']))
         return false;
 
         $match = substr($match, 2, -2);
-        list($type, $match) = split('>', $match, 2);
-        list($pattern, $flags) = split('&', $match, 2);
+        list($type, $match) = explode('>', $match, 2);
+        list($pattern, $flags) = explode('&', $match, 2);
 
         if ($type == 'filename') {
             if (strpos($flags, '|') !== FALSE) {
-                list($flags, $title) = split('\|', $flags);
+                list($flags, $title) = explode('\|', $flags);
             } else {
                 $title = '';
             }
         }
 
-        $flags = split('&', $flags);
+        // load default config options
+        $flags = $this->getConf('defaults').'&'.$flags;
+
+        $flags = explode('&', $flags);
         $params = array(
             'sort' => 'name',
             'order' => 'asc',
@@ -91,9 +81,19 @@ class syntax_plugin_filelist extends DokuWiki_Syntax_Plugin {
             'direct' => 0,
             'recursive' => 0,
             'titlefile' => '_title.txt',
+            'cache' => 0,
+            'randlinks' => 0,
+            'preview' => 0,
+            'previewsize' => 32,
+            'link' => 2,
+            'showsize' => 0,
+            'showdate' => 0,
+            'listsep' => '", "',
+            'onhover' => 0,
+            'ftp' => 0,
         );
         foreach($flags as $flag) {
-            list($name, $value) = split('=', $flag);
+            list($name, $value) = explode('=', $flag);
             $params[trim($name)] = trim($value);
         }
 
@@ -102,20 +102,27 @@ class syntax_plugin_filelist extends DokuWiki_Syntax_Plugin {
             $params['recursive'] = 0;
         }
 
-        return array($type, $pattern, $params, $title);
+        // Trim list separator
+        $params['listsep'] = trim($params['listsep'], '"');
+
+        return array($type, $pattern, $params, $title, $pos);
     }
 
     /**
      * Create output
      */
-    function render($mode, &$renderer, $data) {
+    function render($mode, Doku_Renderer $renderer, $data) {
         global $conf;
 
-        // disable caching
-        $renderer->info['cache'] = false;
+        list($type, $pattern, $params, $title, $pos) = $data;
 
-        list($type, $pattern, $params, $title) = $data;
-        if ($mode == 'xhtml') {
+        if ($mode == 'odt') {
+            $this->is_odt_export = true;
+        }
+        
+        // disable caching
+        $renderer->info['cache'] = (bool) $params['cache'];
+        if ($mode == 'xhtml' || $mode == 'odt') {
 
             $result = $this->_create_filelist($pattern, $params);
             if ($type == 'filename') {
@@ -124,10 +131,10 @@ class syntax_plugin_filelist extends DokuWiki_Syntax_Plugin {
 
             // if we got nothing back, display a message
             if ($result == DOKU_PLUGIN_FILELIST_NOMATCH) {
-                $renderer->doc .= '[n/a: ' . $this->getLang('error_nomatch') . ']';
+                $renderer->cdata('[n/a: ' . $this->getLang('error_nomatch') . ']');
                 return true;
             } else if ($result == DOKU_PLUGIN_FILELIST_OUTSIDEJAIL) {
-                $renderer->doc .= '[n/a: ' . $this->getLang('error_outsidejail') . ']';
+                $renderer->cdata('[n/a: ' . $this->getLang('error_outsidejail') . ']');
                 return true;
             }
 
@@ -153,15 +160,23 @@ class syntax_plugin_filelist extends DokuWiki_Syntax_Plugin {
                     switch ($params['style']) {
                         case 'list':
                         case 'olist':
-                            $renderer->doc .= '<div class="filelist-plugin">'.DOKU_LF;
+                            if (!$this->is_odt_export) {
+                                $renderer->doc .= '<div class="filelist-plugin">'.DOKU_LF;
+                            }
                             $this->_render_list($result, $params, $renderer);
-                            $renderer->doc .= '</div>'.DOKU_LF;
+                            if (!$this->is_odt_export) {
+                                $renderer->doc .= '</div>'.DOKU_LF;
+                            }
                             break;
 
                         case 'table':
-                            $renderer->doc .= '<div class="filelist-plugin">'.DOKU_LF;
-                            $this->_render_table($result, $params, $renderer);
-                            $renderer->doc .= '</div>'.DOKU_LF;
+                            if (!$this->is_odt_export) {
+                                $renderer->doc .= '<div class="filelist-plugin">'.DOKU_LF;
+                            }
+                            $this->_render_table($result, $params, $pos, $renderer);
+                            if (!$this->is_odt_export) {
+                                $renderer->doc .= '</div>'.DOKU_LF;
+                            }
                             break;
 
                         case 'page':
@@ -189,7 +204,7 @@ class syntax_plugin_filelist extends DokuWiki_Syntax_Plugin {
      * @param $renderer the renderer to use
      * @return void
      */
-    function _render_link($filename, $filepath, $basedir, $webdir, $params, &$renderer) {
+    function _render_link($filename, $filepath, $basedir, $webdir, $params, Doku_Renderer $renderer) {
         global $conf;
 
         //prepare for formating
@@ -198,21 +213,61 @@ class syntax_plugin_filelist extends DokuWiki_Syntax_Plugin {
         $link['pre']    = '';
         $link['suf']    = '';
         $link['more']   = '';
-        $link['class']  = 'media';
-        if (!$params['direct']) {
-            $link['url'] = ml(':'.str_replace('/', ':', substr($filepath, strlen($this->mediadir))));
-        } else {
-            $link['url'] = $webdir.substr($filepath, strlen($basedir));
-        }
+        $link['url'] = $this->_get_link_url ($filepath, $basedir, $webdir, $params['randlinks'], $params['direct'], $params['ftp']);
+
         $link['name']   = $filename;
         $link['title']  = $renderer->_xmlEntities($link['url']);
         if($conf['relnofollow']) $link['more'] .= ' rel="nofollow"';
 
-        list($ext,$mime) = mimetype(basename($filepath));
-        $link['class'] .= ' mediafile mf_'.$ext;
+        if ($params['link']) {
+            switch ($params['link']) {
+                case 1:
+                    // Link without background image
+                    $link['class']  = 'media';
+                    break;
+                default:
+                    // Link with background image
+                    list($ext,$mime) = mimetype(basename($filepath));
+                    $link['class'] .= ' mediafile mf_'.$ext;
+                    break;
+            }
 
-        //output formatted
-        $renderer->doc .= $renderer->_formatLink($link);
+            //output formatted
+            if ( !$this->is_odt_export ) {
+                $renderer->doc .= $renderer->_formatLink($link);
+            } else {
+                $this->render_odt_link ($link, $renderer);
+            }
+        } else {
+            // No link, just plain text.
+            $renderer->cdata($filename);
+        }
+    }
+
+    /**
+     * Renders a link for odt mode.
+     *
+     * @param $link the link parameters
+     * @param $renderer the renderer to use
+     * @return void
+     */
+    protected function render_odt_link ($link, Doku_Renderer $renderer) {
+        if ( method_exists ($renderer, 'getODTProperties') === true ) {
+            $properties = array ();
+
+            // Get CSS properties for ODT export.
+            $renderer->getODTProperties ($properties, 'a', $link['class'], NULL, 'screen');
+
+            // Insert image if present for that media class.
+            if ( empty($properties ['background-image']) === false ) {
+                $properties ['background-image'] =
+                    $renderer->replaceURLPrefix ($properties ['background-image'], DOKU_INC);
+                $renderer->_odtAddImage ($properties ['background-image']);
+            }
+        }
+
+        // Render link.
+        $renderer->externallink($link['url'], $link['name']);
     }
 
     /**
@@ -223,7 +278,7 @@ class syntax_plugin_filelist extends DokuWiki_Syntax_Plugin {
      * @param $renderer the renderer to use
      * @return void
      */
-    function _render_list($result, $params, &$renderer) {
+    function _render_list($result, $params, Doku_Renderer $renderer) {
         $this->_render_list_items($result['files'], $result['basedir'], $result['webdir'], $params, $renderer);
     }
 
@@ -238,7 +293,9 @@ class syntax_plugin_filelist extends DokuWiki_Syntax_Plugin {
      * @param $level the level to render
      * @return void
      */
-    function _render_list_items($files, $basedir, $webdir, $params, &$renderer, $level = 1) {
+    function _render_list_items($files, $basedir, $webdir, $params, Doku_Renderer $renderer, $level = 1) {
+        global $conf;
+
         if ($params['style'] == 'olist') {
             $renderer->listo_open();
         } else {
@@ -249,14 +306,46 @@ class syntax_plugin_filelist extends DokuWiki_Syntax_Plugin {
             if ($file['children'] !== false && $file['treesize'] > 0) {
                 // render the directory and its subtree
                 $renderer->listitem_open($level);
-                $renderer->doc .= $file['name'];
+                if ($this->is_odt_export) {
+                    $renderer->p_open();
+                }
+                $renderer->cdata($file['name']);
                 $this->_render_list_items($file['children'], $basedir, $webdir, $params, $renderer, $level+1);
+                if ($this->is_odt_export) {
+                    $renderer->p_close();
+                }
                 $renderer->listitem_close();
             } else if ($file['children'] === false) {
-                // render the file
+                // open list item
                 $renderer->listitem_open($level);
+                if ($this->is_odt_export) {
+                    $renderer->p_open();
+                }
+
+                // render the preview image
+                if ($params['preview']) {
+                    $this->_render_preview_image($file['path'], $basedir, $webdir, $params, $renderer);
+                }
+
+                // render the file link
                 $this->_render_link($file['name'], $file['path'], $basedir, $webdir, $params, $renderer);
+
+                // render filesize
+                if ($params['showsize']) {
+                    $renderer->cdata($params['listsep'].$this->_size_readable($file['size'], 'PiB', 'bi', '%01.1f %s'));
+                }
+
+                // render lastmodified
+                if ($params['showdate']) {
+                    $renderer->cdata($params['listsep'].strftime($conf['dformat'], $file['mtime']));
+                }
+
+                // close list item
+                if ($this->is_odt_export) {
+                    $renderer->p_close();
+                }
                 $renderer->listitem_close();
+
             } else {
                 // ignore empty directories
                 continue;
@@ -278,28 +367,65 @@ class syntax_plugin_filelist extends DokuWiki_Syntax_Plugin {
      * @param $renderer the renderer to use
      * @return void
      */
-    function _render_table($result, $params, &$renderer) {
+    function _render_table($result, $params, $pos, Doku_Renderer $renderer) {
         global $conf;
 
-        $renderer->table_open();
+        if (!$this->is_odt_export) {
+            $renderer->table_open(NULL, NULL, $pos);
+        } else {
+            $columns = 1;
+            if ($params['tableshowsize'] || $params['showsize']) {
+                $columns++;
+            }
+            if ($params['tableshowdate'] || $params['showdate']) {
+                $columns++;
+            }
+            if ($params['preview']) {
+                $columns++;
+            }
+            $renderer->table_open($columns, NULL, $pos);
+        }
 
         if ($params['tableheader']) {
+            if ($this->is_odt_export) {
+                $renderer->tablerow_open();
+            }
+
             $renderer->tableheader_open();
-            $renderer->doc .= $this->getLang('filename');
+            $renderer->cdata($this->getLang('filename'));
             $renderer->tableheader_close();
 
-            if ($params['tableshowsize']) {
+            if ($params['tableshowsize'] || $params['showsize']) {
                 $renderer->tableheader_open();
-                $renderer->doc .= $this->getLang('filesize');
+                $renderer->cdata($this->getLang('filesize'));
                 $renderer->tableheader_close();
             }
 
-            if ($params['tableshowdate']) {
+            if ($params['tableshowdate'] || $params['showdate']) {
                 $renderer->tableheader_open();
-                $renderer->doc .= $this->getLang('lastmodified');
+                $renderer->cdata($this->getLang('lastmodified'));
                 $renderer->tableheader_close();
             }
 
+            if ($params['preview']) {
+                $renderer->tableheader_open(1, 'center', 1);
+                switch ($params['preview']) {
+                    case 1:
+                        $renderer->cdata($this->getLang('preview').' / '.$this->getLang('filetype'));
+                        break;
+                    case 2:
+                        $renderer->cdata($this->getLang('preview'));
+                        break;
+                    case 3:
+                        $renderer->cdata($this->getLang('filetype'));
+                        break;
+                }
+                $renderer->tableheader_close();
+            }
+
+            if ($this->is_odt_export) {
+                $renderer->tablerow_close();
+            }
         }
 
         foreach ($result['files'] as $file) {
@@ -308,21 +434,28 @@ class syntax_plugin_filelist extends DokuWiki_Syntax_Plugin {
             $this->_render_link($file['name'], $file['path'], $result['basedir'], $result['webdir'], $params, $renderer);
             $renderer->tablecell_close();
 
-            if ($params['tableshowsize']) {
+            if ($params['tableshowsize'] || $params['showsize']) {
                 $renderer->tablecell_open(1, 'right');
-                $renderer->doc .= $this->_size_readable($file['size'], 'PiB', 'bi', '%01.1f %s');
+                $renderer->cdata($this->_size_readable($file['size'], 'PiB', 'bi', '%01.1f %s'));
                 $renderer->tablecell_close();
             }
 
-            if ($params['tableshowdate']) {
+            if ($params['tableshowdate'] || $params['showdate']) {
                 $renderer->tablecell_open();
-                $renderer->doc .= strftime($conf['dformat'], $file['mtime']);
+                $renderer->cdata(strftime($conf['dformat'], $file['mtime']));
+                $renderer->tablecell_close();
+            }
+
+            if ($params['preview']) {
+                $renderer->tablecell_open(1, 'center', 1);
+
+                $this->_render_preview_image($file['path'], $result['basedir'], $result['webdir'], $params, $renderer);
                 $renderer->tablecell_close();
             }
 
             $renderer->tablerow_close();
         }
-        $renderer->table_close();
+        $renderer->table_close($pos);
     }
 
     /**
@@ -333,8 +466,21 @@ class syntax_plugin_filelist extends DokuWiki_Syntax_Plugin {
      * @param $renderer the renderer to use
      * @return void
      */
-    function _render_page($result, $params, &$renderer) {
-        $this->_render_page_section($result['files'], $result['basedir'], $result['webdir'], $params, $renderer, $renderer->lastlevel + 1);
+    function _render_page($result, $params, Doku_Renderer $renderer) {
+        if ( method_exists ($renderer, 'getLastlevel') === false ) {
+            $class_vars = get_class_vars (get_class($renderer));
+            if ($class_vars ['lastlevel'] !== NULL) {
+                // Old releases before "hrun": $lastlevel is accessible
+                $lastlevel = $renderer->lastlevel + 1;
+            } else {
+                // Release "hrun" or newer without method 'getLastlevel()'.
+                // Lastlevel can't be determined. Workaroud: always use level 1.
+                $lastlevel = 1;
+            }
+        } else {
+            $lastlevel = $renderer->getLastlevel() + 1;
+        }
+        $this->_render_page_section($result['files'], $result['basedir'], $result['webdir'], $params, $renderer, $lastlevel);
     }
 
     /**
@@ -348,7 +494,7 @@ class syntax_plugin_filelist extends DokuWiki_Syntax_Plugin {
      * @param $level the level to render
      * @return void
      */
-    function _render_page_section($files, $basedir, $webdir, $params, &$renderer, $level) {
+    function _render_page_section($files, $basedir, $webdir, $params, Doku_Renderer $renderer, $level) {
         $trees = array();
         $leafs = array();
 
@@ -376,6 +522,39 @@ class syntax_plugin_filelist extends DokuWiki_Syntax_Plugin {
         }
     }
 
+    /**
+     * Render a preview item for file $filepath.
+     *
+     * @param $filepath the file for which a preview image shall be rendered
+     * @param $basedir the basedir to use
+     * @param $webdir the webdir to use
+     * @param $params the parameters of the filelist call
+     * @param $renderer the renderer to use
+     * @return void
+     */
+    protected function _render_preview_image ($filepath, $basedir, $webdir, $params, Doku_Renderer $renderer) {
+        $imagepath = $this->get_preview_image_path($filepath, $params);
+        if (!empty($imagepath)) {
+            $imgLink = $this->_get_link_url ($imagepath, $basedir, $webdir, 0, 1);
+
+            $previewsize = $params['previewsize'];
+            if ($previewsize == 0) {
+                $previewsize = 32;
+            }
+            $imgclass = '';
+            if ($params['onhover']) {
+                $imgclass = 'class="filelist_preview"';
+            }
+            
+            if (!$this->is_odt_export) {
+                $renderer->doc .= '<img '.$imgclass.' style=" max-height: '.$previewsize.'px; max-width: '.$previewsize.'px;" src="'.$imgLink.'">';
+            } else {
+                list($width, $height)  = $renderer->_odtGetImageSize ($imagepath, $previewsize, $previewsize);
+                $renderer->_odtAddImage ($imagepath, $width.'cm', $height.'cm');
+            }
+        }
+    }
+
     //~~ Filelist functions
 
     /**
@@ -391,6 +570,8 @@ class syntax_plugin_filelist extends DokuWiki_Syntax_Plugin {
         global $conf;
         global $ID;
 
+        $allowed_absolute_paths = explode(',', $this->getConf('allowed_absolute_paths'));
+
         $result = array(
             'files' => array(),
             'basedir' => false,
@@ -405,6 +586,9 @@ class syntax_plugin_filelist extends DokuWiki_Syntax_Plugin {
             }
             // replace : with / and prepend mediadir
             $pattern = $this->mediadir . str_replace(':', '/', $pattern);
+        } elseif($params['direct'] == 2){
+            // treat path as relative to first configured path
+            $pattern = $allowed_absolute_paths[0].'/'.$pattern;
         } else {
             // if path is not absolute, precede it with DOKU_INC
             if (!$this->_path_is_absolute($pattern)) {
@@ -420,8 +604,7 @@ class syntax_plugin_filelist extends DokuWiki_Syntax_Plugin {
         }
 
         // match pattern aginst allowed paths
-        $allowed_absolute_paths = split(',', $this->getConf('allowed_absolute_paths'));
-        $web_paths = split(',', $this->getConf('web_paths'));
+        $web_paths = explode(',', $this->getConf('web_paths'));
         $basedir = false;
         $webdir = false;
         if (count($allowed_absolute_paths) == count($web_paths)) {
@@ -558,7 +741,7 @@ class syntax_plugin_filelist extends DokuWiki_Syntax_Plugin {
     }
 
     /**
-     * Does a (recursive) crawl for finging files based on a given pattern.
+     * Does a (recursive) crawl for finding files based on a given pattern.
      * Based on a safe glob reimplementation using fnmatch and opendir.
      *
      * @param $pattern the pattern to match to
@@ -574,6 +757,11 @@ class syntax_plugin_filelist extends DokuWiki_Syntax_Plugin {
         if (!is_dir($path)) {
             return false;
         }
+
+        $ext = explode(',',$this->getConf('extensions'));
+        $ext = array_map('trim',$ext);
+        $ext = array_map('preg_quote_cb',$ext);
+        $ext = join('|',$ext);
 
         if (($dir = opendir($path)) !== false) {
             $result = array();
@@ -593,9 +781,13 @@ class syntax_plugin_filelist extends DokuWiki_Syntax_Plugin {
                 $filepath = $path . '/' . $file;
 
                 if ($this->_fnmatch($match, $file) || (is_dir($filepath) && $params['recursive'])) {
+                    if(!is_dir($filepath) && !preg_match('/('.$ext.')$/i',$file)){
+                        continue;
+                    }
+
                     if (!$params['direct']) {
                         // exclude prohibited media files via ACLs
-                        $mid = str_replace('/', ':', substr($filepath, strlen($this->mediadir)));
+                        $mid = $this->_convert_mediapath($filepath);
                         $perm = auth_quickaclcheck($mid);
                         if ($perm < AUTH_READ) continue;
                     } else {
@@ -606,9 +798,9 @@ class syntax_plugin_filelist extends DokuWiki_Syntax_Plugin {
                     if (is_dir($filepath)) {
                         $titlefile = $filepath . '/' . $params['titlefile'];
                         if (!$params['direct']) {
-                            $mid = str_replace('/', ':', substr($titlefile, strlen($this->mediadir)));
+                            $mid = $this->_convert_mediapath($titlefile);
                             $perm = auth_quickaclcheck($mid);
-                            if ($perm >= AUTH_READ) {
+                            if (is_readable($titlefile) && $perm >= AUTH_READ) {
                                 $filename = io_readFile($titlefile, false);
                             }
                         } else {
@@ -694,8 +886,8 @@ class syntax_plugin_filelist extends DokuWiki_Syntax_Plugin {
         $path=explode('/', $path);
         $output=array();
         for ($i=0; $i<sizeof($path); $i++) {
-            if (('' == $path[$i] && $i > 0) || '.' == $path[$i]) continue;
-            if ('..' == $path[$i] && $i > 0 && '..' != $output[sizeof($output) - 1]) {
+            if ('.' == $path[$i]) continue;
+            if ('..' == $path[$i] && '..' != $output[sizeof($output) - 1]) {
                 array_pop($output);
                 continue;
             }
@@ -771,10 +963,80 @@ class syntax_plugin_filelist extends DokuWiki_Syntax_Plugin {
      */
     function _path_is_absolute($path) {
         if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-            return ($path[1] == ':');
+            if ($path[1] == ':' || ($path[0] == '/' && $path[1] == '/')) {
+                return true;
+            }
+            return false;
         } else {
             return ($path[0] == '/');
         }
     }
+    
+    function _convert_mediapath($path) {
+        $mid = str_replace('/', ':', substr($path, strlen($this->mediadir))); // strip media base dir
+        return ltrim($mid, ':'); // strip leading :
+    }
 
+    /**
+     * The function determines the preview image path for the given file
+     * depending on the file type and the 'preview' config option value:
+     * 1: Display file as preview image if itself is an image otherwise
+     *    choose DokuWiki image corresponding to the file extension
+     * 2: Display file as preview image if itself is an image otherwise
+     *    display no image
+     * 3. Display DokuWiki image corresponding to the file extension
+     *
+     * @param $filename the file to check
+     * @return string Image to use for preview image
+     */
+    protected function get_preview_image_path ($filename, $params) {
+        list($ext,$mime) = mimetype(basename($filename));
+        $imagepath = '';
+        if (($params['preview'] == 1 || $params['preview'] == 2) &&
+            strncmp($mime, 'image', strlen('image')) == 0) {
+            // The file is an image. Return itself as the image path.
+            $imagepath = $filename;
+        }
+        if (($params['preview'] == 1 && empty($imagepath)) ||
+            $params['preview'] == 3 ) {
+            // No image. Return DokuWiki image for file extension.
+            if (!empty($ext)) {
+                $imagepath = DOKU_INC.'lib/images/fileicons/32x32/'.$ext.'.png';
+            } else {
+                $imagepath = DOKU_INC.'lib/images/fileicons/32x32/file.png';
+            }
+        }
+        return $imagepath;
+    }
+
+    /**
+     * Create URL for file $filepath.
+     *
+     * @param $filepath the file for which a preview image shall be rendered
+     * @param $basedir the basedir to use
+     * @param $webdir the webdir to use
+     * @param $params the parameters of the filelist call
+     * @return string the generated URL
+     */
+    protected function _get_link_url ($filepath, $basedir, $webdir, $randlinks, $direct, $ftp=false) {
+        $urlparams = '';
+        if ($randlinks) {
+            $urlparams = '?'.time();
+        }
+        if (!$direct) {
+            $url = ml(':'.$this->_convert_mediapath($filepath)).$urlparams;
+        } else {
+            $url = $webdir.substr($filepath, strlen($basedir)).$urlparams;
+            if ($ftp)
+            {
+                $url = str_replace('\\','/', $url);
+                if (strpos($url, 'http') === false) {
+                    $url = 'ftp:'.$url;
+                } else {
+                    $url = str_replace('http','ftp', $url);
+                }
+            }
+        }
+        return $url;
+    }
 }

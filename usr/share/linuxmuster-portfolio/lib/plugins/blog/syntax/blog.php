@@ -17,17 +17,7 @@ if (!defined('DOKU_PLUGIN')) define('DOKU_PLUGIN', DOKU_INC.'lib/plugins/');
 require_once(DOKU_PLUGIN.'syntax.php');
 
 class syntax_plugin_blog_blog extends DokuWiki_Syntax_Plugin {
-
-    function getInfo() {
-        return array(
-                'author' => 'Gina Häußge, Michael Klier, Esther Brunner',
-                'email'  => 'dokuwiki@chimeric.de',
-                'date'   => @file_get_contents(DOKU_PLUGIN . 'blog/VERSION'),
-                'name'   => 'Blog Plugin (blog component)',
-                'desc'   => 'Displays a number of recent entries from a given namesspace',
-                'url'    => 'http://dokuwiki.org/plugin:blog',
-                );
-    }
+    private $included_pages = array();
 
     function getType() { return 'substition'; }
     function getPType() { return 'block'; }
@@ -37,13 +27,13 @@ class syntax_plugin_blog_blog extends DokuWiki_Syntax_Plugin {
         $this->Lexer->addSpecialPattern('\{\{blog>.*?\}\}',$mode,'plugin_blog_blog');
     }
 
-    function handle($match, $state, $pos, &$handler) {
+    function handle($match, $state, $pos, Doku_Handler $handler) {
         global $ID;
 
         $match = substr($match, 7, -2); // strip {{blog> from start and }} from end
         list($match, $flags) = explode('&', $match, 2);
         $flags =  explode('&', $flags);
-        $flags[] = 'link'; // always make the first header of a blog entry a permalink
+        array_unshift($flags, 'link'); // always make the first header of a blog entry a permalink (unless nolink is set)
         list($match, $refine) = explode(' ', $match, 2);
         list($ns, $num) = explode('?', $match, 2);
 
@@ -64,17 +54,20 @@ class syntax_plugin_blog_blog extends DokuWiki_Syntax_Plugin {
         return array($ns, $num, $flags, $refine);
     }
 
-    function render($mode, &$renderer, $data) {
+    function render($mode, Doku_Renderer $renderer, $data) {
         list($ns, $num, $flags, $refine) = $data;
 
         $first = $_REQUEST['first'];
         if (!is_numeric($first)) $first = 0;
 
         // get the blog entries for our namespace
+        /** @var helper_plugin_blog $my */
         if ($my =& plugin_load('helper', 'blog')) $entries = $my->getBlog($ns);
+        else return false;
 
         // use tag refinements?
         if ($refine) {
+            /** @var helper_plugin_tag $tag */
             if (plugin_isdisabled('tag') || (!$tag =& plugin_load('helper', 'tag'))) {
                 msg($this->getLang('missing_tagplugin'), -1);
             } else {
@@ -82,20 +75,19 @@ class syntax_plugin_blog_blog extends DokuWiki_Syntax_Plugin {
             }
         }
 
-        // any create form overrides?
-        $formpos = $this->getConf('formposition');
-        if(in_array('topform',$flags)){
-            $formpos = 'top';
-        }elseif(in_array('bottomform',$flags)){
-            $formpos = 'bottom';
-        }elseif(in_array('noform',$flags)){
-            $formpos = 'none';
+        // Normalise flags
+        $blog_flags    = $my->getFlags($flags);
+        $formpos       = $blog_flags['formpos'];
+        $newentrytitle = $blog_flags['newentrytitle'];
+
+        if ($mode == 'xhtml') {
+            // prevent caching to ensure the included pages are always fresh
+            $renderer->info['cache'] = false;
         }
 
         if (!$entries) {
             if ((auth_quickaclcheck($ns.':*') >= AUTH_CREATE) && ($mode == 'xhtml')) {
-                $renderer->info['cache'] = false;
-                if($formpos != 'none') $renderer->doc .= $this->_newEntryForm($ns);
+                if($formpos != 'none') $renderer->doc .= $this->_newEntryForm($ns, $newentrytitle);
             }
             return true; // nothing to display
         }
@@ -105,46 +97,48 @@ class syntax_plugin_blog_blog extends DokuWiki_Syntax_Plugin {
         $entries = array_slice($entries, $first, $num);
 
         // load the include helper plugin
+        /** @var helper_plugin_include $include */
         if (plugin_isdisabled('include') || (!$include =& plugin_load('helper', 'include'))) {
             msg($this->getLang('missing_includeplugin'), -1);
             return false;
         }
 
-        if ($mode == 'xhtml') {
-            // prevent caching to ensure the included pages are always fresh
-            $renderer->info['cache'] = false;
+        // current section level
+        $clevel = 0;
 
+        $perm_create = (auth_quickaclcheck($ns.':*') >= AUTH_CREATE);
+        $include_flags = $include->get_flags($flags);
+
+        if ($mode == 'xhtml') {
             // show new entry form
-            $perm_create = (auth_quickaclcheck($ns.':*') >= AUTH_CREATE);
             if ($perm_create && $formpos == 'top') {
-                $renderer->doc .= $this->_newEntryForm($ns);
+                $renderer->doc .= $this->_newEntryForm($ns, $newentrytitle);
             }
 
-            // current section level
-            $clevel = 0;
+            // get current section level
             preg_match_all('|<div class="level(\d)">|i', $renderer->doc, $matches, PREG_SET_ORDER);
             $n = count($matches)-1;
             if ($n > -1) $clevel = $matches[$n][1];
 
             // close current section
-            if ($clevel) $renderer->doc .= '</div>'.DOKU_LF;
+            if ($clevel && !$include_flags['inline']) $renderer->doc .= '</div>'.DOKU_LF;
             $renderer->doc .= '<div class="hfeed">'.DOKU_LF;
         }
 
-        // we need our own renderer
-        $include_renderer =& p_get_renderer('xhtml');
-        $include_renderer->smileys   = getSmileys();
-        $include_renderer->entities  = getEntities();
-        $include_renderer->acronyms  = getAcronyms();
-        $include_renderer->interwiki = getInterwiki();
 
         // now include the blog entries
         foreach ($entries as $entry) {
-            if ($mode == 'xhtml') {
+            if ($mode == 'xhtml' || $mode == 'code') {
                 if(auth_quickaclcheck($entry['id']) >= AUTH_READ) {
-                    $renderer->doc .= $this->render_XHTML($include, $include_renderer, $entry['id'], $clevel, $flags);
+                    // prevent blog include loops
+                    if(!$this->included_pages[$entry['id']]) {
+                        $this->included_pages[$entry['id']] = true;
+                        $renderer->nest($include->_get_instructions($entry['id'], '', 'page', $clevel, $include_flags));
+                        $this->included_pages[$entry['id']] = false;
+                    }
                 }
             } elseif ($mode == 'metadata') {
+                /** @var Doku_Renderer_metadata $renderer */
                 $renderer->meta['relation']['haspart'][$entry['id']] = true;
             }
         }
@@ -152,44 +146,21 @@ class syntax_plugin_blog_blog extends DokuWiki_Syntax_Plugin {
         if ($mode == 'xhtml') {
             // resume the section
             $renderer->doc .= '</div>'.DOKU_LF;
-            if ($clevel) $renderer->doc .= '<div class="level'.$clevel.'">'.DOKU_LF;
+            if ($clevel && !$include_flags['inline']) $renderer->doc .= '<div class="level'.$clevel.'">'.DOKU_LF;
 
             // show older / newer entries links
             $renderer->doc .= $this->_browseEntriesLinks($more, $first, $num);
 
             // show new entry form
             if ($perm_create && $formpos == 'bottom') {
-                $renderer->doc .= $this->_newEntryForm($ns);
+                $renderer->doc .= $this->_newEntryForm($ns, $newentrytitle);
             }
         }
 
-        return true;
+        return in_array($mode, array('xhtml', 'metadata', 'code'));
     }
 
     /* ---------- (X)HTML Output Functions ---------- */
-
-    /**
-     * Returns the XHTML output including the footer etc. for use with the blog plugin
-     * FIXME remove after blogtng plugin officially replaces the blog plugin?
-     *
-     * @author Michael Klier <chi@chimeric.de>
-     */
-    function render_XHTML(&$include, &$renderer, $page, $lvl, $set_flags) {
-        if(!$include->includes[$page]) {
-            $renderer->doc = '';
-            $include->includes[$page];
-            $flags = $include->get_flags($set_flags);
-            $ins = $include->_get_instructions($page, '', 'page', $lvl, $flags);
-            foreach($ins as $i) {
-                call_user_func_array(array(&$renderer, $i[0]), $i[1] ? $i[1] : array());
-            }
-            // Post process and return the output
-            $data = array($mode, $renderer->doc);
-            trigger_event('RENDERER_CONTENT_POSTPROCESS',$data);
-            return $renderer->doc;
-        }
-    }
-
 
     /**
      * Displays links to older newer entries of the blog namespace
@@ -220,14 +191,14 @@ class syntax_plugin_blog_blog extends DokuWiki_Syntax_Plugin {
      * Displays a form to enter the title of a new entry in the blog namespace
      * and then open that page in the edit mode
      */
-    function _newEntryForm($ns) {
+    function _newEntryForm($ns, $newentrytitle) {
         global $lang;
         global $ID;
 
         return '<div class="newentry_form">'.DOKU_LF.
             '<form id="blog__newentry_form" method="post" action="'.script().'" accept-charset="'.$lang['encoding'].'">'.DOKU_LF.
             DOKU_TAB.'<fieldset>'.DOKU_LF.
-            DOKU_TAB.DOKU_TAB.'<legend>'.$this->getLang('newentry').'</legend>'.DOKU_LF.
+            DOKU_TAB.DOKU_TAB.'<legend>'.hsc($newentrytitle).'</legend>'.DOKU_LF.
             DOKU_TAB.DOKU_TAB.'<input type="hidden" name="id" value="'.$ID.'" />'.DOKU_LF.
             DOKU_TAB.DOKU_TAB.'<input type="hidden" name="do" value="newentry" />'.DOKU_LF.
             DOKU_TAB.DOKU_TAB.'<input type="hidden" name="ns" value="'.$ns.'" />'.DOKU_LF.

@@ -1,22 +1,16 @@
 <?php
-# Default configuration for iCalEvent Dokuwiki Plugin
 
-# Date format that is used to display the from and to values
-# If you leave this empty '', then the default dformat from /conf/dokuwiki.php will be used.
+$lang['dformat'] = "Custom date format to display events (as accepted by PHP's strftime()). Leave blank to use DokuWiki's date format.";
+$lang['tformat'] = "Custom time format to display events (as accepted by PHP's strftime()). Leave blank to use DokuWiki's time format.";
 
-$lang['dayformat'] = "Format string used for formatting the event days";
-$lang['timeformat'] = "Format strung used for formatting the event times";
+$lang['locationUrlPrefix'] = 'URL prefix used to generate a link for locations of events. Leave blank to disable the link.';
+$lang['customLocationUrlPrefix'] = 'Custom URL prefix for location link. Leave blank to use the value selected above.';
 
-# locale setting for setlocale
-$lang['locale'] = "Locale string for months names in the correct laguage";
+$lang['template:default'] = '"default" template';
+$lang['template:list'] = '"list" template';
+$lang['template:table'] = '"table" template';
+$lang['template:table_without_description'] = '"table_without_description" template';
+$lang['template:custom1'] = '"custom1" template';
+$lang['template:custom2'] = '"custom2" template';
+$lang['template:custom3'] = '"custom3" template';
 
-# should the end dates for each event be shown?
-$lang['showEndDates'] = "Should the end dates and times be shown?";
-
-# do you wnat the description parsed as an acronym?
-$lang['list_desc_as_acronym']   = "Should the event description be shown as acronym of the events summary? (Reduces width of table)";
-
-# do you want one table per month instead of a huge eventsstable?
-$lang['list_split_months']      = "Split the event list in months";
-$lang['hour_offset']      = "Adds/subtracts the given ammount ob hours from events times (fix issues with timezones and/or DST)";
-$lang['event_to_next_day']      = "One-day events on goggle calendar are longing into the next day. This option fixes this behaviour";

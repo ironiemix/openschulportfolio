@@ -1,8 +1,7 @@
 base    edittable
-author  Adrian Lang
-email   lang@cosmocode.de
-date    2010-03-22
+author  Andreas Gohr
+email   dokuwiki@cosmocode.de
+date    2016-10-06
 name    edittable plugin
 desc    Provide a custom editor for tables
 url     http://www.dokuwiki.org/plugin:edittable
-

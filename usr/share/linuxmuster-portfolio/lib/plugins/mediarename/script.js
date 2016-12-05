@@ -10,7 +10,8 @@
 
 
 function mediarename_plugin(){
-    var opts = $('media__opts');
+    var $opts = jQuery('#media__opts');
+    var opts = $opts[0];
     if(!opts) return;
     if(!window.opener) return;
 
@@ -23,10 +24,8 @@ function mediarename_plugin(){
     var gboxlbl  = document.createElement('label');
     gboxlbl.htmlFor   = 'mediarename_plugin_recursive';
     var capt1,capt2;
-    if (LANG['mediarename_plugin_recursive']) capt1=LANG['mediarename_plugin_recursive']; 
-    else capt1='Rename recursive ?';
-    if (LANG['mediarename_plugin']) capt2=LANG['mediarename_plugin']; 
-    else capt2='Fix invalid mediafilenames';
+    capt1=LANG['mediarename_plugin_recursive'];
+    capt2=LANG['mediarename_plugin'];
     gboxlbl.innerHTML = capt1;
 
     //show a quicklink
@@ -36,18 +35,18 @@ function mediarename_plugin(){
     glnk.name         = 'mediarename_plugin';
     glnk.innerHTML    = capt2;
     glnk.style.cursor = 'pointer';
- 
-    
+
+
     glnk.onclick = function(){
-        var h1 = $('media__ns');
-        if(!h1) return;
-        var ns = h1.innerHTML;
+        var $h1 = jQuery('#media__ns');
+        if(!$h1[0]) return;
+        var ns = $h1.html();
 	var rename='flat';
         if (gbox.checked) rename='recv';
         window.location.href=window.location.href+'&ns='+ns+'&rename='+rename;
     };
 
-   
+
     opts.appendChild(gbrk);
     opts.appendChild(gbox);
     opts.appendChild(gboxlbl);
@@ -62,7 +61,7 @@ function mediarename_plugin(){
 
 
 // === main ===
-addInitEvent(function() {
+jQuery(function() {
 
 
     mediarename_plugin();

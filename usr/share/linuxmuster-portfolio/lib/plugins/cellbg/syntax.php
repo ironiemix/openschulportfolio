@@ -25,10 +25,10 @@ class syntax_plugin_cellbg extends DokuWiki_Syntax_Plugin {
         return array(
             'author' => 'dr4Ke',
             'email'  => 'dr4ke@dr4ke.net',
-            'date'   => '2009-12-08',
+            'date'   => '2013-10-09',
             'name'   => 'Cells background color plugin',
             'desc'   => 'Sets background of a cell with a specific color',
-            'url'    => 'http://git.dr4ke.net/?p=dr4Ke/dokuwiki-cellbg.git',
+            'url'    => 'http://www.dokuwiki.org/plugin:cellbg',
         );
     }
  
