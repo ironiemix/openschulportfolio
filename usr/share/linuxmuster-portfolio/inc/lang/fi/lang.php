@@ -1,13 +1,16 @@
 <?php
+
 /**
- * Finnish language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author Petteri <petteri@gmail.com>
  * @author Matti Pöllä <mpo@iki.fi>
  * @author Otto Vainio <otto@valjakko.net>
  * @author Teemu Mattila <ghcsystems@gmail.com>
  * @author Sami Olmari <sami@olmari.fi>
+ * @author Rami Lehti <rammer@ipi.fi>
+ * @author Jussi Takala <jussi.takala@live.fi>
+ * @author Wiki Doku <SugarKidder@mailinator.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -15,7 +18,7 @@ $lang['doublequoteopening']    = '”';
 $lang['doublequoteclosing']    = '”';
 $lang['singlequoteopening']    = '’';
 $lang['singlequoteclosing']    = '’';
-$lang['apostrophe']            = '\'';
+$lang['apostrophe']            = '’';
 $lang['btn_edit']              = 'Muokkaa tätä sivua';
 $lang['btn_source']            = 'Näytä sivun lähdekoodi';
 $lang['btn_show']              = 'Näytä sivu';
@@ -39,7 +42,6 @@ $lang['btn_update']            = 'Päivitä';
 $lang['btn_delete']            = 'Poista';
 $lang['btn_back']              = 'Takaisin';
 $lang['btn_backlink']          = 'Paluulinkit';
-$lang['btn_backtomedia']       = 'Takaisin mediatiedostojen valintaan';
 $lang['btn_subscribe']         = 'Tilaa muutokset';
 $lang['btn_profile']           = 'Päivitä profiili';
 $lang['btn_reset']             = 'Tyhjennä';
@@ -51,7 +53,10 @@ $lang['btn_revert']            = 'palauta';
 $lang['btn_register']          = 'Rekisteröidy';
 $lang['btn_apply']             = 'Toteuta';
 $lang['btn_media']             = 'Media manager';
-$lang['loggedinas']            = 'Kirjautunut nimellä';
+$lang['btn_deleteuser']        = 'Poista tilini';
+$lang['btn_img_backto']        = 'Takaisin %s';
+$lang['btn_mediaManager']      = 'Näytä mediamanagerissa';
+$lang['loggedinas']            = 'Kirjautunut nimellä:';
 $lang['user']                  = 'Käyttäjänimi';
 $lang['pass']                  = 'Salasana';
 $lang['newpass']               = 'Uusi salasana';
@@ -62,13 +67,16 @@ $lang['fullname']              = 'Koko nimi';
 $lang['email']                 = 'Sähköposti';
 $lang['profile']               = 'Käyttäjän profiili';
 $lang['badlogin']              = 'Käyttäjänimi tai salasana oli väärä.';
+$lang['badpassconfirm']        = 'Valitan. Salasana oli väärin';
 $lang['minoredit']             = 'Pieni muutos';
 $lang['draftdate']             = 'Luonnos tallennettu automaattisesti';
 $lang['nosecedit']             = 'Sivu on muuttunut välillä ja kappaleen tiedot olivat vanhentuneet. Koko sivu ladattu.';
+$lang['searchcreatepage']      = 'Jos et löytänyt etsimääsi voit luoda uuden sivun tiedustelusi pohjalta käyttämällä \'\'Muokkaa tätä sivua\'\' -napilla.';
 $lang['regmissing']            = 'Kaikki kentät tulee täyttää.';
 $lang['reguexists']            = 'Käyttäjä tällä käyttäjänimellä on jo olemassa.';
 $lang['regsuccess']            = 'Käyttäjä luotiin ja salasana lähetettiin sähköpostilla.';
 $lang['regsuccess2']           = 'Käyttäjänimi on luotu.';
+$lang['regfail']               = 'Valitsemaasi käyttäjää ei voitu luoda.';
 $lang['regmailfail']           = 'Näyttää siltä, että salasanan lähettämisessä tapahtui virhe. Ota yhteys ylläpitäjään!';
 $lang['regbadmail']            = 'Antamasi sähköpostiosoite näyttää epäkelvolta. Jos pidät tätä virheenä ota yhteys ylläpitäjään.';
 $lang['regbadpass']            = 'Annetut kaksi salasanaa eivät täsmää. Yritä uudelleen.';
@@ -78,6 +86,11 @@ $lang['profna']                = 'Tässä wikissä profiilien muokkaaminen ei ol
 $lang['profnochange']          = 'Ei muutoksia.';
 $lang['profnoempty']           = 'Tyhjä nimi tai sähköpostiosoite ei ole sallittu.';
 $lang['profchanged']           = 'Käyttäjän profiilin päivitys onnistui.';
+$lang['profnodelete']          = 'Tässä wikissä ei voi poistaa käyttäjiä';
+$lang['profdeleteuser']        = 'Poista tili';
+$lang['profdeleted']           = 'Käyttäjätilisi on postettu tästä wikistä';
+$lang['profconfdelete']        = 'Haluan poistaa käyttäjätilini tästä wikistä. <br/> Tätä toimintoa ei voi myöhemmin peruuttaa.';
+$lang['profconfdeletemissing'] = 'Vahvistus rastia ei valittu';
 $lang['pwdforget']             = 'Unohtuiko salasana? Hanki uusi';
 $lang['resendna']              = 'Tämä wiki ei tue salasanan uudelleenlähettämistä.';
 $lang['resendpwd']             = 'Aseta uusisalasana';
@@ -90,12 +103,12 @@ $lang['license']               = 'Jollei muuta ole mainittu, niin sisältö täs
 $lang['licenseok']             = 'Huom: Muokkaamalla tätä sivua suostut lisensoimaan sisällön seuraavan lisenssin mukaisesti:';
 $lang['searchmedia']           = 'Etsi tiedostoa nimeltä:';
 $lang['searchmedia_in']        = 'Etsi kohteesta %s';
-$lang['txt_upload']            = 'Valitse tiedosto lähetettäväksi';
-$lang['txt_filename']          = 'Lähetä nimellä (valinnainen)';
+$lang['txt_upload']            = 'Valitse tiedosto lähetettäväksi:';
+$lang['txt_filename']          = 'Lähetä nimellä (valinnainen):';
 $lang['txt_overwrt']           = 'Ylikirjoita olemassa oleva';
 $lang['maxuploadsize']         = 'Palvelimelle siirto max. %s / tiedosto.';
-$lang['lockedby']              = 'Tällä hetkellä tiedoston on lukinnut';
-$lang['lockexpire']            = 'Lukitus päättyy';
+$lang['lockedby']              = 'Tällä hetkellä tiedoston on lukinnut:';
+$lang['lockexpire']            = 'Lukitus päättyy:';
 $lang['js']['willexpire']      = 'Lukituksesi tämän sivun muokkaukseen päättyy minuutin kuluttua.\nRistiriitojen välttämiseksi paina esikatselu-nappia nollataksesi lukitusajan.';
 $lang['js']['notsavedyet']     = 'Dokumentissa on tallentamattomia muutoksia, jotka häviävät.
  Haluatko varmasti jatkaa?';
@@ -142,7 +155,6 @@ $lang['js']['media_overwrt']   = 'Ylikirjoita olemassa olevat tiedostot';
 $lang['rssfailed']             = 'Virhe tapahtui noudettaessa tätä syötettä: ';
 $lang['nothingfound']          = 'Mitään ei löytynyt.';
 $lang['mediaselect']           = 'Mediatiedoston valinta';
-$lang['fileupload']            = 'Mediatiedoston lähetys';
 $lang['uploadsucc']            = 'Tiedoston lähetys onnistui';
 $lang['uploadfail']            = 'Tiedoston lähetys epäonnistui. Syynä ehkä väärät oikeudet?';
 $lang['uploadwrong']           = 'Tiedoston lähetys evätty. Tämä tiedostopääte on kielletty';
@@ -176,14 +188,17 @@ $lang['difflink']              = 'Linkki vertailunäkymään';
 $lang['diff_type']             = 'Näytä eroavaisuudet:';
 $lang['diff_inline']           = 'Sisäkkäin';
 $lang['diff_side']             = 'Vierekkäin';
+$lang['diffprevrev']           = 'Edellinen revisio';
+$lang['diffnextrev']           = 'Seuraava revisio';
+$lang['difflastrev']           = 'Viimeisin revisio';
 $lang['line']                  = 'Rivi';
-$lang['breadcrumb']            = 'Jäljet';
-$lang['youarehere']            = 'Olet täällä';
-$lang['lastmod']               = 'Viimeksi muutettu';
+$lang['breadcrumb']            = 'Jäljet:';
+$lang['youarehere']            = 'Olet täällä:';
+$lang['lastmod']               = 'Viimeksi muutettu:';
 $lang['by']                    = '/';
 $lang['deleted']               = 'poistettu';
 $lang['created']               = 'luotu';
-$lang['restored']              = 'vanha versio palautettu';
+$lang['restored']              = 'vanha versio palautettu (%s)';
 $lang['external_edit']         = 'ulkoinen muokkaus';
 $lang['summary']               = 'Yhteenveto muokkauksesta';
 $lang['noflash']               = 'Tarvitset <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash-liitännäisen</a> nähdäksesi tämän sisällön.';
@@ -228,24 +243,21 @@ $lang['qb_sig']                = 'Lisää allekirjoitus';
 $lang['qb_smileys']            = 'Hymiöt';
 $lang['qb_chars']              = 'Erikoismerkit';
 $lang['upperns']               = 'Hyppää edelliseen nimiavaruuteen';
-$lang['admin_register']        = 'Lisää uusi käyttäjä';
 $lang['metaedit']              = 'Muokkaa metadataa';
 $lang['metasaveerr']           = 'Metadatan kirjoittaminen epäonnistui';
 $lang['metasaveok']            = 'Metadata tallennettu';
-$lang['img_backto']            = 'Takaisin';
-$lang['img_title']             = 'Otsikko';
-$lang['img_caption']           = 'Kuvateksti';
-$lang['img_date']              = 'Päivämäärä';
-$lang['img_fname']             = 'Tiedoston nimi';
-$lang['img_fsize']             = 'Koko';
-$lang['img_artist']            = 'Kuvaaja';
-$lang['img_copyr']             = 'Tekijänoikeus';
-$lang['img_format']            = 'Formaatti';
-$lang['img_camera']            = 'Kamera';
-$lang['img_keywords']          = 'Avainsanat';
-$lang['img_width']             = 'Leveys';
-$lang['img_height']            = 'Korkeus';
-$lang['img_manager']           = 'Näytä mediamanagerissa';
+$lang['img_title']             = 'Otsikko:';
+$lang['img_caption']           = 'Kuvateksti:';
+$lang['img_date']              = 'Päivämäärä:';
+$lang['img_fname']             = 'Tiedoston nimi:';
+$lang['img_fsize']             = 'Koko:';
+$lang['img_artist']            = 'Kuvaaja:';
+$lang['img_copyr']             = 'Tekijänoikeus:';
+$lang['img_format']            = 'Formaatti:';
+$lang['img_camera']            = 'Kamera:';
+$lang['img_keywords']          = 'Avainsanat:';
+$lang['img_width']             = 'Leveys:';
+$lang['img_height']            = 'Korkeus:';
 $lang['subscr_subscribe_success'] = '%s lisätty %s tilauslistalle';
 $lang['subscr_subscribe_error'] = 'Virhe lisättäessä %s tilauslistalle %s';
 $lang['subscr_subscribe_noaddress'] = 'Login tiedoissasi ei ole sähköpostiosoitetta. Sinua ei voi lisätä tilaukseen';
@@ -262,9 +274,7 @@ $lang['subscr_m_receive']      = 'Vastaanota';
 $lang['subscr_style_every']    = 'Sähköposti joka muutoksesta';
 $lang['subscr_style_digest']   = 'yhteenveto-sähköposti joka sivusta (joka %.2f. päivä)';
 $lang['subscr_style_list']     = 'lista muuttuneista sivuista edellisen sähköpostin jälkeen (joka %.2f. päivä)';
-$lang['authmodfailed']         = 'Käyttäjien autentikoinnin asetukset ovat virheelliset. Ilmoita asiasta wikin ylläpitäjälle.';
 $lang['authtempfail']          = 'Käyttäjien autentikointi ei tällä hetkellä onnistu. Jos ongelma jatkuu, ota yhteyttä wikin ylläpitäjään.';
-$lang['authpwdexpire']         = 'Salasanasi vanhenee %d pv:n päästä, vaihda salasanasi pikaisesti.';
 $lang['i_chooselang']          = 'Valitse kieli';
 $lang['i_installer']           = 'DokuWikin asentaja';
 $lang['i_wikiname']            = 'Wikin nimi';
@@ -274,19 +284,24 @@ $lang['i_problems']            = 'Asennusohjelma löysi alla listattuja ongelmia
 $lang['i_modified']            = 'Turvallisuussyistä tämä ohjelma toimii vain uusien ja muokkaamattomien Dokuwiki-asennusten kanssa. Pura tiedostot uudestaan asennuspaketista, tai lue <a href="http://dokuwiki.org/install">Dokuwikin asennusohje (englanniksi)</a>';
 $lang['i_funcna']              = 'PHP:n funktio <code>%s</code> ei ole käytettävissä. Palveluntarjoajasi on saattanut poistaa sen jostain syystä.';
 $lang['i_phpver']              = 'Käyttämäsi PHP-ohjelmiston versio <code>%s</code> on pienempi, kuin tarvitaan <code>%s</code>. PHP-asennuksesi pitää päivittää.';
+$lang['i_mbfuncoverload']      = 'mbstring.func_overload pitää ottaa pois käytöstä php.ini -tiedostosta käyttääksesi DokuWikiä';
 $lang['i_permfail']            = '<code>%s</code> ei ole DokuWikin kirjoitettavissa. Muokkaa hakemiston oikeuksia!';
 $lang['i_confexists']          = '<code>%s</code> on jo olemassa';
 $lang['i_writeerr']            = '<code>%s</code>n luonti epäonnistui. Tarkista hakemiston/tiedoston oikeudet ja luo tiedosto käsin.';
 $lang['i_badhash']             = 'tunnistamaton tai muokattu dokuwiki.php (tarkistussumma=<code>%s</code>)';
 $lang['i_badval']              = '<code>%s</code> - väärä tai tyhjä arvo';
-$lang['i_success']             = 'Kokoonpano tehty onnistuneesti. Voit poistaa install.php tiedoston. Jatka <a href="doku.php">uuteen DokuWikiisi</a>.';
-$lang['i_failure']             = 'Joitain virheitä tapahtui kirjoitettaessa vaadittavia tiedostoja. Sinun pitää korjata ne käsin ennen kuin voit käyttää <a href="doku.php">uutta DokuWikiäsi</a>.';
+$lang['i_success']             = 'Kokoonpano tehty onnistuneesti. Voit poistaa install.php tiedoston. Jatka <a href="doku.php?id=wiki:welcome">uuteen DokuWikiisi</a>.';
+$lang['i_failure']             = 'Joitain virheitä tapahtui kirjoitettaessa vaadittavia tiedostoja. Sinun pitää korjata ne käsin ennen kuin voit käyttää <a href="doku.php?id=wiki:welcome">uutta DokuWikiäsi</a>.';
 $lang['i_policy']              = 'Käyttöoikeuksien oletusmenettelytapa';
 $lang['i_pol0']                = 'Avoin Wiki (luku, kirjoitus, tiedostojen lähetys on sallittu kaikille)';
 $lang['i_pol1']                = 'Julkinen Wiki (luku kaikilla, kirjoitus ja tiedostojen lähetys rekisteröidyillä käyttäjillä)';
 $lang['i_pol2']                = 'Suljettu Wiki (luku, kirjoitus ja tiedostojen lähetys vain rekisteröityneillä käyttäjillä)';
+$lang['i_allowreg']            = 'Salli käyttäjien rekisteröityminen';
 $lang['i_retry']               = 'Yritä uudelleen';
 $lang['i_license']             = 'Valitse lisenssi, jonka alle haluat sisältösi laittaa:';
+$lang['i_license_none']        = 'Älä näytä mitään lisenssitietoja';
+$lang['i_pop_field']           = 'Auta parantamaan DokuWikiä';
+$lang['i_pop_label']           = 'Lähetä kerran kuussa nimetöntä käyttäjätietoa DokuWikin kehittäjille';
 $lang['recent_global']         = 'Seuraat tällä hetkellä muutoksia nimiavaruuden <b>%s</b> sisällä. Voit myös <a href="%s">katsoa muutoksia koko wikissä</a>';
 $lang['years']                 = '%d vuotta sitten';
 $lang['months']                = '%d kuukautta sitten';
@@ -319,3 +334,10 @@ $lang['media_perm_read']       = 'Anteeksi. Sinulla ei ole riittävästi oikeuks
 $lang['media_perm_upload']     = 'Anteeksi. Sinulla ei ole riittävästi oikeuksia lähettääksesi tiedostoja.';
 $lang['media_update']          = 'Lähetä uusi versio';
 $lang['media_restore']         = 'Palauta tämä versio';
+$lang['currentns']             = 'Nykyinen nimiavaruus';
+$lang['searchresult']          = 'Haun tulokset';
+$lang['plainhtml']             = 'pelkkä HTML';
+$lang['wikimarkup']            = 'Wiki markup';
+$lang['unable_to_parse_date']  = 'Parametrin "%s" jäsennys ei onnistu.';
+$lang['email_signature_text'] = 'Tämän postin loi DokuWiki osoitteessa
+@DOKUWIKIURL@';

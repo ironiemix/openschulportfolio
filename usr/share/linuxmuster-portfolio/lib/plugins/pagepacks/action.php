@@ -90,7 +90,7 @@ class action_plugin_pagepacks extends DokuWiki_Action_Plugin {
 
         // need to source plugin manager because otherwise the ZipLib doesn't work
         // FIXME fix ZipLib.class.php
-        require_once(DOKU_INC.'lib/plugins/plugin/admin.php');
+        require_once(DOKU_PLUGIN.'admin.php');
 
         // decompression library doesn't like target folders ending in "/"
         if(substr($target, -1) == "/") $target = substr($target, 0, -1);

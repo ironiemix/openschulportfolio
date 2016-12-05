@@ -1,13 +1,17 @@
 <?php
+
 /**
- * Greek language file
- *
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ *
  * @author Thanos Massias <tm@thriasio.gr>
  * @author Αθανάσιος Νταής <homunculus@wana.gr>
  * @author Konstantinos Koryllos <koryllos@gmail.com>
  * @author George Petsagourakis <petsagouris@gmail.com>
  * @author Petros Vidalis <pvidalis@gmail.com>
+ * @author Vasileios Karavasilis vasileioskaravasilis@gmail.com
+ * @author Constantinos Xanthopoulos <conx@xanthopoulos.info>
+ * @author chris taklis <ctaklis@gmail.com>
+ * @author cross <cross1962@gmail.com>
  */
 $lang['encoding']              = 'utf-8';
 $lang['direction']             = 'ltr';
@@ -39,10 +43,10 @@ $lang['btn_update']            = 'Ενημέρωση';
 $lang['btn_delete']            = 'Σβήσιμο';
 $lang['btn_back']              = 'Πίσω';
 $lang['btn_backlink']          = 'Σύνδεσμοι προς αυτή τη σελίδα';
-$lang['btn_backtomedia']       = 'Επιστροφή στην επιλογή αρχείων';
 $lang['btn_subscribe']         = 'Εγγραφή σε λήψη ενημερώσεων σελίδας';
 $lang['btn_profile']           = 'Επεξεργασία προφίλ';
 $lang['btn_reset']             = 'Ακύρωση';
+$lang['btn_resendpwd']         = 'Εισαγωγή νέου κωδικού';
 $lang['btn_draft']             = 'Επεξεργασία  αυτόματα αποθηκευμένης σελίδας';
 $lang['btn_recover']           = 'Επαναφορά αυτόματα αποθηκευμένης σελίδας';
 $lang['btn_draftdel']          = 'Διαγραφή αυτόματα αποθηκευμένης σελίδας';
@@ -50,7 +54,8 @@ $lang['btn_revert']            = 'Αποκατάσταση';
 $lang['btn_register']          = 'Εγγραφή';
 $lang['btn_apply']             = 'Εφαρμογή';
 $lang['btn_media']             = 'Διαχειριστής πολυμέσων';
-$lang['loggedinas']            = 'Συνδεδεμένος ως';
+$lang['btn_deleteuser']        = 'Αφαίρεσε τον λογαριασμό μου';
+$lang['loggedinas']            = 'Συνδεδεμένος ως:';
 $lang['user']                  = 'Όνομα χρήστη';
 $lang['pass']                  = 'Κωδικός';
 $lang['newpass']               = 'Νέος κωδικός';
@@ -61,6 +66,7 @@ $lang['fullname']              = 'Ονοματεπώνυμο';
 $lang['email']                 = 'e-mail';
 $lang['profile']               = 'Προφίλ χρήστη';
 $lang['badlogin']              = 'Συγνώμη, το όνομα χρήστη ή ο κωδικός ήταν λανθασμένο.';
+$lang['badpassconfirm']        = 'Ο κωδικός που εισάγατε είναι λανθασμένος';
 $lang['minoredit']             = 'Ασήμαντες αλλαγές';
 $lang['draftdate']             = 'Αυτόματη αποθήκευση πρόχειρης σελίδας στις';
 $lang['nosecedit']             = 'Η σελίδα τροποποιήθηκε στο μεταξύ και τα στοιχεία της ενότητας δεν ήταν συγχρονισμένα, οπότε φορτώθηκε η πλήρης σελίδα.  ';
@@ -77,8 +83,13 @@ $lang['profna']                = 'Αυτό το wiki δεν υποστηρίζε
 $lang['profnochange']          = 'Καμία αλλαγή.';
 $lang['profnoempty']           = 'Δεν επιτρέπεται κενό όνομα χρήστη η κενή διεύθυνση email.';
 $lang['profchanged']           = 'Το προφίλ χρήστη τροποποιήθηκε επιτυχώς.';
+$lang['profnodelete']          = 'Το wiki δεν υποστηρίζει την διαγραφή χρηστών';
+$lang['profdeleteuser']        = 'Διαγραφή λογαριασμού';
+$lang['profdeleted']           = 'Ο λογαριασμός διαγράφηκε από αυτό το wiki';
+$lang['profconfdelete']        = 'Επιθυμώ να διαγράψω τον λογαριασμό μου από αυτό το wiki. <br/> Αυτή η επιλογή δεν μπορεί να αναιρεθεί.';
 $lang['pwdforget']             = 'Ξεχάσατε το κωδικό σας; Αποκτήστε νέο.';
 $lang['resendna']              = 'Αυτό το wiki δεν υποστηρίζει την εκ\' νέου αποστολή κωδικών.';
+$lang['resendpwd']             = 'Εισαγωγή νέου ωδικού για';
 $lang['resendpwdmissing']      = 'Πρέπει να συμπληρώσετε όλα τα πεδία.';
 $lang['resendpwdnouser']       = 'Αυτός ο χρήστης δεν υπάρχει στα αρχεία μας.';
 $lang['resendpwdbadauth']      = 'Αυτός ο κωδικός ενεργοποίησης δεν είναι έγκυρος.';
@@ -88,11 +99,12 @@ $lang['license']               = 'Εκτός εάν αναφέρεται δια�
 $lang['licenseok']             = 'Σημείωση: Τροποποιώντας αυτή την σελίδα αποδέχεστε την διάθεση του υλικού σας σύμφωνα με την ακόλουθη άδεια:';
 $lang['searchmedia']           = 'Αναζήτηση αρχείου:';
 $lang['searchmedia_in']        = 'Αναζήτηση σε %s';
-$lang['txt_upload']            = 'Επιλέξτε αρχείο για φόρτωση';
-$lang['txt_filename']          = 'Επιλέξτε νέο όνομα αρχείου (προαιρετικό)';
+$lang['txt_upload']            = 'Επιλέξτε αρχείο για φόρτωση:';
+$lang['txt_filename']          = 'Επιλέξτε νέο όνομα αρχείου (προαιρετικό):';
 $lang['txt_overwrt']           = 'Αντικατάσταση υπάρχοντος αρχείου';
-$lang['lockedby']              = 'Προσωρινά κλειδωμένο από';
-$lang['lockexpire']            = 'Το κλείδωμα λήγει στις';
+$lang['maxuploadsize']         = 'Μέγιστο μέγεθος αρχείου: %s.';
+$lang['lockedby']              = 'Προσωρινά κλειδωμένο από:';
+$lang['lockexpire']            = 'Το κλείδωμα λήγει στις:';
 $lang['js']['willexpire']      = 'Το κλείδωμά σας για την επεξεργασία αυτής της σελίδας θα λήξει σε ένα λεπτό.\n Για να το ανανεώσετε χρησιμοποιήστε την Προεπισκόπηση.';
 $lang['js']['notsavedyet']     = 'Οι μη αποθηκευμένες αλλαγές θα χαθούν.
 Θέλετε να συνεχίσετε;';
@@ -139,12 +151,10 @@ $lang['js']['media_overwrt']   = 'Αντικατάσταση υπάρχοντω�
 $lang['rssfailed']             = 'Παρουσιάστηκε κάποιο σφάλμα κατά την ανάγνωση αυτού του feed: ';
 $lang['nothingfound']          = 'Δεν βρέθηκαν σχετικά αποτελέσματα.';
 $lang['mediaselect']           = 'Επιλογή Αρχείων';
-$lang['fileupload']            = 'Φόρτωση αρχείου';
 $lang['uploadsucc']            = 'Επιτυχής φόρτωση';
 $lang['uploadfail']            = 'Η μεταφόρτωση απέτυχε. Πιθανόν αυτό να οφείλεται στις ρυθμίσεις πρόσβασης του αρχείου.';
 $lang['uploadwrong']           = 'Η μεταφόρτωση δεν έγινε δεκτή. Δεν επιτρέπονται αρχεία αυτού του τύπου!';
 $lang['uploadexist']           = 'Το αρχείο ήδη υπάρχει. Δεν έγινε καμία αλλαγή.';
-$lang['uploadbadcontent']      = 'Το περιεχόμενο του αρχείου δεν ταιριάζει με την επέκτασή του.';
 $lang['uploadspam']            = 'Η μεταφόρτωση ακυρώθηκε από το φίλτρο spam.';
 $lang['uploadxss']             = 'Η μεταφόρτωση ακυρώθηκε λόγω πιθανού επικίνδυνου περιεχομένου.';
 $lang['uploadsize']            = 'Το αρχείο ήταν πολύ μεγάλο. (μέγιστο %s)';
@@ -174,17 +184,23 @@ $lang['diff_type']             = 'Προβολή διαφορών:';
 $lang['diff_inline']           = 'Σε σειρά';
 $lang['diff_side']             = 'Δίπλα-δίπλα';
 $lang['line']                  = 'Γραμμή';
-$lang['breadcrumb']            = 'Ιστορικό';
-$lang['youarehere']            = 'Είστε εδώ';
-$lang['lastmod']               = 'Τελευταία τροποποίηση';
+$lang['breadcrumb']            = 'Ιστορικό:';
+$lang['youarehere']            = 'Είστε εδώ:';
+$lang['lastmod']               = 'Τελευταία τροποποίηση:';
 $lang['by']                    = 'από';
 $lang['deleted']               = 'διαγράφηκε';
 $lang['created']               = 'δημιουργήθηκε';
-$lang['restored']              = 'παλαιότερη έκδοση επαναφέρθηκε';
+$lang['restored']              = 'παλαιότερη έκδοση επαναφέρθηκε (%s)';
 $lang['external_edit']         = 'εξωτερική τροποποίηση';
 $lang['summary']               = 'Επεξεργασία σύνοψης';
 $lang['noflash']               = 'Το <a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Plugin</a> απαιτείται για την προβολή αυτού του στοιχείου.';
 $lang['download']              = 'Λήψη Κώδικα';
+$lang['tools']                 = 'Εργαλεία';
+$lang['user_tools']            = 'Εργαλεία Χρήστη';
+$lang['site_tools']            = 'Εργαλεία ιστότοπου';
+$lang['page_tools']            = 'Εργαλεία ιστοσελίδας';
+$lang['skip_to_content']       = 'παράληψη περιεχομένων';
+$lang['sidebar']               = 'Sidebar';
 $lang['mail_newpage']          = 'σελίδα προστέθηκε:';
 $lang['mail_changed']          = 'σελίδα τροποποιήθηκε:';
 $lang['mail_subscribe_list']   = 'σελίδες που άλλαξαν στον φάκελο:';
@@ -219,24 +235,23 @@ $lang['qb_sig']                = 'Προσθήκη Υπογραφής';
 $lang['qb_smileys']            = 'Smileys';
 $lang['qb_chars']              = 'Ειδικοί Χαρακτήρες';
 $lang['upperns']               = 'πήγαινε στον μητρικό φάκελο';
-$lang['admin_register']        = 'Προσθήκη νέου χρήστη';
 $lang['metaedit']              = 'Τροποποίηση metadata';
 $lang['metasaveerr']           = 'Η αποθήκευση των metadata απέτυχε';
 $lang['metasaveok']            = 'Επιτυχής αποθήκευση metadata';
-$lang['img_backto']            = 'Επιστροφή σε';
-$lang['img_title']             = 'Τίτλος';
-$lang['img_caption']           = 'Λεζάντα';
-$lang['img_date']              = 'Ημερομηνία';
-$lang['img_fname']             = 'Όνομα αρχείου';
-$lang['img_fsize']             = 'Μέγεθος';
-$lang['img_artist']            = 'Καλλιτέχνης';
-$lang['img_copyr']             = 'Copyright';
-$lang['img_format']            = 'Format';
-$lang['img_camera']            = 'Camera';
-$lang['img_keywords']          = 'Λέξεις-κλειδιά';
-$lang['img_width']             = 'Πλάτος';
-$lang['img_height']            = 'Ύψος';
-$lang['img_manager']           = 'Εμφάνιση στον διαχειριστή πολυμέσων';
+$lang['btn_img_backto']            = 'Επιστροφή σε %s';
+$lang['img_title']             = 'Τίτλος:';
+$lang['img_caption']           = 'Λεζάντα:';
+$lang['img_date']              = 'Ημερομηνία:';
+$lang['img_fname']             = 'Όνομα αρχείου:';
+$lang['img_fsize']             = 'Μέγεθος:';
+$lang['img_artist']            = 'Καλλιτέχνης:';
+$lang['img_copyr']             = 'Copyright:';
+$lang['img_format']            = 'Format:';
+$lang['img_camera']            = 'Camera:';
+$lang['img_keywords']          = 'Λέξεις-κλειδιά:';
+$lang['img_width']             = 'Πλάτος:';
+$lang['img_height']            = 'Ύψος:';
+$lang['btn_mediaManager']           = 'Εμφάνιση στον διαχειριστή πολυμέσων';
 $lang['subscr_subscribe_success'] = 'Ο/η %s προστέθηκε στην λίστα ειδοποιήσεων για το %s';
 $lang['subscr_subscribe_error'] = 'Σφάλμα κατά την προσθήκη του/της %s στην λίστα ειδοποιήσεων για το %s';
 $lang['subscr_subscribe_noaddress'] = 'Δεν υπάρχει διεύθυνση ταχυδρομείου συσχετισμένη με το όνομα χρήστη σας. Κατά συνέπεια δεν μπορείτε να προστεθείτε στην λίστα ειδοποιήσεων';
@@ -253,7 +268,6 @@ $lang['subscr_m_receive']      = 'Λήψη';
 $lang['subscr_style_every']    = 'email σε κάθε αλλαγή';
 $lang['subscr_style_digest']   = 'συνοπτικό email αλλαγών της σελίδας (κάθε %.2f μέρες)';
 $lang['subscr_style_list']     = 'λίστα σελίδων με αλλαγές μετά από το τελευταίο email (κάθε %.2f μέρες)';
-$lang['authmodfailed']         = 'Κακή ρύθμιση λίστας χρηστών. Παρακαλούμε ενημερώστε τον διαχειριστή του wiki.';
 $lang['authtempfail']          = 'Η συνδεση χρηστών είναι απενεργοποιημένη αυτή την στιγμή. Αν αυτό διαρκέσει για πολύ, παρακαλούμε ενημερώστε τον διαχειριστή του wiki.';
 $lang['i_chooselang']          = 'Επιλογή γλώσσας';
 $lang['i_installer']           = 'Οδηγός εγκατάστασης DokuWiki';
@@ -270,12 +284,13 @@ $lang['i_confexists']          = '<code>%s</code> υπάρχει ήδη';
 $lang['i_writeerr']            = 'Δεν είναι δυνατή η δημιουργία του <code>%s</code>. Πρέπει να διορθώσετε τα δικαιώματα πρόσβασης αυτού του φακέλου/αρχείου και να δημιουργήσετε το αρχείο χειροκίνητα!';
 $lang['i_badhash']             = 'Μη αναγνωρίσιμο ή τροποποιημένο αρχείο dokuwiki.php (hash=<code>%s</code>)';
 $lang['i_badval']              = '<code>%s</code> - λάθος ή ανύπαρκτη τιμή';
-$lang['i_success']             = 'Η εγκατάσταση ολοκληρώθηκε επιτυχώς. Μπορείτε πλέον να διαγράψετε το αρχείο install.php. Συνεχίστε στο <a href="doku.php">νέο σας DokuWiki</a>.';
-$lang['i_failure']             = 'Εμφανίστηκαν κάποια προβλήματα στη διαδικασία ανανέωσης των αρχείων ρυθμίσεων. Πιθανόν να χρειάζεται να τα τροποποιήσετε χειροκίνητα ώστε να μπορείτε να χρησιμοποιήσετε το <a href="doku.php">νέο σας DokuWiki</a>.';
+$lang['i_success']             = 'Η εγκατάσταση ολοκληρώθηκε επιτυχώς. Μπορείτε πλέον να διαγράψετε το αρχείο install.php. Συνεχίστε στο <a href="doku.php?id=wiki:welcome">νέο σας DokuWiki</a>.';
+$lang['i_failure']             = 'Εμφανίστηκαν κάποια προβλήματα στη διαδικασία ανανέωσης των αρχείων ρυθμίσεων. Πιθανόν να χρειάζεται να τα τροποποιήσετε χειροκίνητα ώστε να μπορείτε να χρησιμοποιήσετε το <a href="doku.php?id=wiki:welcome">νέο σας DokuWiki</a>.';
 $lang['i_policy']              = 'Αρχική πολιτική Λίστας Δικαιωμάτων Πρόσβασης - ACL';
 $lang['i_pol0']                = 'Ανοιχτό Wiki (όλοι μπορούν να διαβάσουν ή να δημιουργήσουν/τροποποιήσουν σελίδες και να μεταφορτώσουν αρχεία)';
 $lang['i_pol1']                = 'Δημόσιο Wiki (όλοι μπορούν να διαβάσουν σελίδες αλλά μόνο οι εγγεγραμμένοι χρήστες μπορούν να δημιουργήσουν/τροποποιήσουν σελίδες και να μεταφορτώσουν αρχεία)';
 $lang['i_pol2']                = 'Κλειστό Wiki (μόνο οι εγγεγραμμένοι χρήστες μπορούν να διαβάσουν ή να δημιουργήσουν/τροποποιήσουν σελίδες και να μεταφορτώσουν αρχεία)';
+$lang['i_allowreg']            = 'Οι χρήστες επιτρέπεται να εγγραφούν μόνοι τους';
 $lang['i_retry']               = 'Νέα προσπάθεια';
 $lang['i_license']             = 'Παρακαλώ επιλέξτε την άδεια που θα χρησιμοποιήσετε για την διάθεση του περιεχομένου σας:';
 $lang['recent_global']         = 'Βλέπετε τις αλλαγές εντός του φακέλου <b>%s</b>. Μπορείτε επίσης να <a href="%s">δείτε τις πρόσφατες αλλαγές σε όλο το wiki</a>.';
@@ -289,20 +304,27 @@ $lang['seconds']               = 'πριν %d δευτερόλεπτα';
 $lang['wordblock']             = 'Η αλλαγή σας δεν αποθηκεύτηκε γιατί περιείχε spam.';
 $lang['media_uploadtab']       = 'Φόρτωση';
 $lang['media_searchtab']       = 'Αναζήτηση';
+$lang['media_file']            = 'Αρχείο';
 $lang['media_viewtab']         = 'Εμφάνιση';
 $lang['media_edittab']         = 'Επεξεργασία';
 $lang['media_historytab']      = 'Ιστορικό';
-$lang['media_thumbsview']      = 'Προεπισκόπιση';
-$lang['media_listview']        = 'Λίστα';
-$lang['media_sort']            = 'Ταξινόμιση';
+$lang['media_list_thumbs']     = 'Μικρογραφίες';
+$lang['media_list_rows']       = 'Γραμμές';
 $lang['media_sort_name']       = 'ανά όνομα';
 $lang['media_sort_date']       = 'ανά ημερομηνία';
+$lang['media_namespaces']      = 'Επιλογή namespace';
+$lang['media_files']           = 'Αρχεία στο %s φάκελο';
 $lang['media_upload']          = 'Φόρτωση στο <strong>%s</strong> φάκελο.';
 $lang['media_search']          = 'Αναζήτηση στο <strong>%s</strong> φάκελο.';
-$lang['media_edit']            = 'Επεξεργασία';
-$lang['media_history']         = 'Αυτές είναι οι παλαιότερες αναθεωρήσεις του αρχείου.';
+$lang['media_view']            = '%s';
+$lang['media_viewold']         = '%s στα %s';
+$lang['media_edit']            = 'Επεξεργασία %s';
+$lang['media_history']         = 'Ιστορικό των %s';
 $lang['media_meta_edited']     = 'τα μεταδεδομένα επεξεργάστηκαν';
 $lang['media_perm_read']       = 'Συγνώμη, δεν έχετε επαρκή διακαιώματα για να διαβάσετε αυτά τα αρχεία.';
 $lang['media_perm_upload']     = 'Συγνώμη, δεν έχετε επαρκή διακαιώματα για να φορτώσετε αυτά τα αρχεία.';
 $lang['media_update']          = 'Φόρτωση νέας έκδοσης';
 $lang['media_restore']         = 'Επαναφορά αυτή της έκδοσης';
+$lang['searchresult']          = 'Αποτέλεσμα έρευνας';
+$lang['email_signature_text'] = 'Αυτό το e-mail δημιουργήθηκε αυτόματα από την εφαρμογή DokuWiki στην διεύθυνση
+@DOKUWIKIURL@';

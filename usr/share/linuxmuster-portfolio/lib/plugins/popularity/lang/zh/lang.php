@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Chinese language file
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
  * @author ZDYX <zhangduyixiong@gmail.com>
  * @author http://www.chinese-tools.com/tools/converter-tradsimp.html

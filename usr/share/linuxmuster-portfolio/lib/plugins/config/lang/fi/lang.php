@@ -1,11 +1,13 @@
 <?php
+
 /**
- * Finnish language file
- *
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
+ * 
  * @author otto@valjakko.net
  * @author Otto Vainio <otto@valjakko.net>
  * @author Teemu Mattila <ghcsystems@gmail.com>
  * @author Sami Olmari <sami@olmari.fi>
+ * @author Wiki Doku <SugarKidder@mailinator.com>
  */
 $lang['menu']                  = 'Asetukset';
 $lang['error']                 = 'Asetuksia ei päivitetty väärän arvon vuoksi. Tarkista muutokset ja lähetä sivu uudestaan.
@@ -30,10 +32,9 @@ $lang['_editing']              = 'Sivumuokkauksen asetukset';
 $lang['_links']                = 'Linkkien asetukset';
 $lang['_media']                = 'Media-asetukset';
 $lang['_notifications']        = 'Ilmoitus-asetukset';
+$lang['_syndication']          = 'Syöteasetukset';
 $lang['_advanced']             = 'Lisäasetukset';
 $lang['_network']              = 'Verkkoasetukset';
-$lang['_plugin_sufix']         = 'liitännäisen asetukset';
-$lang['_template_sufix']       = 'Sivumallin asetukset';
 $lang['_msg_setting_undefined'] = 'Ei asetusten metadataa.';
 $lang['_msg_setting_no_class'] = 'Ei asetusluokkaa.';
 $lang['_msg_setting_no_default'] = 'Ei oletusarvoa';
@@ -57,7 +58,7 @@ $lang['breadcrumbs']           = 'Leivänmurujen määrä';
 $lang['youarehere']            = 'Hierarkkiset leivänmurut';
 $lang['fullpath']              = 'Näytä sivun koko polku sivun alareunassa';
 $lang['typography']            = 'Tee typografiset korvaukset';
-$lang['dformat']               = 'Päivämäärän muoto (katso PHPn <a href="http://www.php.net/strftime">strftime</a> funktiota)';
+$lang['dformat']               = 'Päivämäärän muoto (katso PHPn <a href="http://php.net/strftime">strftime</a> funktiota)';
 $lang['signature']             = 'Allekirjoitus';
 $lang['showuseras']            = 'Mitä näytetään, kun kerrotaan viimeisen editoijan tiedot';
 $lang['toptoclevel']           = 'Ylätason sisällysluettelo';
@@ -85,6 +86,8 @@ $lang['disableactions_wikicode'] = 'Näytä lähdekoodi/Vie raakana';
 $lang['disableactions_other']  = 'Muut toiminnot (pilkulla erotettuna)';
 $lang['auth_security_timeout'] = 'Autentikoinnin aikakatkaisu (sekunteja)';
 $lang['securecookie']          = 'Lähetetäänkö HTTPS:n kautta asetetut evästetiedot HTTPS-yhteydellä? Kytke pois, jos vain wikisi kirjautuminen on suojattu SSL:n avulla, mutta muuten wikiä käytetään ilman suojausta.';
+$lang['remote']                = 'Kytke "remote API" käyttöön. Tämä sallii muiden sovellusten päästä wikiin XML-RPC:n avulla';
+$lang['remoteuser']            = 'Salli "remote API" pääsy vain pilkulla erotetuille ryhmille tai käyttäjille tässä. Jätä tyhjäksi, jos haluat sallia käytön kaikille.';
 $lang['usewordblock']          = 'Estä spam sanalistan avulla';
 $lang['relnofollow']           = 'Käytä rel="nofollow" ulkoisille linkeille';
 $lang['indexdelay']            = 'Aikaraja indeksoinnille (sek)';
@@ -102,7 +105,6 @@ $lang['target____media']       = 'Kohdeikkuna media-linkeissä';
 $lang['target____windows']     = 'Kohdeikkuna Windows-linkeissä';
 $lang['mediarevisions']        = 'Otetaan käyttään Media-versiointi';
 $lang['refcheck']              = 'Mediaviitteen tarkistus';
-$lang['refshow']               = 'Montako mediaviitettä näytetään';
 $lang['gdlib']                 = 'GD Lib versio';
 $lang['im_convert']            = 'ImageMagick-muunnostyökalun polku';
 $lang['jpg_quality']           = 'JPG pakkauslaatu (0-100)';
@@ -113,12 +115,14 @@ $lang['notify']                = 'Lähetä muutosilmoitukset tähän osoitteesee
 $lang['registernotify']        = 'Lähetä ilmoitus uusista rekisteröitymisistä tähän osoitteeseen';
 $lang['mailfrom']              = 'Sähköpostiosoite automaattisia postituksia varten';
 $lang['mailprefix']            = 'Etuliite automaattisesti lähetettyihin dähköposteihin';
+$lang['htmlmail']              = 'Lähetä paremman näköisiä, mutta isompia HTML multipart sähköposteja. Ota pois päältä, jos haluat vain tekstimuotoisia posteja.';
 $lang['sitemap']               = 'Luo Google sitemap (päiviä)';
 $lang['rss_type']              = 'XML-syötteen tyyppi';
 $lang['rss_linkto']            = 'XML-syöte kytkeytyy';
 $lang['rss_content']           = 'Mitä XML-syöte näyttää?';
 $lang['rss_update']            = 'XML-syötteen päivitystahti (sek)';
 $lang['rss_show_summary']      = 'XML-syöte näyttää yhteenvedon otsikossa';
+$lang['rss_media']             = 'Millaiset muutokset pitäisi olla mukana XML-syötteessä.';
 $lang['updatecheck']           = 'Tarkista päivityksiä ja turvavaroituksia? Tätä varten DokuWikin pitää ottaa yhteys update.dokuwiki.orgiin.';
 $lang['userewrite']            = 'Käytä siivottuja URLeja';
 $lang['useslash']              = 'Käytä kauttaviivaa nimiavaruuksien erottimena URL-osoitteissa';
@@ -137,6 +141,7 @@ $lang['xsendfile']             = 'Käytä X-Sendfile otsikkoa, kun web-palvelin 
 $lang['renderer_xhtml']        = 'Renderöinti, jota käytetään wikin pääasialliseen (xhtml) tulostukseen';
 $lang['renderer__core']        = '%s (dokuwiki core)';
 $lang['renderer__plugin']      = '%s (liitännäinen)';
+$lang['dnslookups']            = 'DokuWiki tarkistaa sivun päivittäjän koneen IP-osoitteen isäntänimen. Kytke pois, jos käytät hidasta tai toimimatonta DNS-palvelinta, tai et halua tätä ominaisuutta.';
 $lang['proxy____host']         = 'Proxy-palvelimen nimi';
 $lang['proxy____port']         = 'Proxy portti';
 $lang['proxy____user']         = 'Proxy käyttäjän nimi';

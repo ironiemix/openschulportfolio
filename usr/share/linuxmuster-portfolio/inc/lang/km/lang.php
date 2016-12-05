@@ -34,9 +34,7 @@ $lang['btn_update'] = 'កែឡើង';
 $lang['btn_delete'] = 'លុបចោល';
 $lang['btn_back']   = 'ត្រឡប់';
 $lang['btn_backlink']    = 'ខ្សែចំណងក្រោយ';
-$lang['btn_backtomedia'] = 'ទៅប្រព័នឯកសាវិញ';
 $lang['btn_subscribe']   = 'ដាក់ដំណឹងផ្លស់ប្តូរ';
-$lang['btn_unsubscribe'] = 'ដកដំណឹងផ្លស់ប្តូរ';
 $lang['btn_profile']     = 'កែប្រវត្តិរូប';
 $lang['btn_reset']       = 'កមណត់ឡើងរិញ';
 $lang['btn_draft']    = 'កែគំរោង';
@@ -44,7 +42,7 @@ $lang['btn_recover']  = 'ស្រោះគំរោងឡើង';
 $lang['btn_draftdel'] = 'លុបគំរោង';
 $lang['btn_register'] = 'ចុះឈ្មោះ';//'Register';
 
-$lang['loggedinas'] = 'អ្នកប្រើ';
+$lang['loggedinas'] = 'អ្នកប្រើ:';
 $lang['user']       = 'នាមបម្រើ';
 $lang['pass']       = 'ពាក្សសម្ងត់';
 $lang['newpass']    = 'ពាក្សសម្ងាត់ថ្មី';
@@ -63,7 +61,7 @@ $lang['reguexists'] = 'សុំអាទោស​ នាមប្រើនេ�
 $lang['regsuccess'] = 'អ្នកប្រើបានបង្កើតហើយ និងពាក្សសម្ងាតក៏បានផ្ញើទៀត។';
 $lang['regsuccess2']= 'អ្នកប្រើបានបង្កើតហើយ។';
 $lang['regmailfail']= 'មើលទៅដុចជាមានកំហុសក្នុង....សុំទាកទងអ្នកក្របក្រង';
-$lang['regbadmail'] = 'អ៊ីមេលអ្នកសាសេមិនត្រូវបញ្ជរ&mdash;បើអ្នកកិតថានេះជាកំហុសបដិបត្តិ សុំទាកទងអ្នកក្របគ្រោង។';
+$lang['regbadmail'] = 'អ៊ីមេលអ្នកសាសេមិនត្រូវបញ្ជរ—បើអ្នកកិតថានេះជាកំហុសបដិបត្តិ សុំទាកទងអ្នកក្របគ្រោង។';
 $lang['regbadpass'] = 'គូពាក្សសម្ងាតមិនដូចគ្នាទេ សមសាកទៀត។';
 $lang['regpwmail']  = 'ពាក្សសម្ងាតអ្នក';
 $lang['reghere']    = 'អ្នកឥតមានបញ្ជីនាមបម្រើទេ?  សុំចល់ចុះឈ្មោះធ្វើគណនីសម្របប្រើប្រស';
@@ -81,19 +79,18 @@ $lang['resendpwdbadauth'] = 'សុំអាទោស​ រហស្សលេ�
 $lang['resendpwdconfirm'] ='ខ្សែបន្ត';
 $lang['resendpwdsuccess'] = 'ពាក្សសម្ងាតអ្នកបានផ្ញើហើយ។';
 
-$lang['txt_upload']   = 'ជ្រើសឯកសារដែលរុញ​ឡើង';
-$lang['txt_filename'] = 'រុញឡើងជា (ស្រេច​ចិត្ត)';
+$lang['txt_upload']   = 'ជ្រើសឯកសារដែលរុញ​ឡើង:';
+$lang['txt_filename'] = 'រុញឡើងជា (ស្រេច​ចិត្ត):';
 $lang['txt_overwrt']  = 'កត់ពីលើ';//'Overwrite existing file';
-$lang['lockedby']     = 'ឥឡូវនេះចកជាប់​';
-$lang['lockexpire']   = 'សោជាប់ផុត​កំណត់ម៉ោង';
+$lang['lockedby']     = 'ឥឡូវនេះចកជាប់​:';
+$lang['lockexpire']   = 'សោជាប់ផុត​កំណត់ម៉ោង:';
 $lang['js']['willexpire']   = 'សោអ្នកចំពោះកែតម្រូវទំព័រនេះ ហួសពែលក្នុងមួយនាទី។\nកុំឲ្យមានជម្លោះ ប្រើ «បង្ហាញ»​ ទៅកំណត់​ឡើង​វិញ។';
 
-$lang['js']['notsavedyet'] = "កម្រែមិនទានរុក្សាទកត្រូវបោះបង់។\nបន្តទៅទាឬទេ?";
+$lang['js']['notsavedyet'] = 'កម្រែមិនទានរុក្សាទកត្រូវបោះបង់។\nបន្តទៅទាឬទេ?';
 $lang['rssfailed']   = 'មានកំហុសពេលទៅ​ប្រមូល​យកមតិ​ព័ត៌មាន៖ ';
 $lang['nothingfound']= 'រកមិនឃើញអ្វីទេ។';
 
 $lang['mediaselect'] = 'ឯកសារមីឌៀ';
-$lang['fileupload']  = 'រុញឯកសារមីឌៀឡើង';
 $lang['uploadsucc']  = 'រុញចូលមានជ័យ';
 $lang['uploadfail']  = 'រុញឡើងបរាជ័យ។ ប្រហែលខុសសិទ្ឋានុញ្ញាត?';
 $lang['uploadwrong'] = 'រុញឡើងត្រូវ​បាន​បដិសេធ។ ឯកសារ';
@@ -102,8 +99,8 @@ $lang['uploadbadcontent'] = 'ធាតុចំរុញឡើងមិនត្
 $lang['uploadspam']  = 'ចំរុញឡើង បង្ខាំង ដៅយ  ';
 $lang['uploadxss']   = 'ចំរុញឡើង បង្ខាំង  ';
 $lang['deletesucc']  = 'ឯកសារ «%s» បានលុបហើយ។';
-$lang['deletefail']  = '«%s» មិនអាចលុបទេ&mdashមើល';
-$lang['mediainuse']  = 'ឯកសារ «%s» ឥតទានលុបទេ&mdashមានគេកំភងទេជាប់ប្រើ។';
+$lang['deletefail']  = '«%s» មិនអាចលុបទេ—មើល';
+$lang['mediainuse']  = 'ឯកសារ «%s» ឥតទានលុបទេ—មានគេកំភងទេជាប់ប្រើ។';
 $lang['namespaces']  = 'នាមដ្ឋាន';
 $lang['mediafiles']  = 'ឯកសារទំនេនៅក្នុង';
 
@@ -126,13 +123,12 @@ $lang['current']    = 'ឥឡៅវ';
 $lang['yours']      = 'តំណែអ្នាក';
 $lang['diff']       = 'បង្ហាងអសទិសភាពជាមួយតំណែឥឡូវ ';
 $lang['line']       = 'ខ្សែ';
-$lang['breadcrumb'] = 'ដាន';
-$lang['youarehere'] = 'ដាន';
-$lang['lastmod']    = 'ពេលកែចុងក្រោយ';
+$lang['breadcrumb'] = 'ដាន:';
+$lang['youarehere'] = 'ដាន:';
+$lang['lastmod']    = 'ពេលកែចុងក្រោយ:';
 $lang['by']         = 'និពន្ឋដោយ';
 $lang['deleted']    = 'យកចេញ';
 $lang['created']    = 'បង្កើត';
-$lang['restored']   = 'ស្ដារបុនរាព្រឹតចាស់';
 $lang['external_edit'] = 'កំរេពីក្រៅ';
 $lang['summary']    = 'កែតម្រា';
 
@@ -140,8 +136,6 @@ $lang['mail_newpage']  = 'ថែមទំព័រ';
 $lang['mail_changed']  = 'ទំព័រប្រែប្រួល';
 $lang['mail_new_user'] = 'អ្នកប្រើថ្មី';
 $lang['mail_upload']   = 'រុញអក្សាលើង';
-
-$lang['nosmblinks'] = 'ខ្សែបន្តទៅ «Windows share» ប្រើបានក្នុង «Microsoft IE»។ អ្នកអាច កាត់ឬបិត ខ្សែនេះ។';
 
 $lang['qb_bold']    = 'ឃ្វាមក្រស';
 $lang['qb_italic']  = 'ឃ្វាមជ្រៀង';
@@ -164,38 +158,23 @@ $lang['qb_smileys'] = 'សញ្ញាអារម្មណ៍';
 $lang['qb_chars']   = 'អក្ខរៈពិសេស';
 
 $lang['js']['del_confirm']= 'លុប';
-$lang['admin_register']= 'តែមអ្នកប្រើ';//'Add new user';
-
-$lang['spell_start'] = 'ពិនិត្យអក្ខរាវិរុទ្ធ';//'Check Spelling';
-$lang['spell_stop']  = 'បណ្តកំរែ'; 'Resume Editing';
-$lang['spell_wait']  = 'សូមចាំ';//'Please wait...';
-$lang['spell_noerr'] = 'ឥតមានខុះទេ';
-$lang['spell_nosug'] = 'ឥតមានយោបល់';
-$lang['spell_change']= 'ដូរជំនួស';//'Change';
 
 $lang['metaedit']    = 'កែទិន្នន័យអរូប';//'Edit Metadata';
 $lang['metasaveerr'] = 'ពំអាចកត់រទិន្នន័យអរូប';//'Writing metadata failed';
 $lang['metasaveok']  = 'ទិន្នន័យអរូប';
-$lang['img_backto']  = 'ថយក្រោយ';
-$lang['img_title']   = 'អភិធេយ្យ';
-$lang['img_caption'] = 'ចំណងជើង';
-$lang['img_date']    = 'ថ្ងៃខែ';//'Date';
-$lang['img_fname']   = 'ឈ្មោះឯកសារ';
-$lang['img_fsize']   = 'ទំហំ';//'Size';
-$lang['img_artist']  = 'អ្នកថតរូប';
-$lang['img_copyr']   = 'រក្សា​សិទ្ធិ';
-$lang['img_format']  = 'ធុនប្រភេទ';
-$lang['img_camera']  = 'គ្រឿងថត';
-$lang['img_keywords']= 'មេពាក្ស';//'Keywords';
-
-$lang['subscribe_success']  = ' ដកថែម %s ចូលបញ្ជីបរិវិសកមចំពោះ %s';
-$lang['subscribe_error']    = 'មានកំហុសពេលបន្ថែម %s ចូលបញ្ជីបរិវិសកមចំពោះ %s';
-$lang['subscribe_noaddress']= 'ឥតមានអាសយដ្ឋាន អ្នកមិនអាចកត់ចុល';
-$lang['unsubscribe_success']= 'ដក %s ចេញពីបញ្ជីបរិវិសកមចំពោះ %s';
-$lang['unsubscribe_error']  = 'មានកំហុសពេលដក %s​  ចេញពីបញ្ជីបរិវិសកមចំពោះ %s';
+$lang['btn_img_backto']  = 'ថយក្រោយ%s';
+$lang['img_title']   = 'អភិធេយ្យ:';
+$lang['img_caption'] = 'ចំណងជើង:';
+$lang['img_date']    = 'ថ្ងៃខែ:';//'Date';
+$lang['img_fname']   = 'ឈ្មោះឯកសារ:';
+$lang['img_fsize']   = 'ទំហំ:';//'Size';
+$lang['img_artist']  = 'អ្នកថតរូប:';
+$lang['img_copyr']   = 'រក្សា​សិទ្ធិ:';
+$lang['img_format']  = 'ធុនប្រភេទ:';
+$lang['img_camera']  = 'គ្រឿងថត:';
+$lang['img_keywords']= 'មេពាក្ស:';//'Keywords';
 
 /* auth.class language support */
-$lang['authmodfailed']   = 'និនផ្ទៀងផ្ទាត់​ភាព​​ត្រឹមត្រូវបានទេ។ សុំទាកទងអ្នកក្របគ្រោង។';
 $lang['authtempfail']    = 'ការផ្ទៀងផ្ទាត់​ភាព​​ត្រឹមត្រូវឥតដំនេ។ ប្រើ ....';
 
 /* installer strings */
@@ -206,13 +185,9 @@ $lang['i_enableacl']  = 'បើកប្រើ (អនុសាស)';
 $lang['i_superuser']  = 'អ្នកកំពូល';
 $lang['i_problems']   = 'កម្មវិធី​ដំឡើងបានប៉ះឧបសគ្គ។ អ្នកមិនអាចបន្តទៅទៀត ដល់អ្នកជួសជុលវា។';
 $lang['i_modified']   = '';
-$lang['i_funcna']     = '<code>%s</code> ';
-$lang['i_phpver']     = 'PHP ប្រវត់លេខ<code>%s</code> ជា';
 $lang['i_permfail']   = '<code>%s</code> មិនអាចសាស';
 $lang['i_confexists'] = '<code>%s</code> មានហាយ';
 $lang['i_writeerr']   = 'មិនអាចបណ្កើ<code>%s</code>។ អ្នកត្រវការពិនិត្យអធិក្រឹតិរបស់ថតនឹងឯកសារ។';
-$lang['i_badhash']    = '(hash=<code>%s</code>)';
-$lang['i_badval']     = '<code>%s</code>&mdash;';
 $lang['i_success']    = '';
 $lang['i_failure']    = 'ពលសាសារ';
 $lang['i_policy']     = 'បញ្ជីអនុញ្ញតផ្ដើម';
@@ -223,3 +198,5 @@ $lang['i_pol2']       = 'វីគីបិទជិត';
 $lang['i_retry']      = 'ម្តងទៀត';
 
 //Setup VIM: ex: et ts=2 :
+$lang['email_signature_text'] = 'អ៊ីមេលនេះបន្ចេអពីឌោគូវីគីនៅ
+@DOKUWIKIURL@';

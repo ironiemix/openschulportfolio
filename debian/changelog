@@ -1,3 +1,10 @@
+linuxmuster-portfolio (16.12-snotlout.1) babo62; urgency=medium
+
+  * Dokuwiki update to dokuwiki-2016-06-26a "Elenor of Tsort"  
+  * No functionality check, just the update 
+
+ -- Frank Schiebel <frank@linuxmuster.net>  Mon, 05 Dec 2016 16:22:39 +0100
+
 linuxmuster-portfolio (13.03-fishlegs.2-quickfix1) openml5-testing; urgency=low
 
   * Updated bookcreator to latest version for php5.5 compatibility

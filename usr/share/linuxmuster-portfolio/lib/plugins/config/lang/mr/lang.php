@@ -30,8 +30,6 @@ $lang['_links']                = 'लिंक सेटिंग';
 $lang['_media']                = 'दृक्श्राव्य माध्यम सेटिंग';
 $lang['_advanced']             = 'सविस्तर सेटिंग';
 $lang['_network']              = 'नेटवर्क सेटिंग';
-$lang['_plugin_sufix']         = 'प्लगिन सेटिंग';
-$lang['_template_sufix']       = 'टेम्पलेट ( नमुना ) सेटिंग';
 $lang['_msg_setting_undefined'] = 'सेटिंगविषयी उप-डेटा उपलब्ध नाही.';
 $lang['_msg_setting_no_class'] = 'सेटिंगचा क्लास उपलब्ध नाही';
 $lang['_msg_setting_no_default'] = 'आपोआप किम्मत नाही';
@@ -52,7 +50,7 @@ $lang['youarehere']            = 'प्रतवार ब्रेडक्र
 $lang['typography']            = 'अनवधानाने झालेल्या चुका बदला';
 $lang['htmlok']                = 'अंतर्गत HTML टाकायची परवानगी असू दे';
 $lang['phpok']                 = 'अंतर्गत PHP टाकायची परवानगी असू दे';
-$lang['dformat']               = 'दिनांकाची पद्धत ( PHP चं <a href="http://www.php.net/strftime">strftime</a> हे फंक्शन पाहा )';
+$lang['dformat']               = 'दिनांकाची पद्धत ( PHP चं <a href="http://php.net/strftime">strftime</a> हे फंक्शन पाहा )';
 $lang['signature']             = 'हस्ताक्षर';
 $lang['toptoclevel']           = 'अनुक्रमणिकेची सर्वोच्च पातळी';
 $lang['tocminheads']           = 'कमीत कमी किती शीर्षके असल्यास अनुक्रमणिका बनवावी';
@@ -62,7 +60,6 @@ $lang['camelcase']             = 'लिंकसाठी कॅमलकेस
 $lang['deaccent']              = 'सरळ्सोट पृष्ठ नाम';
 $lang['useheading']            = 'पहिलं शीर्षक पृष्ठ नाम म्हणुन वापरा';
 $lang['refcheck']              = 'दृक्श्राव्य माध्यमाचा संदर्भ तपासा';
-$lang['refshow']               = 'दृक्श्राव्य माध्यामाचे संदर्भ दाखवण्याची संख्या';
 $lang['allowdebug']            = 'डिबगची परवानगी <b> गरज नसल्यास बंद ठेवा !</b>';
 $lang['usewordblock']          = 'भंकस मजकूर थोपवण्यासाठी शब्दसमुह वापरा';
 $lang['indexdelay']            = 'सूचीकरणापूर्वीचा अवकाश ( सेकंदात )';

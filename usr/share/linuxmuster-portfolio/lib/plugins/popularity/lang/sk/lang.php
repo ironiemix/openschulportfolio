@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Slovak language file
+ * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  *
  * @author Michal Mesko <michal.mesko@gmail.com>
  * @author exusik@gmail.com

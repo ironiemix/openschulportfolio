@@ -43,17 +43,17 @@ echo "Version:          $VERSION"
 echo "Source-Version:   $SOURCEVERSION"
 sleep 5
 # Anpassungen einpatchen
-export QUILT_PATCHES=debian/patches
+#export QUILT_PATCHES=debian/patches
 
-quilt --quiltrc /dev/null pop -a
-PATCHFAIL="NO"
-quilt --quiltrc /dev/null push -a || PATCHFAIL="FAILED"
+#quilt --quiltrc /dev/null pop -a
+#PATCHFAIL="NO"
+#quilt --quiltrc /dev/null push -a || PATCHFAIL="FAILED"
 
-if [ $PATCHFAIL = "FAILED" ]; then
-    echo "******************* Patching failed! **************************************"
-    quilt --quiltrc /dev/null pop -a
-    exit 1
-fi
+#if [ $PATCHFAIL = "FAILED" ]; then
+#    echo "******************* Patching failed! **************************************"
+#    quilt --quiltrc /dev/null pop -a
+#    exit 1
+#fi
 # debian Paket bauen
 cd ..
 dpkg-buildpackage -i\.git -I.git

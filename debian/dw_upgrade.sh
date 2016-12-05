@@ -3,6 +3,7 @@
 DELETEFILES="dw_removeoldfiles.txt"
 INCTARGET=../usr/share/linuxmuster-portfolio/
 LIBTARGET=../usr/share/linuxmuster-portfolio/
+VENDORTARGET=../usr/share/linuxmuster-portfolio/
 BINTARGET=../home/linuxmuster-portfolio/
 CONFTARGET=../etc/linuxmuster-portfolio/
 ROOTTARGET=../usr/share/linuxmuster-portfolio/
@@ -30,7 +31,7 @@ for delete in $DELETES; do
  ftd=${INCTARGET}${delete}
  if [ -e $ftd ]; then 
   echo "removing $ftd"
-  svn rm  $ftd
+  git rm  $ftd
  fi
 done
 
@@ -46,10 +47,20 @@ for delete in $DELETES; do
   git rm $ftd
  fi
 done
+
+echo -n "Copying Dokuwiki lib ..."
 cp -r $DWSOURCE/lib $LIBTARGET
+echo " done!"
 
 # bin
+echo -n "Copying Dokuwiki bin ..."
 cp -r $DWSOURCE/bin $BINTARGET
+echo " done!"
+
+# vendor
+echo -n "Copying Dokuwiki vendor ..."
+cp -r $DWSOURCE/vendor $VENDORTARGET
+echo " done!"
 
 # conf
 cp $DWSOURCE/conf/* $CONFTARGET
